@@ -25,7 +25,6 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@artifex/core/*": ["packages/core/*"],
       "@artifex/common/*": ["packages/common/*"],
       "@artifex/events/*": ["packages/events/*"],
       "@artifex/packs/*": ["packages/packs/*"],
