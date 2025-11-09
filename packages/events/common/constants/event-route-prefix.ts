@@ -1,0 +1,30 @@
+// export const enum EventRoutePrefix {
+//   BlockTypeId = 'b',
+//   BrokenBlockTypeId = 'bb',
+//   ItemTypeId = 'i',
+//   BeforeItemTypeId = 'bi',
+//   EntityTypeId = 'e',
+//   DamagerTypeId = 'de',
+//   EventId = 'event',
+//   EffectTypeId = 'eff',
+//   FromDimensionId = 'fromD',
+//   ToDimensionId = 'toD',
+//   ProjectileTypeId = 'proj',
+// }
+
+export const enum EventRoutePrefix {
+  BlockTypeId,
+  BrokenBlockTypeId,
+  ItemTypeId,
+  BeforeItemTypeId,
+  EntityTypeId,
+  DamagerTypeId,
+  EventId,
+  EffectTypeId,
+  FromDimensionId,
+  ToDimensionId,
+  ProjectileTypeId,
+  NextHotbarSlot,
+  PreviousHotbarSlot,
+  EquipmentSlot,
+}

@@ -11,7 +11,7 @@
   "type": "module",
   "dependencies": {
     "@minecraft/debug-utilities": "^1.0.0-beta.1.21.102-stable",
-    "@minecraft/server": "^2.1.0",
+    "@minecraft/server": "^2.2.0",
     "@minecraft/server-ui": "2.0.0",
     "@minecraft/vanilla-data": "^1.21.100"
   },
@@ -36,6 +36,8 @@
     "ts-loader": "^9.5.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.3.3",
-    "typescript-eslint": "^8.29.0"
+    "typescript-eslint": "^8.29.0",
+    "uuid": "^13.0.0",
+    "ws": "^8.18.3"
   }
 }

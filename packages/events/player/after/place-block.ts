@@ -3,7 +3,10 @@ import { PlayerPlaceBlockAfterEvent, world } from '@minecraft/server';
 import { RequireAtLeastOne } from '@artifex/common/types/object/require-at-least-one';
 import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
 import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
-import { EVENT_ROUTE_GLOBAL_ID } from '@artifex/events/common/constants';
+import {
+  EVENT_ROUTE_GLOBAL_ID,
+  EventRoutePrefix,
+} from '@artifex/events/common/constants';
 import {
   EventBlockTypeIdsRouteOption,
   EventRouteController,
@@ -33,26 +36,26 @@ export const placeBlock = (
   action: Action,
   routes?: PlayerPlaceBlockAfterEventRouteOptions,
 ): EventRouteController => {
-  if (!router || !listener) {
-    router = new BasicEventRouter<Action, EventActionData<Action>>();
+  router ??= new BasicEventRouter<Action, EventActionData<Action>>();
 
-    listener = new BasicEventListener({
-      signal: world.afterEvents.playerPlaceBlock,
-      callback(context) {
-        const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
-        if (global !== undefined) {
-          for (let i = 0; i < global.length; i++) {
-            global[i].action(context);
-          }
+  listener ??= new BasicEventListener({
+    signal: world.afterEvents.playerPlaceBlock,
+    callback(context) {
+      const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
+      if (global !== undefined) {
+        for (let i = 0; i < global.length; i++) {
+          global[i].action(context);
         }
+      }
 
-        const combos = router!.getByEventParams(`b[${context.block.typeId}]`);
-        for (let i = 0; i < combos.length; i++) {
-          combos[i].action(context);
-        }
-      },
-    });
-  }
+      const combos = router!.getByEventParams(
+        `${EventRoutePrefix.BlockTypeId}@${context.block.typeId}`,
+      );
+      for (let i = 0; i < combos.length; i++) {
+        combos[i].action(context);
+      }
+    },
+  });
 
   return ArtifexEventUtils.initializeEvent<
     Context,

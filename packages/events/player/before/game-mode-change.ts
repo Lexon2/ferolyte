@@ -19,22 +19,20 @@ let listener: BasicEventListener<PlayerGameModeChangeBeforeEvent> | undefined;
 // Public API ///
 
 export const gameModeChange = (action: Action): EventRouteController => {
-  if (!router || !listener) {
-    router = new BasicEventRouter<Action, EventActionData<Action>>();
+  router ??= new BasicEventRouter<Action, EventActionData<Action>>();
 
-    listener = new BasicEventListener({
-      signal: world.beforeEvents.playerGameModeChange,
-      callback(context) {
-        // Global routes
-        const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
-        if (global !== undefined) {
-          for (let i = 0; i < global.length; i++) {
-            global[i].action(context);
-          }
+  listener ??= new BasicEventListener({
+    signal: world.beforeEvents.playerGameModeChange,
+    callback(context) {
+      // Global routes
+      const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
+      if (global !== undefined) {
+        for (let i = 0; i < global.length; i++) {
+          global[i].action(context);
         }
-      },
-    });
-  }
+      }
+    },
+  });
 
   return ArtifexEventUtils.initializeEvent<
     PlayerGameModeChangeBeforeEvent,

@@ -84,14 +84,14 @@ const getRouteId = (route: ScriptEventCommandRouteOption): string => {
   let suffix = '';
   switch (source) {
     case ScriptEventSource.Block:
-      suffix = `-${route.blockTypeId}`;
+      suffix = route.blockTypeId ? `-${route.blockTypeId}` : '';
       break;
     case 'player':
       suffix = '-minecraft:player';
       break;
     case ScriptEventSource.NPCDialogue:
     case ScriptEventSource.Entity:
-      suffix = `-${route.entityTypeId}`;
+      suffix = route.entityTypeId ? `-${route.entityTypeId}` : '';
       break;
     default:
       break;
@@ -241,8 +241,9 @@ export const scriptEvent = <Route extends ScriptEventCommandRouteOption>(
         if (!sourceEntity) {
           return;
         }
+        const { typeId } = sourceEntity;
 
-        const actions = ROUTES![`e-${id}-${sourceEntity.typeId}`];
+        const actions = ROUTES![`e-${id}`];
         if (actions !== undefined) {
           for (let i = 0; i < actions.length; i++) {
             actions[i].action({
@@ -252,8 +253,18 @@ export const scriptEvent = <Route extends ScriptEventCommandRouteOption>(
           }
         }
 
+        const concreteEntityActions = ROUTES![`e-${id}-${typeId}`];
+        if (concreteEntityActions !== undefined) {
+          for (let i = 0; i < concreteEntityActions.length; i++) {
+            concreteEntityActions[i].action({
+              message,
+              entity: sourceEntity,
+            } as any);
+          }
+        }
+
         const playerActions =
-          sourceEntity.typeId === 'minecraft:player'
+          typeId === 'minecraft:player'
             ? ROUTES![`p-${id}-minecraft:player`]
             : undefined;
         if (playerActions !== undefined) {

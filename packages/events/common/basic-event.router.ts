@@ -3,10 +3,6 @@ import { EventActionPointer } from './interfaces/event-action-pointer';
 import { EventAction } from './types';
 import { EventActionData } from './types/event-acton-data';
 
-type ParamsCache<T extends boolean> = T extends true
-  ? Record<string, string[]>
-  : undefined;
-
 export interface EventRouterOptions {
   cache?: boolean;
 }
@@ -15,6 +11,7 @@ export class BasicEventRouter<
   Action extends EventAction<any>,
   ActionData extends EventActionData<Action>,
 > {
+  private actionId: number = 0;
   public readonly routes: Record<string, ActionData[]>;
 
   constructor(options?: EventRouterOptions) {
@@ -41,7 +38,7 @@ export class BasicEventRouter<
    */
   public add(routeId: string, action: Action): EventActionPointer {
     const route = (this.routes[routeId] ??= []);
-    const actionId = Date.now();
+    const actionId = ++this.actionId;
 
     const wrapped = ((context) => {
       try {
@@ -100,67 +97,65 @@ export class BasicEventRouter<
     const result: ActionData[] = [];
 
     const n = params.length;
-
-    switch (n) {
-      case 0:
-        const global = routes[EVENT_ROUTE_GLOBAL_ID];
-        if (global !== undefined) {
-          result.push(...global);
-        }
-        break;
-
-      case 1:
-        const route1 = routes[params[0]];
-        if (route1 !== undefined) {
-          result.push(...route1);
-        }
-        break;
-
-      case 2:
-        params = params.sort();
-        const combos = [params[0], params[1], `${params[0]}-${params[1]}`];
-        for (let i = 0; i < combos.length; i++) {
-          if (combos[i] in routes) {
-            result.push(...routes[combos[i]]);
-          }
-        }
-        break;
-
-      default:
-        params = params.sort();
-        const paramsCacheKey = params.join('-');
-        const cache = paramsCache[paramsCacheKey] ?? [];
-        if (cache.length > 0) {
-          for (let i = 0; i < cache.length; i++) {
-            const route = routes[cache[i]];
-            if (route !== undefined) {
-              result.push(...route);
-            }
-          }
-
-          return result;
-        }
-
-        for (let mask = 1; mask < 1 << n; mask++) {
-          const combination: string[] = [];
-          for (let i = 0; i < n; i++) {
-            if (mask & (1 << i)) {
-              combination.push(params[i]);
-            }
-          }
-
-          const str = combination.sort().join('-');
-          if (str in routes) {
-            result.push(...routes[str]);
-          }
-
-          cache.push(str);
-        }
-
-        paramsCache[paramsCacheKey] = cache;
-
-        break;
+    if (n === 0) {
+      const global = routes[EVENT_ROUTE_GLOBAL_ID];
+      if (global !== undefined) {
+        result.push(...global);
+      }
+      return result;
     }
+
+    if (n === 1) {
+      const route = routes[params[0]];
+      if (route !== undefined) {
+        result.push(...route);
+      }
+      return result;
+    }
+
+    if (n === 2) {
+      params = params.sort();
+      const combos = [params[0], params[1], `${params[0]}-${params[1]}`];
+      for (let i = 0; i < combos.length; i++) {
+        if (combos[i] in routes) {
+          result.push(...routes[combos[i]]);
+        }
+      }
+
+      return result;
+    }
+
+    params = params.sort();
+    const paramsCacheKey = params.join('-');
+    const cache = paramsCache[paramsCacheKey] ?? [];
+    if (cache.length > 0) {
+      for (let i = 0; i < cache.length; i++) {
+        const route = routes[cache[i]];
+        if (route !== undefined) {
+          result.push(...route);
+        }
+      }
+
+      return result;
+    }
+
+    for (let mask = 1; mask < 1 << n; mask++) {
+      const combination: string[] = [];
+      for (let i = 0; i < n; i++) {
+        if (mask & (1 << i)) {
+          combination.push(params[i]);
+        }
+      }
+
+      const str = combination.sort().join('-');
+      if (str in routes) {
+        result.push(...routes[str]);
+      }
+
+      cache.push(str);
+    }
+
+    paramsCache[paramsCacheKey] = cache;
 
     return result;
   }

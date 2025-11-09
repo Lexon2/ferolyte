@@ -1,7 +1,5 @@
-import { Identifier } from '@artifex/common/types';
-
 export interface EventEntityTypeIdRouteOption {
-  entityTypeId: Identifier;
+  entityTypeId: string;
 }
 
 export interface EventEntityTypeIdsRouteOption {
@@ -9,7 +7,7 @@ export interface EventEntityTypeIdsRouteOption {
 }
 
 export interface EventDamagerTypeIdRouteOption {
-  damagerTypeId: Identifier;
+  damagerTypeId: string;
 }
 
 export interface EventDamagerTypeIdsRouteOption {
@@ -17,7 +15,7 @@ export interface EventDamagerTypeIdsRouteOption {
 }
 
 export interface EventProjectileTypeIdRouteOption {
-  projectileTypeId: Identifier;
+  projectileTypeId: string;
 }
 
 export interface EventProjectileTypeIdsRouteOption {

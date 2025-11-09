@@ -1,4 +1,4 @@
-import { PlayerAfterEvents } from '@artifex/events/player';
+import * as PlayerAfterEvents from '@artifex/events/player/after';
 import { MinecraftDimensionTypes } from '@minecraft/vanilla-data';
 
 PlayerAfterEvents.dimensionChange(

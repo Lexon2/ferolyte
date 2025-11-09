@@ -20,22 +20,20 @@ let listener: BasicEventListener<Context> | undefined;
 
 // Public API ///
 
-export const join = (action: Action): EventRouteController => {
-  if (!router || !listener) {
-    router = new BasicEventRouter<Action, EventActionData<Action>>();
+export const playerJoin = (action: Action): EventRouteController => {
+  router ??= new BasicEventRouter<Action, EventActionData<Action>>();
 
-    listener = new BasicEventListener({
-      signal: world.afterEvents.playerJoin,
-      callback(context) {
-        const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
-        if (global !== undefined) {
-          for (let i = 0; i < global.length; i++) {
-            global[i].action(context);
-          }
+  listener ??= new BasicEventListener({
+    signal: world.afterEvents.playerJoin,
+    callback(context) {
+      const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
+      if (global !== undefined) {
+        for (let i = 0; i < global.length; i++) {
+          global[i].action(context);
         }
-      },
-    });
-  }
+      }
+    },
+  });
 
   return ArtifexEventUtils.initializeEvent<Context, never>(
     listener,

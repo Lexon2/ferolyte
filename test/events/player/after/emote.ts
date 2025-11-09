@@ -1,4 +1,4 @@
-import { PlayerAfterEvents } from '@artifex/events/player';
+import * as PlayerAfterEvents from '@artifex/events/player/after';
 
 PlayerAfterEvents.emote(({ player, personaPieceId }) => {
   console.warn(

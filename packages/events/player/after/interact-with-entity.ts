@@ -1,5 +1,6 @@
 import {
   Entity,
+  ItemStack,
   PlayerInteractWithEntityAfterEvent,
   world,
 } from '@minecraft/server';
@@ -7,7 +8,10 @@ import {
 import { RequireAtLeastOne } from '@artifex/common/types';
 import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
 import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
-import { EVENT_ROUTE_GLOBAL_ID } from '@artifex/events/common/constants';
+import {
+  EVENT_ROUTE_GLOBAL_ID,
+  EventRoutePrefix,
+} from '@artifex/events/common/constants';
 import {
   EventBeforeItemTypeIdsRouteOption,
   EventEntityTypeIdsRouteOption,
@@ -19,11 +23,25 @@ import { ArtifexEventUtils } from '@artifex/events/common/utils';
 
 /// Private Types ///
 
-interface Context extends Omit<PlayerInteractWithEntityAfterEvent, 'target'> {
+type ItemStackType<T extends PlayerInteractWithEntityAfterEventRouteOptions> =
+  T extends { itemTypeId: infer U }
+    ? U extends string[]
+      ? ItemStack
+      : ItemStack | undefined
+    : ItemStack | undefined;
+
+interface Context<
+  T extends
+    PlayerInteractWithEntityAfterEventRouteOptions = PlayerInteractWithEntityAfterEventRouteOptions,
+> extends Omit<PlayerInteractWithEntityAfterEvent, 'target' | 'itemStack'> {
   entity: Entity;
+  itemStack: ItemStackType<T>;
 }
 
-type Action = EventAction<Context>;
+type Action<
+  T extends
+    PlayerInteractWithEntityAfterEventRouteOptions = PlayerInteractWithEntityAfterEventRouteOptions,
+> = EventAction<Context<T>>;
 
 /// Private API ///
 
@@ -42,45 +60,45 @@ export type PlayerInteractWithEntityAfterEventRouteOptions = RequireAtLeastOne<
 
 /// Public API ///
 
-export const interactWithEntity = (
-  action: Action,
-  routes?: PlayerInteractWithEntityAfterEventRouteOptions,
+export const interactWithEntity = <
+  T extends PlayerInteractWithEntityAfterEventRouteOptions,
+>(
+  action: Action<T>,
+  routes?: T,
 ): EventRouteController => {
-  if (!router || !listener) {
-    router = new BasicEventRouter<Action, EventActionData<Action>>();
+  router ??= new BasicEventRouter<Action, EventActionData<Action>>();
 
-    listener = new BasicEventListener({
-      signal: world.afterEvents.playerInteractWithEntity,
-      callback(event) {
-        const { target, player, beforeItemStack, itemStack } = event;
-        const context: Context = {
-          entity: target,
-          player,
-          itemStack,
-          beforeItemStack,
-        };
+  listener ??= new BasicEventListener({
+    signal: world.afterEvents.playerInteractWithEntity,
+    callback(event) {
+      const { target, player, beforeItemStack, itemStack } = event;
+      const context: Context = {
+        entity: target,
+        player,
+        itemStack,
+        beforeItemStack,
+      };
 
-        const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
-        if (global !== undefined) {
-          for (let i = 0; i < global.length; i++) {
-            global[i].action(context);
-          }
+      const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
+      if (global !== undefined) {
+        for (let i = 0; i < global.length; i++) {
+          global[i].action(context);
         }
+      }
 
-        const combos = router!.getByEventParams(
-          `e[${target.typeId}]`,
-          `i[${itemStack?.typeId ?? 'empty'}]`,
-          `bi[${beforeItemStack?.typeId ?? 'empty'}]`,
-        );
-        for (let i = 0; i < combos.length; i++) {
-          combos[i].action(context);
-        }
-      },
-    });
-  }
+      const combos = router!.getByEventParams(
+        `${EventRoutePrefix.EntityTypeId}@${target.typeId}`,
+        `${EventRoutePrefix.ItemTypeId}@${itemStack?.typeId ?? 'empty'}`,
+        `${EventRoutePrefix.BeforeItemTypeId}@${beforeItemStack?.typeId ?? 'empty'}`,
+      );
+      for (let i = 0; i < combos.length; i++) {
+        combos[i].action(context);
+      }
+    },
+  });
 
   return ArtifexEventUtils.initializeEvent<
-    Context,
+    Context<T>,
     PlayerInteractWithEntityAfterEventRouteOptions
   >(listener, router, action, routes);
 };

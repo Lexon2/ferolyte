@@ -1,4 +1,4 @@
-import { EntityAfterEvents } from '@artifex/events/entity';
+import * as EntityAfterEvents from '@artifex/events/entity/after';
 
 EntityAfterEvents.spawn(
   ({ entity }) => {

@@ -11,7 +11,9 @@ export const cartesianMerge = <T extends CartesianInput>(
   if (keys.length === 0) return [];
 
   const values = keys.map((key) =>
-    options[key].length > 0 ? options[key] : [null],
+    Array.isArray(options[key]) && options[key].length > 0
+      ? options[key]
+      : [null],
   );
 
   const routes: CartesianProduct<T>[] = [];
@@ -24,7 +26,7 @@ export const cartesianMerge = <T extends CartesianInput>(
 
     if (index === keys.length) {
       const filtered = Object.fromEntries(
-        Object.entries(current).filter(([_, v]) => v !== null),
+        Object.entries(current).filter(([, v]) => v !== null),
       ) as CartesianProduct<T>;
       if (Object.keys(filtered).length > 0) {
         routes.push(filtered);

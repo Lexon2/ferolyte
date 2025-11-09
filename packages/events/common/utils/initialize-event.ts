@@ -11,7 +11,7 @@ import { ArtifexEventUtils } from '.';
 import { EVENT_ROUTE_GLOBAL_ID } from '../constants';
 import { EventActionPointer, EventRouteController } from '../interfaces';
 
-export const initializeEvent = /* @__PURE__ */ <
+export const initializeEvent = <
   EventContext,
   RouteOptions extends CartesianInput,
 >(
@@ -23,12 +23,19 @@ export const initializeEvent = /* @__PURE__ */ <
   action: EventAction<EventContext>,
   options?: RouteOptions,
 ): EventRouteController => {
+  let isOpened = false;
   const pointers: EventActionPointer[] = [];
   const routes = (
     options ? cartesianMerge(options) : [EVENT_ROUTE_GLOBAL_ID]
   ) as CartesianProduct<RouteOptions>[];
 
-  const open = async () => {
+  const open = () => {
+    if (isOpened) {
+      return;
+    }
+
+    isOpened = true;
+
     for (let i = 0; i < routes.length; i++) {
       // @TODO: Maybe there's a better way to handle types here
       const routeId = ArtifexEventUtils.generateRouteId(
@@ -36,11 +43,16 @@ export const initializeEvent = /* @__PURE__ */ <
       );
       pointers.push(router.add(routeId, action));
     }
-    await listener.listen();
-    console.warn('open');
+    listener.listen();
   };
 
   const close = () => {
+    if (!isOpened) {
+      return;
+    }
+
+    isOpened = false;
+
     for (let i = 0; i < pointers.length; i++) {
       router.remove(pointers[i]);
     }
