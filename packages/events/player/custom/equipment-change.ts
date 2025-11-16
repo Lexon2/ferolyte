@@ -18,8 +18,8 @@ import { BasicEventListener } from '@artifex/events/common/basic-event.listener'
 import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
 import { EventAction, EventActionData } from '@artifex/events/common/types';
 import { ArtifexEventUtils } from '@artifex/events/common/utils';
-import { PlayerEquipment } from 'packages/player/equipment';
-import { OnlinePlayers } from 'packages/player/online-players';
+import { PlayerEquipment } from 'packages/server/player/equipment';
+import { OnlinePlayers } from 'packages/server/player/online-players';
 
 /// Private Types ///
 interface PlayerEquipmentChangeEvent {

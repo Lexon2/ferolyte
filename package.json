@@ -11,9 +11,9 @@
   "type": "module",
   "dependencies": {
     "@minecraft/debug-utilities": "^1.0.0-beta.1.21.102-stable",
-    "@minecraft/server": "^2.2.0",
+    "@minecraft/server": "^2.3.0",
     "@minecraft/server-ui": "2.0.0",
-    "@minecraft/vanilla-data": "^1.21.100"
+    "@minecraft/vanilla-data": "^1.21.120"
   },
   "devDependencies": {
     "@eslint/config-array": "^0.20.0",

@@ -5,7 +5,7 @@ import {
   CartesianInput,
   CartesianProduct,
   cartesianMerge,
-} from '@artifex/utils/object/cartesian-merge';
+} from '@artifex/common/object/cartesian-merge';
 
 import { ArtifexEventUtils } from '.';
 import { EVENT_ROUTE_GLOBAL_ID } from '../constants';

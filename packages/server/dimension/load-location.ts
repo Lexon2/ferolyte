@@ -8,25 +8,15 @@ import {
   world,
 } from '@minecraft/server';
 
-import { getAllEntities } from './get-all-entities';
-import { floor } from '../vector/floor';
+import { getAllEntities } from './utils/get-all-entities';
+import { tryGetBlock } from '../block/utils/try-get-block';
+import { floor } from '../vector/utils/floor';
 
 /// Private Types ///
 
 type LoaderRadius = 2 | 3 | 4 | 5 | 6;
 
 /// Private Functions ///
-
-const getBlockSave = (
-  location: Vector3,
-  dimension: Dimension,
-): Block | undefined => {
-  try {
-    return dimension.getBlock(location);
-  } catch (error) {
-    return undefined;
-  }
-};
 
 const spawnLoader = async (
   location: Vector3,
@@ -51,7 +41,7 @@ const spawnLoader = async (
     loader.teleport(location);
 
     return loader;
-  } catch (error) {}
+  } catch {}
 };
 
 const validateOptions = (
@@ -75,7 +65,7 @@ const validateOptions = (
 const removeLoader = (loader: Entity) => {
   try {
     loader.remove();
-  } catch (error) {}
+  } catch {}
 };
 
 /// Public Types ///
@@ -106,24 +96,31 @@ export interface LoadLocationOptions {
 
 /// Public API ///
 
+/**
+ * Loads a location in a dimension using a loader entity 'artifex:loader'.
+ *
+ * WIP.
+ * This is not yet ready for production use.
+ *
+ * @param location - The location to load.
+ * @param dimension - The dimension to load the location in.
+ * @param options - The options to use for the load.
+ * @returns The result of the load.
+ */
 export const loadLocation = async (
   location: Vector3,
   dimension: Dimension,
-  options?: Partial<LoadLocationOptions>,
+  options?: LoadLocationOptions,
 ): Promise<LoadLocationResult> => {
   location = floor(location);
 
-  let block: Block | undefined = getBlockSave(location, dimension);
+  let block = tryGetBlock({ dimension, ...location });
   if (block) {
     return {
       block,
       unload: () => {},
     };
   }
-
-  const forceUnload = (loader: Entity, unloadDelay: number) => {
-    system.runTimeout(() => removeLoader(loader), unloadDelay);
-  };
 
   const { maxTries, unloadDelay, radius } = validateOptions(options);
   const loader = await spawnLoader(location, dimension, radius);
@@ -134,8 +131,12 @@ export const loadLocation = async (
     };
   }
 
+  const forceUnload = (loader: Entity, unloadDelay: number) => {
+    system.runTimeout(() => removeLoader(loader), unloadDelay);
+  };
+
   for (let i = 0; i < maxTries; i++) {
-    block = getBlockSave(location, dimension);
+    block = tryGetBlock({ dimension, ...location });
 
     if (block) {
       forceUnload(loader, unloadDelay);
