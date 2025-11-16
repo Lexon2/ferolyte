@@ -1,15 +1,13 @@
-import { Identifier } from '@artifex/common/types';
-
 export interface EventBlockTypeIdRouteOption {
-  blockTypeId: Identifier;
+  blockTypeId: string;
 }
 
 export interface EventBrokenBlockTypeIdRouteOption {
-  brokenBlockTypeId: Identifier;
+  brokenBlockTypeId: string;
 }
 
 export interface EventBeforeBlockTypeIdRouteOption {
-  beforeBlockTypeId: Identifier;
+  beforeBlockTypeId: string;
 }
 
 export interface EventBlockTypeIdsRouteOption {

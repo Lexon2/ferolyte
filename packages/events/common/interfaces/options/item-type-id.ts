@@ -1,11 +1,9 @@
-import { Identifier } from '@artifex/common/types';
-
 export interface EventItemTypeIdRouteOption {
-  itemTypeId: Identifier | 'empty';
+  itemTypeId: string | 'empty';
 }
 
 export interface EventBeforeItemTypeIdRouteOption {
-  beforeItemTypeId: Identifier | 'empty';
+  beforeItemTypeId: string | 'empty';
 }
 
 export interface EventItemTypeIdsRouteOption {

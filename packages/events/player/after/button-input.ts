@@ -21,24 +21,22 @@ let listener: BasicEventListener<Context> | undefined;
 // Public API ///
 
 export const buttonInput = (action: Action): EventRouteController => {
-  if (!router || !listener) {
-    router = new BasicEventRouter<Action, EventActionData<Action>>();
+  router ??= new BasicEventRouter<Action, EventActionData<Action>>();
 
-    listener = new BasicEventListener({
-      signal: world.afterEvents.playerButtonInput,
-      callback(context) {
-        // Global routes
-        const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
-        if (global !== undefined) {
-          for (let i = 0; i < global.length; i++) {
-            global[i].action(context);
-          }
+  listener ??= new BasicEventListener({
+    signal: world.afterEvents.playerButtonInput,
+    callback(context) {
+      // Global routes
+      const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
+      if (global !== undefined) {
+        for (let i = 0; i < global.length; i++) {
+          global[i].action(context);
         }
+      }
 
-        // No specific routes for button input event
-      },
-    });
-  }
+      // No specific routes for button input event
+    },
+  });
 
   return ArtifexEventUtils.initializeEvent<Context, never>(
     listener,

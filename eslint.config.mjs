@@ -38,6 +38,12 @@ export default tseslint.config(
         'off',
         { allowInterfaces: 'with-single-extends' },
       ],
+      'prettier/prettier': [
+        'off',
+        {
+          endOfLine: 'crlf',
+        },
+      ],
       'unused-imports/no-unused-vars': [
         'warn',
         {

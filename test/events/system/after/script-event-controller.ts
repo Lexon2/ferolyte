@@ -1,4 +1,4 @@
-import { SystemAfterEvents } from '@artifex/events/system';
+import * as SystemAfterEvents from '@artifex/events/system/after';
 
 const contoller = SystemAfterEvents.scriptEvent(
   ({ message, player }) => {

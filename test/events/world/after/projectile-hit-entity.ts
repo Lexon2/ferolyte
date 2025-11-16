@@ -1,4 +1,4 @@
-import { WorldAfterEvents } from '@artifex/events/world';
+import * as WorldAfterEvents from '@artifex/events/world/after';
 
 WorldAfterEvents.projectileHitEntity(
   ({ entity, projectile }) => {

@@ -1,4 +1,4 @@
-import { PlayerBeforeEvents } from '@artifex/events/player';
+import * as PlayerBeforeEvents from '@artifex/events/player/before';
 
 PlayerBeforeEvents.interactWithBlock(
   (ctx) => {

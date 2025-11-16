@@ -26,21 +26,19 @@ let listener: BasicEventListener<Context> | undefined;
 export const inputPermissionCategoryChange = (
   action: Action,
 ): EventRouteController => {
-  if (!router || !listener) {
-    router = new BasicEventRouter<Action, EventActionData<Action>>();
+  router ??= new BasicEventRouter<Action, EventActionData<Action>>();
 
-    listener = new BasicEventListener({
-      signal: world.afterEvents.playerInputPermissionCategoryChange,
-      callback(context) {
-        const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
-        if (global !== undefined) {
-          for (let i = 0; i < global.length; i++) {
-            global[i].action(context);
-          }
+  listener ??= new BasicEventListener({
+    signal: world.afterEvents.playerInputPermissionCategoryChange,
+    callback(context) {
+      const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
+      if (global !== undefined) {
+        for (let i = 0; i < global.length; i++) {
+          global[i].action(context);
         }
-      },
-    });
-  }
+      }
+    },
+  });
 
   return ArtifexEventUtils.initializeEvent<Context, never>(
     listener,

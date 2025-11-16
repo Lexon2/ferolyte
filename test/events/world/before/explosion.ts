@@ -1,4 +1,4 @@
-import { WorldBeforeEvents } from '@artifex/events/world';
+import * as WorldAfterEvents from '@artifex/events/world/after';
 
 WorldBeforeEvents.explosion((context) => {
   console.warn(`Explosion is about to occur at ${context.source}.`);

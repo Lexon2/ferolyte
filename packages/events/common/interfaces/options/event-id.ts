@@ -1,7 +1,5 @@
-import { Identifier } from '@artifex/common/types';
-
 export interface EventIdRouteOption {
-  eventId: Identifier;
+  eventId: string;
 }
 
 export interface EventIdsRouteOption {

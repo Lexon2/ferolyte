@@ -8,3 +8,8 @@ yarn.lock
 /packs
 /build
 packages/wip/*
+
+
+test/
+!test/events/
+!test/utils/
