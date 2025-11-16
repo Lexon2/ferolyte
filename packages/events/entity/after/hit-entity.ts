@@ -3,7 +3,10 @@ import { EntityHitEntityAfterEvent, world } from '@minecraft/server';
 import { RequireAtLeastOne } from '@artifex/common/types';
 import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
 import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
-import { EVENT_ROUTE_GLOBAL_ID } from '@artifex/events/common/constants';
+import {
+  EVENT_ROUTE_GLOBAL_ID,
+  EventRoutePrefix,
+} from '@artifex/events/common/constants';
 import {
   EventDamagerTypeIdsRouteOption,
   EventEntityTypeIdsRouteOption,
@@ -33,31 +36,28 @@ export const hitEntity = (
   action: Action,
   routes?: EntityHitEntityAfterEventRouteOptions,
 ): EventRouteController => {
-  if (!router || !listener) {
-    router = new BasicEventRouter<Action, EventActionData<Action>>();
-
-    listener = new BasicEventListener({
-      signal: world.afterEvents.entityHitEntity,
-      callback(event) {
-        // Global routes
-        const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
-        if (global !== undefined) {
-          for (let i = 0; i < global.length; i++) {
-            global[i].action(event);
-          }
+  router ??= new BasicEventRouter<Action, EventActionData<Action>>();
+  listener ??= new BasicEventListener({
+    signal: world.afterEvents.entityHitEntity,
+    callback(event) {
+      // Global routes
+      const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
+      if (global !== undefined) {
+        for (let i = 0; i < global.length; i++) {
+          global[i].action(event);
         }
+      }
 
-        // Specific routes
-        const combos = router!.getByEventParams(
-          `e[${event.hitEntity.typeId}]`,
-          `de[${event.damagingEntity.typeId}]`,
-        );
-        for (let i = 0; i < combos.length; i++) {
-          combos[i].action(event);
-        }
-      },
-    });
-  }
+      // Specific routes
+      const combos = router!.getByEventParams(
+        `${EventRoutePrefix.EntityTypeId}@${event.hitEntity.typeId}`,
+        `${EventRoutePrefix.DamagerTypeId}@${event.damagingEntity.typeId}`,
+      );
+      for (let i = 0; i < combos.length; i++) {
+        combos[i].action(event);
+      }
+    },
+  });
 
   return ArtifexEventUtils.initializeEvent<
     EntityHitEntityAfterEvent,

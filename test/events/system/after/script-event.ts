@@ -1,6 +1,6 @@
 import { ScriptEventSource, world } from '@minecraft/server';
 
-import { SystemAfterEvents } from '@artifex/events/system';
+import * as SystemAfterEvents from '@artifex/events/system/after';
 
 SystemAfterEvents.scriptEvent(
   ({ message, player }) => {

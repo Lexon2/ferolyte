@@ -1,4 +1,4 @@
-import { EntityBeforeEvents } from '@artifex/events/entity';
+import * as EntityBeforeEvents from '@artifex/events/entity/before';
 import { MinecraftEffectTypes } from '@minecraft/vanilla-data';
 
 EntityBeforeEvents.effectAdd(

@@ -1,6 +1,6 @@
-import { EntityAfterEvents } from '@artifex/events/entity';
+import * as EntityAfterEvents from '@artifex/events/entity/after';
 
-EntityAfterEvents.load(
+EntityAfterEvents.entityLoad(
   ({ entity }) => {
     console.warn(`Entity ${entity.typeId} has been loaded.`);
   },

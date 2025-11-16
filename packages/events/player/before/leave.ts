@@ -18,23 +18,21 @@ let listener: BasicEventListener<PlayerLeaveBeforeEvent> | undefined;
 
 // Public API ///
 
-export const leave = (action: Action): EventRouteController => {
-  if (!router || !listener) {
-    router = new BasicEventRouter<Action, EventActionData<Action>>();
+export const playerLeave = (action: Action): EventRouteController => {
+  router ??= new BasicEventRouter<Action, EventActionData<Action>>();
 
-    listener = new BasicEventListener({
-      signal: world.beforeEvents.playerLeave,
-      callback(context) {
-        // Global routes
-        const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
-        if (global !== undefined) {
-          for (let i = 0; i < global.length; i++) {
-            global[i].action(context);
-          }
+  listener ??= new BasicEventListener({
+    signal: world.beforeEvents.playerLeave,
+    callback(context) {
+      // Global routes
+      const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
+      if (global !== undefined) {
+        for (let i = 0; i < global.length; i++) {
+          global[i].action(context);
         }
-      },
-    });
-  }
+      }
+    },
+  });
 
   return ArtifexEventUtils.initializeEvent<PlayerLeaveBeforeEvent, never>(
     listener,

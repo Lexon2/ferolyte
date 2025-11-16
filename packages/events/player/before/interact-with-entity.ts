@@ -7,7 +7,10 @@ import {
 import { RequireAtLeastOne } from '@artifex/common/types';
 import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
 import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
-import { EVENT_ROUTE_GLOBAL_ID } from '@artifex/events/common/constants';
+import {
+  EVENT_ROUTE_GLOBAL_ID,
+  EventRoutePrefix,
+} from '@artifex/events/common/constants';
 import {
   EventEntityTypeIdsRouteOption,
   EventItemTypeIdsRouteOption,
@@ -44,45 +47,43 @@ export const interactWithEntity = (
   action: Action,
   routes?: PlayerInteractWithEntityBeforeEventRouteOptions,
 ): EventRouteController => {
-  if (!router || !listener) {
-    router = new BasicEventRouter<Action, EventActionData<Action>>();
+  router ??= new BasicEventRouter<Action, EventActionData<Action>>();
 
-    listener = new BasicEventListener({
-      signal: world.beforeEvents.playerInteractWithEntity,
-      callback(event) {
-        const { target, itemStack, player } = event;
+  listener ??= new BasicEventListener({
+    signal: world.beforeEvents.playerInteractWithEntity,
+    callback(event) {
+      const { target, itemStack, player } = event;
 
-        const context: Context = {
-          entity: target,
-          itemStack,
-          player,
-          get cancel() {
-            return event.cancel;
-          },
-          set cancel(value: boolean) {
-            event.cancel = value;
-          },
-        };
+      const context: Context = {
+        entity: target,
+        itemStack,
+        player,
+        get cancel() {
+          return event.cancel;
+        },
+        set cancel(value: boolean) {
+          event.cancel = value;
+        },
+      };
 
-        // Global routes
-        const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
-        if (global !== undefined) {
-          for (let i = 0; i < global.length; i++) {
-            global[i].action(context);
-          }
+      // Global routes
+      const global = router!.routes[EVENT_ROUTE_GLOBAL_ID];
+      if (global !== undefined) {
+        for (let i = 0; i < global.length; i++) {
+          global[i].action(context);
         }
+      }
 
-        // Specific routes
-        const combos = router!.getByEventParams(
-          `e[${target.typeId}]`,
-          `i[${itemStack?.typeId ?? 'empty'}]`,
-        );
-        for (let i = 0; i < combos.length; i++) {
-          combos[i].action(context);
-        }
-      },
-    });
-  }
+      // Specific routes
+      const combos = router!.getByEventParams(
+        `${EventRoutePrefix.EntityTypeId}@${target.typeId}`,
+        `${EventRoutePrefix.ItemTypeId}@${itemStack?.typeId ?? 'empty'}`,
+      );
+      for (let i = 0; i < combos.length; i++) {
+        combos[i].action(context);
+      }
+    },
+  });
 
   return ArtifexEventUtils.initializeEvent<
     Context,

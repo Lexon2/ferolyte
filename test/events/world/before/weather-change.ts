@@ -1,6 +1,6 @@
 import { WeatherType } from '@minecraft/server';
 
-import { WorldBeforeEvents } from '@artifex/events/world';
+import * as WorldAfterEvents from '@artifex/events/world/after';
 
 WorldBeforeEvents.weatherChange((context) => {
   console.warn(`Weather is about to change to ${context.newWeather}.`);

@@ -4,6 +4,8 @@ export * from './button-push';
 
 export * from './explosion';
 
+export * from './world-load';
+
 export * from './weather-change';
 
 export * from './piston-activate';

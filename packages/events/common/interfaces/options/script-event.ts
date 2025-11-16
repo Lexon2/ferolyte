@@ -6,8 +6,6 @@ import {
   ScriptEventSource,
 } from '@minecraft/server';
 
-import { Identifier } from '@artifex/common/types';
-
 import { EventBlockTypeIdRouteOption } from './block-type-id';
 import { EventEntityTypeIdRouteOption } from './entity-type-id';
 import { EventAction } from '../../types';
@@ -41,7 +39,7 @@ export type ScriptEventCommandActionFromRouteOption<
         : EventAction<ScriptEventCommandMessageAfterEvent>;
 
 export interface ScriptEventCommandIdRouteOption {
-  id: Identifier;
+  id: string;
 }
 
 export interface ScriptEventCommandMessageRouteOption {
@@ -58,16 +56,16 @@ export interface ScriptEventCommandPlayerRouteOption {
 }
 
 export interface ScriptEventCommandBlockRouteOption
-  extends EventBlockTypeIdRouteOption {
+  extends Partial<EventBlockTypeIdRouteOption> {
   source: ScriptEventSource.Block;
 }
 
 export interface ScriptEventCommandEntityRouteOption
-  extends EventEntityTypeIdRouteOption {
+  extends Partial<EventEntityTypeIdRouteOption> {
   source: ScriptEventSource.Entity;
 }
 
 export interface ScriptEventCommandNPCRouteOption
-  extends EventEntityTypeIdRouteOption {
+  extends Partial<EventEntityTypeIdRouteOption> {
   source: ScriptEventSource.NPCDialogue;
 }
