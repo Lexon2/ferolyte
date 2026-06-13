@@ -1,0 +1,19 @@
+import { describe, it } from 'vitest';
+import { createTags } from '@artifex/pack/content/item/convertors/components/tags';
+import { expectComponent, expectUndefined } from '../helpers/assert-component';
+
+describe('createTags', () => {
+  it('returns undefined when input is missing', () => {
+    expectUndefined(createTags);
+  });
+
+  it('returns undefined for invalid tag', () => {
+    expectUndefined(createTags, ['invalid:tag']);
+  });
+
+  it('maps valid tags', () => {
+    expectComponent(createTags, ['minecraft:is_food'], 'minecraft:tags', {
+      tags: ['minecraft:is_food'],
+    });
+  });
+});

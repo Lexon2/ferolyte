@@ -8,7 +8,9 @@
     "lint": "eslint \"./packages/**/*.ts\"",
     "lint:fix": "eslint \"./packages/**/*.ts\" --fix",
     "artifex:build": "tsx test/packs/tasks/build.ts",
-    "artifex:watch": "tsx test/packs/tasks/watch.ts"
+    "artifex:watch": "tsx test/packs/tasks/watch.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "license": "MIT",
   "type": "module",
@@ -41,6 +43,7 @@
     "typescript": "^5.3.3",
     "typescript-eslint": "^8.29.0",
     "uuid": "^13.0.0",
+    "vitest": "^3.2.4",
     "ws": "^8.18.3"
   }
 }
