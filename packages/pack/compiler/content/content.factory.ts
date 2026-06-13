@@ -69,7 +69,7 @@ export const buildContentJson = async (
       return;
     }
 
-    const outFile = await buildFunction(filePath, builder as any);
+    const outFile = await buildFunction(filePath, builder as any, debug);
     if (outFile === undefined) {
       if (debug) {
         return new Error(`\n🛑 Failed to build: ${filename}\n`);

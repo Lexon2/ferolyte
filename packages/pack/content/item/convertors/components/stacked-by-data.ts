@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '../../../../common/validation/content-validation';
+
 /**
  * Creates a stacked_by_data component for Minecraft items
  * @param value Whether items with different data values can stack together
@@ -5,15 +8,13 @@
  */
 export const createStackedByData = (
   value?: boolean,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:stacked_by_data': boolean } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  if (typeof value !== 'boolean') {
-    // @TODO: Add error handling
-    console.error('Stacked by data must be a boolean');
-
+  if (!validateBooleanValue(value, ctx, 'Stacked by data must be a boolean')) {
     return undefined;
   }
 

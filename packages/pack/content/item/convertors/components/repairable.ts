@@ -1,3 +1,7 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../../common/diagnostics/content-diagnostic';
+import { validateNonEmptyArray } from '../../../../common/validation/content-validation';
+
 interface RepairItem {
   items: string[];
   repairAmount: string | number;
@@ -14,18 +18,34 @@ interface RepairableOptions {
  */
 export const createRepairable = (
   options?: RepairableOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:repairable': any } | undefined => {
   if (!options) {
-    // Empty component is valid for repairable
     return undefined;
   }
 
   const result: any = {};
 
   if (Array.isArray(options.repairItems) && options.repairItems.length > 0) {
-    result.repair_items = options.repairItems.map((item) => {
-      if (!Array.isArray(item.items) || item.items.length === 0) {
-        console.warn('Repair items must have a non-empty items array');
+    const repairItems: { items: string[]; repair_amount: string | number }[] =
+      [];
+
+    for (let index = 0; index < options.repairItems.length; index++) {
+      const item = options.repairItems[index];
+      const entryContext =
+        ctx !== undefined
+          ? { ...ctx, fieldPath: `repairItems[${index}]` }
+          : undefined;
+
+      if (
+        !validateNonEmptyArray(
+          item.items,
+          entryContext,
+          'Repair items must have a non-empty items array',
+          'items',
+        )
+      ) {
+        return undefined;
       }
 
       if (
@@ -35,16 +55,22 @@ export const createRepairable = (
           item.repairAmount.length === 0) ||
         (typeof item.repairAmount === 'number' && item.repairAmount <= 0)
       ) {
-        console.warn(
+        logContentError(
+          entryContext !== undefined
+            ? { ...entryContext, fieldPath: 'repairAmount' }
+            : undefined,
           'Repair amount must be a positive number or non-empty string',
         );
+        return undefined;
       }
 
-      return {
+      repairItems.push({
         items: item.items,
         repair_amount: item.repairAmount,
-      };
-    });
+      });
+    }
+
+    result.repair_items = repairItems;
   }
 
   return {

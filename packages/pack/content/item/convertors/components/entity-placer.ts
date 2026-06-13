@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateNonEmptyString } from '../../../../common/validation/content-validation';
+
 interface EntityPlacerOptions {
   entity: string;
   dispenseOn?: string[];
@@ -11,15 +14,20 @@ interface EntityPlacerOptions {
  */
 export const createEntityPlacer = (
   options?: EntityPlacerOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:entity_placer': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
-  if (typeof options.entity !== 'string' || options.entity.length === 0) {
-    // @TODO: Add error handling
-    console.error('Entity must be a non-empty string');
-
+  if (
+    !validateNonEmptyString(
+      options.entity,
+      ctx,
+      'Entity must be a non-empty string',
+      'entity',
+    )
+  ) {
     return undefined;
   }
 
@@ -27,7 +35,6 @@ export const createEntityPlacer = (
     entity: options.entity,
   };
 
-  // Process dispense_on array if provided
   if (
     Array.isArray(options.dispenseOn) &&
     options.dispenseOn.length > 0 &&
@@ -36,7 +43,6 @@ export const createEntityPlacer = (
     result.dispense_on = options.dispenseOn;
   }
 
-  // Process use_on array if provided
   if (
     Array.isArray(options.useOn) &&
     options.useOn.length > 0 &&

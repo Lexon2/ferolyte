@@ -1,6 +1,11 @@
 import { ItemEnchantableSlots } from '../../types/item-enchantable-slots';
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateAllowedValue,
+  validateNonNegativeNumber,
+} from '../../../../common/validation/content-validation';
 
-const validEnchantableSlots = [
+const VALID_ENCHANTABLE_SLOTS: ItemEnchantableSlots[] = [
   'axe',
   'bow',
   'armor_feet',
@@ -30,15 +35,21 @@ interface EnchantableOptions {
  */
 export const createEnchantable = (
   options?: EnchantableOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:enchantable': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
-  if (!options.slot || !validEnchantableSlots.includes(options.slot)) {
-    // @TODO: Add error handling
-    console.error('Enchantable slot is invalid');
-
+  if (
+    !validateAllowedValue(
+      options.slot,
+      VALID_ENCHANTABLE_SLOTS,
+      ctx,
+      'Enchantable slot is invalid',
+      'slot',
+    )
+  ) {
     return undefined;
   }
 
@@ -47,10 +58,14 @@ export const createEnchantable = (
   };
 
   if (options.value !== undefined) {
-    if (typeof options.value !== 'number' || options.value < 0) {
-      // @TODO: Add error handling
-      console.error('Enchantable value must be greater than or equal to 0');
-
+    if (
+      !validateNonNegativeNumber(
+        options.value,
+        ctx,
+        'Enchantable value must be greater than or equal to 0',
+        'value',
+      )
+    ) {
       return undefined;
     }
     result.value = options.value;

@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '../../../../common/validation/content-validation';
+
 /**
  * Creates a should_despawn component for Minecraft items
  * @param value Whether the item should despawn when dropped
@@ -5,15 +8,13 @@
  */
 export const createShouldDespawn = (
   value?: boolean,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:should_despawn': boolean } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  if (typeof value !== 'boolean') {
-    // @TODO: Add error handling
-    console.error('Should despawn must be a boolean');
-
+  if (!validateBooleanValue(value, ctx, 'Should despawn must be a boolean')) {
     return undefined;
   }
 

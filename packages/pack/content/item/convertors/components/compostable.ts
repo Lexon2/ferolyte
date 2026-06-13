@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateNumberRange } from '../../../../common/validation/content-validation';
+
 interface CompostableOptions {
   compostingChance?: number;
 }
@@ -9,15 +12,22 @@ interface CompostableOptions {
  */
 export const createCompostable = (
   options?: CompostableOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:compostable': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
-  if (typeof options.compostingChance !== 'number' || options.compostingChance < 1 || options.compostingChance > 100) {
-    // @TODO: Add error handling
-    console.error('Composting chance must be a number between 1 and 100');
-
+  if (
+    !validateNumberRange(
+      options.compostingChance,
+      1,
+      100,
+      ctx,
+      'Composting chance must be a number between 1 and 100',
+      'compostingChance',
+    )
+  ) {
     return undefined;
   }
 

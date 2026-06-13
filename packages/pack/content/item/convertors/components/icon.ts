@@ -1,3 +1,7 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../../common/diagnostics/content-diagnostic';
+import { validateNonEmptyString } from '../../../../common/validation/content-validation';
+
 interface IconTextures {
   default: string;
   [key: string]: string;
@@ -12,16 +16,20 @@ type IconOptions = string | { textures: IconTextures };
  */
 export const createIcon = (
   options?: IconOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:icon': any } | undefined => {
   if (options === undefined) {
     return undefined;
   }
 
   if (typeof options === 'string') {
-    if (options.length === 0) {
-      // @TODO: Add error handling
-      console.error('Icon texture string must not be empty');
-
+    if (
+      !validateNonEmptyString(
+        options,
+        ctx,
+        'Icon texture string must not be empty',
+      )
+    ) {
       return undefined;
     }
     return {
@@ -35,24 +43,25 @@ export const createIcon = (
 
   if (typeof options === 'object' && options !== null && options.textures) {
     if (
-      typeof options.textures.default !== 'string' ||
-      options.textures.default.length === 0
+      !validateNonEmptyString(
+        options.textures.default,
+        ctx,
+        'Icon textures must have a non-empty default property',
+        'textures.default',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Icon textures must have a non-empty default property');
-
       return undefined;
     }
 
-    // Validate all texture values are strings
     for (const key in options.textures) {
       if (
-        typeof options.textures[key] !== 'string' ||
-        options.textures[key].length === 0
+        !validateNonEmptyString(
+          options.textures[key],
+          ctx,
+          `Icon texture "${key}" must be a non-empty string`,
+          `textures.${key}`,
+        )
       ) {
-        // @TODO: Add error handling
-        console.error(`Icon texture "${key}" must be a non-empty string`);
-
         return undefined;
       }
     }
@@ -64,8 +73,6 @@ export const createIcon = (
     };
   }
 
-  // @TODO: Add error handling
-  console.error('Icon must be a string or an object with textures');
-
+  logContentError(ctx, 'Icon must be a string or an object with textures');
   return undefined;
 };

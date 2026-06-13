@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createRepairable } from '@artifex/pack/content/item/convertors/components/repairable';
-import { expectComponent } from '../helpers/assert-component';
+import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createRepairable', () => {
   it('returns undefined when input is missing', () => {
@@ -21,9 +21,9 @@ describe('createRepairable', () => {
     });
   });
 
-  it('still returns output with invalid nested values', () => {
-    expect(createRepairable({
+  it('returns undefined for invalid nested values', () => {
+    expectUndefined(createRepairable, {
       repairItems: [{ items: [], repairAmount: -1 }],
-    })).toBeDefined();
+    });
   });
 });

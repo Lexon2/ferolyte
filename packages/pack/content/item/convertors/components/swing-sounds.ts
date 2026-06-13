@@ -1,4 +1,6 @@
 import { ItemSwingSoundsComponent } from '../../interfaces/components/swing-sounds';
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateString } from '../../../../common/validation/content-validation';
 
 /**
  * Creates a swing_sounds component for Minecraft items
@@ -7,6 +9,7 @@ import { ItemSwingSoundsComponent } from '../../interfaces/components/swing-soun
  */
 export const createSwingSounds = (
   options?: ItemSwingSoundsComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:swing_sounds': Record<string, string> } | undefined => {
   if (!options) {
     return undefined;
@@ -15,27 +18,42 @@ export const createSwingSounds = (
   const result: Record<string, string> = {};
 
   if (options.attackCriticalHit !== undefined) {
-    if (typeof options.attackCriticalHit !== 'string') {
-      console.error('Attack critical hit sound must be a string');
-
+    if (
+      !validateString(
+        options.attackCriticalHit,
+        ctx,
+        'Attack critical hit sound must be a string',
+        'attackCriticalHit',
+      )
+    ) {
       return undefined;
     }
     result.attack_critical_hit = options.attackCriticalHit;
   }
 
   if (options.attackHit !== undefined) {
-    if (typeof options.attackHit !== 'string') {
-      console.error('Attack hit sound must be a string');
-
+    if (
+      !validateString(
+        options.attackHit,
+        ctx,
+        'Attack hit sound must be a string',
+        'attackHit',
+      )
+    ) {
       return undefined;
     }
     result.attack_hit = options.attackHit;
   }
 
   if (options.attackMiss !== undefined) {
-    if (typeof options.attackMiss !== 'string') {
-      console.error('Attack miss sound must be a string');
-
+    if (
+      !validateString(
+        options.attackMiss,
+        ctx,
+        'Attack miss sound must be a string',
+        'attackMiss',
+      )
+    ) {
       return undefined;
     }
     result.attack_miss = options.attackMiss;

@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '../../../../common/validation/content-validation';
+
 /**
  * Creates a liquid_clipped component for Minecraft items
  * @param value Whether the item can be used in liquids
@@ -5,15 +8,13 @@
  */
 export const createLiquidClipped = (
   value?: boolean,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:liquid_clipped': boolean } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  if (typeof value !== 'boolean') {
-    // @TODO: Add error handling
-    console.error('Liquid clipped must be a boolean');
-
+  if (!validateBooleanValue(value, ctx, 'Liquid clipped must be a boolean')) {
     return undefined;
   }
 

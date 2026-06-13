@@ -23,9 +23,9 @@ describe('createDigger', () => {
     });
   });
 
-  it('still returns output with invalid nested values', () => {
-    expect(createDigger({
+  it('returns undefined for invalid nested values', () => {
+    expectUndefined(createDigger, {
       destroySpeeds: [{ block: '', speed: -1 }],
-    })).toBeDefined();
+    });
   });
 });

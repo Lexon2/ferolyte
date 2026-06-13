@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateNonNegativeNumber } from '../../../../common/validation/content-validation';
+
 interface StorageWeightModifierOptions {
   weightInStorageItem?: number;
 }
@@ -9,9 +12,9 @@ interface StorageWeightModifierOptions {
  */
 export const createStorageWeightModifier = (
   options?: StorageWeightModifierOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:storage_weight_modifier': any } | undefined => {
   if (!options) {
-    // Empty component is valid for storage_weight_modifier
     return undefined;
   }
 
@@ -19,12 +22,13 @@ export const createStorageWeightModifier = (
 
   if (options.weightInStorageItem !== undefined) {
     if (
-      typeof options.weightInStorageItem !== 'number' ||
-      options.weightInStorageItem < 0
+      !validateNonNegativeNumber(
+        options.weightInStorageItem,
+        ctx,
+        'Weight in storage item must be a non-negative number',
+        'weightInStorageItem',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Weight in storage item must be a non-negative number');
-
       return undefined;
     }
     result.weight_in_storage_item = options.weightInStorageItem;

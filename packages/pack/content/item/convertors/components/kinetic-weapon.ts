@@ -1,4 +1,6 @@
 import { ItemKineticWeaponComponent } from '../../interfaces/components/kinetic-weapon';
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateNumber } from '../../../../common/validation/content-validation';
 import {
   convertKineticWeaponConditions,
   convertWeaponReach,
@@ -11,6 +13,7 @@ import {
  */
 export const createKineticWeapon = (
   options?: ItemKineticWeaponComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:kinetic_weapon': Record<string, unknown> } | undefined => {
   if (!options) {
     return undefined;
@@ -48,36 +51,51 @@ export const createKineticWeapon = (
   }
 
   if (options.damageModifier !== undefined) {
-    if (typeof options.damageModifier !== 'number') {
-      console.error('Damage modifier must be a number');
-
+    if (
+      !validateNumber(
+        options.damageModifier,
+        ctx,
+        'Damage modifier must be a number',
+        'damageModifier',
+      )
+    ) {
       return undefined;
     }
     result.damage_modifier = options.damageModifier;
   }
 
   if (options.damageMultiplier !== undefined) {
-    if (typeof options.damageMultiplier !== 'number') {
-      console.error('Damage multiplier must be a number');
-
+    if (
+      !validateNumber(
+        options.damageMultiplier,
+        ctx,
+        'Damage multiplier must be a number',
+        'damageMultiplier',
+      )
+    ) {
       return undefined;
     }
     result.damage_multiplier = options.damageMultiplier;
   }
 
   if (options.delay !== undefined) {
-    if (typeof options.delay !== 'number') {
-      console.error('Delay must be a number');
-
+    if (
+      !validateNumber(options.delay, ctx, 'Delay must be a number', 'delay')
+    ) {
       return undefined;
     }
     result.delay = options.delay;
   }
 
   if (options.hitboxMargin !== undefined) {
-    if (typeof options.hitboxMargin !== 'number') {
-      console.error('Hitbox margin must be a number');
-
+    if (
+      !validateNumber(
+        options.hitboxMargin,
+        ctx,
+        'Hitbox margin must be a number',
+        'hitboxMargin',
+      )
+    ) {
       return undefined;
     }
     result.hitbox_margin = options.hitboxMargin;

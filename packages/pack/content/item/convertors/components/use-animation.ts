@@ -1,4 +1,18 @@
 import { ItemUseAnimation } from '../../types/item-use-animation';
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateAllowedValue } from '../../../../common/validation/content-validation';
+
+const VALID_ANIMATIONS: ItemUseAnimation[] = [
+  'bow',
+  'brush',
+  'camera',
+  'crossbow',
+  'drink',
+  'eat',
+  'none',
+  'spear',
+  'spyglass',
+];
 
 /**
  * Creates a use_animation component for Minecraft items
@@ -7,30 +21,20 @@ import { ItemUseAnimation } from '../../types/item-use-animation';
  */
 export const createUseAnimation = (
   value?: ItemUseAnimation,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:use_animation': ItemUseAnimation } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  const validAnimations: Set<ItemUseAnimation> = new Set([
-    'bow',
-    'brush',
-    'camera',
-    'crossbow',
-    'drink',
-    'eat',
-    'none',
-    'spear',
-    'spyglass',
-  ]);
-
-  if (!validAnimations.has(value)) {
-    // @TODO: Add error handling
-    console.error('Use animation must be a valid animation type');
-    console.error(
-      `Valid animations are: ${Array.from(validAnimations).join(', ')}`,
-    );
-
+  if (
+    !validateAllowedValue(
+      value,
+      VALID_ANIMATIONS,
+      ctx,
+      `Use animation must be one of: ${VALID_ANIMATIONS.join(', ')}`,
+    )
+  ) {
     return undefined;
   }
 

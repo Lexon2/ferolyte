@@ -1,16 +1,25 @@
 import { itemComponentCreatorsFactory } from './convertors/components';
+import { ItemComponentCreator } from './convertors/components/index';
 import { convertMenuCategory } from './convertors/components/menu-category/convert-category';
 import { ItemConfig } from './interfaces/item-config';
 import { MinecraftItem } from './interfaces/minecraft-item';
 import { ContentBuilder } from '../../common/interfaces/content.builder';
+import { ContentDiagnosticContext } from '../../common/diagnostics/content-diagnostic';
 import { CONTENT_METADATA } from '../../compiler/content/content.metadata';
 
 export class ItemBuilder implements ContentBuilder {
   readonly metadata = CONTENT_METADATA.ITEM;
 
   private config: ItemConfig;
+  private buildContext?: ContentDiagnosticContext;
+
   constructor(config: ItemConfig) {
     this.config = config;
+  }
+
+  public withBuildContext(ctx: ContentDiagnosticContext): this {
+    this.buildContext = { contentType: 'item', ...ctx };
+    return this;
   }
 
   public cloneConfig(): ItemConfig {
@@ -44,8 +53,13 @@ export class ItemBuilder implements ContentBuilder {
       description.is_experimental = isExperimental;
     }
 
+    const menuCategoryContext: ContentDiagnosticContext | undefined =
+      this.buildContext !== undefined
+        ? { ...this.buildContext, component: 'menuCategory' }
+        : undefined;
+
     const convertedMenuCategory = menuCategory
-      ? convertMenuCategory(menuCategory)
+      ? convertMenuCategory(menuCategory, menuCategoryContext)
       : undefined;
 
     if (convertedMenuCategory !== undefined) {
@@ -66,7 +80,8 @@ export class ItemBuilder implements ContentBuilder {
       const factory =
         itemComponentCreatorsFactory[
           component as keyof typeof itemComponentCreatorsFactory
-        ];
+        ] as ItemComponentCreator | undefined;
+
       if (factory === undefined) {
         itemComponents = {
           ...itemComponents,
@@ -74,13 +89,18 @@ export class ItemBuilder implements ContentBuilder {
         };
         continue;
       }
-      const componentData = components[component as keyof typeof components];
 
-      const minecraftComponent = factory(componentData);
+      const componentData = components[component as keyof typeof components];
+      const componentContext: ContentDiagnosticContext | undefined =
+        this.buildContext !== undefined
+          ? { ...this.buildContext, component, fieldPath: undefined }
+          : undefined;
+
+      const minecraftComponent = factory(componentData, componentContext);
       if (minecraftComponent === undefined) {
-        console.warn(`Item component "${component}" is invalid. Skipping...`);
         continue;
       }
+
       itemComponents = { ...itemComponents, ...minecraftComponent };
     }
 

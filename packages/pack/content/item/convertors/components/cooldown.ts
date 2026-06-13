@@ -1,3 +1,10 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateAllowedValue,
+  validateNonEmptyString,
+  validatePositiveNumber,
+} from '../../../../common/validation/content-validation';
+
 interface CooldownOptions {
   category: string;
   duration: number;
@@ -11,22 +18,31 @@ interface CooldownOptions {
  */
 export const createCooldown = (
   options?: CooldownOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:cooldown': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
-  if (typeof options.category !== 'string' || options.category.length === 0) {
-    // @TODO: Add error handling
-    console.error('Cooldown category must be a non-empty string');
-
+  if (
+    !validateNonEmptyString(
+      options.category,
+      ctx,
+      'Cooldown category must be a non-empty string',
+      'category',
+    )
+  ) {
     return undefined;
   }
 
-  if (typeof options.duration !== 'number' || options.duration <= 0) {
-    // @TODO: Add error handling
-    console.error('Cooldown duration must be a positive number');
-
+  if (
+    !validatePositiveNumber(
+      options.duration,
+      ctx,
+      'Cooldown duration must be a positive number',
+      'duration',
+    )
+  ) {
     return undefined;
   }
 
@@ -36,9 +52,15 @@ export const createCooldown = (
   };
 
   if (options.type !== undefined) {
-    if (options.type !== 'use' && options.type !== 'attack') {
-      console.error('Cooldown type must be "use" or "attack"');
-
+    if (
+      !validateAllowedValue(
+        options.type,
+        ['use', 'attack'],
+        ctx,
+        'Cooldown type must be "use" or "attack"',
+        'type',
+      )
+    ) {
       return undefined;
     }
     result.type = options.type;

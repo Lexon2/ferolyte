@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateIntegerRange } from '../../../../common/validation/content-validation';
+
 interface StorageWeightLimitOptions {
   maxWeightLimit?: number;
 }
@@ -9,9 +12,9 @@ interface StorageWeightLimitOptions {
  */
 export const createStorageWeightLimit = (
   options?: StorageWeightLimitOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:storage_weight_limit': any } | undefined => {
   if (!options) {
-    // Empty component is valid for storage_weight_limit
     return undefined;
   }
 
@@ -19,15 +22,15 @@ export const createStorageWeightLimit = (
 
   if (options.maxWeightLimit !== undefined) {
     if (
-      typeof options.maxWeightLimit !== 'number' ||
-      options.maxWeightLimit <= 0 ||
-      options.maxWeightLimit > 64
-    ) {
-      // @TODO: Add error handling
-      console.error(
+      !validateIntegerRange(
+        options.maxWeightLimit,
+        1,
+        64,
+        ctx,
         'Max weight limit must be a positive number and less than 64',
-      );
-
+        'maxWeightLimit',
+      )
+    ) {
       return undefined;
     }
     result.max_weight_limit = options.maxWeightLimit;

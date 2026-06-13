@@ -1,4 +1,8 @@
 import { ItemRarity } from '../../types/item-rarity';
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateAllowedValue } from '../../../../common/validation/content-validation';
+
+const VALID_RARITIES: ItemRarity[] = ['common', 'uncommon', 'rare', 'epic'];
 
 /**
  * Creates a rarity component for Minecraft items
@@ -7,17 +11,20 @@ import { ItemRarity } from '../../types/item-rarity';
  */
 export const createRarity = (
   value?: ItemRarity,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:rarity': ItemRarity } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  const validRarities: ItemRarity[] = ['common', 'uncommon', 'rare', 'epic'];
-
-  if (!validRarities.includes(value)) {
-    // @TODO: Add error handling
-    console.error('Rarity must be one of: common, uncommon, rare, epic');
-
+  if (
+    !validateAllowedValue(
+      value,
+      VALID_RARITIES,
+      ctx,
+      'Rarity must be one of: common, uncommon, rare, epic',
+    )
+  ) {
     return undefined;
   }
 

@@ -1,3 +1,9 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateNonEmptyString,
+  validateNonNegativeNumber,
+} from '../../../../common/validation/content-validation';
+
 interface DurabilitySensorOptions {
   durability?: number;
   particleType?: string;
@@ -11,6 +17,7 @@ interface DurabilitySensorOptions {
  */
 export const createDurabilitySensor = (
   options?: DurabilitySensorOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:durability_sensor': any } | undefined => {
   if (!options) {
     return undefined;
@@ -19,10 +26,14 @@ export const createDurabilitySensor = (
   const result: any = {};
 
   if (options.durability !== undefined) {
-    if (typeof options.durability !== 'number' || options.durability < 0) {
-      // @TODO: Add error handling
-      console.error('Durability must be a non-negative number');
-
+    if (
+      !validateNonNegativeNumber(
+        options.durability,
+        ctx,
+        'Durability must be a non-negative number',
+        'durability',
+      )
+    ) {
       return undefined;
     }
     result.durability = options.durability;
@@ -30,12 +41,13 @@ export const createDurabilitySensor = (
 
   if (options.particleType !== undefined) {
     if (
-      typeof options.particleType !== 'string' ||
-      options.particleType.length === 0
+      !validateNonEmptyString(
+        options.particleType,
+        ctx,
+        'Particle type must be a non-empty string',
+        'particleType',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Particle type must be a non-empty string');
-
       return undefined;
     }
     result.particle_type = options.particleType;
@@ -43,12 +55,13 @@ export const createDurabilitySensor = (
 
   if (options.soundEvent !== undefined) {
     if (
-      typeof options.soundEvent !== 'string' ||
-      options.soundEvent.length === 0
+      !validateNonEmptyString(
+        options.soundEvent,
+        ctx,
+        'Sound event must be a non-empty string',
+        'soundEvent',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Sound event must be a non-empty string');
-
       return undefined;
     }
     result.sound_event = options.soundEvent;

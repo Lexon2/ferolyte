@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '../../../../common/validation/content-validation';
+
 /**
  * Creates an allow_off_hand component for Minecraft items
  * @param value Whether the item can be held in the off-hand slot
@@ -5,15 +8,13 @@
  */
 export const createAllowOffHand = (
   value?: boolean,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:allow_off_hand': boolean } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  if (typeof value !== 'boolean') {
-    // @TODO: Add error handling
-    console.error('Allow off hand must be a boolean');
-
+  if (!validateBooleanValue(value, ctx, 'Allow off hand must be a boolean')) {
     return undefined;
   }
 

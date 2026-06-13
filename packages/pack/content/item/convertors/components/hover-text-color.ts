@@ -1,5 +1,25 @@
-import { ItemHoverTextColor } from "../../types/item-hover-text-color";
+import { ItemHoverTextColor } from '../../types/item-hover-text-color';
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateAllowedValue } from '../../../../common/validation/content-validation';
 
+const VALID_COLORS: ItemHoverTextColor[] = [
+  'black',
+  'blue',
+  'brown',
+  'cyan',
+  'gray',
+  'green',
+  'light_blue',
+  'light_green',
+  'magenta',
+  'orange',
+  'pink',
+  'purple',
+  'red',
+  'silver',
+  'white',
+  'yellow',
+];
 
 /**
  * Creates a hover_text_color component for Minecraft items
@@ -8,21 +28,20 @@ import { ItemHoverTextColor } from "../../types/item-hover-text-color";
  */
 export const createHoverTextColor = (
   value?: ItemHoverTextColor,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:hover_text_color': ItemHoverTextColor } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  const validColors: ItemHoverTextColor[] = [
-    "black", "blue", "brown", "cyan", "gray", "green",
-    "light_blue", "light_green", "magenta", "orange",
-    "pink", "purple", "red", "silver", "white", "yellow"
-  ];
-
-  if (!validColors.includes(value)) {
-    // @TODO: Add error handling
-    console.error('Hover text color must be a valid Minecraft color');
-
+  if (
+    !validateAllowedValue(
+      value,
+      VALID_COLORS,
+      ctx,
+      'Hover text color must be a valid Minecraft color',
+    )
+  ) {
     return undefined;
   }
 

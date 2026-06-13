@@ -1,3 +1,7 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../../common/diagnostics/content-diagnostic';
+import { validatePositiveNumber } from '../../../../common/validation/content-validation';
+
 interface DamageChance {
   min: number;
   max: number;
@@ -15,15 +19,20 @@ interface DurabilityOptions {
  */
 export const createDurability = (
   options?: DurabilityOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:durability': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
-  if (typeof options.maxDurability !== 'number' || options.maxDurability <= 0) {
-    // @TODO: Add error handling
-    console.error('Max durability must be a positive number');
-
+  if (
+    !validatePositiveNumber(
+      options.maxDurability,
+      ctx,
+      'Max durability must be a positive number',
+      'maxDurability',
+    )
+  ) {
     return undefined;
   }
 
@@ -32,18 +41,20 @@ export const createDurability = (
   };
 
   if (options.damageChance) {
+    const { min, max } = options.damageChance;
     if (
-      typeof options.damageChance.min !== 'number' ||
-      typeof options.damageChance.max !== 'number' ||
-      options.damageChance.min < 0 ||
-      options.damageChance.max > 100 ||
-      options.damageChance.min > options.damageChance.max
+      typeof min !== 'number' ||
+      typeof max !== 'number' ||
+      min < 0 ||
+      max > 100 ||
+      min > max
     ) {
-      // @TODO: Add error handling
-      console.error(
+      logContentError(
+        ctx !== undefined
+          ? { ...ctx, fieldPath: 'damageChance' }
+          : undefined,
         'Damage chance must have valid min/max values between 0 and 100',
       );
-
       return undefined;
     }
 

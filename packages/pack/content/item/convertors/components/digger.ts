@@ -1,3 +1,10 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateNonEmptyArray,
+  validateNonEmptyString,
+  validatePositiveNumber,
+} from '../../../../common/validation/content-validation';
+
 interface DestroySpeed {
   speed: number;
   block: string;
@@ -15,36 +22,62 @@ interface DiggerOptions {
  */
 export const createDigger = (
   options?: DiggerOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:digger': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
   if (
-    !Array.isArray(options.destroySpeeds) ||
-    options.destroySpeeds.length === 0
+    !validateNonEmptyArray(
+      options.destroySpeeds,
+      ctx,
+      'Destroy speeds must be a non-empty array',
+      'destroySpeeds',
+    )
   ) {
-    // @TODO: Add error handling
-    console.error('Destroy speeds must be a non-empty array');
-
     return undefined;
   }
 
+  const destroySpeeds: { speed: number; block: string }[] = [];
+
+  for (let index = 0; index < options.destroySpeeds.length; index++) {
+    const speed = options.destroySpeeds[index];
+    const entryContext =
+      ctx !== undefined
+        ? { ...ctx, fieldPath: `destroySpeeds[${index}]` }
+        : undefined;
+
+    if (
+      !validatePositiveNumber(
+        speed.speed,
+        entryContext,
+        'Destroy speed must be a positive number',
+        'speed',
+      )
+    ) {
+      return undefined;
+    }
+
+    if (
+      !validateNonEmptyString(
+        speed.block,
+        entryContext,
+        'Block must be a non-empty string',
+        'block',
+      )
+    ) {
+      return undefined;
+    }
+
+    destroySpeeds.push({
+      speed: speed.speed,
+      block: speed.block,
+    });
+  }
+
   const result: any = {
-    destroy_speeds: options.destroySpeeds.map((speed) => {
-      if (typeof speed.speed !== 'number' || speed.speed <= 0) {
-        console.warn('Destroy speed must be a positive number');
-      }
-
-      if (typeof speed.block !== 'string' || speed.block.length === 0) {
-        console.warn('Block must be a non-empty string');
-      }
-
-      return {
-        speed: speed.speed,
-        block: speed.block,
-      };
-    }),
+    destroy_speeds: destroySpeeds,
   };
 
   if (typeof options.useEfficiency === 'boolean') {

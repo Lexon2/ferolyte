@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateNonEmptyString } from '../../../../common/validation/content-validation';
+
 interface BlockPlacerOptions {
   block: string;
   useOn?: string[];
@@ -12,15 +15,20 @@ interface BlockPlacerOptions {
  */
 export const createBlockPlacer = (
   options?: BlockPlacerOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:block_placer': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
-  if (typeof options.block !== 'string' || options.block.length === 0) {
-    // @TODO: Add error handling
-    console.error('Block must be a non-empty string');
-
+  if (
+    !validateNonEmptyString(
+      options.block,
+      ctx,
+      'Block must be a non-empty string',
+      'block',
+    )
+  ) {
     return undefined;
   }
 
@@ -28,7 +36,6 @@ export const createBlockPlacer = (
     block: options.block,
   };
 
-  // Add optional properties if they exist
   if (Array.isArray(options.useOn) && options.useOn.length > 0) {
     result.use_on = options.useOn.map((tag) => ({ tags: tag }));
   }

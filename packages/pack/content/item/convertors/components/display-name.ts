@@ -1,10 +1,11 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateNonEmptyString } from '../../../../common/validation/content-validation';
+
 export const createDisplayName = (
   name: string,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:display_name': any } | undefined => {
-  if (typeof name !== 'string' || name.length === 0) {
-    // @TODO: Add error handling
-    console.error('Display name must be a non-empty string');
-
+  if (!validateNonEmptyString(name, ctx, 'Display name must be a non-empty string')) {
     return;
   }
 

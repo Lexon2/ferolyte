@@ -1,4 +1,6 @@
 import { ItemPiercingWeaponComponent } from '../../interfaces/components/piercing-weapon';
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateNumber } from '../../../../common/validation/content-validation';
 import { convertWeaponReach } from './utils/weapon-reach';
 
 /**
@@ -8,6 +10,7 @@ import { convertWeaponReach } from './utils/weapon-reach';
  */
 export const createPiercingWeapon = (
   options?: ItemPiercingWeaponComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:piercing_weapon': Record<string, unknown> } | undefined => {
   if (!options) {
     return undefined;
@@ -26,9 +29,14 @@ export const createPiercingWeapon = (
   }
 
   if (options.hitboxMargin !== undefined) {
-    if (typeof options.hitboxMargin !== 'number') {
-      console.error('Hitbox margin must be a number');
-
+    if (
+      !validateNumber(
+        options.hitboxMargin,
+        ctx,
+        'Hitbox margin must be a number',
+        'hitboxMargin',
+      )
+    ) {
       return undefined;
     }
     result.hitbox_margin = options.hitboxMargin;

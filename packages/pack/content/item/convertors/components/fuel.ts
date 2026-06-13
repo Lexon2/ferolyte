@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validatePositiveNumber } from '../../../../common/validation/content-validation';
+
 interface FuelOptions {
   duration: number;
 }
@@ -9,15 +12,20 @@ interface FuelOptions {
  */
 export const createFuel = (
   options?: FuelOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:fuel': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
-  if (typeof options.duration !== 'number' || options.duration <= 0) {
-    // @TODO: Add error handling
-    console.error('Fuel duration must be a positive number');
-
+  if (
+    !validatePositiveNumber(
+      options.duration,
+      ctx,
+      'Fuel duration must be a positive number',
+      'duration',
+    )
+  ) {
     return undefined;
   }
 

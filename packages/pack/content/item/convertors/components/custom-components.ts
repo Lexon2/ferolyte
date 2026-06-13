@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateCustomComponentIds } from '../../../../common/validation/content-validation';
+
 /**
  * Creates a custom_components component for Minecraft items
  * @param values Array of custom component identifiers
@@ -5,22 +8,13 @@
  */
 export const createCustomComponents = (
   values?: string[],
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:custom_components': string[] } | undefined => {
-  if (!values || !Array.isArray(values) || values.length === 0) {
+  if (!validateCustomComponentIds(values, ctx)) {
     return undefined;
   }
 
-  // Validate all entries are strings
-  for (const value of values) {
-    if (typeof value !== 'string' || value.length === 0) {
-      // @TODO: Add error handling
-      console.error('Custom components must be non-empty strings');
-
-      return undefined;
-    }
-  }
-
   return {
-    'minecraft:custom_components': values,
+    'minecraft:custom_components': values as string[],
   };
 };

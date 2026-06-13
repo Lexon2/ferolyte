@@ -8,6 +8,7 @@ import { writeFileByPath } from '../utils/write-file-by-path';
 export const buildBlockJson = async (
   filePath: string,
   builder: BlockBuilder,
+  _debug: boolean = true,
 ): Promise<string | undefined> => {
   const json = builder.build();
   const jsonString = JSON.stringify(json, null, 2);

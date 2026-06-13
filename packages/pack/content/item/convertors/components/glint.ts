@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '../../../../common/validation/content-validation';
+
 /**
  * Creates a glint component for Minecraft items
  * @param value Whether the item has an enchantment glint
@@ -5,15 +8,13 @@
  */
 export const createGlint = (
   value?: boolean,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:glint': boolean } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  if (typeof value !== 'boolean') {
-    // @TODO: Add error handling
-    console.error('Glint must be a boolean');
-
+  if (!validateBooleanValue(value, ctx, 'Glint must be a boolean')) {
     return undefined;
   }
 

@@ -1,4 +1,11 @@
-const validSoundEvents = [
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateAllowedValue,
+  validateIntegerRange,
+  validatePositiveNumber,
+} from '../../../../common/validation/content-validation';
+
+const VALID_SOUND_EVENTS = [
   '13',
   'cat',
   'blocks',
@@ -15,7 +22,7 @@ const validSoundEvents = [
   'otherside',
   '5',
   'relic',
-];
+] as const;
 
 interface RecordOptions {
   soundEvent: string;
@@ -30,22 +37,21 @@ interface RecordOptions {
  */
 export const createRecord = (
   options?: RecordOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:record': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
   if (
-    typeof options.soundEvent !== 'string' ||
-    options.soundEvent.length === 0 ||
-    !validSoundEvents.includes(options.soundEvent)
+    !validateAllowedValue(
+      options.soundEvent,
+      VALID_SOUND_EVENTS,
+      ctx,
+      `Sound event must be one of: ${VALID_SOUND_EVENTS.join(', ')}`,
+      'soundEvent',
+    )
   ) {
-    // @TODO: Add error handling
-    console.error('Sound event must be a non-empty string and one of the valid sound events');
-    console.error(
-      'Valid sound events are: ' + validSoundEvents.join(', '),
-    );
-
     return undefined;
   }
 
@@ -55,23 +61,29 @@ export const createRecord = (
 
   if (options.comparatorSignal !== undefined) {
     if (
-      typeof options.comparatorSignal !== 'number' ||
-      options.comparatorSignal < 0 ||
-      options.comparatorSignal > 13
+      !validateIntegerRange(
+        options.comparatorSignal,
+        0,
+        13,
+        ctx,
+        'Comparator signal must be a number between 0 and 15',
+        'comparatorSignal',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Comparator signal must be a number between 0 and 15');
-
       return undefined;
     }
     result.comparator_signal = options.comparatorSignal;
   }
 
   if (options.duration !== undefined) {
-    if (typeof options.duration !== 'number' || options.duration <= 0) {
-      // @TODO: Add error handling
-      console.error('Duration must be a positive number');
-
+    if (
+      !validatePositiveNumber(
+        options.duration,
+        ctx,
+        'Duration must be a positive number',
+        'duration',
+      )
+    ) {
       return undefined;
     }
     result.duration = options.duration;

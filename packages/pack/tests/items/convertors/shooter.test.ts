@@ -27,9 +27,9 @@ describe('createShooter', () => {
     });
   });
 
-  it('still returns output with invalid ammunition item', () => {
-    expect(createShooter({
+  it('returns undefined for invalid ammunition item', () => {
+    expectUndefined(createShooter, {
       ammunition: [{ item: '' }],
-    })).toBeDefined();
+    });
   });
 });

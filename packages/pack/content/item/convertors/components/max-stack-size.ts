@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateIntegerRange } from '../../../../common/validation/content-validation';
+
 /**
  * Creates a max_stack_size component for Minecraft items
  * @param value The maximum stack size for the item from 1 to 64
@@ -5,15 +8,21 @@
  */
 export const createMaxStackSize = (
   value?: number,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:max_stack_size': number } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  if (value < 1 || value > 64) {
-    // @TODO: Add error handling
-    console.error('Max stack size must be from 1 to 64');
-
+  if (
+    !validateIntegerRange(
+      value,
+      1,
+      64,
+      ctx,
+      'Max stack size must be from 1 to 64',
+    )
+  ) {
     return undefined;
   }
 

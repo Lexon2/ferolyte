@@ -49,6 +49,7 @@ const replaceTrailingZeroFloats = (obj: any): void => {
 export const buildServerEntityJson = async (
   filePath: string,
   builder: ServerEntityBuilder,
+  _debug: boolean = true,
 ): Promise<string | undefined> => {
   const json = builder.build();
   replaceTrailingZeroFloats(json);

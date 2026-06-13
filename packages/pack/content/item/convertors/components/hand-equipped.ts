@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '../../../../common/validation/content-validation';
+
 /**
  * Creates a hand_equipped component for Minecraft items
  * @param value Whether the item is rendered in hand when equipped
@@ -5,15 +8,13 @@
  */
 export const createHandEquipped = (
   value?: boolean,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:hand_equipped': boolean } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  if (typeof value !== 'boolean') {
-    // @TODO: Add error handling
-    console.error('Hand equipped must be a boolean');
-
+  if (!validateBooleanValue(value, ctx, 'Hand equipped must be a boolean')) {
     return undefined;
   }
 

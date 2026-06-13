@@ -8,8 +8,14 @@ import { writeFileByPath } from '../utils/write-file-by-path';
 export const buildItemJson = async (
   filePath: string,
   builder: ItemBuilder,
+  debug: boolean = true,
 ): Promise<string | undefined> => {
-  // const source = builder.cloneConfig();
+  builder.withBuildContext({
+    sourceFile: filePath,
+    identifier: builder.cloneConfig().identifier,
+    debug,
+    contentType: 'item',
+  });
 
   const json = builder.build();
   const jsonString = JSON.stringify(json, null, 2);

@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../../common/diagnostics/content-diagnostic';
+
 interface DyeableOptions {
   defaultColor?: string | [number, number, number];
 }
@@ -9,9 +12,9 @@ interface DyeableOptions {
  */
 export const createDyeable = (
   options?: DyeableOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:dyeable': any } | undefined => {
   if (!options) {
-    // Empty component is valid for dyeable
     return undefined;
   }
 
@@ -25,9 +28,12 @@ export const createDyeable = (
         options.defaultColor.length === 0 ||
         !hexColorRegex.test(options.defaultColor)
       ) {
-        // @TODO: Add error handling
-        console.error('Default color string must be a valid HEX color code');
-
+        logContentError(
+          ctx !== undefined
+            ? { ...ctx, fieldPath: 'defaultColor' }
+            : undefined,
+          'Default color string must be a valid HEX color code',
+        );
         return undefined;
       }
       result.default_color = options.defaultColor;
@@ -40,18 +46,20 @@ export const createDyeable = (
           (val) => typeof val === 'number' && val >= 0 && val <= 255,
         )
       ) {
-        // @TODO: Add error handling
-        console.error(
+        logContentError(
+          ctx !== undefined
+            ? { ...ctx, fieldPath: 'defaultColor' }
+            : undefined,
           'Default color RGB values must be numbers between 0 and 255',
         );
-
         return undefined;
       }
       result.default_color = options.defaultColor;
     } else {
-      // @TODO: Add error handling
-      console.error('Default color must be a string or RGB array of 3 numbers');
-
+      logContentError(
+        ctx !== undefined ? { ...ctx, fieldPath: 'defaultColor' } : undefined,
+        'Default color must be a string or RGB array of 3 numbers',
+      );
       return undefined;
     }
   }

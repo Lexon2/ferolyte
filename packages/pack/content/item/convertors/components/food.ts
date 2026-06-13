@@ -1,3 +1,11 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateBooleanValue,
+  validateNonEmptyString,
+  validateNonNegativeNumber,
+  validateNumber,
+} from '../../../../common/validation/content-validation';
+
 interface FoodOptions {
   canAlwaysEat?: boolean;
   nutrition?: number;
@@ -12,39 +20,51 @@ interface FoodOptions {
  */
 export const createFood = (
   options?: FoodOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:food': any } | undefined => {
   if (!options) {
-    // Empty object is valid for food
     return undefined;
   }
 
   const result: any = {};
 
   if (options.nutrition !== undefined) {
-    if (typeof options.nutrition !== 'number' || options.nutrition < 0) {
-      // @TODO: Add error handling
-      console.error('Nutrition must be a non-negative number');
-
+    if (
+      !validateNonNegativeNumber(
+        options.nutrition,
+        ctx,
+        'Nutrition must be a non-negative number',
+        'nutrition',
+      )
+    ) {
       return undefined;
     }
     result.nutrition = options.nutrition;
   }
 
   if (options.saturationModifier !== undefined) {
-    if (typeof options.saturationModifier !== 'number') {
-      // @TODO: Add error handling
-      console.error('Saturation modifier must be a number');
-
+    if (
+      !validateNumber(
+        options.saturationModifier,
+        ctx,
+        'Saturation modifier must be a number',
+        'saturationModifier',
+      )
+    ) {
       return undefined;
     }
     result.saturation_modifier = options.saturationModifier;
   }
 
   if (options.canAlwaysEat !== undefined) {
-    if (typeof options.canAlwaysEat !== 'boolean') {
-      // @TODO: Add error handling
-      console.error('Can always eat must be a boolean');
-
+    if (
+      !validateBooleanValue(
+        options.canAlwaysEat,
+        ctx,
+        'Can always eat must be a boolean',
+        'canAlwaysEat',
+      )
+    ) {
       return undefined;
     }
     result.can_always_eat = options.canAlwaysEat;
@@ -52,12 +72,13 @@ export const createFood = (
 
   if (options.usingConvertsTo !== undefined) {
     if (
-      typeof options.usingConvertsTo !== 'string' ||
-      options.usingConvertsTo.length === 0
+      !validateNonEmptyString(
+        options.usingConvertsTo,
+        ctx,
+        'Using converts to must be a non-empty string',
+        'usingConvertsTo',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Using converts to must be a non-empty string');
-
       return undefined;
     }
     result.using_converts_to = options.usingConvertsTo;

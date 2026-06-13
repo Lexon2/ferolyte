@@ -1,3 +1,10 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateBooleanValue,
+  validateIntegerRange,
+} from '../../../../common/validation/content-validation';
+
 interface StorageItemOptions {
   allowNestedStorageItems?: boolean;
   allowedItems?: string[];
@@ -12,19 +19,23 @@ interface StorageItemOptions {
  */
 export const createStorageItem = (
   options?: StorageItemOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:storage_item': any } | undefined => {
   if (!options) {
-    // Empty component is valid for storage_item
     return undefined;
   }
 
   const result: any = {};
 
   if (options.allowNestedStorageItems !== undefined) {
-    if (typeof options.allowNestedStorageItems !== 'boolean') {
-      // @TODO: Add error handling
-      console.error('Allow nested storage items must be a boolean');
-
+    if (
+      !validateBooleanValue(
+        options.allowNestedStorageItems,
+        ctx,
+        'Allow nested storage items must be a boolean',
+        'allowNestedStorageItems',
+      )
+    ) {
       return undefined;
     }
     result.allow_nested_storage_items = options.allowNestedStorageItems;
@@ -32,25 +43,30 @@ export const createStorageItem = (
 
   if (options.maxSlots !== undefined) {
     if (
-      typeof options.maxSlots !== 'number' ||
-      options.maxSlots <= 0 ||
-      options.maxSlots > 64
+      !validateIntegerRange(
+        options.maxSlots,
+        1,
+        64,
+        ctx,
+        'Max slots must be a positive number',
+        'maxSlots',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Max slots must be a positive number');
-
       return undefined;
     }
     result.max_slots = options.maxSlots;
   }
 
   if (Array.isArray(options.allowedItems)) {
-    // Validate all items are strings
-    for (const item of options.allowedItems) {
+    for (let index = 0; index < options.allowedItems.length; index++) {
+      const item = options.allowedItems[index];
       if (typeof item !== 'string' || item.length === 0) {
-        // @TODO: Add error handling
-        console.error('Allowed items must be non-empty strings');
-
+        logContentError(
+          ctx !== undefined
+            ? { ...ctx, fieldPath: `allowedItems[${index}]` }
+            : undefined,
+          'Allowed items must be non-empty strings',
+        );
         return undefined;
       }
     }
@@ -58,12 +74,15 @@ export const createStorageItem = (
   }
 
   if (Array.isArray(options.bannedItems)) {
-    // Validate all items are strings
-    for (const item of options.bannedItems) {
+    for (let index = 0; index < options.bannedItems.length; index++) {
+      const item = options.bannedItems[index];
       if (typeof item !== 'string' || item.length === 0) {
-        // @TODO: Add error handling
-        console.error('Banned items must be non-empty strings');
-
+        logContentError(
+          ctx !== undefined
+            ? { ...ctx, fieldPath: `bannedItems[${index}]` }
+            : undefined,
+          'Banned items must be non-empty strings',
+        );
         return undefined;
       }
     }

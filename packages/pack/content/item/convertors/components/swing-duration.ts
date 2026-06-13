@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { validateNonNegativeNumber } from '../../../../common/validation/content-validation';
+
 interface SwingDurationOptions {
   value?: number;
 }
@@ -9,14 +12,20 @@ interface SwingDurationOptions {
  */
 export const createSwingDuration = (
   options?: SwingDurationOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:swing_duration': { value: number } } | undefined => {
   if (!options || options.value === undefined) {
     return undefined;
   }
 
-  if (typeof options.value !== 'number' || options.value < 0) {
-    console.error('Swing duration value must be a non-negative number');
-
+  if (
+    !validateNonNegativeNumber(
+      options.value,
+      ctx,
+      'Swing duration value must be a non-negative number',
+      'value',
+    )
+  ) {
     return undefined;
   }
 

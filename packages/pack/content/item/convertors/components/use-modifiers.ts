@@ -1,3 +1,11 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateBooleanValue,
+  validateNonNegativeNumber,
+  validateNumber,
+  validateString,
+} from '../../../../common/validation/content-validation';
+
 interface UseModifiersOptions {
   useDuration: number;
   movementModifier?: number;
@@ -12,15 +20,20 @@ interface UseModifiersOptions {
  */
 export const createUseModifiers = (
   options?: UseModifiersOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:use_modifiers': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
-  if (typeof options.useDuration !== 'number' || options.useDuration < 0) {
-    // @TODO: Add error handling
-    console.error('Use duration must be a positive number');
-
+  if (
+    !validateNonNegativeNumber(
+      options.useDuration,
+      ctx,
+      'Use duration must be a positive number',
+      'useDuration',
+    )
+  ) {
     return undefined;
   }
 
@@ -29,28 +42,42 @@ export const createUseModifiers = (
   };
 
   if (options.movementModifier !== undefined) {
-    if (typeof options.movementModifier !== 'number') {
-      // @TODO: Add error handling
-      console.error('Movement modifier must be a number');
-
+    if (
+      !validateNumber(
+        options.movementModifier,
+        ctx,
+        'Movement modifier must be a number',
+        'movementModifier',
+      )
+    ) {
       return undefined;
     }
     result.movement_modifier = options.movementModifier;
   }
 
   if (options.emitVibrations !== undefined) {
-    if (typeof options.emitVibrations !== 'boolean') {
-      console.error('Emit vibrations must be a boolean');
-
+    if (
+      !validateBooleanValue(
+        options.emitVibrations,
+        ctx,
+        'Emit vibrations must be a boolean',
+        'emitVibrations',
+      )
+    ) {
       return undefined;
     }
     result.emit_vibrations = options.emitVibrations;
   }
 
   if (options.startSound !== undefined) {
-    if (typeof options.startSound !== 'string') {
-      console.error('Start sound must be a string');
-
+    if (
+      !validateString(
+        options.startSound,
+        ctx,
+        'Start sound must be a string',
+        'startSound',
+      )
+    ) {
       return undefined;
     }
     result.start_sound = options.startSound;
@@ -60,4 +87,3 @@ export const createUseModifiers = (
     'minecraft:use_modifiers': result,
   };
 };
-

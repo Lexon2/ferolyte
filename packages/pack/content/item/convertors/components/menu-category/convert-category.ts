@@ -1,32 +1,55 @@
+import { ContentDiagnosticContext } from '../../../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../../../common/diagnostics/content-diagnostic';
 import {
-  validateBoolean,
+  validateAllowedValue,
+  validateBooleanValue,
   validateString,
-} from '../../../../server-entity/convertors/common/validation';
+} from '../../../../../common/validation/content-validation';
 import { ItemMenuCategory } from '../../../interfaces/item-menu-category';
 import { ItemMenuCategoryType } from '../../../types/item-menu-category-type';
 
-// @TODO: Use this constant to create a menu categories type
-const validCategories = new Set([
+const VALID_CATEGORIES = [
   'construction',
   'equipment',
   'items',
   'nature',
   'none',
-]);
+] as const;
 
 export const convertMenuCategory = (
   input: ItemMenuCategory,
+  ctx?: ContentDiagnosticContext,
 ): ItemMenuCategory | undefined => {
-  if (input.category === undefined || !validateCategory(input.category)) {
+  if (input.category === undefined) {
+    logContentError(ctx, 'Menu category is required');
     return undefined;
   }
 
-  const result: any = {};
+  if (
+    !validateAllowedValue(
+      input.category,
+      VALID_CATEGORIES,
+      ctx,
+      `Category must be one of: ${VALID_CATEGORIES.join(', ')}`,
+      'category',
+    )
+  ) {
+    return undefined;
+  }
 
-  result.category = input.category;
+  const result: Record<string, unknown> = {
+    category: input.category,
+  };
 
   if (input.isHiddenInCommands !== undefined) {
-    if (!validateBoolean(input.isHiddenInCommands, 'isHiddenInCommands')) {
+    if (
+      !validateBooleanValue(
+        input.isHiddenInCommands,
+        ctx,
+        'isHiddenInCommands must be a boolean',
+        'isHiddenInCommands',
+      )
+    ) {
       return undefined;
     }
 
@@ -34,18 +57,20 @@ export const convertMenuCategory = (
   }
 
   if (input.group !== undefined) {
-    if (!validateString(input.group, 'group')) {
+    if (!validateString(input.group, ctx, 'group must be a string', 'group')) {
       return undefined;
     }
 
     result.group = input.group;
   }
 
-  return result;
+  return result as ItemMenuCategory;
 };
 
 export const validateCategory = (
   category: ItemMenuCategoryType,
 ): ItemMenuCategoryType | undefined => {
-  return validCategories.has(category) ? category : undefined;
+  return VALID_CATEGORIES.includes(category as (typeof VALID_CATEGORIES)[number])
+    ? category
+    : undefined;
 };

@@ -1,3 +1,9 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateNonEmptyString,
+  validateNonNegativeNumber,
+} from '../../../../common/validation/content-validation';
+
 interface ProjectileOptions {
   projectileEntity: string;
   minimumCriticalPower?: number;
@@ -10,18 +16,20 @@ interface ProjectileOptions {
  */
 export const createProjectile = (
   options?: ProjectileOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:projectile': any } | undefined => {
   if (!options) {
     return undefined;
   }
 
   if (
-    typeof options.projectileEntity !== 'string' ||
-    options.projectileEntity.length === 0
+    !validateNonEmptyString(
+      options.projectileEntity,
+      ctx,
+      'Projectile entity must be a non-empty string',
+      'projectileEntity',
+    )
   ) {
-    // @TODO: Add error handling
-    console.error('Projectile entity must be a non-empty string');
-
     return undefined;
   }
 
@@ -31,12 +39,13 @@ export const createProjectile = (
 
   if (options.minimumCriticalPower !== undefined) {
     if (
-      typeof options.minimumCriticalPower !== 'number' ||
-      options.minimumCriticalPower < 0
+      !validateNonNegativeNumber(
+        options.minimumCriticalPower,
+        ctx,
+        'Minimum critical power must be a non-negative number',
+        'minimumCriticalPower',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Minimum critical power must be a non-negative number');
-
       return undefined;
     }
     result.minimum_critical_power = options.minimumCriticalPower;

@@ -1,3 +1,9 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateBooleanValue,
+  validateNonNegativeNumber,
+} from '../../../../common/validation/content-validation';
+
 interface ThrowableOptions {
   doSwingAnimation?: boolean;
   launchPowerScale?: number;
@@ -14,19 +20,23 @@ interface ThrowableOptions {
  */
 export const createThrowable = (
   options?: ThrowableOptions,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:throwable': any } | undefined => {
   if (!options) {
-    // Empty component is valid for throwable
     return undefined;
   }
 
   const result: any = {};
 
   if (options.doSwingAnimation !== undefined) {
-    if (typeof options.doSwingAnimation !== 'boolean') {
-      // @TODO: Add error handling
-      console.error('Do swing animation must be a boolean');
-
+    if (
+      !validateBooleanValue(
+        options.doSwingAnimation,
+        ctx,
+        'Do swing animation must be a boolean',
+        'doSwingAnimation',
+      )
+    ) {
       return undefined;
     }
     result.do_swing_animation = options.doSwingAnimation;
@@ -34,12 +44,13 @@ export const createThrowable = (
 
   if (options.launchPowerScale !== undefined) {
     if (
-      typeof options.launchPowerScale !== 'number' ||
-      options.launchPowerScale < 0
+      !validateNonNegativeNumber(
+        options.launchPowerScale,
+        ctx,
+        'Launch power scale must be a positive number',
+        'launchPowerScale',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Launch power scale must be a positive number');
-
       return undefined;
     }
     result.launch_power_scale = options.launchPowerScale;
@@ -47,12 +58,13 @@ export const createThrowable = (
 
   if (options.maxDrawDuration !== undefined) {
     if (
-      typeof options.maxDrawDuration !== 'number' ||
-      options.maxDrawDuration < 0
+      !validateNonNegativeNumber(
+        options.maxDrawDuration,
+        ctx,
+        'Max draw duration must be a positive number',
+        'maxDrawDuration',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Max draw duration must be a positive number');
-
       return undefined;
     }
     result.max_draw_duration = options.maxDrawDuration;
@@ -60,12 +72,13 @@ export const createThrowable = (
 
   if (options.minDrawDuration !== undefined) {
     if (
-      typeof options.minDrawDuration !== 'number' ||
-      options.minDrawDuration < 0
+      !validateNonNegativeNumber(
+        options.minDrawDuration,
+        ctx,
+        'Min draw duration must be a non-negative number',
+        'minDrawDuration',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Min draw duration must be a non-negative number');
-
       return undefined;
     }
     result.min_draw_duration = options.minDrawDuration;
@@ -73,22 +86,27 @@ export const createThrowable = (
 
   if (options.maxLaunchPower !== undefined) {
     if (
-      typeof options.maxLaunchPower !== 'number' ||
-      options.maxLaunchPower < 0
+      !validateNonNegativeNumber(
+        options.maxLaunchPower,
+        ctx,
+        'Max launch power must be a positive number',
+        'maxLaunchPower',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Max launch power must be a positive number');
-
       return undefined;
     }
     result.max_launch_power = options.maxLaunchPower;
   }
 
   if (options.scalePowerByDrawDuration !== undefined) {
-    if (typeof options.scalePowerByDrawDuration !== 'boolean') {
-      // @TODO: Add error handling
-      console.error('Scale power by draw duration must be a boolean');
-
+    if (
+      !validateBooleanValue(
+        options.scalePowerByDrawDuration,
+        ctx,
+        'Scale power by draw duration must be a boolean',
+        'scalePowerByDrawDuration',
+      )
+    ) {
       return undefined;
     }
     result.scale_power_by_draw_duration = options.scalePowerByDrawDuration;

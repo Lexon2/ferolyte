@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../../common/diagnostics/content-diagnostic';
+
 /**
  * Creates an interact_button component for Minecraft items
  * @param value Whether the interact button is shown in touch controls, or custom button text
@@ -5,14 +8,14 @@
  */
 export const createInteractButton = (
   value?: boolean | string,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:interact_button': boolean | string } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
   if (typeof value !== 'boolean' && typeof value !== 'string') {
-    console.error('Interact button must be a boolean or string');
-
+    logContentError(ctx, 'Interact button must be a boolean or string');
     return undefined;
   }
 

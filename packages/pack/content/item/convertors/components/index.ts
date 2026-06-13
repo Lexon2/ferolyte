@@ -44,10 +44,17 @@ import { createUseAnimation } from './use-animation';
 import { createUseModifiers } from './use-modifiers';
 import { createWearable } from './wearable';
 
+import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+
+export type ItemComponentCreator = (
+  value?: unknown,
+  ctx?: ContentDiagnosticContext,
+) => Record<string, unknown> | undefined;
+
 /**
  * Mapping of ItemConfig component properties to their creator functions
  */
-export const itemComponentCreatorsFactory: Record<string, (v?: any) => any> = {
+export const itemComponentCreatorsFactory: Record<string, ItemComponentCreator> = {
   allowOffHand: createAllowOffHand,
   blockPlacer: createBlockPlacer,
   bundleInteraction: createBundleInteraction,
