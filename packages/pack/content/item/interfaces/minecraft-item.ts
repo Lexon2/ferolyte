@@ -36,13 +36,17 @@ export interface MinecraftItem {
       'minecraft:dyeable'?: any;
       'minecraft:enchantable'?: any;
       'minecraft:entity_placer'?: any;
+      'minecraft:fire_resistant'?: any;
       'minecraft:food'?: any;
       'minecraft:fuel'?: any;
       'minecraft:glint'?: any;
       'minecraft:hand_equipped'?: any;
       'minecraft:icon'?: any;
+      'minecraft:interact_button'?: any;
+      'minecraft:kinetic_weapon'?: any;
       'minecraft:liquid_clipped'?: any;
       'minecraft:max_stack_size'?: any;
+      'minecraft:piercing_weapon'?: any;
       'minecraft:projectile'?: any;
       'minecraft:record'?: any;
       'minecraft:rarity'?: any;
@@ -53,6 +57,8 @@ export interface MinecraftItem {
       'minecraft:storage_item'?: any;
       'minecraft:storage_weight_limit'?: any;
       'minecraft:storage_weight_modifier'?: any;
+      'minecraft:swing_duration'?: any;
+      'minecraft:swing_sounds'?: any;
       'minecraft:tags'?: any;
       'minecraft:throwable'?: any;
       'minecraft:use_animation'?: any;

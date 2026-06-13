@@ -68,9 +68,10 @@ export class ItemBuilder implements ContentBuilder {
           component as keyof typeof itemComponentCreatorsFactory
         ];
       if (factory === undefined) {
-        console.warn(
-          `Item component "${component}" is not supported. Skipping...`,
-        );
+        itemComponents = {
+          ...itemComponents,
+          [component]: components[component as keyof typeof components],
+        };
         continue;
       }
       const componentData = components[component as keyof typeof components];

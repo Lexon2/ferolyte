@@ -2,6 +2,7 @@ interface BlockPlacerOptions {
   block: string;
   useOn?: string[];
   replaceBlockItem?: boolean;
+  alignedPlacement?: boolean;
 }
 
 /**
@@ -34,6 +35,10 @@ export const createBlockPlacer = (
 
   if (typeof options.replaceBlockItem === 'boolean') {
     result.replace_block_item = options.replaceBlockItem;
+  }
+
+  if (typeof options.alignedPlacement === 'boolean') {
+    result.aligned_placement = options.alignedPlacement;
   }
 
   return {

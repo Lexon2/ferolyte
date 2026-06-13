@@ -1,6 +1,8 @@
 interface UseModifiersOptions {
   useDuration: number;
   movementModifier?: number;
+  emitVibrations?: boolean;
+  startSound?: string;
 }
 
 /**
@@ -34,6 +36,24 @@ export const createUseModifiers = (
       return undefined;
     }
     result.movement_modifier = options.movementModifier;
+  }
+
+  if (options.emitVibrations !== undefined) {
+    if (typeof options.emitVibrations !== 'boolean') {
+      console.error('Emit vibrations must be a boolean');
+
+      return undefined;
+    }
+    result.emit_vibrations = options.emitVibrations;
+  }
+
+  if (options.startSound !== undefined) {
+    if (typeof options.startSound !== 'string') {
+      console.error('Start sound must be a string');
+
+      return undefined;
+    }
+    result.start_sound = options.startSound;
   }
 
   return {

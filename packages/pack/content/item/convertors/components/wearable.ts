@@ -4,6 +4,7 @@ interface WearableOptions {
   protection?: number;
   dispensable?: boolean;
   slot?: ItemWearableSlot;
+  hidesPlayerLocation?: boolean;
 }
 
 /**
@@ -66,6 +67,15 @@ export const createWearable = (
       return undefined;
     }
     result.dispensable = options.dispensable;
+  }
+
+  if (options.hidesPlayerLocation !== undefined) {
+    if (typeof options.hidesPlayerLocation !== 'boolean') {
+      console.error('Hides player location must be a boolean');
+
+      return undefined;
+    }
+    result.hides_player_location = options.hidesPlayerLocation;
   }
 
   return {

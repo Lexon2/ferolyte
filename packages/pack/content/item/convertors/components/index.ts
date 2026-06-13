@@ -14,14 +14,18 @@ import { createDurabilitySensor } from './durability-sensor';
 import { createDyeable } from './dyeable';
 import { createEnchantable } from './enchantable';
 import { createEntityPlacer } from './entity-placer';
+import { createFireResistant } from './fire-resistant';
 import { createFood } from './food';
 import { createFuel } from './fuel';
 import { createGlint } from './glint';
 import { createHandEquipped } from './hand-equipped';
 import { createHoverTextColor } from './hover-text-color';
 import { createIcon } from './icon';
+import { createInteractButton } from './interact-button';
+import { createKineticWeapon } from './kinetic-weapon';
 import { createLiquidClipped } from './liquid-clipped';
 import { createMaxStackSize } from './max-stack-size';
+import { createPiercingWeapon } from './piercing-weapon';
 import { createProjectile } from './projectile';
 import { createRarity } from './rarity';
 import { createRecord } from './record';
@@ -32,6 +36,8 @@ import { createStackedByData } from './stacked-by-data';
 import { createStorageItem } from './storage-item';
 import { createStorageWeightLimit } from './storage-weight-limit';
 import { createStorageWeightModifier } from './storage-weight-modifier';
+import { createSwingDuration } from './swing-duration';
+import { createSwingSounds } from './swing-sounds';
 import { createTags } from './tags';
 import { createThrowable } from './throwable';
 import { createUseAnimation } from './use-animation';
@@ -58,14 +64,18 @@ export const itemComponentCreatorsFactory: Record<string, (v?: any) => any> = {
   dyeable: createDyeable,
   enchantable: createEnchantable,
   entityPlacer: createEntityPlacer,
+  fireResistant: createFireResistant,
   food: createFood,
   fuel: createFuel,
   glint: createGlint,
   handEquipped: createHandEquipped,
   hoverTextColor: createHoverTextColor,
   icon: createIcon,
+  interactButton: createInteractButton,
+  kineticWeapon: createKineticWeapon,
   liquidClipped: createLiquidClipped,
   maxStackSize: createMaxStackSize,
+  piercingWeapon: createPiercingWeapon,
   projectile: createProjectile,
   record: createRecord,
   rarity: createRarity,
@@ -76,6 +86,8 @@ export const itemComponentCreatorsFactory: Record<string, (v?: any) => any> = {
   storageItem: createStorageItem,
   storageWeightLimit: createStorageWeightLimit,
   storageWeightModifier: createStorageWeightModifier,
+  swingDuration: createSwingDuration,
+  swingSounds: createSwingSounds,
   tags: createTags,
   throwable: createThrowable,
   useAnimation: createUseAnimation,
@@ -116,6 +128,8 @@ export * from './enchantable';
 
 export * from './entity-placer';
 
+export * from './fire-resistant';
+
 export * from './food';
 
 export * from './fuel';
@@ -128,9 +142,15 @@ export * from './hover-text-color';
 
 export * from './icon';
 
+export * from './interact-button';
+
+export * from './kinetic-weapon';
+
 export * from './liquid-clipped';
 
 export * from './max-stack-size';
+
+export * from './piercing-weapon';
 
 export * from './projectile';
 
@@ -151,6 +171,10 @@ export * from './storage-item';
 export * from './storage-weight-limit';
 
 export * from './storage-weight-modifier';
+
+export * from './swing-duration';
+
+export * from './swing-sounds';
 
 export * from './tags';
 

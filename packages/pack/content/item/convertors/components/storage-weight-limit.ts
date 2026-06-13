@@ -24,7 +24,9 @@ export const createStorageWeightLimit = (
       options.maxWeightLimit > 64
     ) {
       // @TODO: Add error handling
-      console.error('Max weight limit must be a positive number');
+      console.error(
+        'Max weight limit must be a positive number and less than 64',
+      );
 
       return undefined;
     }
