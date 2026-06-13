@@ -1,45 +1,58 @@
 import { DestructionParticlesComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import {
+  validateAllowedValue,
+  validateIntegerRange,
+  validateNonEmptyString,
+} from '../../../common/validation/content-validation';
+
+const VALID_TINT_METHODS = [
+  'none',
+  'default_foliage',
+  'birch_foliage',
+  'evergreen_foliage',
+  'dry_foliage',
+  'grass',
+  'water',
+] as const;
 
 /**
  * Creates a destruction_particles component for Minecraft blocks
- * @param options The destruction particles options
- * @returns The destruction_particles component in Minecraft format or undefined if validation fails
  */
 export const createDestructionParticles = (
   options?: DestructionParticlesComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:destruction_particles': any } | undefined => {
   if (!options) {
-    // Empty component is valid for destruction_particles
     return undefined;
   }
 
   const result: any = {};
 
-  // Validate and add texture
   if (options.texture !== undefined) {
-    if (typeof options.texture !== 'string' || options.texture.length === 0) {
-      // @TODO: Add error handling
-      console.error('Texture must be a non-empty string');
-
+    if (
+      !validateNonEmptyString(
+        options.texture,
+        ctx,
+        'Texture must be a non-empty string',
+        'texture',
+      )
+    ) {
       return undefined;
     }
     result.texture = options.texture;
   }
 
-  // Validate and add tint_method
   if (options.tintMethod !== undefined) {
-    const validTintMethods = [
-      'none',
-      'default_foliage',
-      'birch_foliage',
-      'evergreen_foliage',
-      'dry_foliage',
-      'grass',
-      'water',
-    ];
-    if (!validTintMethods.includes(options.tintMethod)) {
-      console.error('Tint method must be a valid tint method enum value');
-
+    if (
+      !validateAllowedValue(
+        options.tintMethod,
+        VALID_TINT_METHODS,
+        ctx,
+        'Tint method must be a valid tint method enum value',
+        'tintMethod',
+      )
+    ) {
       return undefined;
     }
     result.tint_method = options.tintMethod;
@@ -47,12 +60,15 @@ export const createDestructionParticles = (
 
   if (options.particleCount !== undefined) {
     if (
-      typeof options.particleCount !== 'number' ||
-      options.particleCount < 0 ||
-      options.particleCount > 255
+      !validateIntegerRange(
+        options.particleCount,
+        0,
+        255,
+        ctx,
+        'Particle count must be a number between 0 and 255',
+        'particleCount',
+      )
     ) {
-      console.error('Particle count must be a number between 0 and 255');
-
       return undefined;
     }
     result.particle_count = options.particleCount;

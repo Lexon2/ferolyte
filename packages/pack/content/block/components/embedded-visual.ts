@@ -1,4 +1,5 @@
 import { EmbeddedVisualComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
 import { createItemVisual } from './item-visual';
 
 /**
@@ -6,8 +7,9 @@ import { createItemVisual } from './item-visual';
  */
 export const createEmbeddedVisual = (
   options?: EmbeddedVisualComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:embedded_visual': any } | undefined => {
-  const itemVisual = createItemVisual(options);
+  const itemVisual = createItemVisual(options, ctx);
   if (itemVisual === undefined) {
     return undefined;
   }

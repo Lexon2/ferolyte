@@ -1,3 +1,7 @@
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import { validateNonEmptyString } from '../../../common/validation/content-validation';
+
 export interface CraftingTableComponent {
   craftingTags?: string[];
   tableName?: string;
@@ -5,11 +9,10 @@ export interface CraftingTableComponent {
 
 /**
  * Creates a crafting_table component for Minecraft blocks
- * @param options The crafting table options
- * @returns The crafting_table component in Minecraft format or undefined if validation fails
  */
 export const createCraftingTable = (
   options?: CraftingTableComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:crafting_table': any } | undefined => {
   if (!options) {
     return undefined;
@@ -17,28 +20,31 @@ export const createCraftingTable = (
 
   const result: any = {};
 
-  // Validate and add crafting_tags
   if (Array.isArray(options.craftingTags)) {
-    for (const tag of options.craftingTags) {
+    for (let index = 0; index < options.craftingTags.length; index++) {
+      const tag = options.craftingTags[index];
       if (typeof tag !== 'string' || tag.length < 1 || tag.length > 64) {
-        // @TODO: Add error handling
-        console.error('Crafting tags must be a string array with 1-64 characters');
-
+        logContentError(
+          ctx !== undefined
+            ? { ...ctx, fieldPath: `craftingTags[${index}]` }
+            : undefined,
+          'Crafting tags must be a string array with 1-64 characters',
+        );
         return undefined;
       }
     }
     result.crafting_tags = options.craftingTags;
   }
 
-  // Validate and add table_name
   if (options.tableName !== undefined) {
     if (
-      typeof options.tableName !== 'string' ||
-      options.tableName.length === 0
+      !validateNonEmptyString(
+        options.tableName,
+        ctx,
+        'Table name must be a non-empty string',
+        'tableName',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Table name must be a non-empty string');
-
       return undefined;
     }
     result.table_name = options.tableName;

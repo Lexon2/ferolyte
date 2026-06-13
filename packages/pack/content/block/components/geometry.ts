@@ -1,23 +1,27 @@
 import { GeometryComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import { validateNonEmptyString } from '../../../common/validation/content-validation';
 
 /**
  * Creates a geometry component for Minecraft blocks
- * @param options The geometry identifier string or options object
- * @returns The geometry component in Minecraft format or undefined if validation fails
  */
 export const createGeometry = (
   options?: string | GeometryComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:geometry': string | any } | undefined => {
   if (options === undefined) {
     return undefined;
   }
 
-  // Handle string case (identifier only)
   if (typeof options === 'string') {
-    if (options.length === 0) {
-      // @TODO: Add error handling
-      console.error('Geometry identifier must be a non-empty string');
-
+    if (
+      !validateNonEmptyString(
+        options,
+        ctx,
+        'Geometry identifier must be a non-empty string',
+      )
+    ) {
       return undefined;
     }
     return {
@@ -25,15 +29,15 @@ export const createGeometry = (
     };
   }
 
-  // Handle object case
   if (typeof options === 'object' && options !== null) {
     if (
-      typeof options.identifier !== 'string' ||
-      options.identifier.length === 0
+      !validateNonEmptyString(
+        options.identifier,
+        ctx,
+        'Geometry identifier must be a non-empty string',
+        'identifier',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Geometry identifier must be a non-empty string');
-
       return undefined;
     }
 
@@ -41,7 +45,6 @@ export const createGeometry = (
       identifier: options.identifier,
     };
 
-    // Validate and add bone_visibility
     if (options.boneVisibility) {
       const boneVisibility: Record<string, boolean | string> = {};
 
@@ -49,11 +52,12 @@ export const createGeometry = (
         const visibility = options.boneVisibility[bone];
 
         if (typeof visibility !== 'boolean' && typeof visibility !== 'string') {
-          // @TODO: Add error handling
-          console.error(
+          logContentError(
+            ctx !== undefined
+              ? { ...ctx, fieldPath: `boneVisibility.${bone}` }
+              : undefined,
             'Bone visibility values must be booleans or valid expressions',
           );
-
           return undefined;
         }
 
@@ -63,26 +67,29 @@ export const createGeometry = (
       result.bone_visibility = boneVisibility;
     }
 
-    // Validate and add culling
     if (options.culling !== undefined) {
-      if (typeof options.culling !== 'string' || options.culling.length === 0) {
-        // @TODO: Add error handling
-        console.error('Culling must be a non-empty string');
-
+      if (
+        !validateNonEmptyString(
+          options.culling,
+          ctx,
+          'Culling must be a non-empty string',
+          'culling',
+        )
+      ) {
         return undefined;
       }
       result.culling = options.culling;
     }
 
-    // Validate and add culling_layer
     if (options.cullingLayer !== undefined) {
       if (
-        typeof options.cullingLayer !== 'string' ||
-        options.cullingLayer.length === 0
+        !validateNonEmptyString(
+          options.cullingLayer,
+          ctx,
+          'Culling layer must be a non-empty string',
+          'cullingLayer',
+        )
       ) {
-        // @TODO: Add error handling
-        console.error('Culling layer must be a non-empty string');
-
         return undefined;
       }
       result.culling_layer = options.cullingLayer;
@@ -90,11 +97,13 @@ export const createGeometry = (
 
     if (options.cullingShape !== undefined) {
       if (
-        typeof options.cullingShape !== 'string' ||
-        options.cullingShape.length === 0
+        !validateNonEmptyString(
+          options.cullingShape,
+          ctx,
+          'Culling shape must be a non-empty string',
+          'cullingShape',
+        )
       ) {
-        console.error('Culling shape must be a non-empty string');
-
         return undefined;
       }
       result.culling_shape = options.cullingShape;
@@ -110,8 +119,10 @@ export const createGeometry = (
       ) {
         result.uv_lock = options.uvLock;
       } else {
-        console.error('UV lock must be a boolean or a non-empty string array');
-
+        logContentError(
+          ctx !== undefined ? { ...ctx, fieldPath: 'uvLock' } : undefined,
+          'UV lock must be a boolean or a non-empty string array',
+        );
         return undefined;
       }
     }
@@ -121,8 +132,9 @@ export const createGeometry = (
     };
   }
 
-  // @TODO: Add error handling
-  console.error('Geometry must be a string or an object with valid properties');
-
+  logContentError(
+    ctx,
+    'Geometry must be a string or an object with valid properties',
+  );
   return undefined;
 };

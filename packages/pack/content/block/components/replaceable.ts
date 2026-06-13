@@ -1,3 +1,5 @@
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+
 /**
  * Creates a replaceable component for Minecraft blocks
  * @param value Whether the block can be replaced when another block is placed
@@ -5,12 +7,12 @@
  */
 export const createReplaceable = (
   value?: boolean,
+  _ctx?: ContentDiagnosticContext,
 ): { 'minecraft:replaceable': object } | undefined => {
   if (value === undefined || value === false) {
     return undefined;
   }
 
-  // The replaceable component only needs to exist, it doesn't have properties
   return {
     'minecraft:replaceable': {},
   };

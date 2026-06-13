@@ -1,12 +1,13 @@
 import { RedstoneConductivityComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '../../../common/validation/content-validation';
 
 /**
  * Creates a redstone_conductivity component for Minecraft blocks
- * @param options The redstone conductivity options
- * @returns The redstone_conductivity component in Minecraft format or undefined if validation fails
  */
 export const createRedstoneConductivity = (
   options?: RedstoneConductivityComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:redstone_conductivity': any } | undefined => {
   if (options === undefined) {
     return undefined;
@@ -15,20 +16,28 @@ export const createRedstoneConductivity = (
   const result: any = {};
 
   if (options.allowsWireToStepDown !== undefined) {
-    if (typeof options.allowsWireToStepDown !== 'boolean') {
-      // @TODO: Add error handling
-      console.error('Allows wire to step down must be a boolean');
-
+    if (
+      !validateBooleanValue(
+        options.allowsWireToStepDown,
+        ctx,
+        'Allows wire to step down must be a boolean',
+        'allowsWireToStepDown',
+      )
+    ) {
       return undefined;
     }
     result.allows_wire_to_step_down = options.allowsWireToStepDown;
   }
 
   if (options.redstoneConductor !== undefined) {
-    if (typeof options.redstoneConductor !== 'boolean') {
-      // @TODO: Add error handling
-      console.error('Redstone conductor must be a boolean');
-
+    if (
+      !validateBooleanValue(
+        options.redstoneConductor,
+        ctx,
+        'Redstone conductor must be a boolean',
+        'redstoneConductor',
+      )
+    ) {
       return undefined;
     }
     result.redstone_conductor = options.redstoneConductor;

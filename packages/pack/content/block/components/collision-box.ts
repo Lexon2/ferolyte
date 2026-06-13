@@ -1,3 +1,7 @@
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import { validateVector3 } from '../../../common/validation/content-validation';
+
 type Vector3 = [number, number, number];
 
 interface CollisionBoxOptions {
@@ -7,17 +11,25 @@ interface CollisionBoxOptions {
 
 const convertCollisionBoxEntry = (
   options: CollisionBoxOptions,
+  ctx?: ContentDiagnosticContext,
+  index?: number,
 ): { origin?: Vector3; size?: Vector3 } | undefined => {
+  const entryContext =
+    ctx !== undefined && index !== undefined
+      ? { ...ctx, fieldPath: `[${index}]` }
+      : ctx;
+
   const result: any = {};
 
   if (options.origin !== undefined) {
     if (
-      !Array.isArray(options.origin) ||
-      options.origin.length !== 3 ||
-      !options.origin.every((val) => typeof val === 'number')
+      !validateVector3(
+        options.origin,
+        entryContext,
+        'Origin must be a Vector3 array with 3 numeric values',
+        'origin',
+      )
     ) {
-      console.error('Origin must be a Vector3 array with 3 numeric values');
-
       return undefined;
     }
     result.origin = options.origin;
@@ -25,12 +37,13 @@ const convertCollisionBoxEntry = (
 
   if (options.size !== undefined) {
     if (
-      !Array.isArray(options.size) ||
-      options.size.length !== 3 ||
-      !options.size.every((val) => typeof val === 'number')
+      !validateVector3(
+        options.size,
+        entryContext,
+        'Size must be a Vector3 array with 3 numeric values',
+        'size',
+      )
     ) {
-      console.error('Size must be a Vector3 array with 3 numeric values');
-
       return undefined;
     }
     result.size = options.size;
@@ -41,11 +54,10 @@ const convertCollisionBoxEntry = (
 
 /**
  * Creates a collision_box component for Minecraft blocks
- * @param options The collision box options or boolean for simplified usage
- * @returns The collision_box component in Minecraft format or undefined if validation fails
  */
 export const createCollisionBox = (
   options?: boolean | CollisionBoxOptions | CollisionBoxOptions[],
+  ctx?: ContentDiagnosticContext,
 ): {
   'minecraft:collision_box':
     | boolean
@@ -65,8 +77,8 @@ export const createCollisionBox = (
   if (Array.isArray(options)) {
     const boxes: Array<{ origin?: Vector3; size?: Vector3 }> = [];
 
-    for (const box of options) {
-      const converted = convertCollisionBoxEntry(box);
+    for (let index = 0; index < options.length; index++) {
+      const converted = convertCollisionBoxEntry(options[index], ctx, index);
       if (converted === undefined) {
         return undefined;
       }
@@ -79,7 +91,7 @@ export const createCollisionBox = (
   }
 
   if (typeof options === 'object' && options !== null) {
-    const converted = convertCollisionBoxEntry(options);
+    const converted = convertCollisionBoxEntry(options, ctx);
     if (converted === undefined) {
       return undefined;
     }
@@ -89,7 +101,9 @@ export const createCollisionBox = (
     };
   }
 
-  console.error('Collision box must be a boolean or an object with valid properties');
-
+  logContentError(
+    ctx,
+    'Collision box must be a boolean or an object with valid properties',
+  );
   return undefined;
 };

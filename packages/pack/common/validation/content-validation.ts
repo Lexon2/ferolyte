@@ -280,6 +280,24 @@ export const validateDamageSourceArray = (
   return true;
 };
 
+export const validateVector3 = (
+  value: unknown,
+  ctx: ContentDiagnosticContext | undefined,
+  reason = 'Value must be a Vector3 array with 3 numeric values',
+  fieldPath?: string,
+): value is [number, number, number] => {
+  if (
+    !Array.isArray(value) ||
+    value.length !== 3 ||
+    !value.every((n) => typeof n === 'number' && !Number.isNaN(n))
+  ) {
+    logContentError(resolveContext(ctx, fieldPath), reason);
+    return false;
+  }
+
+  return true;
+};
+
 export const validateCustomComponentIds = (
   values: unknown,
   ctx: ContentDiagnosticContext | undefined,

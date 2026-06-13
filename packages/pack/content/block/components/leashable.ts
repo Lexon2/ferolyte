@@ -1,10 +1,13 @@
 import { LeashableComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { validateVector3 } from '../../../common/validation/content-validation';
 
 /**
  * Creates a leashable component for Minecraft blocks
  */
 export const createLeashable = (
   options?: LeashableComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:leashable': any } | undefined => {
   if (options === undefined) {
     return undefined;
@@ -14,12 +17,13 @@ export const createLeashable = (
 
   if (options.offset !== undefined) {
     if (
-      !Array.isArray(options.offset) ||
-      options.offset.length !== 3 ||
-      !options.offset.every((val) => typeof val === 'number')
+      !validateVector3(
+        options.offset,
+        ctx,
+        'Offset must be a Vector3 array with 3 numeric values',
+        'offset',
+      )
     ) {
-      console.error('Offset must be a Vector3 array with 3 numeric values');
-
       return undefined;
     }
     result.offset = options.offset;

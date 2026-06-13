@@ -1,4 +1,9 @@
 import { LiquidDetectionComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import {
+  validateAllowedValue,
+  validateBooleanValue,
+} from '../../../common/validation/content-validation';
 
 type Direction =
   | 'up'
@@ -11,13 +16,30 @@ type Direction =
   | 'all';
 type OnLiquidTouches = 'blocking' | 'broken' | 'popped' | 'no_reaction';
 
+const VALID_LIQUID_TYPES = ['water'] as const;
+const VALID_ON_LIQUID_TOUCHES: OnLiquidTouches[] = [
+  'blocking',
+  'broken',
+  'popped',
+  'no_reaction',
+];
+const VALID_DIRECTIONS: Direction[] = [
+  'up',
+  'down',
+  'north',
+  'south',
+  'east',
+  'west',
+  'side',
+  'all',
+];
+
 /**
  * Creates a liquid_detection component for Minecraft blocks
- * @param options The liquid detection options
- * @returns The liquid_detection component in Minecraft format or undefined if validation fails
  */
 export const createLiquidDetection = (
   options?: LiquidDetectionComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:liquid_detection': any } | undefined => {
   if (options === undefined) {
     return undefined;
@@ -28,66 +50,70 @@ export const createLiquidDetection = (
   if (Array.isArray(options.detectionRules)) {
     const rules: any[] = [];
 
-    for (const rule of options.detectionRules) {
+    for (let index = 0; index < options.detectionRules.length; index++) {
+      const rule = options.detectionRules[index];
+      const ruleContext =
+        ctx !== undefined
+          ? { ...ctx, fieldPath: `detectionRules[${index}]` }
+          : undefined;
       const newRule: any = {};
 
       if (rule.canContainLiquid !== undefined) {
-        if (typeof rule.canContainLiquid !== 'boolean') {
-          // @TODO: Add error handling
-          console.error('Can contain liquid must be a boolean');
-
+        if (
+          !validateBooleanValue(
+            rule.canContainLiquid,
+            ruleContext,
+            'Can contain liquid must be a boolean',
+            'canContainLiquid',
+          )
+        ) {
           return undefined;
         }
         newRule.can_contain_liquid = rule.canContainLiquid;
       }
 
       if (rule.liquidType !== undefined) {
-        if (rule.liquidType !== 'water') {
-          // @TODO: Add error handling
-          console.error('Liquid type must be "water"');
-
+        if (
+          !validateAllowedValue(
+            rule.liquidType,
+            VALID_LIQUID_TYPES,
+            ruleContext,
+            'Liquid type must be "water"',
+            'liquidType',
+          )
+        ) {
           return undefined;
         }
         newRule.liquid_type = rule.liquidType;
       }
 
       if (rule.onLiquidTouches !== undefined) {
-        const validValues: OnLiquidTouches[] = [
-          'blocking',
-          'broken',
-          'popped',
-          'no_reaction',
-        ];
-        if (!validValues.includes(rule.onLiquidTouches)) {
-          // @TODO: Add error handling
-          console.error(
+        if (
+          !validateAllowedValue(
+            rule.onLiquidTouches,
+            VALID_ON_LIQUID_TOUCHES,
+            ruleContext,
             'On liquid touches must be "blocking", "broken", "popped", or "no_reaction"',
-          );
-
+            'onLiquidTouches',
+          )
+        ) {
           return undefined;
         }
         newRule.on_liquid_touches = rule.onLiquidTouches;
       }
 
       if (Array.isArray(rule.stopsLiquidFlowingFromDirection)) {
-        const validDirections: Direction[] = [
-          'up',
-          'down',
-          'north',
-          'south',
-          'east',
-          'west',
-          'side',
-          'all',
-        ];
-
-        for (const direction of rule.stopsLiquidFlowingFromDirection) {
-          if (!validDirections.includes(direction)) {
-            // @TODO: Add error handling
-            console.error(
+        for (let dirIndex = 0; dirIndex < rule.stopsLiquidFlowingFromDirection.length; dirIndex++) {
+          const direction = rule.stopsLiquidFlowingFromDirection[dirIndex];
+          if (
+            !validateAllowedValue(
+              direction,
+              VALID_DIRECTIONS,
+              ruleContext,
               'Stops liquid flowing from direction must be valid directions',
-            );
-
+              `stopsLiquidFlowingFromDirection[${dirIndex}]`,
+            )
+          ) {
             return undefined;
           }
         }
@@ -97,9 +123,14 @@ export const createLiquidDetection = (
       }
 
       if (rule.useLiquidClipping !== undefined) {
-        if (typeof rule.useLiquidClipping !== 'boolean') {
-          console.error('Use liquid clipping must be a boolean');
-
+        if (
+          !validateBooleanValue(
+            rule.useLiquidClipping,
+            ruleContext,
+            'Use liquid clipping must be a boolean',
+            'useLiquidClipping',
+          )
+        ) {
           return undefined;
         }
         newRule.use_liquid_clipping = rule.useLiquidClipping;

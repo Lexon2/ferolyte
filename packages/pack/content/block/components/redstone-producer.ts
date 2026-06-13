@@ -1,4 +1,10 @@
 import { RedstoneProducerComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import {
+  validateAllowedValue,
+  validateBooleanValue,
+  validateIntegerRange,
+} from '../../../common/validation/content-validation';
 
 type Face =
   | 'up'
@@ -10,7 +16,7 @@ type Face =
   | 'side'
   | 'all';
 
-const validFaces: Face[] = [
+const VALID_FACES: Face[] = [
   'up',
   'down',
   'north',
@@ -21,15 +27,26 @@ const validFaces: Face[] = [
   'all',
 ];
 
-const convertFaces = (faces?: Face[]): Face[] | undefined => {
+const convertFaces = (
+  faces: Face[] | undefined,
+  ctx: ContentDiagnosticContext | undefined,
+  fieldPath: string,
+): Face[] | undefined => {
   if (faces === undefined) {
     return undefined;
   }
 
-  for (const face of faces) {
-    if (!validFaces.includes(face)) {
-      console.error('Face must be a valid direction value');
-
+  for (let index = 0; index < faces.length; index++) {
+    const face = faces[index];
+    if (
+      !validateAllowedValue(
+        face,
+        VALID_FACES,
+        ctx,
+        'Face must be a valid direction value',
+        `${fieldPath}[${index}]`,
+      )
+    ) {
       return undefined;
     }
   }
@@ -42,18 +59,22 @@ const convertFaces = (faces?: Face[]): Face[] | undefined => {
  */
 export const createRedstoneProducer = (
   options?: RedstoneProducerComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:redstone_producer': any } | undefined => {
   if (options === undefined) {
     return undefined;
   }
 
   if (
-    typeof options.power !== 'number' ||
-    options.power < 0 ||
-    options.power > 15
+    !validateIntegerRange(
+      options.power,
+      0,
+      15,
+      ctx,
+      'Power must be a number between 0 and 15',
+      'power',
+    )
   ) {
-    console.error('Power must be a number between 0 and 15');
-
     return undefined;
   }
 
@@ -61,7 +82,11 @@ export const createRedstoneProducer = (
     power: options.power,
   };
 
-  const stronglyPoweredFace = convertFaces(options.stronglyPoweredFace);
+  const stronglyPoweredFace = convertFaces(
+    options.stronglyPoweredFace,
+    ctx,
+    'stronglyPoweredFace',
+  );
   if (stronglyPoweredFace === undefined && options.stronglyPoweredFace) {
     return undefined;
   }
@@ -69,7 +94,11 @@ export const createRedstoneProducer = (
     result.strongly_powered_face = stronglyPoweredFace;
   }
 
-  const connectedFaces = convertFaces(options.connectedFaces);
+  const connectedFaces = convertFaces(
+    options.connectedFaces,
+    ctx,
+    'connectedFaces',
+  );
   if (connectedFaces === undefined && options.connectedFaces) {
     return undefined;
   }
@@ -78,9 +107,14 @@ export const createRedstoneProducer = (
   }
 
   if (options.transformRelative !== undefined) {
-    if (typeof options.transformRelative !== 'boolean') {
-      console.error('Transform relative must be a boolean');
-
+    if (
+      !validateBooleanValue(
+        options.transformRelative,
+        ctx,
+        'Transform relative must be a boolean',
+        'transformRelative',
+      )
+    ) {
       return undefined;
     }
     result.transform_relative = options.transformRelative;

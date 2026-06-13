@@ -1,6 +1,11 @@
 import { BlockTraits } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../common/diagnostics/content-diagnostic';
 
-export const convertBlockTraits = (traits: BlockTraits): any => {
+export const convertBlockTraits = (
+  traits: BlockTraits,
+  ctx?: ContentDiagnosticContext,
+): any => {
   if (traits === undefined || typeof traits !== 'object') {
     return undefined;
   }
@@ -24,6 +29,15 @@ export const convertBlockTraits = (traits: BlockTraits): any => {
       Array.isArray(states) &&
       states.every((state) => validPlacementDirectionStates.includes(state))
     ) {
+      if (yRotation !== undefined && !validPlacementDirectionYRotations.includes(yRotation)) {
+        logContentError(
+          ctx !== undefined
+            ? { ...ctx, fieldPath: 'placementDirection.yRotation' }
+            : undefined,
+          'Placement direction yRotation must be a valid rotation value',
+        );
+      }
+
       minecraftTraits['minecraft:placement_direction'] = {
         enabled_states: states,
         y_rotation_offset:
@@ -31,6 +45,13 @@ export const convertBlockTraits = (traits: BlockTraits): any => {
             ? yRotation
             : undefined,
       };
+    } else if (states) {
+      logContentError(
+        ctx !== undefined
+          ? { ...ctx, fieldPath: 'placementDirection.states' }
+          : undefined,
+        'Placement direction states must be valid enabled states',
+      );
     }
   }
 
@@ -44,6 +65,13 @@ export const convertBlockTraits = (traits: BlockTraits): any => {
       minecraftTraits['minecraft:placement_position'] = {
         enabled_states: states,
       };
+    } else if (states) {
+      logContentError(
+        ctx !== undefined
+          ? { ...ctx, fieldPath: 'placementPosition.states' }
+          : undefined,
+        'Placement position states must be valid enabled states',
+      );
     }
   }
 

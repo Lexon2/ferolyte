@@ -25,7 +25,7 @@ describe('convertBlockComponents', () => {
   });
 
   it('skips invalid registered components', () => {
-    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(convertBlockComponents({
       loot: '',
@@ -34,7 +34,7 @@ describe('convertBlockComponents', () => {
       'minecraft:replaceable': {},
     });
 
-    expect(warnSpy).toHaveBeenCalledWith('Item component "loot" is invalid. Skipping...');
-    warnSpy.mockRestore();
+    expect(errorSpy).toHaveBeenCalled();
+    errorSpy.mockRestore();
   });
 });

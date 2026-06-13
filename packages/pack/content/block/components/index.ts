@@ -34,11 +34,17 @@ import { createSupport } from './support';
 import { createTick } from './tick';
 import { createTransformation } from './transformation';
 import { createDisplayName } from '../../item/convertors/components/display-name';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+
+export type BlockComponentCreator = (
+  value?: unknown,
+  ctx?: ContentDiagnosticContext,
+) => Record<string, unknown> | undefined;
 
 /**
  * Mapping of BlockConfig component properties to their creator functions
  */
-export const blockComponentCreatorsFactory: Record<string, (v?: any) => any> = {
+export const blockComponentCreatorsFactory: Record<string, BlockComponentCreator> = {
   chestObstruction: createChestObstruction,
   collisionBox: createCollisionBox,
   connectionRule: createConnectionRule,

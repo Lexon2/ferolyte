@@ -2,14 +2,36 @@ import {
   BlockFilterDescriptor,
   PlacementFilterComponent,
 } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import {
+  validateAllowedValue,
+  validateNonEmptyString,
+} from '../../../common/validation/content-validation';
+
+const VALID_FACES = [
+  'up',
+  'down',
+  'north',
+  'south',
+  'east',
+  'west',
+  'side',
+  'all',
+] as const;
 
 const convertBlockFilter = (
   filter: BlockFilterDescriptor,
+  ctx?: ContentDiagnosticContext,
 ): any | undefined => {
   if (typeof filter === 'string') {
-    if (filter.length === 0) {
-      console.error('Block filter strings must not be empty');
-
+    if (
+      !validateNonEmptyString(
+        filter,
+        ctx,
+        'Block filter strings must not be empty',
+      )
+    ) {
       return undefined;
     }
     return filter;
@@ -17,22 +39,32 @@ const convertBlockFilter = (
 
   if (typeof filter === 'object' && filter !== null) {
     if ('name' in filter) {
-      const descriptor: any = { name: filter.name };
-
-      if (typeof filter.name !== 'string' || filter.name.length === 0) {
-        console.error('Block filter name must be a non-empty string');
-
+      if (
+        !validateNonEmptyString(
+          filter.name,
+          ctx,
+          'Block filter name must be a non-empty string',
+          'name',
+        )
+      ) {
         return undefined;
       }
+
+      const descriptor: any = { name: filter.name };
 
       if (filter.states !== undefined) {
         descriptor.states = filter.states;
       }
 
       if (filter.tags !== undefined) {
-        if (typeof filter.tags !== 'string' || filter.tags.length === 0) {
-          console.error('Block filter tags must be a non-empty string');
-
+        if (
+          !validateNonEmptyString(
+            filter.tags,
+            ctx,
+            'Block filter tags must be a non-empty string',
+            'tags',
+          )
+        ) {
           return undefined;
         }
         descriptor.tags = filter.tags;
@@ -46,20 +78,19 @@ const convertBlockFilter = (
     }
   }
 
-  console.error(
+  logContentError(
+    ctx,
     'Block filter must be a string or a valid block descriptor object',
   );
-
   return undefined;
 };
 
 /**
  * Creates a placement_filter component for Minecraft blocks
- * @param options The placement filter options
- * @returns The placement_filter component in Minecraft format or undefined if validation fails
  */
 export const createPlacementFilter = (
   options?: PlacementFilterComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:placement_filter': any } | undefined => {
   if (options === undefined) {
     return undefined;
@@ -70,26 +101,26 @@ export const createPlacementFilter = (
   if (Array.isArray(options.conditions)) {
     const conditions: any[] = [];
 
-    for (const condition of options.conditions) {
+    for (let condIndex = 0; condIndex < options.conditions.length; condIndex++) {
+      const condition = options.conditions[condIndex];
+      const condContext =
+        ctx !== undefined
+          ? { ...ctx, fieldPath: `conditions[${condIndex}]` }
+          : undefined;
       const newCondition: any = {};
 
       if (Array.isArray(condition.allowedFaces)) {
-        const validFaces = [
-          'up',
-          'down',
-          'north',
-          'south',
-          'east',
-          'west',
-          'side',
-          'all',
-        ];
-
-        for (const face of condition.allowedFaces) {
-          if (!validFaces.includes(face)) {
-            // @TODO: Add error handling
-            console.error('Allowed faces must be valid direction values');
-
+        for (let faceIndex = 0; faceIndex < condition.allowedFaces.length; faceIndex++) {
+          const face = condition.allowedFaces[faceIndex];
+          if (
+            !validateAllowedValue(
+              face,
+              VALID_FACES,
+              condContext,
+              'Allowed faces must be valid direction values',
+              `allowedFaces[${faceIndex}]`,
+            )
+          ) {
             return undefined;
           }
         }
@@ -100,8 +131,14 @@ export const createPlacementFilter = (
       if (Array.isArray(condition.blockFilter)) {
         const blockFilters: any[] = [];
 
-        for (const filter of condition.blockFilter) {
-          const converted = convertBlockFilter(filter);
+        for (let filterIndex = 0; filterIndex < condition.blockFilter.length; filterIndex++) {
+          const filter = condition.blockFilter[filterIndex];
+          const converted = convertBlockFilter(
+            filter,
+            condContext !== undefined
+              ? { ...condContext, fieldPath: `blockFilter[${filterIndex}]` }
+              : undefined,
+          );
           if (converted === undefined) {
             return undefined;
           }

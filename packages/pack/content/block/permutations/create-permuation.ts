@@ -6,6 +6,11 @@ import {
   BlockPermutationCondition,
   BlockPermutationConfig,
 } from '../interfaces/block-config';
+import {
+  ContentDiagnosticContext,
+  logContentError,
+} from '../../../common/diagnostics/content-diagnostic';
+import { validateNumber } from '../../../common/validation/content-validation';
 
 interface BlockPermutation {
   condition: string;
@@ -14,11 +19,18 @@ interface BlockPermutation {
 
 export const createBlockPermutations = (
   permutations: BlockPermutationConfig[],
+  ctx?: ContentDiagnosticContext,
 ): BlockPermutation[] => {
   const result: BlockPermutation[] = [];
 
-  for (const permutation of permutations) {
-    const blockPermutation = createBlockPermutation(permutation);
+  for (let index = 0; index < permutations.length; index++) {
+    const permutationContext =
+      ctx !== undefined ? { ...ctx, fieldPath: `[${index}]` } : undefined;
+
+    const blockPermutation = createBlockPermutation(
+      permutations[index],
+      permutationContext,
+    );
     if (blockPermutation !== undefined) {
       result.push(blockPermutation);
     }
@@ -29,20 +41,40 @@ export const createBlockPermutations = (
 
 export const createBlockPermutation = (
   permutation: BlockPermutationConfig,
+  ctx?: ContentDiagnosticContext,
 ): BlockPermutation | undefined => {
   const { condition, components } = permutation;
 
-  const stringCondition = parseBlockPermutationCondition(condition);
+  const stringCondition = parseBlockPermutationCondition(condition, ctx);
   if (stringCondition === undefined) {
-    console.error('Invalid permutation condition');
-
+    logContentError(
+      ctx !== undefined ? { ...ctx, fieldPath: 'condition' } : undefined,
+      'Invalid permutation condition',
+    );
     return undefined;
   }
 
-  const convertedComponents = convertBlockComponents(components);
-  if (convertedComponents === undefined) {
-    console.error('Invalid components');
+  const componentsContext: ContentDiagnosticContext | undefined =
+    ctx !== undefined
+      ? {
+          ...ctx,
+          section: 'components',
+          fieldPath:
+            ctx.fieldPath !== undefined
+              ? `${ctx.fieldPath}.components`
+              : 'components',
+        }
+      : undefined;
 
+  const convertedComponents = convertBlockComponents(
+    components,
+    componentsContext,
+  );
+  if (convertedComponents === undefined) {
+    logContentError(
+      ctx !== undefined ? { ...ctx, fieldPath: 'components' } : undefined,
+      'Invalid components',
+    );
     return undefined;
   }
 
@@ -54,6 +86,7 @@ export const createBlockPermutation = (
 
 export const parseBlockPermutationCondition = (
   condition: BlockPermutationCondition,
+  _ctx?: ContentDiagnosticContext,
 ): string | undefined => {
   let result: string | undefined = '';
 
@@ -69,7 +102,6 @@ export const parseBlockPermutationCondition = (
       }
 
       if (stateCondition) {
-        // Remove the last ' || '
         stateCondition = stateCondition.slice(0, -4);
         result += `(${stateCondition}) && `;
       }
@@ -86,78 +118,48 @@ export const parseBlockPermutationCondition = (
   return result;
 };
 
-/**
- * Creates a state equality condition for block permutations
- * @param stateName The name of the state to check
- * @param value The value to compare against
- * @returns A Molang condition string
- */
 export const createStateEqualCondition = (
   stateName: string,
   value: string | number | boolean,
 ): string => {
-  // Handle special case for boolean values
   if (typeof value === 'boolean') {
     return `${!value ? '!' : ''}query.block_state('${stateName}')`;
   }
 
-  // Use double equals for comparison in Molang expressions
   return `query.block_state('${stateName}') == ${
     typeof value === 'string' ? `'${value}'` : value
   }`;
 };
 
-/**
- * Creates a state not equal condition for block permutations
- * @param stateName The name of the state to check
- * @param value The value to compare against
- * @returns A Molang condition string
- */
 export const createStateNotEqualCondition = (
   stateName: string,
   value: string | number | boolean,
 ): string => {
-  // Handle special case for boolean values
   if (typeof value === 'boolean') {
     return `${!value ? '' : '!'}query.block_state('${stateName}')`;
   }
 
-  // Use != for comparison in Molang expressions
   return `query.block_state('${stateName}') != ${
     typeof value === 'string' ? `'${value}'` : value
   }`;
 };
 
-/**
- * Creates a numeric state comparison condition for block permutations
- * @param stateName The name of the state to check
- * @param operator The comparison operator to use (>, <, >=, <=)
- * @param value The numeric value to compare against
- * @returns A Molang condition string
- */
 export const createStateComparisonCondition = (
   stateName: string,
   operator: '>' | '<' | '>=' | '<=',
   value: number,
+  ctx?: ContentDiagnosticContext,
 ): string => {
-  if (typeof value !== 'number') {
-    console.warn('Comparison value should be a number');
-  }
+  validateNumber(value, ctx, 'Comparison value should be a number');
 
   return `query.block_state('${stateName}') ${operator} ${value}`;
 };
 
-/**
- * Combines multiple conditions with AND logic
- * @param conditions Array of condition strings to combine
- * @returns A combined condition string with AND operator
- */
 export const combineWithAnd = (conditions: string[]): string => {
   if (!Array.isArray(conditions) || conditions.length === 0) {
     return 'true';
   }
 
-  // Filter out empty conditions
   const validConditions = conditions.filter((c) => c && c.length > 0);
 
   if (validConditions.length === 0) {
@@ -168,21 +170,14 @@ export const combineWithAnd = (conditions: string[]): string => {
     return validConditions[0];
   }
 
-  // Wrap each condition in parentheses and join with &&
   return validConditions.map((c) => `(${c})`).join(' && ');
 };
 
-/**
- * Combines multiple conditions with OR logic
- * @param conditions Array of condition strings to combine
- * @returns A combined condition string with OR operator
- */
 export const combineWithOr = (conditions: string[]): string => {
   if (!Array.isArray(conditions) || conditions.length === 0) {
     return 'false';
   }
 
-  // Filter out empty conditions
   const validConditions = conditions.filter((c) => c && c.length > 0);
 
   if (validConditions.length === 0) {
@@ -193,6 +188,5 @@ export const combineWithOr = (conditions: string[]): string => {
     return validConditions[0];
   }
 
-  // Wrap each condition in parentheses and join with ||
   return validConditions.map((c) => `(${c})`).join(' || ');
 };

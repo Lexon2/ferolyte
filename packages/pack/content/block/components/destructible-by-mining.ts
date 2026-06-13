@@ -1,3 +1,11 @@
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import {
+  validateNonEmptyString,
+  validateNonNegativeNumber,
+  validateNumber,
+} from '../../../common/validation/content-validation';
+
 export interface ItemSpecificSpeed {
   item: string;
   destroySpeed: number;
@@ -10,74 +18,82 @@ export interface DestructibleByMiningComponent {
 
 /**
  * Creates a destructible_by_mining component for Minecraft blocks
- * @param options The destructible by mining options or boolean for simplified usage
- * @returns The destructible_by_mining component in Minecraft format or undefined if validation fails
  */
 export const createDestructibleByMining = (
   options?: boolean | DestructibleByMiningComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:destructible_by_mining': boolean | any } | undefined => {
   if (options === undefined) {
     return undefined;
   }
 
-  // Handle boolean case (true means default destructible, false means not destructible)
   if (typeof options === 'boolean') {
     return {
       'minecraft:destructible_by_mining': options,
     };
   }
 
-  // Handle object case
   if (typeof options === 'object' && options !== null) {
     const result: any = {};
 
-    // Validate and add seconds_to_destroy
     if (options.secondsToDestroy !== undefined) {
       if (
-        typeof options.secondsToDestroy !== 'number' ||
-        options.secondsToDestroy < 0
+        !validateNonNegativeNumber(
+          options.secondsToDestroy,
+          ctx,
+          'Seconds to destroy must be a non-negative number',
+          'secondsToDestroy',
+        )
       ) {
-        // @TODO: Add error handling
-        console.error('Seconds to destroy must be a non-negative number');
-
         return undefined;
       }
       result.seconds_to_destroy = options.secondsToDestroy;
     }
 
-    // Validate and add item_specific_speeds
     if (Array.isArray(options.itemSpecificSpeeds)) {
       result.item_specific_speeds = [];
 
-      for (const entry of options.itemSpecificSpeeds) {
+      for (let index = 0; index < options.itemSpecificSpeeds.length; index++) {
+        const entry = options.itemSpecificSpeeds[index];
+        const entryContext =
+          ctx !== undefined
+            ? { ...ctx, fieldPath: `itemSpecificSpeeds[${index}]` }
+            : undefined;
+
         if (typeof entry !== 'object' || entry === null) {
-          // @TODO: Add error handling
-          console.error('Item specific speed entries must be objects');
-
+          logContentError(
+            entryContext,
+            'Item specific speed entries must be objects',
+          );
           return undefined;
         }
 
-        const itemSpeed: any = {};
-
-        // Validate item
-        if (!entry.item || typeof entry.item !== 'string') {
-          // @TODO: Add error handling
-          console.error('Item must be a non-empty string');
-
+        if (
+          !validateNonEmptyString(
+            entry.item,
+            entryContext,
+            'Item must be a non-empty string',
+            'item',
+          )
+        ) {
           return undefined;
         }
-        itemSpeed.item = entry.item;
 
-        // Validate destroy_speed
-        if (typeof entry.destroySpeed !== 'number') {
-          // @TODO: Add error handling
-          console.error('Destroy speed must be a number');
-
+        if (
+          !validateNumber(
+            entry.destroySpeed,
+            entryContext,
+            'Destroy speed must be a number',
+            'destroySpeed',
+          )
+        ) {
           return undefined;
         }
-        itemSpeed.destroy_speed = entry.destroySpeed;
 
-        result.item_specific_speeds.push(itemSpeed);
+        result.item_specific_speeds.push({
+          item: entry.item,
+          destroy_speed: entry.destroySpeed,
+        });
       }
     }
 
@@ -86,10 +102,9 @@ export const createDestructibleByMining = (
     };
   }
 
-  // @TODO: Add error handling
-  console.error(
+  logContentError(
+    ctx,
     'Destructible by mining must be a boolean or an object with valid properties',
   );
-
   return undefined;
 };

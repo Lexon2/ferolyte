@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { validateIntegerRange } from '../../../common/validation/content-validation';
+
 /**
  * Creates a light_emission component for Minecraft blocks
  * @param value The light emission value (0-15)
@@ -5,20 +8,21 @@
  */
 export const createLightEmission = (
   value?: number,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:light_emission': number } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
   if (
-    typeof value !== 'number' ||
-    value < 0 ||
-    value > 15 ||
-    !Number.isInteger(value)
+    !validateIntegerRange(
+      value,
+      0,
+      15,
+      ctx,
+      'Light emission must be an integer between 0 and 15',
+    )
   ) {
-    // @TODO: Add error handling
-    console.error('Light emission must be an integer between 0 and 15');
-
     return undefined;
   }
 

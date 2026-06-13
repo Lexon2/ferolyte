@@ -1,36 +1,44 @@
 import { ColorValue } from '../../common/types/color-value';
 import { MapColorComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import {
+  validateAllowedValue,
+  validateNonEmptyString,
+} from '../../../common/validation/content-validation';
+
+const VALID_TINT_METHODS = ['noise', 'underwater', 'sinusoidal'] as const;
 
 /**
  * Creates a map_color component for Minecraft blocks
- * @param options The map color value or options object
- * @returns The map_color component in Minecraft format or undefined if validation fails
  */
 export const createMapColor = (
   options?: MapColorComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:map_color': ColorValue | any } | undefined => {
   if (options === undefined) {
     return undefined;
   }
 
-  // Handle direct color value (string or RGB array)
   if (typeof options === 'string' || Array.isArray(options)) {
     if (typeof options === 'string') {
-      if (options.length === 0) {
-        // @TODO: Add error handling
-        console.error('Map color string must not be empty');
-
+      if (
+        !validateNonEmptyString(
+          options,
+          ctx,
+          'Map color string must not be empty',
+        )
+      ) {
         return undefined;
       }
     } else if (
       options.length !== 3 ||
       !options.every((val) => typeof val === 'number' && val >= 0 && val <= 255)
     ) {
-      // @TODO: Add error handling
-      console.error(
+      logContentError(
+        ctx,
         'Map color RGB array must contain 3 values between 0 and 255',
       );
-
       return undefined;
     }
 
@@ -39,12 +47,12 @@ export const createMapColor = (
     };
   }
 
-  // Handle object case
   if (typeof options === 'object' && options !== null) {
     if (!options.color) {
-      // @TODO: Add error handling
-      console.error('Map color object must have a color property');
-
+      logContentError(
+        ctx,
+        'Map color object must have a color property',
+      );
       return undefined;
     }
 
@@ -53,13 +61,15 @@ export const createMapColor = (
     };
 
     if (options.tintMethod) {
-      const validTintMethods = ['noise', 'underwater', 'sinusoidal'];
-      if (!validTintMethods.includes(options.tintMethod)) {
-        // @TODO: Add error handling
-        console.error(
+      if (
+        !validateAllowedValue(
+          options.tintMethod,
+          VALID_TINT_METHODS,
+          ctx,
           'Tint method must be "noise", "underwater", or "sinusoidal"',
-        );
-
+          'tintMethod',
+        )
+      ) {
         return undefined;
       }
       result.tint_method = options.tintMethod;
@@ -70,10 +80,9 @@ export const createMapColor = (
     };
   }
 
-  // @TODO: Add error handling
-  console.error(
+  logContentError(
+    ctx,
     'Map color must be a string, RGB array, or an object with valid properties',
   );
-
   return undefined;
 };

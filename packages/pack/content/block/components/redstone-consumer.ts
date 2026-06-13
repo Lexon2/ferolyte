@@ -1,22 +1,31 @@
 import { RedstoneConsumerComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import {
+  validateBooleanValue,
+  validateIntegerRange,
+} from '../../../common/validation/content-validation';
 
 /**
  * Creates a redstone_consumer component for Minecraft blocks
  */
 export const createRedstoneConsumer = (
   options?: RedstoneConsumerComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:redstone_consumer': any } | undefined => {
   if (options === undefined) {
     return undefined;
   }
 
   if (
-    typeof options.minPower !== 'number' ||
-    options.minPower < 0 ||
-    options.minPower > 15
+    !validateIntegerRange(
+      options.minPower,
+      0,
+      15,
+      ctx,
+      'Min power must be a number between 0 and 15',
+      'minPower',
+    )
   ) {
-    console.error('Min power must be a number between 0 and 15');
-
     return undefined;
   }
 
@@ -25,9 +34,14 @@ export const createRedstoneConsumer = (
   };
 
   if (options.propagatesPower !== undefined) {
-    if (typeof options.propagatesPower !== 'boolean') {
-      console.error('Propagates power must be a boolean');
-
+    if (
+      !validateBooleanValue(
+        options.propagatesPower,
+        ctx,
+        'Propagates power must be a boolean',
+        'propagatesPower',
+      )
+    ) {
       return undefined;
     }
     result.propagates_power = options.propagatesPower;

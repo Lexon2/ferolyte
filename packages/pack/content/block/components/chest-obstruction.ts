@@ -1,10 +1,15 @@
 import { ChestObstructionComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { validateAllowedValue } from '../../../common/validation/content-validation';
+
+const VALID_OBSTRUCTION_RULES = ['always', 'never', 'shape'] as const;
 
 /**
  * Creates a chest_obstruction component for Minecraft blocks
  */
 export const createChestObstruction = (
   options?: ChestObstructionComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:chest_obstruction': any } | undefined => {
   if (options === undefined) {
     return undefined;
@@ -13,10 +18,15 @@ export const createChestObstruction = (
   const result: any = {};
 
   if (options.obstructionRule !== undefined) {
-    const validRules = ['always', 'never', 'shape'];
-    if (!validRules.includes(options.obstructionRule)) {
-      console.error('Obstruction rule must be "always", "never", or "shape"');
-
+    if (
+      !validateAllowedValue(
+        options.obstructionRule,
+        VALID_OBSTRUCTION_RULES,
+        ctx,
+        'Obstruction rule must be "always", "never", or "shape"',
+        'obstructionRule',
+      )
+    ) {
       return undefined;
     }
     result.obstruction_rule = options.obstructionRule;

@@ -4,6 +4,7 @@ import { createBlockPermutations } from './permutations/create-permuation';
 import { convertBlockStates } from './states/convert-states';
 import { convertBlockTraits } from './traits/convert-traits';
 import { ContentBuilder } from '../../common/interfaces/content.builder';
+import { ContentDiagnosticContext } from '../../common/diagnostics/content-diagnostic';
 import { CONTENT_METADATA } from '../../compiler/content/content.metadata';
 import { convertMenuCategory } from '../item/convertors/components/menu-category/convert-category';
 
@@ -11,8 +12,15 @@ export class BlockBuilder implements ContentBuilder {
   readonly metadata = CONTENT_METADATA.BLOCK;
 
   private config: BlockConfig;
+  private buildContext?: ContentDiagnosticContext;
+
   constructor(config: BlockConfig) {
     this.config = config;
+  }
+
+  public withBuildContext(ctx: ContentDiagnosticContext): this {
+    this.buildContext = { contentType: 'block', ...ctx };
+    return this;
   }
 
   public cloneConfig(): any {
@@ -53,8 +61,13 @@ export class BlockBuilder implements ContentBuilder {
     const { menuCategory } = this.config;
     const { description } = file['minecraft:block'];
 
+    const menuCategoryContext: ContentDiagnosticContext | undefined =
+      this.buildContext !== undefined
+        ? { ...this.buildContext, section: 'menuCategory' }
+        : undefined;
+
     const validatedMenuCategory = menuCategory
-      ? convertMenuCategory(menuCategory)
+      ? convertMenuCategory(menuCategory, menuCategoryContext)
       : undefined;
     if (validatedMenuCategory !== undefined) {
       description.menu_category = validatedMenuCategory;
@@ -67,7 +80,10 @@ export class BlockBuilder implements ContentBuilder {
       return;
     }
 
-    const minecraftComponents = convertBlockComponents(components);
+    const minecraftComponents = convertBlockComponents(
+      components,
+      this.buildContext,
+    );
     if (minecraftComponents === undefined) {
       return;
     }
@@ -81,7 +97,15 @@ export class BlockBuilder implements ContentBuilder {
       return;
     }
 
-    const minecraftPermutations = createBlockPermutations(permutations);
+    const permutationsContext: ContentDiagnosticContext | undefined =
+      this.buildContext !== undefined
+        ? { ...this.buildContext, section: 'permutations' }
+        : undefined;
+
+    const minecraftPermutations = createBlockPermutations(
+      permutations,
+      permutationsContext,
+    );
     if (minecraftPermutations === undefined) {
       return;
     }
@@ -95,7 +119,12 @@ export class BlockBuilder implements ContentBuilder {
       return;
     }
 
-    const minecraftStates = convertBlockStates(states);
+    const statesContext: ContentDiagnosticContext | undefined =
+      this.buildContext !== undefined
+        ? { ...this.buildContext, section: 'states' }
+        : undefined;
+
+    const minecraftStates = convertBlockStates(states, statesContext);
     if (minecraftStates === undefined) {
       return;
     }
@@ -109,7 +138,12 @@ export class BlockBuilder implements ContentBuilder {
       return;
     }
 
-    const minecraftTraits = convertBlockTraits(traits);
+    const traitsContext: ContentDiagnosticContext | undefined =
+      this.buildContext !== undefined
+        ? { ...this.buildContext, section: 'traits' }
+        : undefined;
+
+    const minecraftTraits = convertBlockTraits(traits, traitsContext);
     if (minecraftTraits === undefined) {
       return;
     }

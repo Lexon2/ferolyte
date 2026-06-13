@@ -1,37 +1,37 @@
 import { DestructibleByExplosionComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import { validateNonNegativeNumber } from '../../../common/validation/content-validation';
 
 /**
  * Creates a destructible_by_explosion component for Minecraft blocks
- * @param options The destructible by explosion options or boolean for simplified usage
- * @returns The destructible_by_explosion component in Minecraft format or undefined if validation fails
  */
 export const createDestructibleByExplosion = (
   options?: boolean | DestructibleByExplosionComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:destructible_by_explosion': boolean | any } | undefined => {
   if (options === undefined) {
     return undefined;
   }
 
-  // Handle boolean case (true means default destructible, false means not destructible)
   if (typeof options === 'boolean') {
     return {
       'minecraft:destructible_by_explosion': options,
     };
   }
 
-  // Handle object case
   if (typeof options === 'object' && options !== null) {
     const result: any = {};
 
-    // Validate and add explosion_resistance
     if (options.explosionResistance !== undefined) {
       if (
-        typeof options.explosionResistance !== 'number' ||
-        options.explosionResistance < 0
+        !validateNonNegativeNumber(
+          options.explosionResistance,
+          ctx,
+          'Explosion resistance must be a non-negative number',
+          'explosionResistance',
+        )
       ) {
-        // @TODO: Add error handling
-        console.error('Explosion resistance must be a non-negative number');
-
         return undefined;
       }
       result.explosion_resistance = options.explosionResistance;
@@ -42,10 +42,9 @@ export const createDestructibleByExplosion = (
     };
   }
 
-  // @TODO: Add error handling
-  console.error(
+  logContentError(
+    ctx,
     'Destructible by explosion must be a boolean or an object with valid properties',
   );
-
   return undefined;
 };

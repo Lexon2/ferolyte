@@ -1,3 +1,6 @@
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { validateNumberRange } from '../../../common/validation/content-validation';
+
 /**
  * Creates a friction component for Minecraft blocks
  * @param value The friction value (0.0-0.9)
@@ -5,15 +8,21 @@
  */
 export const createFriction = (
   value?: number,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:friction': number } | undefined => {
   if (value === undefined) {
     return undefined;
   }
 
-  if (typeof value !== 'number' || value < 0 || value > 0.9) {
-    // @TODO: Add error handling
-    console.error('Friction must be a number between 0.0 and 0.9');
-
+  if (
+    !validateNumberRange(
+      value,
+      0,
+      0.9,
+      ctx,
+      'Friction must be a number between 0.0 and 0.9',
+    )
+  ) {
     return undefined;
   }
 

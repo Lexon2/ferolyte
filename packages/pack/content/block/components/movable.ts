@@ -1,21 +1,30 @@
 import { MovableComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { validateAllowedValue } from '../../../common/validation/content-validation';
+
+const VALID_MOVEMENT_TYPES = ['push_pull', 'push', 'popped', 'immovable'] as const;
+const VALID_STICKY = ['same', 'none'] as const;
 
 /**
  * Creates a movable component for Minecraft blocks
  */
 export const createMovable = (
   options?: MovableComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:movable': any } | undefined => {
   if (options === undefined) {
     return undefined;
   }
 
-  const validMovementTypes = ['push_pull', 'push', 'popped', 'immovable'];
-  if (!validMovementTypes.includes(options.movementType)) {
-    console.error(
+  if (
+    !validateAllowedValue(
+      options.movementType,
+      VALID_MOVEMENT_TYPES,
+      ctx,
       'Movement type must be "push_pull", "push", "popped", or "immovable"',
-    );
-
+      'movementType',
+    )
+  ) {
     return undefined;
   }
 
@@ -24,10 +33,15 @@ export const createMovable = (
   };
 
   if (options.sticky !== undefined) {
-    const validSticky = ['same', 'none'];
-    if (!validSticky.includes(options.sticky)) {
-      console.error('Sticky must be "same" or "none"');
-
+    if (
+      !validateAllowedValue(
+        options.sticky,
+        VALID_STICKY,
+        ctx,
+        'Sticky must be "same" or "none"',
+        'sticky',
+      )
+    ) {
       return undefined;
     }
     result.sticky = options.sticky;

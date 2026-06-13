@@ -1,22 +1,56 @@
 export type ContentType = 'item' | 'block' | 'server-entity' | 'client-entity';
 
+export type ContentSection =
+  | 'components'
+  | 'states'
+  | 'traits'
+  | 'permutations'
+  | 'menuCategory';
+
 export interface ContentDiagnosticContext {
   sourceFile?: string;
   identifier?: string;
   component?: string;
   fieldPath?: string;
+  section?: ContentSection;
   debug?: boolean;
   contentType?: ContentType;
 }
 
 export const buildFieldPath = (ctx: ContentDiagnosticContext): string => {
   const parts: string[] = [];
+  const section = ctx.section ?? (ctx.component !== undefined ? 'components' : undefined);
 
-  if (ctx.component !== undefined) {
-    parts.push('components', ctx.component);
+  switch (section) {
+    case 'components':
+      if (ctx.component !== undefined) {
+        parts.push('components', ctx.component);
+      }
+      break;
+    case 'states':
+      parts.push('states');
+      break;
+    case 'traits':
+      parts.push('traits');
+      break;
+    case 'permutations':
+      parts.push('permutations');
+      break;
+    case 'menuCategory':
+      parts.push('menuCategory');
+      break;
+    default:
+      if (ctx.component !== undefined) {
+        parts.push('components', ctx.component);
+      }
+      break;
   }
 
   if (ctx.fieldPath !== undefined && ctx.fieldPath.length > 0) {
+    if (ctx.fieldPath.startsWith('[')) {
+      return `${parts.join('.')}${ctx.fieldPath}`;
+    }
+
     parts.push(ctx.fieldPath);
   }
 
@@ -82,8 +116,27 @@ export const withComponentContext = (
   component: string,
 ): ContentDiagnosticContext | undefined => {
   if (ctx === undefined) {
-    return { component, contentType: 'item' };
+    return { component, section: 'components', contentType: 'item' };
   }
 
-  return { ...ctx, component, fieldPath: undefined };
+  return { ...ctx, component, section: 'components', fieldPath: undefined };
+};
+
+export const withSectionContext = (
+  ctx: ContentDiagnosticContext | undefined,
+  section: ContentSection,
+  fieldPath?: string,
+): ContentDiagnosticContext | undefined => {
+  if (ctx === undefined) {
+    return fieldPath !== undefined
+      ? { section, fieldPath, contentType: 'block' }
+      : { section, contentType: 'block' };
+  }
+
+  return {
+    ...ctx,
+    section,
+    component: section === 'components' ? ctx.component : undefined,
+    fieldPath,
+  };
 };

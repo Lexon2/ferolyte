@@ -1,41 +1,40 @@
-import {
-  ItemVisualComponent,
-} from '../interfaces/block-config';
+import { ItemVisualComponent } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import { validateNonEmptyString } from '../../../common/validation/content-validation';
 
 /**
  * Creates an item_visual component for Minecraft blocks
- * @param options The item visual options
- * @returns The item_visual component in Minecraft format or undefined if validation fails
  */
 export const createItemVisual = (
   options?: ItemVisualComponent,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:item_visual': any } | undefined => {
   if (options === undefined) {
     return undefined;
   }
 
   if (typeof options !== 'object' || options === null) {
-    // @TODO: Add error handling
-    console.error('Item visual must be an object with valid properties');
-
+    logContentError(ctx, 'Item visual must be an object with valid properties');
     return undefined;
   }
 
   const result: any = {};
 
-  // Validate and add geometry
   if (options.geometry === undefined) {
-    // @TODO: Add error handling
-    console.error('Geometry is required for item visual');
-
+    logContentError(ctx, 'Geometry is required for item visual');
     return undefined;
   }
 
   if (typeof options.geometry === 'string') {
-    if (options.geometry.length === 0) {
-      // @TODO: Add error handling
-      console.error('Geometry identifier must be a non-empty string');
-
+    if (
+      !validateNonEmptyString(
+        options.geometry,
+        ctx,
+        'Geometry identifier must be a non-empty string',
+        'geometry',
+      )
+    ) {
       return undefined;
     }
     result.geometry = options.geometry;
@@ -44,12 +43,13 @@ export const createItemVisual = (
     options.geometry !== null
   ) {
     if (
-      typeof options.geometry.identifier !== 'string' ||
-      options.geometry.identifier.length === 0
+      !validateNonEmptyString(
+        options.geometry.identifier,
+        ctx,
+        'Geometry identifier must be a non-empty string',
+        'geometry.identifier',
+      )
     ) {
-      // @TODO: Add error handling
-      console.error('Geometry identifier must be a non-empty string');
-
       return undefined;
     }
 
@@ -57,7 +57,6 @@ export const createItemVisual = (
       identifier: options.geometry.identifier,
     };
 
-    // Add bone_visibility if present
     if (options.geometry.boneVisibility) {
       geometryObj.bone_visibility = {};
       for (const bone in options.geometry.boneVisibility) {
@@ -68,19 +67,15 @@ export const createItemVisual = (
 
     result.geometry = geometryObj;
   } else {
-    // @TODO: Add error handling
-    console.error(
+    logContentError(
+      ctx,
       'Geometry must be a string or an object with valid properties',
     );
-
     return undefined;
   }
 
-  // Validate and add material_instances
   if (options.materialInstances === undefined) {
-    // @TODO: Add error handling
-    console.error('Material instances are required for item visual');
-
+    logContentError(ctx, 'Material instances are required for item visual');
     return undefined;
   }
 
@@ -88,9 +83,10 @@ export const createItemVisual = (
     typeof options.materialInstances !== 'object' ||
     options.materialInstances === null
   ) {
-    // @TODO: Add error handling
-    console.error('Material instances must be an object');
-
+    logContentError(
+      ctx !== undefined ? { ...ctx, fieldPath: 'materialInstances' } : undefined,
+      'Material instances must be an object',
+    );
     return undefined;
   }
 

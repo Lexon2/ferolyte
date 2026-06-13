@@ -8,6 +8,7 @@ import {
   validateBooleanValue,
   validateNonEmptyString,
   validatePositiveNumber,
+  validateVector3,
 } from '@artifex/pack/common/validation/content-validation';
 
 describe('buildFieldPath', () => {
@@ -26,6 +27,49 @@ describe('buildFieldPath', () => {
         fieldPath: 'maxDrawDuration',
       }),
     ).toBe('components.throwable.maxDrawDuration');
+  });
+
+  it('builds block section field paths', () => {
+    expect(
+      buildFieldPath({
+        section: 'states',
+        fieldPath: 'direction',
+        contentType: 'block',
+      }),
+    ).toBe('states.direction');
+
+    expect(
+      buildFieldPath({
+        section: 'traits',
+        fieldPath: 'placementDirection.states',
+        contentType: 'block',
+      }),
+    ).toBe('traits.placementDirection.states');
+
+    expect(
+      buildFieldPath({
+        section: 'permutations',
+        fieldPath: '[0].components.collisionBox',
+        contentType: 'block',
+      }),
+    ).toBe('permutations[0].components.collisionBox');
+
+    expect(
+      buildFieldPath({
+        section: 'menuCategory',
+        fieldPath: 'category',
+        contentType: 'block',
+      }),
+    ).toBe('menuCategory.category');
+
+    expect(
+      buildFieldPath({
+        section: 'components',
+        component: 'collisionBox',
+        fieldPath: 'origin',
+        contentType: 'block',
+      }),
+    ).toBe('components.collisionBox.origin');
   });
 });
 
@@ -99,6 +143,30 @@ describe('content validation helpers', () => {
         'Fuel duration must be a positive number',
         'duration',
       ),
+    ).toBe(false);
+
+    errorSpy.mockRestore();
+  });
+
+  it('validateVector3 accepts valid arrays and rejects invalid values', () => {
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    expect(
+      validateVector3([0, 0.5, 1], {
+        section: 'components',
+        component: 'collisionBox',
+        fieldPath: 'origin',
+        contentType: 'block',
+      }),
+    ).toBe(true);
+
+    expect(
+      validateVector3([0, 1], {
+        section: 'components',
+        component: 'collisionBox',
+        fieldPath: 'origin',
+        contentType: 'block',
+      }),
     ).toBe(false);
 
     errorSpy.mockRestore();

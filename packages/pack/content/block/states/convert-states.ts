@@ -1,12 +1,18 @@
 import { BlockStates } from '../interfaces/block-config';
+import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import {
+  validateNonEmptyArray,
+  validateNonEmptyString,
+  validateNumber,
+} from '../../../common/validation/content-validation';
 
 /**
  * Creates properly formatted block states for Minecraft blocks
- * @param states The block states definition
- * @returns The properly formatted block states or undefined if validation fails
  */
 export const convertBlockStates = (
   states?: BlockStates,
+  ctx?: ContentDiagnosticContext,
 ): BlockStates | undefined => {
   if (!states || typeof states !== 'object') {
     return undefined;
@@ -16,55 +22,65 @@ export const convertBlockStates = (
 
   for (const stateName in states) {
     const stateValue = states[stateName];
+    const stateContext =
+      ctx !== undefined ? { ...ctx, fieldPath: stateName } : undefined;
 
-    // Handle string array states (enumeration states)
     if (Array.isArray(stateValue)) {
-      if (stateValue.length === 0) {
-        // @TODO: Add error handling
-        console.error(
+      if (
+        !validateNonEmptyArray(
+          stateValue,
+          stateContext,
           `State "${stateName}" must have at least one possible value`,
-        );
-
+        )
+      ) {
         return undefined;
       }
 
-      // Validate all values are strings
-      for (const value of stateValue) {
-        if (typeof value === 'string' && value.length === 0) {
-          // @TODO: Add error handling
-          console.error(
+      for (let index = 0; index < stateValue.length; index++) {
+        const value = stateValue[index];
+        if (typeof value !== 'string' || value.length === 0) {
+          logContentError(
+            stateContext !== undefined
+              ? { ...stateContext, fieldPath: `[${index}]` }
+              : undefined,
             `State values for "${stateName}" must be non-empty strings`,
           );
-
           return undefined;
         }
       }
 
-      result[stateName] = [...(stateValue as string[])]; // Copy the array
-    }
-    // Handle numerical range states
-    else if (
+      result[stateName] = [...(stateValue as string[])];
+    } else if (
       typeof stateValue === 'object' &&
       stateValue !== null &&
       stateValue.values
     ) {
       const { min, max } = stateValue.values;
 
-      if (typeof min !== 'number' || typeof max !== 'number') {
-        // @TODO: Add error handling
-        console.error(
+      if (
+        !validateNumber(
+          min,
+          stateContext,
           `State "${stateName}" min and max values must be numbers`,
-        );
-
+          'values.min',
+        ) ||
+        !validateNumber(
+          max,
+          stateContext,
+          `State "${stateName}" min and max values must be numbers`,
+          'values.max',
+        )
+      ) {
         return undefined;
       }
 
       if (min > max) {
-        // @TODO: Add error handling
-        console.error(
+        logContentError(
+          stateContext !== undefined
+            ? { ...stateContext, fieldPath: 'values' }
+            : undefined,
           `State "${stateName}" min value cannot be greater than max value`,
         );
-
         return undefined;
       }
 
@@ -72,11 +88,10 @@ export const convertBlockStates = (
         values: { min, max },
       };
     } else {
-      // @TODO: Add error handling
-      console.error(
+      logContentError(
+        stateContext,
         `State "${stateName}" must be an array of strings or an object with min/max values`,
       );
-
       return undefined;
     }
   }
@@ -86,51 +101,49 @@ export const convertBlockStates = (
 
 /**
  * Creates a string enumeration state for Minecraft blocks
- * @param values The possible string values for this state
- * @returns Array of string values or undefined if validation fails
  */
-export const createEnumState = (values: string[]): string[] | undefined => {
-  if (!Array.isArray(values) || values.length === 0) {
-    // @TODO: Add error handling
-    console.error('Enum state must have at least one possible value');
-
+export const createEnumState = (
+  values: string[],
+  ctx?: ContentDiagnosticContext,
+): string[] | undefined => {
+  if (!validateNonEmptyArray(values, ctx, 'Enum state must have at least one possible value')) {
     return undefined;
   }
 
-  // Validate all values are strings
-  for (const value of values) {
-    if (typeof value !== 'string' || value.length === 0) {
-      // @TODO: Add error handling
-      console.error('Enum state values must be non-empty strings');
-
+  for (let index = 0; index < values.length; index++) {
+    const value = values[index];
+    if (
+      !validateNonEmptyString(
+        value,
+        ctx,
+        'Enum state values must be non-empty strings',
+        `[${index}]`,
+      )
+    ) {
       return undefined;
     }
   }
 
-  return [...values]; // Return a copy to avoid mutations
+  return [...values];
 };
 
 /**
  * Creates a numerical range state for Minecraft blocks
- * @param min The minimum value
- * @param max The maximum value
- * @returns An object with min/max values or undefined if validation fails
  */
 export const createIntState = (
   min: number,
   max: number,
+  ctx?: ContentDiagnosticContext,
 ): { values: { min: number; max: number } } | undefined => {
-  if (typeof min !== 'number' || typeof max !== 'number') {
-    // @TODO: Add error handling
-    console.error('Min and max values must be numbers');
-
+  if (
+    !validateNumber(min, ctx, 'Min and max values must be numbers', 'min') ||
+    !validateNumber(max, ctx, 'Min and max values must be numbers', 'max')
+  ) {
     return undefined;
   }
 
   if (min > max) {
-    // @TODO: Add error handling
-    console.error('Min value cannot be greater than max value');
-
+    logContentError(ctx, 'Min value cannot be greater than max value');
     return undefined;
   }
 
@@ -139,26 +152,14 @@ export const createIntState = (
   };
 };
 
-/**
- * Helper function to create a boolean state (true/false)
- * @returns An array with "true" and "false" strings
- */
 export const createBooleanState = (): string[] => {
   return ['true', 'false'];
 };
 
-/**
- * Helper function to create a direction state (north, south, east, west)
- * @returns An array with cardinal direction strings
- */
 export const createDirectionState = (): string[] => {
   return ['north', 'south', 'east', 'west'];
 };
 
-/**
- * Helper function to create a facing state (including up and down)
- * @returns An array with all six direction strings
- */
 export const createFacingState = (): string[] => {
   return ['north', 'south', 'east', 'west', 'up', 'down'];
 };
