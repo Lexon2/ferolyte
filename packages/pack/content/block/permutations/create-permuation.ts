@@ -74,12 +74,16 @@ export const parseBlockPermutationCondition = (
         result += `(${stateCondition}) && `;
       }
     }
+
+    if (result) {
+      result = result.slice(0, -4);
+    }
   }
 
   if (query) {
     result += `${query}`;
   }
-  return result ? result.slice(0, -4) : undefined;
+  return result;
 };
 
 /**

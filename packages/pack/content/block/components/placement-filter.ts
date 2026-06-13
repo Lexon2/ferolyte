@@ -1,4 +1,57 @@
-import { PlacementFilterComponent } from '../interfaces/block-config';
+import {
+  BlockFilterDescriptor,
+  PlacementFilterComponent,
+} from '../interfaces/block-config';
+
+const convertBlockFilter = (
+  filter: BlockFilterDescriptor,
+): any | undefined => {
+  if (typeof filter === 'string') {
+    if (filter.length === 0) {
+      console.error('Block filter strings must not be empty');
+
+      return undefined;
+    }
+    return filter;
+  }
+
+  if (typeof filter === 'object' && filter !== null) {
+    if ('name' in filter) {
+      const descriptor: any = { name: filter.name };
+
+      if (typeof filter.name !== 'string' || filter.name.length === 0) {
+        console.error('Block filter name must be a non-empty string');
+
+        return undefined;
+      }
+
+      if (filter.states !== undefined) {
+        descriptor.states = filter.states;
+      }
+
+      if (filter.tags !== undefined) {
+        if (typeof filter.tags !== 'string' || filter.tags.length === 0) {
+          console.error('Block filter tags must be a non-empty string');
+
+          return undefined;
+        }
+        descriptor.tags = filter.tags;
+      }
+
+      return descriptor;
+    }
+
+    if (typeof filter.tags === 'string') {
+      return { tags: filter.tags };
+    }
+  }
+
+  console.error(
+    'Block filter must be a string or a valid block descriptor object',
+  );
+
+  return undefined;
+};
 
 /**
  * Creates a placement_filter component for Minecraft blocks
@@ -48,28 +101,11 @@ export const createPlacementFilter = (
         const blockFilters: any[] = [];
 
         for (const filter of condition.blockFilter) {
-          if (typeof filter === 'string') {
-            if (filter.length === 0) {
-              // @TODO: Add error handling
-              console.error('Block filter strings must not be empty');
-
-              return undefined;
-            }
-            blockFilters.push(filter);
-          } else if (
-            typeof filter === 'object' &&
-            filter !== null &&
-            typeof filter.tags === 'string'
-          ) {
-            blockFilters.push({ tags: filter.tags });
-          } else {
-            // @TODO: Add error handling
-            console.error(
-              'Block filter must be a string or an object with tags property',
-            );
-
+          const converted = convertBlockFilter(filter);
+          if (converted === undefined) {
             return undefined;
           }
+          blockFilters.push(converted);
         }
 
         newCondition.block_filter = blockFilters;

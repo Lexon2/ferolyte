@@ -96,6 +96,15 @@ export const createLiquidDetection = (
           rule.stopsLiquidFlowingFromDirection;
       }
 
+      if (rule.useLiquidClipping !== undefined) {
+        if (typeof rule.useLiquidClipping !== 'boolean') {
+          console.error('Use liquid clipping must be a boolean');
+
+          return undefined;
+        }
+        newRule.use_liquid_clipping = rule.useLiquidClipping;
+      }
+
       rules.push(newRule);
     }
 

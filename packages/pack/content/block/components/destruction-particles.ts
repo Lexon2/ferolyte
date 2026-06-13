@@ -28,16 +28,34 @@ export const createDestructionParticles = (
 
   // Validate and add tint_method
   if (options.tintMethod !== undefined) {
-    const validTintMethods = ['noise', 'underwater', 'sinusoidal', null];
-    if (!validTintMethods.includes(options.tintMethod as any)) {
-      // @TODO: Add error handling
-      console.error(
-        'Tint method must be "noise", "underwater", "sinusoidal", or null',
-      );
+    const validTintMethods = [
+      'none',
+      'default_foliage',
+      'birch_foliage',
+      'evergreen_foliage',
+      'dry_foliage',
+      'grass',
+      'water',
+    ];
+    if (!validTintMethods.includes(options.tintMethod)) {
+      console.error('Tint method must be a valid tint method enum value');
 
       return undefined;
     }
     result.tint_method = options.tintMethod;
+  }
+
+  if (options.particleCount !== undefined) {
+    if (
+      typeof options.particleCount !== 'number' ||
+      options.particleCount < 0 ||
+      options.particleCount > 255
+    ) {
+      console.error('Particle count must be a number between 0 and 255');
+
+      return undefined;
+    }
+    result.particle_count = options.particleCount;
   }
 
   return {

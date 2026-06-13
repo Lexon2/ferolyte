@@ -1,7 +1,8 @@
 import { convertBlockComponents } from './convert-components';
 import { BlockConfig } from './interfaces/block-config';
 import { createBlockPermutations } from './permutations/create-permuation';
-import { createBlockStates } from './states/create-states';
+import { convertBlockStates } from './states/convert-states';
+import { convertBlockTraits } from './traits/convert-traits';
 import { ContentBuilder } from '../../common/interfaces/content.builder';
 import { CONTENT_METADATA } from '../../compiler/content/content.metadata';
 import { convertMenuCategory } from '../item/convertors/components/menu-category/convert-category';
@@ -43,6 +44,7 @@ export class BlockBuilder implements ContentBuilder {
     this.formatComponents(minecraftBlock);
     this.formatPermutations(minecraftBlock);
     this.formatStates(minecraftBlock);
+    this.formatTraits(minecraftBlock);
 
     return minecraftBlock;
   }
@@ -93,11 +95,25 @@ export class BlockBuilder implements ContentBuilder {
       return;
     }
 
-    const minecraftStates = createBlockStates(states);
+    const minecraftStates = convertBlockStates(states);
     if (minecraftStates === undefined) {
       return;
     }
 
-    file['minecraft:block'].states = { ...minecraftStates };
+    file['minecraft:block'].description.states = { ...minecraftStates };
+  }
+
+  private formatTraits(file: any) {
+    const { traits } = this.config;
+    if (traits === undefined) {
+      return;
+    }
+
+    const minecraftTraits = convertBlockTraits(traits);
+    if (minecraftTraits === undefined) {
+      return;
+    }
+
+    file['minecraft:block'].description.traits = { ...minecraftTraits };
   }
 }

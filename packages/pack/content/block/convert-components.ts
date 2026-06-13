@@ -14,26 +14,29 @@ export const convertBlockComponents = (
     return;
   }
 
-  for (const component in components) {
+  for (const componentId in components) {
     const factory =
       blockComponentCreatorsFactory[
-        component as keyof typeof blockComponentCreatorsFactory
+        componentId as keyof typeof blockComponentCreatorsFactory
       ];
-    if (factory === undefined) {
-      console.warn(
-        `Item component "${component}" is not supported. Skipping...`,
+
+    let componentData: any = {};
+    if (factory !== undefined) {
+      componentData = factory(
+        components[componentId as keyof typeof components],
       );
-      continue;
+
+      if (componentData === undefined) {
+        console.warn(`Item component "${componentId}" is invalid. Skipping...`);
+        continue;
+      }
+    } else {
+      componentData = {
+        [componentId]: components[componentId as keyof typeof components],
+      };
     }
 
-    const componentData = components[component as keyof typeof components];
-    const minecraftComponent = factory(componentData);
-
-    if (minecraftComponent === undefined) {
-      console.warn(`Item component "${component}" is invalid. Skipping...`);
-      continue;
-    }
-    result = { ...result, ...minecraftComponent };
+    result = { ...result, ...componentData };
   }
 
   return result;

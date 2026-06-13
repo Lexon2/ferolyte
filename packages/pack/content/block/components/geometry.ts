@@ -88,6 +88,34 @@ export const createGeometry = (
       result.culling_layer = options.cullingLayer;
     }
 
+    if (options.cullingShape !== undefined) {
+      if (
+        typeof options.cullingShape !== 'string' ||
+        options.cullingShape.length === 0
+      ) {
+        console.error('Culling shape must be a non-empty string');
+
+        return undefined;
+      }
+      result.culling_shape = options.cullingShape;
+    }
+
+    if (options.uvLock !== undefined) {
+      if (typeof options.uvLock === 'boolean') {
+        result.uv_lock = options.uvLock;
+      } else if (
+        Array.isArray(options.uvLock) &&
+        options.uvLock.length > 0 &&
+        options.uvLock.every((bone) => typeof bone === 'string')
+      ) {
+        result.uv_lock = options.uvLock;
+      } else {
+        console.error('UV lock must be a boolean or a non-empty string array');
+
+        return undefined;
+      }
+    }
+
     return {
       'minecraft:geometry': result,
     };

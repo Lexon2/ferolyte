@@ -1,4 +1,4 @@
-const validTags = [
+export const vanillaTags = [
   'diamond_tier_destructible',
   'iron_tier_destructible',
   'is_axe_item_destructible',
@@ -12,7 +12,7 @@ const validTags = [
   'stone_tier_destructible',
 ] as const;
 
-export type BlockTags = (typeof validTags)[number];
+export type BlockTags = (typeof vanillaTags)[number];
 
 /**
  * Creates a tag component for Minecraft blocks
@@ -29,19 +29,14 @@ export const createBlockTags = (
   const result: Record<string, object> = {};
 
   for (const tag of tags) {
-    if (
-      typeof tag !== 'string' ||
-      tag.length === 0 ||
-      validTags.indexOf(tag as BlockTags) === -1
-    ) {
+    if (typeof tag !== 'string' || tag.length === 0) {
       // @TODO: Add error handling
       console.error('Block tags must be non-empty strings');
 
       return undefined;
     }
 
-    // Create the tag:minecraft:{tag} component
-    result[`tag:minecraft:${tag}`] = {};
+    result[`tag:${tag}`] = {};
   }
 
   return result;

@@ -1,3 +1,5 @@
+import { Identifier } from '@artifex/common/types/base';
+
 import { ColorValue } from '../../../content/common/types/color-value';
 import { ItemMenuCategory } from '../../item/interfaces/item-menu-category';
 import { BlockTags } from '../components/tags';
@@ -87,10 +89,20 @@ export interface DestructibleByMiningComponent {
   }>;
 }
 
+export type TintMethod =
+  | 'none'
+  | 'default_foliage'
+  | 'birch_foliage'
+  | 'evergreen_foliage'
+  | 'dry_foliage'
+  | 'grass'
+  | 'water';
+
 // Interface for destruction particles component
 export interface DestructionParticlesComponent {
   texture?: string;
-  tintMethod?: string;
+  tintMethod?: TintMethod;
+  particleCount?: number;
 }
 
 // Interface for flammable component
@@ -105,6 +117,8 @@ export interface GeometryComponent {
   boneVisibility?: Record<string, boolean | string>;
   culling?: string;
   cullingLayer?: string;
+  cullingShape?: string;
+  uvLock?: boolean | string[];
 }
 
 // Interface for item visual component
@@ -112,6 +126,8 @@ export interface ItemVisualComponent {
   geometry: string | GeometryComponent;
   materialInstances: MaterialInstancesComponent;
 }
+
+export type EmbeddedVisualComponent = ItemVisualComponent;
 
 // Interface for liquid detection component
 export interface LiquidDetectionComponent {
@@ -122,12 +138,24 @@ export interface LiquidDetectionComponent {
     stopsLiquidFlowingFromDirection?: Array<
       'up' | 'down' | 'north' | 'south' | 'east' | 'west' | 'side' | 'all'
     >;
+    useLiquidClipping?: boolean;
   }>;
 }
 
 // Interface for material instances component
-export interface MaterialInstancesComponent {
-  [face: string]:
+export const enum MaterialInstanceFace {
+  Up = 'up',
+  Down = 'down',
+  North = 'north',
+  South = 'south',
+  East = 'east',
+  West = 'west',
+  Side = 'side',
+  All = '*',
+}
+
+export type MaterialInstancesComponent = {
+  [face in MaterialInstanceFace | (string & {})]?:
     | string
     | {
         ambientOcclusion?: boolean | number;
@@ -143,9 +171,19 @@ export interface MaterialInstancesComponent {
           | 'alpha_test_single_sided_to_opaque';
         texture?: string;
         isotropic?: boolean;
-        tintMethod?: string;
+        tintMethod?: TintMethod;
+        alphaMaskedTint?: boolean;
       };
-}
+};
+
+export type BlockFilterDescriptor =
+  | string
+  | { tags: string }
+  | {
+      name: string;
+      states?: Record<string, boolean | number | string>;
+      tags?: string;
+    };
 
 // Interface for placement filter component
 export interface PlacementFilterComponent {
@@ -153,7 +191,7 @@ export interface PlacementFilterComponent {
     allowedFaces?: Array<
       'up' | 'down' | 'north' | 'south' | 'east' | 'west' | 'side' | 'all'
     >;
-    blockFilter?: Array<string | { tags: string }>;
+    blockFilter?: BlockFilterDescriptor[];
   }>;
 }
 
@@ -189,16 +227,78 @@ export interface EntityFallOnComponent {
   minFallDistance?: number;
 }
 
+export interface ChestObstructionComponent {
+  obstructionRule?: 'always' | 'never' | 'shape';
+}
+
+export interface ConnectionRuleComponent {
+  acceptsConnectionsFrom?: 'all' | 'none' | 'only_fences';
+  enabledDirections?: Array<'east' | 'north' | 'south' | 'west'>;
+}
+
+export interface LeashableComponent {
+  offset?: Vector3;
+}
+
+export interface MovableComponent {
+  movementType: 'push_pull' | 'push' | 'popped' | 'immovable';
+  sticky?: 'same' | 'none';
+}
+
+export interface PrecipitationInteractionsComponent {
+  precipitationBehavior:
+    | 'obstruct_rain'
+    | 'obstruct_rain_accumulate_snow'
+    | 'none'
+    | 'snow_log_no_collision';
+}
+
+export interface RandomOffsetAxis {
+  range?: { min?: number; max?: number };
+  steps?: number;
+}
+
+export interface RandomOffsetComponent {
+  x?: RandomOffsetAxis;
+  y?: RandomOffsetAxis;
+  z?: RandomOffsetAxis;
+}
+
+export interface RedstoneConsumerComponent {
+  minPower: number;
+  propagatesPower?: boolean;
+}
+
+export interface RedstoneProducerComponent {
+  power: number;
+  stronglyPoweredFace?: Array<
+    'up' | 'down' | 'north' | 'south' | 'east' | 'west' | 'side' | 'all'
+  >;
+  connectedFaces?: Array<
+    'up' | 'down' | 'north' | 'south' | 'east' | 'west' | 'side' | 'all'
+  >;
+  transformRelative?: boolean;
+}
+
+export interface SupportComponent {
+  shape: 'fence' | 'stair';
+}
+
 export type MapColorComponent =
   | ColorValue
   | { color: ColorValue; tintMethod?: string };
 
 // Main block components interface
-export interface BlockComponents {
+export interface BlockComponents<Legacy extends boolean = false> {
   /**
    * Collision box for the block
    */
-  collisionBox?: boolean | CollisionBoxComponent;
+  collisionBox?: boolean | CollisionBoxComponent | CollisionBoxComponent[];
+
+  /**
+   * Chest obstruction rule
+   */
+  chestObstruction?: ChestObstructionComponent;
 
   /**
    * Makes block into a custom crafting table
@@ -206,9 +306,15 @@ export interface BlockComponents {
   craftingTable?: CraftingTableComponent;
 
   /**
-   * Custom component definitions
+   * Connection rule for fences, walls, etc.
    */
-  customComponents?: string[];
+  connectionRule?: ConnectionRuleComponent;
+
+  /**
+   * Custom component definitions
+   * @description Used for legacy (version < 1.21.90) custom component keys.
+   */
+  customComponents?: Legacy extends true ? string[] : never;
 
   /**
    * Destructible by explosion properties
@@ -231,14 +337,19 @@ export interface BlockComponents {
   displayName?: string;
 
   /**
-   * Entity fall on behavior
+   * Visual when embedded in another block (e.g. flowerpot)
    */
-  entityFallOn?: EntityFallOnComponent;
+  embeddedVisual?: EmbeddedVisualComponent;
 
   /**
    * Flammable properties
    */
   flammable?: boolean | FlammableComponent;
+
+  /**
+   * Allows embedding in a flowerpot
+   */
+  flowerPottable?: boolean;
 
   /**
    * Friction value for the block (0.0-0.9)
@@ -254,6 +365,11 @@ export interface BlockComponents {
    * Item visual properties
    */
   itemVisual?: ItemVisualComponent;
+
+  /**
+   * Leash attachment offset
+   */
+  leashable?: LeashableComponent;
 
   /**
    * Light dampening value (0-15)
@@ -286,9 +402,24 @@ export interface BlockComponents {
   materialInstances?: MaterialInstancesComponent;
 
   /**
+   * Piston movement behavior
+   */
+  movable?: MovableComponent;
+
+  /**
    * Placement filter conditions
    */
   placementFilter?: PlacementFilterComponent;
+
+  /**
+   * Rain and snow interaction behavior
+   */
+  precipitationInteractions?: PrecipitationInteractionsComponent;
+
+  /**
+   * Random position offset like foliage
+   */
+  randomOffset?: RandomOffsetComponent;
 
   /**
    * Redstone conductivity properties
@@ -296,9 +427,29 @@ export interface BlockComponents {
   redstoneConductivity?: RedstoneConductivityComponent;
 
   /**
+   * Redstone signal consumer
+   */
+  redstoneConsumer?: RedstoneConsumerComponent;
+
+  /**
+   * Redstone signal producer
+   */
+  redstoneProducer?: RedstoneProducerComponent;
+
+  /**
+   * Block can be replaced when another block is placed
+   */
+  replaceable?: boolean;
+
+  /**
    * Selection box for the block
    */
   selectionBox?: boolean | SelectionBoxComponent;
+
+  /**
+   * Support shape (fence, stair)
+   */
+  support?: SupportComponent;
 
   /**
    * Tick component properties
@@ -313,17 +464,28 @@ export interface BlockComponents {
   /**
    * Block tags
    */
-  tags?: BlockTags[];
+  tags?: (BlockTags | (string & {}))[];
 }
+
+export type BlockVersions =
+  | '1.21.70'
+  | '1.21.80'
+  | '1.21.90'
+  | '1.21.100'
+  | '1.21.110'
+  | '1.21.120'
+  | '1.21.130'
+  | '1.26.10'
+  | '1.26.20';
 
 /**
  * Main interface for block configuration
  */
-export interface BlockConfig {
+export interface BlockConfig<Version extends BlockVersions = BlockVersions> {
   /**
    * Block version
    */
-  version?: '1.21.70' | '1.21.80';
+  version?: Version;
   /**
    * Block identifier
    * @example "minecraft:stone" or "example:my_block"
@@ -348,7 +510,9 @@ export interface BlockConfig {
   /**
    * Block components
    */
-  components?: BlockComponents;
+  components?:
+    | BlockComponents<Version extends '1.21.70' | '1.21.80' ? true : false>
+    | Record<Identifier, any>;
 
   /**
    * Block permutations based on states

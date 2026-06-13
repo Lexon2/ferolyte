@@ -142,6 +142,15 @@ export const createMaterialInstances = (
         materialObj.tint_method = material.tintMethod;
       }
 
+      if (material.alphaMaskedTint !== undefined) {
+        if (typeof material.alphaMaskedTint !== 'boolean') {
+          console.error(`Alpha masked tint for face "${face}" must be a boolean`);
+
+          return undefined;
+        }
+        materialObj.alpha_masked_tint = material.alphaMaskedTint;
+      }
+
       result[face] = materialObj;
     }
   }
