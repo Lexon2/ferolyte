@@ -3,6 +3,7 @@
 node_modules
 yarn.lock
 *.zip
+package-lock.json
 
 dist
 packs
