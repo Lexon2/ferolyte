@@ -5,7 +5,6 @@
     "lib": ["es2020", "dom"],
     "moduleResolution": "node",
     "rootDir": ".",
-    "outDir": "./dist",
     "baseUrl": ".",
     "declaration": false,
     "noEmitHelpers": true,
@@ -18,13 +17,19 @@
     "strict": true,
     "allowUnreachableCode": true,
     "allowUnusedLabels": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitReturns": false,
     "noImplicitUseStrict": false,
     "listFiles": false,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "allowJs": true,
+    "incremental": true,
+    "composite": true,
+    "strictNullChecks": true,
     "paths": {
+      "@artifex/core/*": ["packages/core/*"],
       "@artifex/common/*": ["packages/common/*"],
       "@artifex/events/*": ["packages/events/*"],
       "@artifex/pack/*": ["packages/pack/*"],
@@ -32,7 +37,7 @@
       "@artifex/utils/*": ["packages/utils/*"]
     }
   },
-  "include": ["packages/**/*", "test/**/*", "packs/**/*", "artifex.config.mts"],
-  "exclude": ["node_modules"],
+  "include": ["test/**/*"],
+  "exclude": ["node_modules", "artifex", "packs"],
   "compileOnSave": false
 }

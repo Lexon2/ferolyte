@@ -1,24 +1,24 @@
 {
   "name": "@artifex",
-  "version": "0.1.0",
   "license": "MIT",
+  "version": "0.1.0",
   "description": "Craft your Minecraft BE addons easialy with Artifex framework.",
   "main": "src/main.ts",
+  "type": "module",
   "scripts": {
     "lint": "eslint \"./packages/**/*.ts\"",
     "lint:fix": "eslint \"./packages/**/*.ts\" --fix",
-    "artifex:build": "tsx test/packs/tasks/build.ts",
-    "artifex:watch": "tsx test/packs/tasks/watch.ts",
+    "artifex:build": "tsx test/tasks/build.ts",
+    "artifex:watch": "tsx test/tasks/watch.ts",
+    "artifex:watch:development": "tsx test/tasks/watch.ts development",
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "license": "MIT",
-  "type": "module",
   "dependencies": {
     "@minecraft/debug-utilities": "^1.0.0-beta.1.21.102-stable",
-    "@minecraft/server": "^2.3.0",
+    "@minecraft/server": "^2.6.0",
     "@minecraft/server-ui": "2.0.0",
-    "@minecraft/vanilla-data": "^1.21.120",
+    "@minecraft/vanilla-data": "^1.26.20",
     "chokidar": "^4.0.3",
     "esbuild": "^0.25.2"
   },
