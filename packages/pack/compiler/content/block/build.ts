@@ -1,6 +1,7 @@
 import { join } from 'path';
 
 import { BlockBuilder } from '../../../content/block/block-builder';
+import { ContentBuildOptions } from '../../actions/options';
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
 import { writeFileByPath } from '../utils/write-file-by-path';
@@ -8,12 +9,12 @@ import { writeFileByPath } from '../utils/write-file-by-path';
 export const buildBlockJson = async (
   filePath: string,
   builder: BlockBuilder,
-  debug: boolean = true,
+  options: ContentBuildOptions = { debug: true, diagnostics: true },
 ): Promise<string | undefined> => {
   builder.withBuildContext({
     sourceFile: filePath,
     identifier: builder.cloneConfig().identifier,
-    debug,
+    diagnostics: options.diagnostics,
     contentType: 'block',
   });
 

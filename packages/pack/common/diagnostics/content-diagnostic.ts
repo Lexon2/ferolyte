@@ -14,6 +14,7 @@ export interface ContentDiagnosticContext {
   fieldPath?: string;
   section?: ContentSection;
   debug?: boolean;
+  diagnostics?: boolean;
   contentType?: ContentType;
 }
 
@@ -80,7 +81,7 @@ export const logContentError = (
   ctx: ContentDiagnosticContext | undefined,
   reason: string,
 ): void => {
-  if (ctx?.debug === false) {
+  if (ctx?.diagnostics === false) {
     return;
   }
 

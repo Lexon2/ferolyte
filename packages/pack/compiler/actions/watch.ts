@@ -8,52 +8,65 @@ import { createPacksOutputPathFromInputPath } from './utils/create-output-path';
 import { loadConfig } from '../config/load-config';
 import { rebuildFile, unlinkContentFile } from '../core/builder';
 import { DependencyGraphActions } from '../core/graph';
+import {
+  CompilerActionOptions,
+  ContentBuildOptions,
+  resolveCompilerOptions,
+} from './options';
 
-const processEdit = async (filePath: string) => {
-  try {
-    if (!filePath.endsWith('.ts')) {
-      const outputPath = createPacksOutputPathFromInputPath(filePath);
-      if (outputPath) {
-        await copyFile(filePath, outputPath);
-        console.log(`\n🔄 Copied ${filePath}\n       To ${outputPath}\n`);
+const createProcessEdit =
+  (buildOptions: ContentBuildOptions) => async (filePath: string) => {
+    try {
+      if (!filePath.endsWith('.ts')) {
+        const outputPath = createPacksOutputPathFromInputPath(filePath);
+        if (outputPath) {
+          await copyFile(filePath, outputPath);
+          console.log(`\n🔄 Copied ${filePath}\n       To ${outputPath}\n`);
+        }
+        return;
       }
-      return;
-    }
 
-    await rebuildFile(filePath);
-    // if (isArtifexContentFile(filePath)) {
-    // }
-  } catch {}
-};
+      await rebuildFile(filePath, buildOptions);
+    } catch {}
+  };
 
-const processUnlink = async (filePath: string) => {
-  try {
-    if (!filePath.endsWith('.ts')) {
-      const outputPath = createPacksOutputPathFromInputPath(filePath);
-      if (outputPath) {
-        await unlink(outputPath);
-        console.log(`\n🔄 Deleted ${filePath}\n       To ${outputPath}\n`);
+const createProcessUnlink =
+  (buildOptions: ContentBuildOptions) => async (filePath: string) => {
+    try {
+      if (!filePath.endsWith('.ts')) {
+        const outputPath = createPacksOutputPathFromInputPath(filePath);
+        if (outputPath) {
+          await unlink(outputPath);
+          console.log(`\n🔄 Deleted ${filePath}\n       To ${outputPath}\n`);
+        }
+        return;
       }
-      return;
-    }
 
-    await unlinkContentFile(filePath);
-    // if (isArtifexContentFile(filePath)) {
-    // }
-  } catch {}
-};
+      await unlinkContentFile(filePath, buildOptions);
+    } catch {}
+  };
 
 /**
  * Watches the input directory for changes and rebuilds the content.
  */
-export const watch = async (profile: string) => {
-  await loadConfig(profile);
+export const watch = async (options: CompilerActionOptions) => {
+  const resolved = resolveCompilerOptions(options);
+  const buildOptions: ContentBuildOptions = {
+    debug: resolved.debug,
+    diagnostics: resolved.diagnostics,
+  };
+
+  await loadConfig(resolved.profile);
   console.log('🔍 Building dependency graph...');
   await DependencyGraphActions.create();
 
-  await build(false, profile);
+  await build({
+    profile: resolved.profile,
+    debug: resolved.debug,
+    diagnostics: resolved.diagnostics,
+  });
 
-  const process = chokidar.watch(BUILD_CONTEXT.PACKS.INPUT_BASE_PATH, {
+  const watcher = chokidar.watch(BUILD_CONTEXT.PACKS.INPUT_BASE_PATH, {
     awaitWriteFinish: {
       stabilityThreshold: 500,
     },
@@ -62,10 +75,16 @@ export const watch = async (profile: string) => {
     persistent: true,
   });
 
-  process
+  const processEdit = createProcessEdit(buildOptions);
+  const processUnlink = createProcessUnlink(buildOptions);
+
+  watcher
     .on('add', processEdit)
     .on('change', processEdit)
-    .on('unlink', processUnlink);
+    .on('unlink', processUnlink)
+    .on('addDir', (dirPath) => {
+      watcher.add(dirPath);
+    });
 
   console.log('🚀 Watcher is running');
 };

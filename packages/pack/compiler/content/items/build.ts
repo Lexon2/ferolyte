@@ -4,16 +4,17 @@ import { ItemBuilder } from '../../../content/item/item-builder';
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
 import { writeFileByPath } from '../utils/write-file-by-path';
+import { ContentBuildOptions } from '../../actions/options';
 
 export const buildItemJson = async (
   filePath: string,
   builder: ItemBuilder,
-  debug: boolean = true,
+  options: ContentBuildOptions = { debug: true, diagnostics: true },
 ): Promise<string | undefined> => {
   builder.withBuildContext({
     sourceFile: filePath,
     identifier: builder.cloneConfig().identifier,
-    debug,
+    diagnostics: options.diagnostics,
     contentType: 'item',
   });
 

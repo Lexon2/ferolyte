@@ -7,6 +7,10 @@ import { createPacksOutputPathFromInputPath } from './utils/create-output-path';
 import { getBuildCacheDistDir } from '../content/utils/build-cache-dist-dir';
 import { ArtifexContentBuilder } from '../core/builder';
 import { isArtifexContentFile } from '../core/utils/is-content-file';
+import {
+  CompilerActionOptions,
+  resolveCompilerOptions,
+} from './options';
 
 /**
  * Walks through a directory and yields all files.
@@ -70,7 +74,9 @@ const clearBuildDirectory = async () => {
 /**
  * Builds the content.
  */
-export const build = async (debug: boolean = true, profile: string) => {
+export const build = async (options: CompilerActionOptions) => {
+  const { profile, debug, diagnostics } = resolveCompilerOptions(options);
+
   if (debug) {
     console.log('🔄 Building...');
   }
@@ -82,7 +88,7 @@ export const build = async (debug: boolean = true, profile: string) => {
   const [copyFilePaths, buildFilePaths] = await createBuildDictionary();
 
   for (const file of buildFilePaths) {
-    await ArtifexContentBuilder.buildFile(file, debug);
+    await ArtifexContentBuilder.buildFile(file, { debug, diagnostics });
   }
 
   for (const [source, destination] of Object.entries(copyFilePaths)) {

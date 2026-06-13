@@ -6,6 +6,7 @@ import { CONTENT_METADATA } from './content.metadata';
 import { buildItemJson } from './items/build';
 import { buildServerEntityJson } from './server-entity/build';
 import { ContentBuilder } from '../../common/interfaces/content.builder';
+import { ContentBuildOptions } from '../actions/options';
 
 const contentFactory = {
   [CONTENT_METADATA.ITEM]: buildItemJson,
@@ -35,8 +36,9 @@ export interface BuildContentJsonResult {
 export const buildContentJson = async (
   filePath: string,
   bundledFileUrl: string,
-  debug: boolean = true,
+  options: ContentBuildOptions = { debug: true, diagnostics: true },
 ): Promise<BuildContentJsonResult | Error | undefined> => {
+  const { debug, diagnostics } = options;
   const filename = basename(filePath);
 
   const contentBuilder = await importContent(bundledFileUrl);
@@ -69,7 +71,10 @@ export const buildContentJson = async (
       return;
     }
 
-    const outFile = await buildFunction(filePath, builder as any, debug);
+    const outFile = await buildFunction(filePath, builder as any, {
+      debug,
+      diagnostics,
+    });
     if (outFile === undefined) {
       if (debug) {
         return new Error(`\n🛑 Failed to build: ${filename}\n`);

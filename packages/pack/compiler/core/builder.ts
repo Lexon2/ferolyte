@@ -13,13 +13,18 @@ import { createEsbuildConfig } from './utils/build-esbuild-config';
 import { isArtifexContentFile } from './utils/is-content-file';
 import { getBuildCacheDistDir } from '../content/utils/build-cache-dist-dir';
 import { createContentPath } from '../content/utils/create-content-path';
+import { ContentBuildOptions } from '../actions/options';
 
 /**
  * Builds a file using esbuild and imports it.
  * @param filePath - The path to the file to build.
  * @returns A promise that resolves when the file is built and imported.
  */
-export const buildFile = async (filePath: string, debug: boolean = true) => {
+export const buildFile = async (
+  filePath: string,
+  options: ContentBuildOptions = { debug: true, diagnostics: true },
+) => {
+  const { debug, diagnostics } = options;
   const startTime = Date.now();
   const fileName = basename(filePath, '.ts') + Date.now().toString() + '.js';
   const outFile = join(getBuildCacheDistDir(), fileName);
@@ -31,7 +36,10 @@ export const buildFile = async (filePath: string, debug: boolean = true) => {
   let result: BuildContentJsonResult | undefined;
 
   try {
-    const buildResult = await buildContentJson(filePath, url, debug);
+    const buildResult = await buildContentJson(filePath, url, {
+      debug,
+      diagnostics,
+    });
     if (buildResult instanceof Error) {
       console.error(buildResult.message);
 
@@ -70,13 +78,16 @@ export const buildFile = async (filePath: string, debug: boolean = true) => {
  * @param filePath - The path to the file to rebuild.
  * @returns A promise that resolves when the file and its dependencies are rebuilt.
  */
-export const rebuildFile = async (filePath: string, debug: boolean = true) => {
+export const rebuildFile = async (
+  filePath: string,
+  options: ContentBuildOptions = { debug: true, diagnostics: true },
+) => {
   await rm(getBuildCacheDistDir(), { recursive: true, force: true });
 
   const filesToRebuild = await addFile(filePath);
 
   for (const file of [...filesToRebuild].filter(isArtifexContentFile)) {
-    await buildFile(file, debug);
+    await buildFile(file, options);
   }
 };
 
@@ -86,8 +97,9 @@ export const rebuildFile = async (filePath: string, debug: boolean = true) => {
  */
 export const unlinkContentFile = async (
   filePath: string,
-  debug: boolean = true,
+  options: ContentBuildOptions = { debug: true, diagnostics: true },
 ) => {
+  const { debug } = options;
   const distPath = createContentPath(filePath);
   if (!distPath) {
     return;

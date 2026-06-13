@@ -97,12 +97,12 @@ describe('logContentError', () => {
     errorSpy.mockRestore();
   });
 
-  it('does not log when debug is false', () => {
+  it('does not log when diagnostics is false', () => {
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     logContentError(
       {
-        debug: false,
+        diagnostics: false,
         component: 'allowOffHand',
       },
       'Allow off hand must be a boolean',

@@ -4,11 +4,12 @@ import { ClientEntityBuilder } from '../../../content/client-entity/client-entit
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
 import { writeFileByPath } from '../utils/write-file-by-path';
+import { ContentBuildOptions } from '../../actions/options';
 
 export const buildClientEntityJson = async (
   filePath: string,
   builder: ClientEntityBuilder,
-  _debug: boolean = true,
+  _options: ContentBuildOptions = { debug: true, diagnostics: true },
 ): Promise<string | undefined> => {
   const json = builder.build();
   const jsonString = JSON.stringify(json, null, 2);

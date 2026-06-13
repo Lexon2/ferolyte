@@ -5,6 +5,7 @@ import { ServerEntityBuilder } from '../../../content/server-entity/server-entit
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
 import { writeFileByPath } from '../utils/write-file-by-path';
+import { ContentBuildOptions } from '../../actions/options';
 
 // TODO: Remove this once we have a better way to handle floats
 const replaceArtifexFloatsInJsonString = (json: string): string => {
@@ -49,7 +50,7 @@ const replaceTrailingZeroFloats = (obj: any): void => {
 export const buildServerEntityJson = async (
   filePath: string,
   builder: ServerEntityBuilder,
-  _debug: boolean = true,
+  _options: ContentBuildOptions = { debug: true, diagnostics: true },
 ): Promise<string | undefined> => {
   const json = builder.build();
   replaceTrailingZeroFloats(json);
