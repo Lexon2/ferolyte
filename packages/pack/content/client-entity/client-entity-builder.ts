@@ -28,6 +28,7 @@ export class ClientEntityBuilder implements ContentBuilder {
     };
 
     this.formatDescription(entity);
+    this.formatScripts(entity);
 
     return entity;
   }
@@ -39,7 +40,6 @@ export class ClientEntityBuilder implements ContentBuilder {
       materials,
       minEngineVersion,
       animations,
-      scripts,
       soundEffects,
       particleEffects,
       particleEmitters,
@@ -91,10 +91,6 @@ export class ClientEntityBuilder implements ContentBuilder {
       description.animations = animations;
     }
 
-    if (scripts !== undefined) {
-      description.scripts = scripts;
-    }
-
     if (soundEffects !== undefined) {
       description.sound_effects = soundEffects;
     }
@@ -129,6 +125,92 @@ export class ClientEntityBuilder implements ContentBuilder {
 
     if (spawnEgg !== undefined) {
       description.spawn_egg = spawnEgg;
+    }
+  }
+
+  private formatScripts(entity: any) {
+    const { scripts } = this.config;
+    if (scripts === undefined) {
+      return;
+    }
+
+    const {
+      animate,
+      initialize,
+      preAnimation,
+      parentSetup,
+      variables,
+      scale,
+      scalex,
+      scaley,
+      scalez,
+      shouldUpdateBonesAndEffectsOffscreen,
+      shouldUpdateEffectsOffscreen,
+    } = scripts;
+
+    const entityScripts =
+      entity['minecraft:client_entity'].description.scripts ?? {};
+
+    if (animate !== undefined) {
+      const formattedAnimate: (Record<string, string> | string)[] = [];
+      for (const item of animate) {
+        if (typeof item === 'string') {
+          formattedAnimate.push(item);
+          continue;
+        }
+
+        // To handle object with multiple animations in it.
+        for (const [key, value] of Object.entries(item)) {
+          formattedAnimate.push({ [key]: value });
+        }
+      }
+      entityScripts.animate = formattedAnimate;
+    }
+
+    if (initialize !== undefined) {
+      entityScripts.initialize = initialize;
+    }
+
+    if (preAnimation !== undefined) {
+      entityScripts.pre_animation = preAnimation;
+    }
+
+    if (parentSetup !== undefined) {
+      entityScripts.parent_setup = parentSetup;
+    }
+
+    if (variables !== undefined) {
+      entityScripts.variables = variables;
+    }
+
+    if (scale !== undefined) {
+      entityScripts.scale = scale;
+    }
+
+    if (scalex !== undefined) {
+      entityScripts.scalex = scalex;
+    }
+
+    if (scaley !== undefined) {
+      entityScripts.scaley = scaley;
+    }
+
+    if (scalez !== undefined) {
+      entityScripts.scalez = scalez;
+    }
+
+    if (shouldUpdateBonesAndEffectsOffscreen !== undefined) {
+      entityScripts.should_update_bones_and_effects_offscreen =
+        shouldUpdateBonesAndEffectsOffscreen;
+    }
+
+    if (shouldUpdateEffectsOffscreen !== undefined) {
+      entityScripts.should_update_effects_offscreen =
+        shouldUpdateEffectsOffscreen;
+    }
+
+    if (Object.keys(entityScripts).length !== 0) {
+      entity['minecraft:client_entity'].description.scripts = entityScripts;
     }
   }
 }

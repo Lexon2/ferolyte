@@ -13,7 +13,8 @@ type ClientEntityVersions = '1.10.0' | '1.8.0';
  * A client side entity definition.
  */
 export interface ClientEntityConfig<
-  Animations extends ClientEntityAnimationsCollection = ClientEntityAnimationsCollection,
+  Animations extends
+    ClientEntityAnimationsCollection = ClientEntityAnimationsCollection,
 > {
   /**
    * The version of the client entity config.

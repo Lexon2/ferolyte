@@ -1,9 +1,10 @@
 import { OneOfRecord } from '../../../common/types/core/one-of-record';
 import { MolangMath, MolangQuery } from '../../molang/types';
 
-type AnimationKeys<T> = T extends Record<infer K extends string, string>
-  ? K | OneOfRecord<K, MolangMath | MolangQuery>
-  : never;
+type AnimationKeys<T> =
+  T extends Record<infer K extends string, string>
+    ? K | OneOfRecord<K, MolangMath | MolangQuery>
+    : never;
 
 /**
  * The configuration for the entity's scripts.
@@ -34,7 +35,9 @@ export interface ClientEntityScriptsConfig<
   /**
    * The scale of the mob's geometry.
    */
-  variables?: Record<`variable.` | (string & {}), string>;
+  variables?: {
+    [key in `variable.${string}` | (string & {})]?: 'public';
+  };
 
   /**
    * The scale of the mob's geometry.
