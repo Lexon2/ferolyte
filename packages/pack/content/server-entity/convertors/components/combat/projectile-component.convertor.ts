@@ -542,6 +542,24 @@ const convertOnHit = (onHit: ProjectileOnHit): any => {
     }
   }
 
+  // Validate stickInGround
+  if (onHit.stickInGround !== undefined) {
+    const stickInGround: any = {};
+    if (onHit.stickInGround.shakeTime !== undefined) {
+      if (
+        !validateNumber(
+          onHit.stickInGround.shakeTime,
+          'stickInGround.shakeTime',
+        )
+      ) {
+        return undefined;
+      }
+      stickInGround.shake_time = onHit.stickInGround.shakeTime;
+    }
+
+    result.stick_in_ground = stickInGround;
+  }
+
   return result;
 };
 

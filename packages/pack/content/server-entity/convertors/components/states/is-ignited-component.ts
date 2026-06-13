@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertIsIgnitedComponent = (
-  component: Partial<IsIgnitedComponent>
+  component: Partial<IsIgnitedComponent>,
 ): { 'minecraft:is_ignited': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:is_ignited': result
+    'minecraft:is_ignited': result,
   };
 };

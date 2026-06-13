@@ -1,4 +1,5 @@
 import { CannotBeAttackedComponent } from '../../../interfaces/components/combat/cannot-be-attacked-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts a CannotBeAttackedComponent to Minecraft format
@@ -8,12 +9,12 @@ import { CannotBeAttackedComponent } from '../../../interfaces/components/combat
 export const convertCannotBeAttackedComponent = (
   component: Partial<CannotBeAttackedComponent>,
 ): { 'minecraft:cannot_be_attacked': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 
-  // Cannot be attacked component has no properties, just return empty object
   return {
-    'minecraft:cannot_be_attacked': {},
+    'minecraft:cannot_be_attacked': result,
   };
 };

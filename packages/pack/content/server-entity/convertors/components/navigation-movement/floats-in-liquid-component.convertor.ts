@@ -1,4 +1,5 @@
 import { FloatsInLiquidComponent } from '../../../interfaces/components/navigation-movement/floats-in-liquid-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts a FloatsInLiquidComponent to Minecraft format
@@ -8,12 +9,12 @@ import { FloatsInLiquidComponent } from '../../../interfaces/components/navigati
 export const convertFloatsInLiquidComponent = (
   component: Partial<FloatsInLiquidComponent>,
 ): { 'minecraft:floats_in_liquid': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 
-  // Floats in liquid component has no properties, just return empty object
   return {
-    'minecraft:floats_in_liquid': {},
+    'minecraft:floats_in_liquid': result,
   };
 };

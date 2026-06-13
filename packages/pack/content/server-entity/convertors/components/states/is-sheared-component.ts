@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertIsShearedComponent = (
-  component: Partial<IsShearedComponent>
+  component: Partial<IsShearedComponent>,
 ): { 'minecraft:is_sheared': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:is_sheared': result
+    'minecraft:is_sheared': result,
   };
 };

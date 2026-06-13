@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertIsSaddledComponent = (
-  component: Partial<IsSaddledComponent>
+  component: Partial<IsSaddledComponent>,
 ): { 'minecraft:is_saddled': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:is_saddled': result
+    'minecraft:is_saddled': result,
   };
 };

@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertIsChargedComponent = (
-  component: Partial<IsChargedComponent>
+  component: Partial<IsChargedComponent>,
 ): { 'minecraft:is_charged': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:is_charged': result
+    'minecraft:is_charged': result,
   };
 };

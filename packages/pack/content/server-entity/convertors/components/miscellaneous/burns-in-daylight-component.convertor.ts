@@ -1,4 +1,5 @@
 import { BurnsInDaylightComponent } from '../../../interfaces/components/miscellaneous/burns-in-daylight-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts a BurnsInDaylightComponent to Minecraft format
@@ -8,11 +9,12 @@ import { BurnsInDaylightComponent } from '../../../interfaces/components/miscell
 export const convertBurnsInDaylightComponent = (
   component: Partial<BurnsInDaylightComponent>,
 ): { 'minecraft:burns_in_daylight': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:burns_in_daylight': {},
+    'minecraft:burns_in_daylight': result,
   };
 };

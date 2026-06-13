@@ -1,4 +1,5 @@
 import { HideComponent } from '../../../interfaces/components/miscellaneous/hide-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts a HideComponent to Minecraft format
@@ -8,12 +9,12 @@ import { HideComponent } from '../../../interfaces/components/miscellaneous/hide
 export const convertHideComponent = (
   component: Partial<HideComponent>,
 ): { 'minecraft:hide': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 
-  // Hide component has no properties, just return empty object
   return {
-    'minecraft:hide': {},
+    'minecraft:hide': result,
   };
 };

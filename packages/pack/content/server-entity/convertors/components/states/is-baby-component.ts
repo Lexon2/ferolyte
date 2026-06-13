@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertIsBabyComponent = (
-  component: Partial<IsBabyComponent>
+  component: Partial<IsBabyComponent>,
 ): { 'minecraft:is_baby': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:is_baby': result
+    'minecraft:is_baby': result,
   };
 };

@@ -2,12 +2,8 @@ import { BodyRotationAlwaysFollowsHeadComponent } from '../../../interfaces/comp
 import { convertStateObject } from '../../common/state-object';
 
 export const convertBodyRotationAlwaysFollowsHeadComponent = (
-  component?: BodyRotationAlwaysFollowsHeadComponent,
+  component: Partial<BodyRotationAlwaysFollowsHeadComponent>,
 ): { 'minecraft:body_rotation_always_follows_head'?: any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;

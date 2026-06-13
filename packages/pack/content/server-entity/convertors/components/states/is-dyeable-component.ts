@@ -7,12 +7,8 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertIsDyeableComponent = (
-  component: Partial<IsDyeableComponent>
+  component: Partial<IsDyeableComponent>,
 ): { 'minecraft:is_dyeable': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;
@@ -29,6 +25,6 @@ export const convertIsDyeableComponent = (
   }
 
   return {
-    'minecraft:is_dyeable': result
+    'minecraft:is_dyeable': result,
   };
 };

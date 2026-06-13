@@ -116,7 +116,7 @@ export const convertEnumProperty = (
     result.values = property.values;
   }
 
-  if (property.default) {
+  if (property.default !== undefined) {
     if (
       !validateString(property.default, 'default') ||
       !property.values.includes(property.default)
@@ -138,7 +138,7 @@ export const convertBooleanProperty = (
     return undefined;
   }
 
-  if (property.default) {
+  if (property.default !== undefined) {
     if (!validateBoolean(property.default, 'default')) {
       return undefined;
     }

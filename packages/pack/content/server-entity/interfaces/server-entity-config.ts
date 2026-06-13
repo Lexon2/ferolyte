@@ -13,7 +13,7 @@ export interface ServerEntityConfig {
    * @description The version of the entity. This is used to determine the format of the entity data.
    * @default Takes the version from `artifex.config.ts` by default
    */
-  version?: `${number}.${number}.${number}`;
+  version?: string;
 
   /**
    * Is Experimental
@@ -101,5 +101,15 @@ export interface ServerEntityConfig {
    * Events
    * @description The events that the entity can run, these add or remove components_groups.
    */
-  events?: { [key: string]: EntityEvents };
+  events?: ServerEntityEvents;
 }
+
+export type ServerEntityEvents = {
+  [key in MinecraftEvents | (string & {})]?: EntityEvents;
+};
+
+type MinecraftEvents =
+  | 'minecraft:entity_spawned'
+  | 'minecraft:on_prime'
+  | 'minecraft:entity_transformed'
+  | 'minecraft:entity_born';

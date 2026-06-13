@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertOutOfControlComponent = (
-  component: Partial<OutOfControlComponent>
+  component: Partial<OutOfControlComponent>,
 ): { 'minecraft:out_of_control': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result: any = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:out_of_control': result
+    'minecraft:out_of_control': result,
   };
 };

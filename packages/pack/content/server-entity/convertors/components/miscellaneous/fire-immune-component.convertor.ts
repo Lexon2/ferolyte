@@ -1,4 +1,5 @@
 import { FireImmuneComponent } from '../../../interfaces/components/miscellaneous/fire-immune-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts a FireImmuneComponent to Minecraft format
@@ -8,12 +9,13 @@ import { FireImmuneComponent } from '../../../interfaces/components/miscellaneou
 export const convertFireImmuneComponent = (
   component: Partial<FireImmuneComponent>,
 ): { 'minecraft:fire_immune': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 
   // Fire immune component has no properties, just return empty object
   return {
-    'minecraft:fire_immune': {},
+    'minecraft:fire_immune': result,
   };
 };

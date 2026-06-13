@@ -1,4 +1,5 @@
 import { CanClimbComponent } from '../../../interfaces/components/navigation-movement/can-climb-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts a CanClimbComponent to Minecraft format
@@ -8,11 +9,12 @@ import { CanClimbComponent } from '../../../interfaces/components/navigation-mov
 export const convertCanClimbComponent = (
   component: Partial<CanClimbComponent>,
 ): { 'minecraft:can_climb': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:can_climb': {},
+    'minecraft:can_climb': result,
   };
 };

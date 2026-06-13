@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertIsShakingComponent = (
-  component: Partial<IsShakingComponent>
+  component: Partial<IsShakingComponent>,
 ): { 'minecraft:is_shaking': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:is_shaking': result
+    'minecraft:is_shaking': result,
   };
 };

@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertIsCollidableComponent = (
-  component: Partial<IsCollidableComponent>
+  component: Partial<IsCollidableComponent>,
 ): { 'minecraft:is_collidable': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:is_collidable': result
+    'minecraft:is_collidable': result,
   };
 };

@@ -9,10 +9,6 @@ import { convertStateObject } from '../../common/state-object';
 export const convertJumpDynamicComponent = (
   component: Partial<JumpDynamicComponent>,
 ): { 'minecraft:jump.dynamic': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result: any = convertStateObject(component);
   if (!result) {
     return undefined;

@@ -1,7 +1,6 @@
 import { SuspectTrackingComponent } from '../../../interfaces/components/miscellaneous/suspect-tracking-component';
 import { convertStateObject } from '../../common/state-object';
 
-
 /**
  * Converts a SuspectTrackingComponent to Minecraft format
  * @param component The component to convert
@@ -10,10 +9,6 @@ import { convertStateObject } from '../../common/state-object';
 export const convertSuspectTrackingComponent = (
   component: SuspectTrackingComponent,
 ): { 'minecraft:suspect_tracking': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result: any = convertStateObject(component);
   if (!result) {
     return undefined;
@@ -23,6 +18,3 @@ export const convertSuspectTrackingComponent = (
     'minecraft:suspect_tracking': result,
   };
 };
-
-
-

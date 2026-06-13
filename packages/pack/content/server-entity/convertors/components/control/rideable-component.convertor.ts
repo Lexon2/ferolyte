@@ -25,20 +25,6 @@ const convertSeat = (seat: SeatsSpec): any => {
     result.dismount_mode = seat.dismountMode;
   }
 
-  if (seat.onRiderEnterEvent !== undefined) {
-    if (!validateString(seat.onRiderEnterEvent, 'onRiderEnterEvent')) {
-      return undefined;
-    }
-    result.on_rider_enter_event = seat.onRiderEnterEvent;
-  }
-
-  if (seat.onRiderExitEvent !== undefined) {
-    if (!validateString(seat.onRiderExitEvent, 'onRiderExitEvent')) {
-      return undefined;
-    }
-    result.on_rider_exit_event = seat.onRiderExitEvent;
-  }
-
   if (seat.thirdPersonCameraRadius !== undefined) {
     if (
       !validateNumber(seat.thirdPersonCameraRadius, 'thirdPersonCameraRadius')

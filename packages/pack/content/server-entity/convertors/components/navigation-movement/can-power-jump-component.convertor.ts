@@ -1,4 +1,5 @@
 import { CanPowerJumpComponent } from '../../../interfaces/components/navigation-movement/can-power-jump-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts a CanPowerJumpComponent to Minecraft format
@@ -8,11 +9,12 @@ import { CanPowerJumpComponent } from '../../../interfaces/components/navigation
 export const convertCanPowerJumpComponent = (
   component: Partial<CanPowerJumpComponent>,
 ): { 'minecraft:can_power_jump': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:can_power_jump': {},
+    'minecraft:can_power_jump': result,
   };
 };

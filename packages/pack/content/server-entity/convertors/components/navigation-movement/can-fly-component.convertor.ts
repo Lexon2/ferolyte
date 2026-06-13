@@ -9,11 +9,10 @@ import { convertStateObject } from '../../common/state-object';
 export const convertCanFlyComponent = (
   component: Partial<CanFlyComponent>,
 ): { 'minecraft:can_fly': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
+  if (!result) {
+    return;
+  }
 
   return {
     'minecraft:can_fly': result,

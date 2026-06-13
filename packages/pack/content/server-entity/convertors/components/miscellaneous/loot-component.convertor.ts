@@ -20,7 +20,9 @@ export const convertLootComponent = (
 
   // Validate table path format
   if (!component.table.match(/^loot_tables\/.*\.json$/)) {
-    console.error('table must be a path to a loot table file in the format: loot_tables/*.json');
+    console.error(
+      'table must be a path to a loot table file in the format: loot_tables/*.json',
+    );
 
     return undefined;
   }

@@ -1,4 +1,5 @@
 import { GoHomeBehavior } from '../../interfaces/behaviors/go-home-behavior';
+import { EntityEventTrigger } from '../../interfaces/trigger';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -8,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertGoHomeBehavior = (
-  behavior: Partial<GoHomeBehavior>
+  behavior: Partial<GoHomeBehavior>,
 ): { 'minecraft:behavior.go_home': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,11 +43,16 @@ export const convertGoHomeBehavior = (
 
   // Validate onHome
   if (behavior.onHome !== undefined) {
-    const convertedOnHome = convertTrigger(behavior.onHome);
-    if (!convertedOnHome) {
+    let onHome: EntityEventTrigger[] | undefined;
+    if (Array.isArray(behavior.onHome)) {
+      onHome = behavior.onHome.map(convertTrigger);
+    } else {
+      onHome = [convertTrigger(behavior.onHome)];
+    }
+    if (onHome.some((trigger) => trigger === undefined)) {
       return undefined;
     }
-    result.on_home = convertedOnHome;
+    result.on_home = onHome;
   }
 
   // Validate onFailed
@@ -60,7 +66,9 @@ export const convertGoHomeBehavior = (
 
   // Validate calculateNewPathRadius
   if (behavior.calculateNewPathRadius !== undefined) {
-    if (!validateNumber(behavior.calculateNewPathRadius, 'calculateNewPathRadius')) {
+    if (
+      !validateNumber(behavior.calculateNewPathRadius, 'calculateNewPathRadius')
+    ) {
       return undefined;
     }
     result.calculate_new_path_radius = behavior.calculateNewPathRadius;
@@ -75,6 +83,6 @@ export const convertGoHomeBehavior = (
   }
 
   return {
-    'minecraft:behavior.go_home': result
+    'minecraft:behavior.go_home': result,
   };
 };

@@ -55,7 +55,9 @@ const convertDamageTrigger = (trigger: DamageTrigger) => {
   }
 
   if (trigger.onDamageSoundEvent !== undefined) {
-    if (!validateSoundEvent(trigger.onDamageSoundEvent, 'on_damage_sound_event')) {
+    if (
+      !validateSoundEvent(trigger.onDamageSoundEvent, 'on_damage_sound_event')
+    ) {
       return undefined;
     }
     result.on_damage_sound_event = trigger.onDamageSoundEvent;

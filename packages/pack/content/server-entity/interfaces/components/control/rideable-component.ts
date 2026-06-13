@@ -80,16 +80,6 @@ export interface SeatsSpec {
   dismountMode?: string;
 
   /**
-   * Event to execute on the owner entity when an entity starts riding it
-   */
-  onRiderEnterEvent?: string;
-
-  /**
-   * Event to execute on the owner entity when an entity stops riding it
-   */
-  onRiderExitEvent?: string;
-
-  /**
    * The camera radius when in third person or third person front camera
    */
   thirdPersonCameraRadius?: number;

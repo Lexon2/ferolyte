@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertVibrationDamperComponent = (
-  component: Partial<VibrationDamperComponent>
+  component: Partial<VibrationDamperComponent>,
 ): { 'minecraft:vibration_damper': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result: any = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:vibration_damper': result
+    'minecraft:vibration_damper': result,
   };
 };

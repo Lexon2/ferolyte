@@ -3,6 +3,7 @@ import {
   EntityEventRandomize,
   EntityEvents,
 } from '../interfaces/entity-events';
+import { ServerEntityEvents } from '../interfaces/server-entity-config';
 import { convertEntityFilters } from './common/filters.convertor';
 import {
   validateBoolean,
@@ -109,7 +110,7 @@ export const convertEntityEventRandomize = (
  * @returns The event in Minecraft format or undefined if validation fails
  */
 export const convertEntityEvent = (
-  event: EntityEvents,
+  event: EntityEvents | undefined,
 ): { [key: string]: any } | undefined => {
   if (event === undefined) {
     return undefined;
@@ -218,9 +219,9 @@ export const convertEntityEvent = (
   return result;
 };
 
-export const convertEntityEvents = (events: {
-  [key: string]: EntityEvents;
-}): { [key: string]: any } | undefined => {
+export const convertEntityEvents = (
+  events: ServerEntityEvents,
+): { [key: string]: any } | undefined => {
   const result: { [key: string]: any } = {};
 
   for (const event in events) {

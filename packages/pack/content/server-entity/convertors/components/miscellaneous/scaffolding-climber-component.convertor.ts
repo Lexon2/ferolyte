@@ -9,10 +9,6 @@ import { convertStateObject } from '../../common/state-object';
 export const convertScaffoldingClimberComponent = (
   component: ScaffoldingClimberComponent,
 ): { 'minecraft:scaffolding_climber': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result: any = convertStateObject(component);
   if (!result) {
     return undefined;
@@ -22,5 +18,3 @@ export const convertScaffoldingClimberComponent = (
     'minecraft:scaffolding_climber': result,
   };
 };
-
-

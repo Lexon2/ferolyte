@@ -1,4 +1,5 @@
 import { InputGroundControlledComponent } from '../../../interfaces/components/control/input-ground-controlled-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts an InputGroundControlledComponent to Minecraft format
@@ -8,7 +9,8 @@ import { InputGroundControlledComponent } from '../../../interfaces/components/c
 export const convertInputGroundControlledComponent = (
   component: Partial<InputGroundControlledComponent>,
 ): { 'minecraft:input_ground_controlled': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 

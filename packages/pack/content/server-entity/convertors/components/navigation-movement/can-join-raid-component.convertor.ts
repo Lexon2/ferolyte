@@ -1,4 +1,5 @@
 import { CanJoinRaidComponent } from '../../../interfaces/components/navigation-movement/can-join-raid-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts a CanJoinRaidComponent to Minecraft format
@@ -8,12 +9,12 @@ import { CanJoinRaidComponent } from '../../../interfaces/components/navigation-
 export const convertCanJoinRaidComponent = (
   component: Partial<CanJoinRaidComponent>,
 ): { 'minecraft:can_join_raid': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 
-  // Can join raid component has no properties, just return empty object
   return {
-    'minecraft:can_join_raid': {},
+    'minecraft:can_join_raid': result,
   };
 };

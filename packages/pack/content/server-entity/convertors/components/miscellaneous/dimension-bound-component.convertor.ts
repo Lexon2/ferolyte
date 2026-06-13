@@ -1,4 +1,5 @@
 import { DimensionBoundComponent } from '../../../interfaces/components/miscellaneous/dimension-bound-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts a DimensionBoundComponent to Minecraft format
@@ -8,12 +9,12 @@ import { DimensionBoundComponent } from '../../../interfaces/components/miscella
 export const convertDimensionBoundComponent = (
   component: Partial<DimensionBoundComponent>,
 ): { 'minecraft:dimension_bound': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 
-  // Dimension bound component has no properties, just return empty object
   return {
-    'minecraft:dimension_bound': {},
+    'minecraft:dimension_bound': result,
   };
 };

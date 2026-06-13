@@ -1,4 +1,5 @@
 import { HurtWhenWetComponent } from '../../../interfaces/components/miscellaneous/hurt-when-wet-component';
+import { convertStateObject } from '../../common/state-object';
 
 /**
  * Converts a HurtWhenWetComponent to Minecraft format
@@ -8,12 +9,12 @@ import { HurtWhenWetComponent } from '../../../interfaces/components/miscellaneo
 export const convertHurtWhenWetComponent = (
   component: Partial<HurtWhenWetComponent>,
 ): { 'minecraft:hurt_when_wet': any } | undefined => {
-  if (!component || !component.value) {
+  const result = convertStateObject(component);
+  if (!result) {
     return undefined;
   }
 
-  // Hurt when wet component has no properties, just return empty object
   return {
-    'minecraft:hurt_when_wet': {},
+    'minecraft:hurt_when_wet': result,
   };
 };

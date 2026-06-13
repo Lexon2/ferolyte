@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertTrustingComponent = (
-  component: Partial<TrustingComponent>
+  component: Partial<TrustingComponent>,
 ): { 'minecraft:trusting': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:trusting': result
+    'minecraft:trusting': result,
   };
 };

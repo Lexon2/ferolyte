@@ -20,7 +20,7 @@ export interface GoHomeBehavior extends BehaviorPriority {
   /**
    * Event(s) to run when this mob gets home
    */
-  onHome?: EntityEventTrigger;
+  onHome?: EntityEventTrigger[] | EntityEventTrigger;
 
   /**
    * Event(s) to run when this goal fails

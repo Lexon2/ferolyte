@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertIsIllagerCaptainComponent = (
-  component: Partial<IsIllagerCaptainComponent>
+  component: Partial<IsIllagerCaptainComponent>,
 ): { 'minecraft:is_illager_captain': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:is_illager_captain': result
+    'minecraft:is_illager_captain': result,
   };
 };

@@ -22,8 +22,7 @@ export const convertEntityFilters = (
     if (convertor) {
       const converted = convertor(filters);
       if (converted) {
-        // @TODO: fix it in every filter.
-        result = { test: converted.test, ...converted };
+        result = { test: filters.test, ...converted };
       }
     }
   } else if ('allOf' in filters && Array.isArray(filters.allOf)) {

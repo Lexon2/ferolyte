@@ -636,7 +636,13 @@ export interface ProjectileOnHit {
   /**
    * Decides if the object sticks in ground and contains shake_time integer parameter to determine how long it will shake.
    */
-  stickInGround?: {};
+  stickInGround?: {
+    /**
+     * The time in ticks that the projectile will shake.
+     * @default 0
+     */
+    shakeTime?: number;
+  };
 
   /**
    * Determines if the owner is transported on hit.

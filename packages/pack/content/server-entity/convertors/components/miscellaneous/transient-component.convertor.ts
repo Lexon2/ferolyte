@@ -7,18 +7,14 @@ import { convertStateObject } from '../../common/state-object';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertTransientComponent = (
-  component: Partial<TransientComponent>
+  component: Partial<TransientComponent>,
 ): { 'minecraft:transient': any } | undefined => {
-  if (!component) {
-    return undefined;
-  }
-
   const result: any = convertStateObject(component);
   if (!result) {
     return undefined;
   }
 
   return {
-    'minecraft:transient': result
+    'minecraft:transient': result,
   };
 };
