@@ -2,15 +2,19 @@ import { copyFile, mkdir, readdir, rm } from 'fs/promises';
 import { join, dirname } from 'path';
 
 import { BUILD_CONTEXT } from '../build-context';
+import { CompilerActionOptions, resolveCompilerOptions } from './options';
 import { loadConfig } from '../config/load-config';
 import { createPacksOutputPathFromInputPath } from './utils/create-output-path';
 import { getBuildCacheDistDir } from '../content/utils/build-cache-dist-dir';
 import { ArtifexContentBuilder } from '../core/builder';
 import { isArtifexContentFile } from '../core/utils/is-content-file';
-import {
-  CompilerActionOptions,
-  resolveCompilerOptions,
-} from './options';
+
+const SKIP_DIRECTORIES = new Set([
+  'node_modules',
+  '.git',
+  '.artifex',
+  'dist',
+]);
 
 /**
  * Walks through a directory and yields all files.
@@ -23,6 +27,10 @@ async function* walkFiles(dir: string): AsyncGenerator<string> {
   for (const file of files) {
     const path = join(dir, file.name);
     if (file.isDirectory()) {
+      if (SKIP_DIRECTORIES.has(file.name)) {
+        continue;
+      }
+
       yield* walkFiles(path);
     } else {
       yield path;
@@ -40,17 +48,23 @@ const createBuildDictionary = async (): Promise<
   const copyFilePaths: Record<string, string> = {};
   const buildFilePaths: string[] = [];
 
-  const { INPUT_BASE_PATH } = BUILD_CONTEXT.PACKS;
+  const { INPUT_BEHAVIOR_PACK_PATH, INPUT_RESOURCE_PACK_PATH } =
+    BUILD_CONTEXT.PACKS;
 
-  for await (const file of walkFiles(INPUT_BASE_PATH)) {
-    if (!file.endsWith('.ts')) {
-      const outputPath: string = createPacksOutputPathFromInputPath(file);
+  for (const inputPath of [
+    INPUT_BEHAVIOR_PACK_PATH,
+    INPUT_RESOURCE_PACK_PATH,
+  ]) {
+    for await (const file of walkFiles(inputPath)) {
+      if (!file.endsWith('.ts')) {
+        const outputPath = createPacksOutputPathFromInputPath(file);
 
-      if (outputPath) {
-        copyFilePaths[file] = outputPath;
+        if (outputPath) {
+          copyFilePaths[file] = outputPath;
+        }
+      } else if (isArtifexContentFile(file)) {
+        buildFilePaths.push(file);
       }
-    } else if (isArtifexContentFile(file)) {
-      buildFilePaths.push(file);
     }
   }
 
@@ -87,15 +101,21 @@ export const build = async (options: CompilerActionOptions) => {
 
   const [copyFilePaths, buildFilePaths] = await createBuildDictionary();
 
-  for (const file of buildFilePaths) {
-    await ArtifexContentBuilder.buildFile(file, { debug, diagnostics });
-  }
+  await Promise.all(
+    buildFilePaths.map((file) =>
+      ArtifexContentBuilder.buildFile(file, { debug, diagnostics }),
+    ),
+  );
 
-  for (const [source, destination] of Object.entries(copyFilePaths)) {
-    const dir = dirname(destination);
-    await mkdir(dir, { recursive: true });
-    await copyFile(source, destination);
-  }
+  await Promise.all(
+    Object.entries(copyFilePaths).map(([source, destination]) => {
+      const dir = dirname(destination);
+
+      return mkdir(dir, { recursive: true }).then(() =>
+        copyFile(source, destination),
+      );
+    }),
+  );
 
   if (debug) {
     console.log(`🔄 Complete build in ${Date.now() - startTime}ms`);

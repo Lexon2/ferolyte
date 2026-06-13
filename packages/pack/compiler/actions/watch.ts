@@ -66,14 +66,21 @@ export const watch = async (options: CompilerActionOptions) => {
     diagnostics: resolved.diagnostics,
   });
 
-  const watcher = chokidar.watch(BUILD_CONTEXT.PACKS.INPUT_BASE_PATH, {
-    awaitWriteFinish: {
-      stabilityThreshold: 500,
+  const watcher = chokidar.watch(
+    [
+      BUILD_CONTEXT.PACKS.INPUT_BEHAVIOR_PACK_PATH,
+      BUILD_CONTEXT.PACKS.INPUT_RESOURCE_PACK_PATH,
+    ],
+    {
+      awaitWriteFinish: {
+        stabilityThreshold: 500,
+      },
+      atomic: true,
+      ignored: ['**/node_modules/**', '**/.git/**', '**/.artifex/**'],
+      ignoreInitial: true,
+      persistent: true,
     },
-    atomic: true,
-    ignoreInitial: true,
-    persistent: true,
-  });
+  );
 
   const processEdit = createProcessEdit(buildOptions);
   const processUnlink = createProcessUnlink(buildOptions);

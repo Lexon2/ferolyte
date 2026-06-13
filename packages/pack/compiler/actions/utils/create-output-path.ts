@@ -85,9 +85,9 @@ export const createPacksOutputPathFromInputPath = (filePath: string) => {
       // prePath = join(OUTPUT_RESOURCE_PACK_PATH, dir, OUTPUT_NAMESPACE_PATH);
       prePath = join(OUTPUT_RESOURCE_PACK_PATH, dir);
     }
+  } else {
+    return;
   }
 
-  prePath = join(prePath, fileName);
-
-  return prePath;
+  return join(prePath, fileName);
 };

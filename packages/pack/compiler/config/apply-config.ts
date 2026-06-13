@@ -1,4 +1,5 @@
 import { readFile } from 'fs/promises';
+import { parse as parseJsonc } from 'jsonc-parser';
 import { join } from 'path';
 
 import { BUILD_CONTEXT } from '../build-context';
@@ -11,7 +12,7 @@ const applyTsConfig = async (config: ArtifexProfileConfig) => {
     config.tsconfig ?? join(process.cwd(), 'tsconfig.json');
 
   const tsconfig = await readFile(BUILD_CONTEXT.TS.CONFIG_PATH, 'utf8');
-  const parsed = JSON.parse(tsconfig);
+  const parsed = parseJsonc(tsconfig);
 
   if (parsed.compilerOptions.paths) {
     for (const alias in parsed.compilerOptions.paths) {
