@@ -1,4 +1,4 @@
-import { Identifier } from '@artifex/common/types/base';
+import { Identifier } from '@artifex/common/types';
 
 import { ColorValue } from '../../../content/common/types/color-value';
 import { ItemMenuCategory } from '../../item/interfaces/item-menu-category';
