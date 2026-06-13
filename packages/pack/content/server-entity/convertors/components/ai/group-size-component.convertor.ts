@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { GroupSizeComponent } from '../../../interfaces/components/ai/group-size-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertGroupSizeComponent = (
-  component: Partial<GroupSizeComponent>
+  component: Partial<GroupSizeComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:group_size': any } | undefined => {
   if (!component) {
     return undefined;
@@ -18,7 +20,7 @@ export const convertGroupSizeComponent = (
 
   // Validate filters
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters);
+    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }

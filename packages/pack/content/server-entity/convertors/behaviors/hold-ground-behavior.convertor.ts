@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { HoldGroundBehavior } from '../../interfaces/behaviors/hold-ground-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import {
@@ -12,6 +13,7 @@ import {
  */
 export const convertHoldGroundBehavior = (
   behavior: Partial<HoldGroundBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.hold_ground': any } | undefined => {
   if (!behavior) {
     return undefined;

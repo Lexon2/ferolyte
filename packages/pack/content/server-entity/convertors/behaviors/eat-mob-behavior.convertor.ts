@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EatMobBehavior } from '../../interfaces/behaviors/eat-mob-behavior';
 import { validateNumber, validateSoundEvent, validateTradeOrLootTablePath } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateSoundEvent, validateTradeOrLootTablePath } from
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertEatMobBehavior = (
-  behavior: Partial<EatMobBehavior>
+  behavior: Partial<EatMobBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.eat_mob': any } | undefined => {
   if (!behavior) {
     return undefined;

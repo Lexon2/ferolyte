@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { StayNearNoteBlockBehavior } from '../../interfaces/behaviors/stay-near-note-block-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertStayNearNoteBlockBehavior = (
-  behavior: Partial<StayNearNoteBlockBehavior>
+  behavior: Partial<StayNearNoteBlockBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.stay_near_noteblock': any } | undefined => {
   if (!behavior) {
     return undefined;

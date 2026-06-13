@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RailMovementComponent } from '../../../interfaces/components/navigation-movement/rail-movement-component';
 import { validateNumber } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertRailMovementComponent = (
-  component: Partial<RailMovementComponent>
+  component: Partial<RailMovementComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:rail_movement': any } | undefined => {
   if (!component) {
     return undefined;

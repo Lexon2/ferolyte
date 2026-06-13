@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { InWaterFilter } from '../../interfaces/filters/in-water-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -8,10 +9,11 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertInWaterFilter = (
-  filter: Partial<InWaterFilter>
+  filter: Partial<InWaterFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   return convertBooleanFilter({
     ...filter,
     test: 'in_water'
-  });
+  }, ctx);
 };

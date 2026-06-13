@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TimerFlag1Behavior } from '../../interfaces/behaviors/timer-flag-1-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -9,7 +10,8 @@ import { validateNumber, validateStringArray } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertTimerFlag1Behavior = (
-  behavior: Partial<TimerFlag1Behavior>
+  behavior: Partial<TimerFlag1Behavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.timer_flag_1': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -53,7 +55,7 @@ export const convertTimerFlag1Behavior = (
 
   // Validate onEnd
   if (behavior.onEnd !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onEnd);
+    const convertedTrigger = convertTrigger(behavior.onEnd, withFieldPath(ctx, 'onEnd'));
     if (!convertedTrigger) {
       return undefined;
     }
@@ -62,7 +64,7 @@ export const convertTimerFlag1Behavior = (
 
   // Validate onStart
   if (behavior.onStart !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onStart);
+    const convertedTrigger = convertTrigger(behavior.onStart, withFieldPath(ctx, 'onStart'));
     if (!convertedTrigger) {
       return undefined;
     }

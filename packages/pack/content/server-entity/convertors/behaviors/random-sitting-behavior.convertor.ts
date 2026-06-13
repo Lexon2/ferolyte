@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RandomSittingBehavior } from '../../interfaces/behaviors/random-sitting-behavior';
 import { validateNumber, validatePercentage } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validatePercentage } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRandomSittingBehavior = (
-  behavior: Partial<RandomSittingBehavior>
+  behavior: Partial<RandomSittingBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.random_sitting': any } | undefined => {
   if (!behavior) {
     return undefined;

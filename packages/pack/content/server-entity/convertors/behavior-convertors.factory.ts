@@ -51,6 +51,7 @@ import {
   convertFollowOwnerBehavior,
   convertFollowParentBehavior,
   convertFollowTargetCaptainBehavior,
+  convertFollowTargetLeaderBehavior,
   convertGoAndGiveItemsToNoteblockBehavior,
   convertGoAndGiveItemsToOwnerBehavior,
   convertGoHomeBehavior,
@@ -104,6 +105,7 @@ import {
   convertPanicBehavior,
   convertPetSleepWithOwnerBehavior,
   convertPickupItemsBehavior,
+  convertPlaceBlockBehavior,
   convertPlayBehavior,
   convertPlayDeadBehavior,
   convertPlayerRideTamedBehavior,
@@ -159,6 +161,7 @@ import {
   convertSwimWanderBehavior,
   convertSwimWithEntityBehavior,
   convertSwoopAttackBehavior,
+  convertTakeBlockBehavior,
   convertTakeFlowerBehavior,
   convertTargetWhenPushedBehavior,
   convertTeleportToOwnerBehavior,
@@ -168,6 +171,8 @@ import {
   convertTimerFlag3Behavior,
   convertTradeInterestBehavior,
   convertTradeWithPlayerBehavior,
+  convertTransportItemsBehavior,
+  convertUseKineticWeaponBehavior,
   convertVexCopyOwnerTargetBehavior,
   convertVexRandomMoveBehavior,
   convertWitherRandomAttackPosGoalBehavior,
@@ -176,10 +181,16 @@ import {
   convertWorkComposterBehavior,
 } from './behaviors';
 import { EntityBehaviors } from '../interfaces/entity-behaviors';
+import { ContentDiagnosticContext } from '../../common/diagnostics/content-diagnostic';
 
-export const entityBevaviorConvertorsFactory: Record<
+export type EntityBehaviorConvertor = (
+  value?: unknown,
+  ctx?: ContentDiagnosticContext,
+) => Record<string, unknown> | undefined;
+
+export const entityBehaviorConvertorsFactory: Record<
   keyof EntityBehaviors,
-  (v?: any) => any
+  EntityBehaviorConvertor
 > = {
   admireItem: convertAdmireItemBehavior,
   avoidBlock: convertAvoidBlockBehavior,
@@ -233,6 +244,7 @@ export const entityBevaviorConvertorsFactory: Record<
   followOwner: convertFollowOwnerBehavior,
   followParent: convertFollowParentBehavior,
   followTargetCaptain: convertFollowTargetCaptainBehavior,
+  followTargetLeader: convertFollowTargetLeaderBehavior,
   goAndGiveItemsToNoteblock: convertGoAndGiveItemsToNoteblockBehavior,
   goAndGiveItemsToOwner: convertGoAndGiveItemsToOwnerBehavior,
   goHome: convertGoHomeBehavior,
@@ -287,6 +299,7 @@ export const entityBevaviorConvertorsFactory: Record<
   panic: convertPanicBehavior,
   petSleepWithOwner: convertPetSleepWithOwnerBehavior,
   pickupItems: convertPickupItemsBehavior,
+  placeBlock: convertPlaceBlockBehavior,
   play: convertPlayBehavior,
   playDead: convertPlayDeadBehavior,
   playerRideTamed: convertPlayerRideTamedBehavior,
@@ -342,6 +355,7 @@ export const entityBevaviorConvertorsFactory: Record<
   swimWander: convertSwimWanderBehavior,
   swimWithEntity: convertSwimWithEntityBehavior,
   swoopAttack: convertSwoopAttackBehavior,
+  takeBlock: convertTakeBlockBehavior,
   takeFlower: convertTakeFlowerBehavior,
   targetWhenPushed: convertTargetWhenPushedBehavior,
   teleportToOwner: convertTeleportToOwnerBehavior,
@@ -351,6 +365,8 @@ export const entityBevaviorConvertorsFactory: Record<
   timerFlag3: convertTimerFlag3Behavior,
   tradeInterest: convertTradeInterestBehavior,
   tradeWithPlayer: convertTradeWithPlayerBehavior,
+  transportItems: convertTransportItemsBehavior,
+  useKineticWeapon: convertUseKineticWeaponBehavior,
   vexCopyOwnerTarget: convertVexCopyOwnerTargetBehavior,
   vexRandomMove: convertVexRandomMoveBehavior,
   witherRandomAttackPosGoal: convertWitherRandomAttackPosGoalBehavior,
@@ -358,3 +374,6 @@ export const entityBevaviorConvertorsFactory: Record<
   work: convertWorkBehavior,
   workComposter: convertWorkComposterBehavior,
 };
+
+/** @deprecated Use entityBehaviorConvertorsFactory */
+export const entityBevaviorConvertorsFactory = entityBehaviorConvertorsFactory;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MovementSoundDistanceOffsetComponent } from '../../../interfaces/components/miscellaneous/movement-sound-distance-offset-component';
 import { validateNumber } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertMovementSoundDistanceOffsetComponent = (
-  component: Partial<MovementSoundDistanceOffsetComponent>
+  component: Partial<MovementSoundDistanceOffsetComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:movement_sound_distance_offset': any } | undefined => {
   if (!component) {
     return undefined;

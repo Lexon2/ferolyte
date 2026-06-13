@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { HealthComponent } from '../../../interfaces/components/attribute/health-component';
 import { convertAttributeComponent } from '../../common/attribute';
 
@@ -7,7 +8,8 @@ import { convertAttributeComponent } from '../../common/attribute';
  * @returns The converted component in Minecraft format or undefined if validation fails
  */
 export const convertHealthComponent = (
-  component: Partial<HealthComponent>
+  component: Partial<HealthComponent>,
+  ctx?: ContentDiagnosticContext
 ): Record<string, any> | undefined => {
   return convertAttributeComponent(component, 'health', 0);
 };

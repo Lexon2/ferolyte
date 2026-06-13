@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { GeneticsComponent, GeneticsGene, GeneticVariant } from '../../../interfaces/components/miscellaneous/genetics-component';
 import { convertRange } from '../../common/convertors';
 import { convertTrigger } from '../../common/trigger.convertor';
@@ -21,7 +22,7 @@ const convertGeneticVariant = (
 
   // Validate birthEvent
   if (variant.birthEvent !== undefined) {
-    const convertedBirthEvent = convertTrigger(variant.birthEvent);
+    const convertedBirthEvent = convertTrigger(variant.birthEvent, withFieldPath(ctx, 'birthEvent'));
     if (!convertedBirthEvent) {
       return undefined;
     }
@@ -134,6 +135,7 @@ const convertGene = (
  */
 export const convertGeneticsComponent = (
   component: Partial<GeneticsComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:genetics': any } | undefined => {
   if (!component) {
     return undefined;

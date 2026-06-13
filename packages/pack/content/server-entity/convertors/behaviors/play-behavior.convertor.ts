@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PlayBehavior } from '../../interfaces/behaviors/play-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateInteger, validateNumber, validatePercentage, validateVector3 } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateInteger, validateNumber, validatePercentage, validateVector3 } 
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertPlayBehavior = (
-  behavior: Partial<PlayBehavior>
+  behavior: Partial<PlayBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.play': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -61,7 +63,9 @@ export const convertPlayBehavior = (
     if (!Array.isArray(behavior.friendTypes)) {
       return undefined;
     }
-    const convertedFilters = behavior.friendTypes.map(convertEntityFilters);
+    const convertedFilters = behavior.friendTypes.map((filter, index) =>
+      convertEntityFilters(filter, withFieldPath(ctx, `friendTypes[${index}]`)),
+    );
     if (convertedFilters.some((filter) => !filter)) {
       return undefined;
     }

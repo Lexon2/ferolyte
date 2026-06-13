@@ -12,4 +12,6 @@ export { ItemHopperComponent } from './item-hopper-component';
 
 export { InventoryComponent } from './inventory-component';
 
+export { OnEquipmentChangedComponent } from './on-equipment-changed-component';
+
 export { SittableComponent } from './sittable-component';

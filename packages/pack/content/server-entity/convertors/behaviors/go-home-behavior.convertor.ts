@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { GoHomeBehavior } from '../../interfaces/behaviors/go-home-behavior';
 import { EntityEventTrigger } from '../../interfaces/trigger';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -10,6 +11,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertGoHomeBehavior = (
   behavior: Partial<GoHomeBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.go_home': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -47,7 +49,7 @@ export const convertGoHomeBehavior = (
     if (Array.isArray(behavior.onHome)) {
       onHome = behavior.onHome.map(convertTrigger);
     } else {
-      onHome = [convertTrigger(behavior.onHome)];
+      onHome = [convertTrigger(behavior.onHome, withFieldPath(ctx, 'onHome'))];
     }
     if (onHome.some((trigger) => trigger === undefined)) {
       return undefined;
@@ -57,7 +59,7 @@ export const convertGoHomeBehavior = (
 
   // Validate onFailed
   if (behavior.onFailed !== undefined) {
-    const convertedOnFailed = convertTrigger(behavior.onFailed);
+    const convertedOnFailed = convertTrigger(behavior.onFailed, withFieldPath(ctx, 'onFailed'));
     if (!convertedOnFailed) {
       return undefined;
     }

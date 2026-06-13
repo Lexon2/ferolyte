@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertFilterBase } from './common/convert-filter-base';
 import {
   FILTER_EQUIPMENT_SLOTS,
@@ -13,24 +14,25 @@ import { validateAllowedValues } from '../common/validation';
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertHasNametagFilter = (
-  filter: Partial<HasNametagFilter>
+  filter: Partial<HasNametagFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
   }
 
   // Validate value property
-  if (filter.value === undefined || !validateBoolean(filter.value, 'value')) {
+  if (filter.value === undefined || !validateBoolean(filter.value, 'value', ctx)) {
     return undefined;
   }
 
   // Validate optional domain property
   if (filter.domain !== undefined &&
-      !validateAllowedValues(filter.domain, FILTER_EQUIPMENT_SLOTS, 'domain')) {
+      !validateAllowedValues(filter.domain, FILTER_EQUIPMENT_SLOTS, 'domain', ctx)) {
     return undefined;
   }
 
-  const baseResult = convertFilterBase(filter);
+  const baseResult = convertFilterBase(filter, ctx);
   if (!baseResult) {
     return undefined;
   }

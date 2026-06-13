@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TemptBehavior } from '../../interfaces/behaviors/tempt-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -9,7 +10,8 @@ import { validateNumber, validateBoolean, validateSoundEvent, validateStringArra
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertTemptBehavior = (
-  behavior: Partial<TemptBehavior>
+  behavior: Partial<TemptBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.tempt': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -100,7 +102,7 @@ export const convertTemptBehavior = (
 
   // Validate onStart
   if (behavior.onStart !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onStart);
+    const convertedTrigger = convertTrigger(behavior.onStart, withFieldPath(ctx, 'onStart'));
     if (!convertedTrigger) {
       return undefined;
     }
@@ -109,7 +111,7 @@ export const convertTemptBehavior = (
 
   // Validate onEnd
   if (behavior.onEnd !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onEnd);
+    const convertedTrigger = convertTrigger(behavior.onEnd, withFieldPath(ctx, 'onEnd'));
     if (!convertedTrigger) {
       return undefined;
     }

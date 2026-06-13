@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SwoopAttackBehavior } from '../../interfaces/behaviors/swoop-attack-behavior';
 import { convertRange } from '../common/convertors';
 import { validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSwoopAttackBehavior = (
-  behavior: Partial<SwoopAttackBehavior>
+  behavior: Partial<SwoopAttackBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.swoop_attack': any } | undefined => {
   if (!behavior) {
     return undefined;

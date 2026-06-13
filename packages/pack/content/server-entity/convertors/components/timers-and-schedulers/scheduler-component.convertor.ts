@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SchedulerComponent } from '../../../interfaces/components/timers-and-schedulers/scheduler-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertSchedulerComponent = (
-  component: Partial<SchedulerComponent>
+  component: Partial<SchedulerComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:scheduler': any } | undefined => {
   if (!component) {
     return undefined;
@@ -48,7 +50,7 @@ export const convertSchedulerComponent = (
       }
 
       // Validate event
-      const convertedEvent = convertTrigger(event.event);
+      const convertedEvent = convertTrigger(event.event, withFieldPath(ctx, 'event'));
       if (!convertedEvent) {
         return undefined;
       }

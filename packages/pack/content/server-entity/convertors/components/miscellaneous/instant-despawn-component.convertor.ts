@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { InstantDespawnComponent } from '../../../interfaces/components/miscellaneous/instant-despawn-component';
 
 /**
@@ -7,6 +8,7 @@ import { InstantDespawnComponent } from '../../../interfaces/components/miscella
  */
 export const convertInstantDespawnComponent = (
   component: Partial<InstantDespawnComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:instant_despawn': any } | undefined => {
   if (!component) {
     return undefined;

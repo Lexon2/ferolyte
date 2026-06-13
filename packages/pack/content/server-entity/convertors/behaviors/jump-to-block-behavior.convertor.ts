@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { JumpToBlockBehavior } from '../../interfaces/behaviors/jump-to-block-behavior';
 import { validateInteger, validateNumber, validatePercentage, validateStringArray, validateVector2 } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber, validatePercentage, validateStringArra
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertJumpToBlockBehavior = (
-  behavior: Partial<JumpToBlockBehavior>
+  behavior: Partial<JumpToBlockBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.jump_to_block': any } | undefined => {
   if (!behavior) {
     return undefined;

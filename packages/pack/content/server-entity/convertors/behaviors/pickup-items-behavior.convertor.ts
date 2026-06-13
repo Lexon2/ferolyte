@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PickupItemsBehavior } from '../../interfaces/behaviors/pickup-items-behavior';
 import { validateNumber, validateBoolean, validateStringArray, validateInteger } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateBoolean, validateStringArray, validateInteger }
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertPickupItemsBehavior = (
-  behavior: Partial<PickupItemsBehavior>
+  behavior: Partial<PickupItemsBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.pickup_items': any } | undefined => {
   if (!behavior) {
     return undefined;

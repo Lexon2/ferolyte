@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TeleportToOwnerBehavior } from '../../interfaces/behaviors/teleport-to-owner-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertTeleportToOwnerBehavior = (
-  behavior: Partial<TeleportToOwnerBehavior>
+  behavior: Partial<TeleportToOwnerBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.teleport_to_owner': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,7 +36,7 @@ export const convertTeleportToOwnerBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters);
+    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }

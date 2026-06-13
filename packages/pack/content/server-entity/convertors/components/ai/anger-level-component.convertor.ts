@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AngerLevelComponent } from '../../../interfaces/components/ai/anger-level-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import {
@@ -14,6 +15,7 @@ import {
  */
 export const convertAngerLevelComponent = (
   component: Partial<AngerLevelComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:anger_level': any } | undefined => {
   if (!component) {
     return undefined;
@@ -104,6 +106,7 @@ export const convertAngerLevelComponent = (
   if (component.nuisanceFilter !== undefined) {
     const convertedNuisanceFilter = convertEntityFilters(
       component.nuisanceFilter,
+      withFieldPath(ctx, 'nuisanceFilter'),
     );
     if (!convertedNuisanceFilter) {
       return undefined;

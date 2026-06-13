@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { NapBehavior } from '../../interfaces/behaviors/nap-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertNapBehavior = (
-  behavior: Partial<NapBehavior>
+  behavior: Partial<NapBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.nap': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -66,7 +68,7 @@ export const convertNapBehavior = (
 
   // Validate canNapFilters
   if (behavior.canNapFilters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.canNapFilters);
+    const convertedFilters = convertEntityFilters(behavior.canNapFilters, withFieldPath(ctx, 'canNapFilters'));
     if (!convertedFilters) {
       return undefined;
     }
@@ -75,7 +77,7 @@ export const convertNapBehavior = (
 
   // Validate wakeMobExceptions
   if (behavior.wakeMobExceptions !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.wakeMobExceptions);
+    const convertedFilters = convertEntityFilters(behavior.wakeMobExceptions, withFieldPath(ctx, 'wakeMobExceptions'));
     if (!convertedFilters) {
       return undefined;
     }

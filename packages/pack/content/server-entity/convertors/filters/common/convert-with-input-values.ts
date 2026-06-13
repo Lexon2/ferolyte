@@ -1,4 +1,4 @@
-
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertFilterBase } from './convert-filter-base';
 import { FilterOperator } from '../../../constants/filter-operators';
 import { FilterSubject } from '../../../constants/filter-subjects';
@@ -10,12 +10,12 @@ export const convertWithInputValues = <T extends readonly any[]>(filter: {
   operator?: FilterOperator;
   subject?: FilterSubject;
   value?: T[number];
-}, inputValues: T): MinecraftJsonFilter | undefined => {
+}, inputValues: T, ctx?: ContentDiagnosticContext): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
   }
 
-  const result: any = convertFilterBase(filter);
+  const result: any = convertFilterBase(filter, ctx);
 
   if (!result) {
     return undefined;

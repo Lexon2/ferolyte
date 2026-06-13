@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { StrollTowardsVillageBehavior } from '../../interfaces/behaviors/stroll-towards-village-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertStrollTowardsVillageBehavior = (
-  behavior: Partial<StrollTowardsVillageBehavior>
+  behavior: Partial<StrollTowardsVillageBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.stroll_towards_village': any } | undefined => {
   if (!behavior) {
     return undefined;

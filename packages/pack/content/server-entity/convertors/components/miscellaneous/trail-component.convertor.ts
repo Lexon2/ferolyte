@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TrailComponent } from '../../../interfaces/components/miscellaneous/trail-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 
@@ -7,7 +8,8 @@ import { convertEntityFilters } from '../../common/filters.convertor';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertTrailComponent = (
-  component: Partial<TrailComponent>
+  component: Partial<TrailComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:trail': any } | undefined => {
   if (!component) {
     return undefined;
@@ -27,7 +29,7 @@ export const convertTrailComponent = (
 
   // Validate spawnFilter
   if (component.spawnFilter !== undefined) {
-    const convertedFilters = convertEntityFilters(component.spawnFilter);
+    const convertedFilters = convertEntityFilters(component.spawnFilter, withFieldPath(ctx, 'spawnFilter'));
     if (!convertedFilters) {
       return undefined;
     }

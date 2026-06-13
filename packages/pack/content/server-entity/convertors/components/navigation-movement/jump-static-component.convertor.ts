@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { JumpStaticComponent } from '../../../interfaces/components/navigation-movement/jump-static-component';
 import { validateNumber } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertJumpStaticComponent = (
   component: Partial<JumpStaticComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:jump.static': any } | undefined => {
   if (!component) {
     return undefined;

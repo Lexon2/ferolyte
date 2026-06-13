@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MoveToLavaBehavior } from '../../interfaces/behaviors/move-to-lava-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertMoveToLavaBehavior = (
-  behavior: Partial<MoveToLavaBehavior>
+  behavior: Partial<MoveToLavaBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.move_to_lava': any } | undefined => {
   if (!behavior) {
     return undefined;

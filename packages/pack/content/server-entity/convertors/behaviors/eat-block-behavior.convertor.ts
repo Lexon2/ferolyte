@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EatBlockBehavior } from '../../interfaces/behaviors/eat-block-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateNumber, validateString } from '../common/validation';
@@ -9,6 +10,7 @@ import { validateNumber, validateString } from '../common/validation';
  */
 export const convertEatBlockBehavior = (
   behavior: Partial<EatBlockBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.eat_block': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,7 +28,7 @@ export const convertEatBlockBehavior = (
 
   // Validate onEat
   if (behavior.onEat !== undefined) {
-    const onEat = convertTrigger(behavior.onEat);
+    const onEat = convertTrigger(behavior.onEat, withFieldPath(ctx, 'onEat'));
     if (!onEat) {
       return undefined;
     }

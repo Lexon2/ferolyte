@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import {
   FILTER_OPERATORS,
   FilterOperator,
@@ -8,15 +9,18 @@ import {
 } from '../../../constants/filter-subjects';
 import { validateAllowedValues } from '../../common/validation';
 
-export const convertFilterBase = (filter: {
+export const convertFilterBase = (
+  filter: {
   operator?: FilterOperator;
   subject?: FilterSubject;
-}): { operator?: FilterOperator; subject?: FilterSubject } | undefined => {
+},
+  ctx?: ContentDiagnosticContext
+): { operator?: FilterOperator; subject?: FilterSubject } | undefined => {
   const result: any = {};
 
   // Validate optional properties
   if (filter.operator !== undefined) {
-    if (!validateAllowedValues(filter.operator, FILTER_OPERATORS, 'operator')) {
+    if (!validateAllowedValues(filter.operator, FILTER_OPERATORS, 'operator', ctx)) {
       return undefined;
     }
 
@@ -24,7 +28,7 @@ export const convertFilterBase = (filter: {
   }
 
   if (filter.subject !== undefined) {
-    if (!validateAllowedValues(filter.subject, FILTER_SUBJECTS, 'subject')) {
+    if (!validateAllowedValues(filter.subject, FILTER_SUBJECTS, 'subject', ctx)) {
       return undefined;
     }
 

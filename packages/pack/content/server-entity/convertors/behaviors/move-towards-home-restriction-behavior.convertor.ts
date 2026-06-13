@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MoveTowardsHomeRestrictionBehavior } from '../../interfaces/behaviors/move-towards-home-restriction-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertMoveTowardsHomeRestrictionBehavior = (
-  behavior: Partial<MoveTowardsHomeRestrictionBehavior>
+  behavior: Partial<MoveTowardsHomeRestrictionBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.move_towards_home_restriction': any } | undefined => {
   if (!behavior) {
     return undefined;

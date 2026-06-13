@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ScaleComponent } from '../../../interfaces/components/physical/scale-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertScaleComponent = (
-  component: Partial<ScaleComponent>
+  component: Partial<ScaleComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:scale': any } | undefined => {
   if (!component) {
     return undefined;

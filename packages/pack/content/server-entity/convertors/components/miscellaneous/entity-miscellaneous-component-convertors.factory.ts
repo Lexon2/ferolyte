@@ -39,10 +39,13 @@ import { convertPlayerSaturationComponent } from './player-saturation-component.
 import { convertPreferredPathComponent } from './preferred-path-component.convertor';
 import { convertRaidTriggerComponent } from './raid-trigger-component.convertor';
 import { convertRavagerBlockedComponent } from './ravager-blocked-component.convertor';
+import { convertRemoveInPeacefulComponent } from './remove-in-peaceful-component.convertor';
 import { convertRendersWhenInvisibleComponent } from './renders-when-invisible-component.convertor';
 import { convertScaffoldingClimberComponent } from './scaffolding-climber-component.convertor';
+import { convertShareablesComponent } from './shareables-component.convertor';
 import { convertSoundVolumeComponent } from './sound-volume-component.convertor';
 import { convertSpawnEntityComponent } from './spawn-entity-component.convertor';
+import { convertSpawnOnDeathComponent } from './spawn-on-death-component.convertor';
 import { convertSpellEffectsComponent } from './spell-effects-component.convertor';
 import { convertStrengthComponent } from './strength-component.convertor';
 import { convertSuspectTrackingComponent } from './suspect-tracking-component.convertor';
@@ -97,10 +100,13 @@ export const entityMiscellaneousComponentConvertorsFactory = {
   preferredPath: convertPreferredPathComponent,
   raidTrigger: convertRaidTriggerComponent,
   ravagerBlocked: convertRavagerBlockedComponent,
+  removeInPeaceful: convertRemoveInPeacefulComponent,
   rendersWhenInvisible: convertRendersWhenInvisibleComponent,
   scaffoldingClimber: convertScaffoldingClimberComponent,
+  shareables: convertShareablesComponent,
   soundVolume: convertSoundVolumeComponent,
   spawnEntity: convertSpawnEntityComponent,
+  spawnOnDeath: convertSpawnOnDeathComponent,
   spellEffects: convertSpellEffectsComponent,
   strength: convertStrengthComponent,
   suspectTracking: convertSuspectTrackingComponent,

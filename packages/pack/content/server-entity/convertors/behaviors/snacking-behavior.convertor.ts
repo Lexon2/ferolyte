@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SnackingBehavior } from '../../interfaces/behaviors/snacking-behavior';
 import { validateNumber, validatePercentage, validateStringArray } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validatePercentage, validateStringArray } from '../comm
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSnackingBehavior = (
-  behavior: Partial<SnackingBehavior>
+  behavior: Partial<SnackingBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.snacking': any } | undefined => {
   if (!behavior) {
     return undefined;

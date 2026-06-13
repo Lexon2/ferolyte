@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RiseToLiquidLevelBehavior } from '../../interfaces/behaviors/rise-to-liquid-level-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRiseToLiquidLevelBehavior = (
-  behavior: Partial<RiseToLiquidLevelBehavior>
+  behavior: Partial<RiseToLiquidLevelBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.rise_to_liquid_level': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MoveTowardsTargetBehavior } from '../../interfaces/behaviors/move-towards-target-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertMoveTowardsTargetBehavior = (
-  behavior: Partial<MoveTowardsTargetBehavior>
+  behavior: Partial<MoveTowardsTargetBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.move_towards_target': any } | undefined => {
   if (!behavior) {
     return undefined;

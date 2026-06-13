@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { StayWhileSittingBehavior } from '../../interfaces/behaviors/stay-while-sitting-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertStayWhileSittingBehavior = (
-  behavior: Partial<StayWhileSittingBehavior>
+  behavior: Partial<StayWhileSittingBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.stay_while_sitting': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { GiveableComponent } from '../../../interfaces/components/interaction/giveable-component';
 import { validateStringArray } from '../../common/validation';
 import { validateNumberRange } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertGiveableComponent = (
-  component: Partial<GiveableComponent>
+  component: Partial<GiveableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:giveable': any } | undefined => {
   if (!component) {
     return undefined;

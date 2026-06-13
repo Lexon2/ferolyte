@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FollowMobBehavior } from '../../interfaces/behaviors/follow-mob-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import {
@@ -14,6 +15,7 @@ import {
  */
 export const convertFollowMobBehavior = (
   behavior: Partial<FollowMobBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.follow_mob': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -76,7 +78,7 @@ export const convertFollowMobBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters);
+    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }

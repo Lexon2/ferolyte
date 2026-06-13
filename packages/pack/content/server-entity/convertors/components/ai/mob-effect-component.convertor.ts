@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MobEffectComponent } from '../../../interfaces/components/ai/mob-effect-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertMobEffectComponent = (
-  component: Partial<MobEffectComponent>
+  component: Partial<MobEffectComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:mob_effect': any } | undefined => {
   if (!component) {
     return undefined;
@@ -34,7 +36,7 @@ export const convertMobEffectComponent = (
 
   // Validate entityFilter
   if (component.entityFilter !== undefined) {
-    const convertedEntityFilter = convertEntityFilters(component.entityFilter);
+    const convertedEntityFilter = convertEntityFilters(component.entityFilter, withFieldPath(ctx, 'entityFilter'));
     if (!convertedEntityFilter) {
       return undefined;
     }

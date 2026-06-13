@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationFlyComponent } from '../../../interfaces/components/navigation-movement/navigation-fly-component';
 
@@ -7,7 +8,8 @@ import { NavigationFlyComponent } from '../../../interfaces/components/navigatio
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertNavigationFlyComponent = (
-  component: Partial<NavigationFlyComponent>
+  component: Partial<NavigationFlyComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:navigation.fly': any } | undefined => {
   if (!component) {
     return undefined;

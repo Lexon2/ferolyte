@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FlockingComponent } from '../../../interfaces/components/ai/flocking-component';
 import { validateNumber } from '../../common/validation';
 import { validateBoolean } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateBoolean } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertFlockingComponent = (
-  component: Partial<FlockingComponent>
+  component: Partial<FlockingComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:flocking': any } | undefined => {
   if (!component) {
     return undefined;

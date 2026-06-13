@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RandomFlyBehavior } from '../../interfaces/behaviors/random-fly-behavior';
 import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateBoolean, validateInteger } from '../common/vali
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRandomFlyBehavior = (
-  behavior: Partial<RandomFlyBehavior>
+  behavior: Partial<RandomFlyBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.random_fly': any } | undefined => {
   if (!behavior) {
     return undefined;

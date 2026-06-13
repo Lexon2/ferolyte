@@ -11,6 +11,7 @@ import { convertManagedWanderingTraderComponent } from './managed-wandering-trad
 import { convertMobEffectComponent } from './mob-effect-component.convertor';
 import { convertMobEffectImmunityComponent } from './mob-effect-immunity-component.convertor';
 import { convertNpcComponent } from './npc-component.convertor';
+import { convertOffspringComponent } from './offspring-component.convertor';
 import { convertOutOfControlComponent } from './out-of-control-component.converter';
 import { convertPersistentComponent } from './persistent-component.convertor';
 import { convertTameableComponent } from './tameable-component.convert';
@@ -32,6 +33,7 @@ export const entityAiComponentConvertorsFactory = {
   mobEffect: convertMobEffectComponent,
   mobEffectImmunity: convertMobEffectImmunityComponent,
   npc: convertNpcComponent,
+  offspring: convertOffspringComponent,
   outOfControl: convertOutOfControlComponent,
   persistent: convertPersistentComponent,
   tameable: convertTameableComponent,

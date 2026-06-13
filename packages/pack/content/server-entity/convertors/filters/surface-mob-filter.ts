@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { SurfaceMobFilter } from '../../interfaces/filters/surface-mob-filter';
 
@@ -7,7 +8,8 @@ import { SurfaceMobFilter } from '../../interfaces/filters/surface-mob-filter';
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertSurfaceMobFilter = (
-  filter: Partial<SurfaceMobFilter>
+  filter: Partial<SurfaceMobFilter>,
+  ctx?: ContentDiagnosticContext
 ): ReturnType<typeof convertBooleanFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
@@ -15,5 +17,5 @@ export const convertSurfaceMobFilter = (
   return convertBooleanFilter({
     ...filter,
     test: 'surface_mob'
-  });
+  }, ctx);
 };

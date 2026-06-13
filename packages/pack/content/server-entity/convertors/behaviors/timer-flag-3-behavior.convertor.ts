@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertTimerFlag1Behavior } from './timer-flag-1-behavior.convertor';
 import { TimerFlag3Behavior } from '../../interfaces/behaviors/timer-flag-3-behavior';
 
@@ -7,7 +8,8 @@ import { TimerFlag3Behavior } from '../../interfaces/behaviors/timer-flag-3-beha
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertTimerFlag3Behavior = (
-  behavior: Partial<TimerFlag3Behavior>
+  behavior: Partial<TimerFlag3Behavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.timer_flag_3': any } | undefined => {
   const converted = convertTimerFlag1Behavior(behavior);
   if (!converted) {

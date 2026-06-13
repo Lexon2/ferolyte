@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SendEventBehavior, EventChoice, EventStep } from '../../interfaces/behaviors/send-event-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber, validateBoolean, validateHexColor, validateSoundEvent, validateString } from '../common/validation';
@@ -39,7 +40,10 @@ const convertEventStep = (step: EventStep): any | undefined => {
  * @param choice The choice to convert
  * @returns The choice in Minecraft format or undefined if validation fails
  */
-const convertEventChoice = (choice: EventChoice): any | undefined => {
+const convertEventChoice = (
+  choice: EventChoice,
+  ctx?: ContentDiagnosticContext,
+): any | undefined => {
   const convertedChoice: any = {};
 
   if (choice.minActivationRange !== undefined) {
@@ -71,7 +75,7 @@ const convertEventChoice = (choice: EventChoice): any | undefined => {
   }
 
   if (choice.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(choice.filters);
+    const convertedFilters = convertEntityFilters(choice.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }
@@ -119,7 +123,8 @@ const convertEventChoice = (choice: EventChoice): any | undefined => {
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSendEventBehavior = (
-  behavior: Partial<SendEventBehavior>
+  behavior: Partial<SendEventBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.send_event': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -156,7 +161,9 @@ export const convertSendEventBehavior = (
     if (!Array.isArray(behavior.eventChoices)) {
       return undefined;
     }
-    const convertedChoices = behavior.eventChoices.map(convertEventChoice);
+    const convertedChoices = behavior.eventChoices.map((choice, index) =>
+      convertEventChoice(choice, withFieldPath(ctx, `eventChoices[${index}]`)),
+    );
     if (convertedChoices.some(choice => choice === undefined)) {
       return undefined;
     }

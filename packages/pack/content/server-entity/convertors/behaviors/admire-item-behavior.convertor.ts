@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AdmireItemBehavior } from '../../interfaces/behaviors/admire-item-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -9,7 +10,8 @@ import { validateNumber, validateSoundEvent } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertAdmireItemBehavior = (
-  behavior: Partial<AdmireItemBehavior>
+  behavior: Partial<AdmireItemBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.admire_item': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -44,7 +46,7 @@ export const convertAdmireItemBehavior = (
 
   // Validate onAdmireItemStart
   if (behavior.onAdmireItemStart !== undefined) {
-    const onAdmireItemStart = convertTrigger(behavior.onAdmireItemStart);
+    const onAdmireItemStart = convertTrigger(behavior.onAdmireItemStart, withFieldPath(ctx, 'onAdmireItemStart'));
     if (!onAdmireItemStart) {
       return undefined;
     }
@@ -53,7 +55,7 @@ export const convertAdmireItemBehavior = (
 
   // Validate onAdmireItemStop
   if (behavior.onAdmireItemStop !== undefined) {
-    const onAdmireItemStop = convertTrigger(behavior.onAdmireItemStop);
+    const onAdmireItemStop = convertTrigger(behavior.onAdmireItemStop, withFieldPath(ctx, 'onAdmireItemStop'));
     if (!onAdmireItemStop) {
       return undefined;
     }

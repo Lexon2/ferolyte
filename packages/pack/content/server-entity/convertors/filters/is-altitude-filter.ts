@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { IsAltitudeFilter } from '../../interfaces/filters/is-altitude-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -8,10 +9,11 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertIsAltitudeFilter = (
-  filter: Partial<IsAltitudeFilter>
+  filter: Partial<IsAltitudeFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   return convertNumberFilter({
     ...filter,
     test: 'is_altitude'
-  });
+  }, ctx);
 };

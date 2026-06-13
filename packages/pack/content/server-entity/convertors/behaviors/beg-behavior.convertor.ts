@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BegBehavior } from '../../interfaces/behaviors/beg-behavior';
 import { validateNumber, validateComplexRange, validateStringArray } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateComplexRange, validateStringArray } from '../co
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertBegBehavior = (
-  behavior: Partial<BegBehavior>
+  behavior: Partial<BegBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.beg': any } | undefined => {
   if (!behavior) {
     return undefined;

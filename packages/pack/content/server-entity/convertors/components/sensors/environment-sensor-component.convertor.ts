@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EnvironmentSensorComponent } from '../../../interfaces/components/sensors/environment-sensor-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -8,6 +9,7 @@ import { convertTrigger } from '../../common/trigger.convertor';
  */
 export const convertEnvironmentSensorComponent = (
   component: Partial<EnvironmentSensorComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:environment_sensor': any } | undefined => {
   if (!component) {
     return undefined;

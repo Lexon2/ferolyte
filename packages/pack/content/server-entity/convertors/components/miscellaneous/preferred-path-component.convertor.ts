@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PreferredPathComponent } from '../../../interfaces/components/miscellaneous/preferred-path-component';
 import { validateNumber, validateInteger } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateInteger } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertPreferredPathComponent = (
-  component: Partial<PreferredPathComponent>
+  component: Partial<PreferredPathComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:preferred_path': any } | undefined => {
   if (!component) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MovementBasicComponent } from '../../../interfaces/components/navigation-movement/movement-basic-component';
 import { validateMaxTurn } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateMaxTurn } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertMovementBasicComponent = (
-  component: Partial<MovementBasicComponent>
+  component: Partial<MovementBasicComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:movement.basic': any } | undefined => {
   if (!component) {
     return undefined;

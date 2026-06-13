@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AvoidMobTypeBehavior } from '../../interfaces/behaviors/avoid-mob-type-behavior';
 import { convertRange } from '../common/convertors';
 import { convertSingleEntityDefinition } from '../common/entity-definition.convertor';
@@ -15,6 +16,7 @@ import {
  */
 export const convertAvoidMobTypeBehavior = (
   behavior: Partial<AvoidMobTypeBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.avoid_mob_type': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -160,7 +162,7 @@ export const convertAvoidMobTypeBehavior = (
 
   // Validate onEscapeEvent
   if (behavior.onEscapeEvent !== undefined) {
-    const onEscapeEvent = convertTrigger(behavior.onEscapeEvent);
+    const onEscapeEvent = convertTrigger(behavior.onEscapeEvent, withFieldPath(ctx, 'onEscapeEvent'));
     if (!onEscapeEvent) {
       return undefined;
     }

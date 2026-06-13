@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FloatsInLiquidComponent } from '../../../interfaces/components/navigation-movement/floats-in-liquid-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertFloatsInLiquidComponent = (
   component: Partial<FloatsInLiquidComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:floats_in_liquid': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

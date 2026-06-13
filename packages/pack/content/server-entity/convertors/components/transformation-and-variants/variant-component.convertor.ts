@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { VariantComponent } from '../../../interfaces/components/transformation-and-variants/variant-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The converted component in Minecraft format or undefined if validation fails
  */
 export const convertVariantComponent = (
-  component: Partial<VariantComponent>
+  component: Partial<VariantComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:variant': any } | undefined => {
   if (!component) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { LightLevelFilter } from '../../interfaces/filters/light-level-filter';
 
@@ -7,7 +8,8 @@ import { LightLevelFilter } from '../../interfaces/filters/light-level-filter';
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertLightLevelFilter = (
-  filter: Partial<LightLevelFilter>
+  filter: Partial<LightLevelFilter>,
+  ctx?: ContentDiagnosticContext
 ): ReturnType<typeof convertNumberFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
@@ -15,5 +17,5 @@ export const convertLightLevelFilter = (
   return convertNumberFilter({
     ...filter,
     test: 'light_level'
-  });
+  }, ctx);
 };

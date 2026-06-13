@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MingleBehavior } from '../../interfaces/behaviors/mingle-behavior';
 import { validateNumber, validateString, validateStringArray } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateString, validateStringArray } from '../common/v
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertMingleBehavior = (
-  behavior: Partial<MingleBehavior>
+  behavior: Partial<MingleBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.mingle': any } | undefined => {
   if (!behavior) {
     return undefined;

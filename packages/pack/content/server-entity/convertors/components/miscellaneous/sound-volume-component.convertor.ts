@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SoundVolumeComponent } from '../../../interfaces/components/miscellaneous/sound-volume-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertSoundVolumeComponent = (
-  component: Partial<SoundVolumeComponent>
+  component: Partial<SoundVolumeComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:sound_volume': { value: number } } | undefined => {
   if (!component) {
     return undefined;

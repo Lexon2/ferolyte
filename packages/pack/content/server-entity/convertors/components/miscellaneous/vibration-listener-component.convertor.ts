@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { VibrationListenerComponent } from '../../../interfaces/components/miscellaneous/vibration-listener-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertVibrationListenerComponent = (
   component: Partial<VibrationListenerComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:vibration_listener': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

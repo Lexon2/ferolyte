@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FallDamageComponent } from '../../../interfaces/components/miscellaneous/fall-damage-component';
 import { validateNumber } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertFallDamageComponent = (
   component: Partial<FallDamageComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:fall_damage': any } | undefined => {
   if (!component) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TradeInterestBehavior } from '../../interfaces/behaviors/trade-interest-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertTradeInterestBehavior = (
-  behavior: Partial<TradeInterestBehavior>
+  behavior: Partial<TradeInterestBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.trade_interest': any } | undefined => {
   if (!behavior) {
     return undefined;

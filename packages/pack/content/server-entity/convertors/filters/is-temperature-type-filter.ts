@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { TEMPERATURE_TYPES } from '../../constants/temperature-types';
 import { IsTemperatureTypeFilter } from '../../interfaces/filters/is-temperature-type-filter';
@@ -9,13 +10,12 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertIsTemperatureTypeFilter = (
-  filter: Partial<IsTemperatureTypeFilter>
+  filter: Partial<IsTemperatureTypeFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
-  return convertWithInputValues(
-    {
+  return convertWithInputValues({
       ...filter,
       test: 'is_temperature_type'
     },
-    TEMPERATURE_TYPES
-  );
+    TEMPERATURE_TYPES, ctx);
 };

@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AngryComponent } from '../../../interfaces/components/ai/angry-component';
 import { convertRange } from '../../common/convertors';
 import { convertEntityFilters } from '../../common/filters.convertor';
@@ -15,6 +16,7 @@ import {
  */
 export const convertAngryComponent = (
   component: Partial<AngryComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:angry': any } | undefined => {
   if (!component) {
     return undefined;
@@ -32,9 +34,7 @@ export const convertAngryComponent = (
 
   // Validate broadcastFilters
   if (component.broadcastFilters !== undefined) {
-    const convertedBroadcastFilters = convertEntityFilters(
-      component.broadcastFilters,
-    );
+    const convertedBroadcastFilters = convertEntityFilters(component.broadcastFilters, withFieldPath(ctx, 'broadcastFilters'));
     if (!convertedBroadcastFilters) {
       return undefined;
     }
@@ -43,7 +43,7 @@ export const convertAngryComponent = (
 
   // Validate filters
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters);
+    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }
@@ -82,7 +82,7 @@ export const convertAngryComponent = (
 
   // Validate calmEvent
   if (component.calmEvent !== undefined) {
-    const convertedCalmEvent = convertTrigger(component.calmEvent);
+    const convertedCalmEvent = convertTrigger(component.calmEvent, withFieldPath(ctx, 'calmEvent'));
     if (!convertedCalmEvent) {
       return undefined;
     }

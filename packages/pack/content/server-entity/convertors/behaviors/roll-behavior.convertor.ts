@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RollBehavior } from '../../interfaces/behaviors/roll-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRollBehavior = (
-  behavior: Partial<RollBehavior>
+  behavior: Partial<RollBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.roll': any } | undefined => {
   if (!behavior) {
     return undefined;

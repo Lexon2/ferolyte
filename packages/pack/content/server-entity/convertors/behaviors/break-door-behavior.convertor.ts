@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BreakDoorBehavior } from '../../interfaces/behaviors/break-door-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertBreakDoorBehavior = (
-  behavior: Partial<BreakDoorBehavior>
+  behavior: Partial<BreakDoorBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.break_door': any } | undefined => {
   if (!behavior) {
     return undefined;

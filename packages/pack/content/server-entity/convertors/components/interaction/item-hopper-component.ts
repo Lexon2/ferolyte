@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ItemHopperComponent } from '../../../interfaces/components/interaction/item-hopper-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertItemHopperComponent = (
   component: Partial<ItemHopperComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:item_hopper': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

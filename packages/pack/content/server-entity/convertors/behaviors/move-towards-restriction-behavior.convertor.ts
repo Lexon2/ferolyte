@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { CONTROL_FLAG } from '../../constants/control-flags';
 import { MoveTowardsRestrictionBehavior } from '../../interfaces/behaviors/move-towards-restriction-behavior';
 import { validateNumber, validateStringArray } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber, validateStringArray } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertMoveTowardsRestrictionBehavior = (
-  behavior: Partial<MoveTowardsRestrictionBehavior>
+  behavior: Partial<MoveTowardsRestrictionBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.move_towards_restriction': any } | undefined => {
   if (!behavior) {
     return undefined;

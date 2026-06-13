@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { IsStunnedComponent } from '../../../interfaces/components/states/is-stunned-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertIsStunnedComponent = (
   component: Partial<IsStunnedComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:is_stunned': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

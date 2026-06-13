@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { DIFFICULTIES } from '../../constants/difficulties';
 import { IsDifficultyFilter } from '../../interfaces/filters/is-difficulty-filter';
@@ -9,13 +10,12 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertIsDifficultyFilter = (
-  filter: Partial<IsDifficultyFilter>
+  filter: Partial<IsDifficultyFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
-  return convertWithInputValues(
-    {
+  return convertWithInputValues({
       ...filter,
       test: 'is_difficulty'
     },
-    DIFFICULTIES
-  );
+    DIFFICULTIES, ctx);
 };

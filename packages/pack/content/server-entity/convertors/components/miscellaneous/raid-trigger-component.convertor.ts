@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RaidTriggerComponent } from '../../../interfaces/components/miscellaneous/raid-trigger-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -7,7 +8,8 @@ import { convertTrigger } from '../../common/trigger.convertor';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertRaidTriggerComponent = (
-  component: Partial<RaidTriggerComponent>
+  component: Partial<RaidTriggerComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:raid_trigger': any } | undefined => {
   if (!component) {
     return undefined;
@@ -17,7 +19,7 @@ export const convertRaidTriggerComponent = (
 
   // Validate triggeredEvent
   if (component.triggeredEvent !== undefined) {
-    const convertedTriggeredEvent = convertTrigger(component.triggeredEvent);
+    const convertedTriggeredEvent = convertTrigger(component.triggeredEvent, withFieldPath(ctx, 'triggeredEvent'));
     if (!convertedTriggeredEvent) {
       return undefined;
     }

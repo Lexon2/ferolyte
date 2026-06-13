@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MovementSkipComponent } from '../../../interfaces/components/navigation-movement/movement-skip-component';
 import { validateMaxTurn } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateMaxTurn } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertMovementSkipComponent = (
-  component: Partial<MovementSkipComponent>
+  component: Partial<MovementSkipComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:movement.skip': any } | undefined => {
   if (!component) {
     return undefined;

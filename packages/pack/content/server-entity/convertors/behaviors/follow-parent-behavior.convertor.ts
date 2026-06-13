@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FollowParentBehavior } from '../../interfaces/behaviors/follow-parent-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertFollowParentBehavior = (
-  behavior: Partial<FollowParentBehavior>
+  behavior: Partial<FollowParentBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.follow_parent': any } | undefined => {
   if (!behavior) {
     return undefined;

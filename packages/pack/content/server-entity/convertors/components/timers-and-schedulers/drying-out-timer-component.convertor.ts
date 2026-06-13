@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DryingOutTimerComponent } from '../../../interfaces/components/timers-and-schedulers/drying-out-timer-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateTime } from '../../common/validation';
@@ -9,6 +10,7 @@ import { validateTime } from '../../common/validation';
  */
 export const convertDryingOutTimerComponent = (
   component: Partial<DryingOutTimerComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:drying_out_timer': any } | undefined => {
   if (!component) {
     return undefined;
@@ -36,7 +38,7 @@ export const convertDryingOutTimerComponent = (
 
   // Validate driedOutEvent
   if (component.driedOutEvent !== undefined) {
-    const convertedDriedOutEvent = convertTrigger(component.driedOutEvent);
+    const convertedDriedOutEvent = convertTrigger(component.driedOutEvent, withFieldPath(ctx, 'driedOutEvent'));
     if (!convertedDriedOutEvent) {
       return undefined;
     }

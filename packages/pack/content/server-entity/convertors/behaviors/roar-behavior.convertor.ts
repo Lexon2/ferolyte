@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RoarBehavior } from '../../interfaces/behaviors/roar-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRoarBehavior = (
-  behavior: Partial<RoarBehavior>
+  behavior: Partial<RoarBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.roar': any } | undefined => {
   if (!behavior) {
     return undefined;

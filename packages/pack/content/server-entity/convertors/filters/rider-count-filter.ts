@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { RiderCountFilter } from '../../interfaces/filters/rider-count-filter';
 
@@ -7,7 +8,8 @@ import { RiderCountFilter } from '../../interfaces/filters/rider-count-filter';
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertRiderCountFilter = (
-  filter: Partial<RiderCountFilter>
+  filter: Partial<RiderCountFilter>,
+  ctx?: ContentDiagnosticContext
 ): ReturnType<typeof convertNumberFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
@@ -15,5 +17,5 @@ export const convertRiderCountFilter = (
   return convertNumberFilter({
     ...filter,
     test: 'rider_count'
-  });
+  }, ctx);
 };

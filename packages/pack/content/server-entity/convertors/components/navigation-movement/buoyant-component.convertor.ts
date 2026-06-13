@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BuoyantComponent } from '../../../interfaces/components/navigation-movement/buoyant-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertBuoyantComponent = (
   component: Partial<BuoyantComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:buoyant': any } | undefined => {
   if (!component) {
     return undefined;

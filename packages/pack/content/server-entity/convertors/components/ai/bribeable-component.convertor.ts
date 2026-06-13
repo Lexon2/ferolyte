@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BribeableComponent } from '../../../interfaces/components/ai/bribeable-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertBribeableComponent = (
   component: Partial<BribeableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:bribeable': any } | undefined => {
   if (!component) {
     return undefined;

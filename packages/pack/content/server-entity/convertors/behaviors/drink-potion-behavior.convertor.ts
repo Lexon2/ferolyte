@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DrinkPotionBehavior } from '../../interfaces/behaviors/drink-potion-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber, validatePercentage } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber, validatePercentage } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertDrinkPotionBehavior = (
-  behavior: Partial<DrinkPotionBehavior>
+  behavior: Partial<DrinkPotionBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.drink_potion': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -40,7 +42,8 @@ export const convertDrinkPotionBehavior = (
       return undefined;
     }
 
-    result.potions = behavior.potions.map((potion: { id?: number; chance?: number; filters?: any }) => {
+    result.potions = behavior.potions.map((potion, index) => {
+      const potionCtx = withFieldPath(ctx, `potions[${index}]`);
       const convertedPotion: any = {};
 
       // Validate id
@@ -61,7 +64,10 @@ export const convertDrinkPotionBehavior = (
 
       // Validate filters
       if (potion.filters !== undefined) {
-        const convertedFilters = convertEntityFilters(potion.filters);
+        const convertedFilters = convertEntityFilters(
+          potion.filters,
+          withFieldPath(potionCtx, 'filters'),
+        );
         if (convertedFilters === undefined) {
           return undefined;
         }

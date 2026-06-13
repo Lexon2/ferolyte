@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MovementJumpComponent } from '../../../interfaces/components/navigation-movement/movement-jump-component';
 import { validateMaxTurn } from '../../common/validation';
 import { validateNumberRange } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertMovementJumpComponent = (
-  component: Partial<MovementJumpComponent>
+  component: Partial<MovementJumpComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:movement.jump': any } | undefined => {
   if (!component) {
     return undefined;

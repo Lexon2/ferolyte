@@ -1,4 +1,4 @@
-import { entityBevaviorConvertorsFactory } from './convertors/behavior-convertors.factory';
+import { entityBehaviorConvertorsFactory } from './convertors/behavior-convertors.factory';
 import { entityComponentConvertorsFactory } from './convertors/component-convertors-factory';
 import { convertEntityEvents } from './convertors/entity-events.convertor';
 import { convertEntityProperties } from './convertors/entity-properties.convertor';
@@ -6,6 +6,10 @@ import { EntityBehaviors } from './interfaces/entity-behaviors';
 import { EntityComponents } from './interfaces/entity-components';
 import { MinecraftServerEntity } from './interfaces/minecraft-server-entity';
 import { ServerEntityConfig } from './interfaces/server-entity-config';
+import {
+  ContentDiagnosticContext,
+  logContentError,
+} from '../../common/diagnostics/content-diagnostic';
 import { ContentBuilder } from '../../common/interfaces/content.builder';
 import { CONTENT_METADATA } from '../../compiler/content/content.metadata';
 
@@ -13,9 +17,15 @@ export class ServerEntityBuilder implements ContentBuilder {
   readonly metadata = CONTENT_METADATA.SERVER_ENTITY;
 
   private config: ServerEntityConfig;
+  private buildContext?: ContentDiagnosticContext;
 
   constructor(config: ServerEntityConfig) {
     this.config = config;
+  }
+
+  public withBuildContext(ctx: ContentDiagnosticContext): this {
+    this.buildContext = { contentType: 'server-entity', ...ctx };
+    return this;
   }
 
   public cloneConfig(): ServerEntityConfig {
@@ -83,7 +93,7 @@ export class ServerEntityBuilder implements ContentBuilder {
     if (properties !== undefined) {
       const convertedProperties = convertEntityProperties(properties);
       if (convertedProperties === undefined) {
-        console.warn(`Entity properties are invalid. Skipping...`);
+        logContentError(this.buildContext, 'Entity properties are invalid');
 
         return;
       }
@@ -107,7 +117,16 @@ export class ServerEntityBuilder implements ContentBuilder {
       if (component === 'behaviors') {
         const convertedBehaviors = this.convertBehaviors(components.behaviors);
         if (convertedBehaviors === undefined) {
-          console.warn(`Entity behaviors are invalid. Skipping...`);
+          logContentError(
+            this.buildContext !== undefined
+              ? {
+                  ...this.buildContext,
+                  component: 'behaviors',
+                  fieldPath: undefined,
+                }
+              : undefined,
+            'Entity behaviors are invalid',
+          );
           continue;
         }
         entityComponents = { ...entityComponents, ...convertedBehaviors };
@@ -117,15 +136,26 @@ export class ServerEntityBuilder implements ContentBuilder {
       const factory =
         entityComponentConvertorsFactory[component as keyof EntityComponents];
       if (factory === undefined) {
-        console.warn(
-          `Entity component "${component}" is not supported. Skipping...`,
+        logContentError(
+          this.buildContext !== undefined
+            ? { ...this.buildContext, component, fieldPath: undefined }
+            : undefined,
+          `Entity component "${component}" is not supported`,
         );
         continue;
       }
       const componentData = components[component as keyof typeof components];
-      const minecraftComponent = factory(componentData);
+      const componentContext: ContentDiagnosticContext | undefined =
+        this.buildContext !== undefined
+          ? { ...this.buildContext, component, fieldPath: undefined }
+          : undefined;
+
+      const minecraftComponent = factory(componentData, componentContext);
       if (minecraftComponent === undefined) {
-        console.warn(`Entity component "${component}" is invalid. Skipping...`);
+        logContentError(
+          componentContext,
+          `Entity component "${component}" is invalid`,
+        );
         continue;
       }
       entityComponents = { ...entityComponents, ...minecraftComponent };
@@ -143,18 +173,37 @@ export class ServerEntityBuilder implements ContentBuilder {
 
     for (const behavior in behaviors) {
       const factory =
-        entityBevaviorConvertorsFactory[behavior as keyof EntityBehaviors];
+        entityBehaviorConvertorsFactory[behavior as keyof EntityBehaviors];
       if (factory === undefined) {
-        console.warn(
-          `Entity behavior "${behavior}" is not supported. Skipping...`,
+        logContentError(
+          this.buildContext !== undefined
+            ? {
+                ...this.buildContext,
+                component: 'behaviors',
+                fieldPath: behavior,
+              }
+            : undefined,
+          `Entity behavior "${behavior}" is not supported`,
         );
         continue;
       }
 
       const behaviorData = behaviors[behavior as keyof typeof behaviors];
-      const minecraftBehavior = factory(behaviorData);
+      const behaviorContext: ContentDiagnosticContext | undefined =
+        this.buildContext !== undefined
+          ? {
+              ...this.buildContext,
+              component: 'behaviors',
+              fieldPath: behavior,
+            }
+          : undefined;
+
+      const minecraftBehavior = factory(behaviorData, behaviorContext);
       if (minecraftBehavior === undefined) {
-        console.warn(`Entity behavior "${behavior}" is invalid. Skipping...`);
+        logContentError(
+          behaviorContext,
+          `Entity behavior "${behavior}" is invalid`,
+        );
         continue;
       }
       entityBehaviors = { ...entityBehaviors, ...minecraftBehavior };
@@ -200,7 +249,7 @@ export class ServerEntityBuilder implements ContentBuilder {
       return;
     }
 
-    const convertedEvents = convertEntityEvents(events);
+    const convertedEvents = convertEntityEvents(events, this.buildContext);
     if (convertedEvents === undefined) {
       return;
     }

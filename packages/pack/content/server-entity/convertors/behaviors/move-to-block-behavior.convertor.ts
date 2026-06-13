@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MoveToBlockBehavior } from '../../interfaces/behaviors/move-to-block-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -17,6 +18,7 @@ import {
  */
 export const convertMoveToBlockBehavior = (
   behavior: Partial<MoveToBlockBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.move_to_block': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,7 +44,7 @@ export const convertMoveToBlockBehavior = (
 
   // Validate onStayCompleted
   if (behavior.onStayCompleted !== undefined) {
-    const convertedOnStayCompleted = convertTrigger(behavior.onStayCompleted);
+    const convertedOnStayCompleted = convertTrigger(behavior.onStayCompleted, withFieldPath(ctx, 'onStayCompleted'));
     if (!convertedOnStayCompleted) {
       return undefined;
     }
@@ -51,7 +53,7 @@ export const convertMoveToBlockBehavior = (
 
   // Validate onReach
   if (behavior.onReach !== undefined) {
-    const convertedOnReach = convertTrigger(behavior.onReach);
+    const convertedOnReach = convertTrigger(behavior.onReach, withFieldPath(ctx, 'onReach'));
     if (!convertedOnReach) {
       return undefined;
     }
@@ -122,9 +124,7 @@ export const convertMoveToBlockBehavior = (
 
   // Validate targetBlockFilters
   if (behavior.targetBlockFilters !== undefined) {
-    const convertedTargetBlockFilters = convertEntityFilters(
-      behavior.targetBlockFilters,
-    );
+    const convertedTargetBlockFilters = convertEntityFilters(behavior.targetBlockFilters, withFieldPath(ctx, 'targetBlockFilters'));
     if (!convertedTargetBlockFilters) {
       return undefined;
     }

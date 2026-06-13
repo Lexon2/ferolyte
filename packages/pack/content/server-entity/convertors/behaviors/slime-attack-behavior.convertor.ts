@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SlimeAttackBehavior } from '../../interfaces/behaviors/slime-attack-behavior';
 import { validateNumber, validateBoolean } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateBoolean } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSlimeAttackBehavior = (
-  behavior: Partial<SlimeAttackBehavior>
+  behavior: Partial<SlimeAttackBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.slime_attack': any } | undefined => {
   if (!behavior) {
     return undefined;

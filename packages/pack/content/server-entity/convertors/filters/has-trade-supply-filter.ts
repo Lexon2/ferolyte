@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { HasTradeSupplyFilter } from '../../interfaces/filters/has-trade-supply-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -8,10 +9,11 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertHasTradeSupplyFilter = (
-  filter: Partial<HasTradeSupplyFilter>
+  filter: Partial<HasTradeSupplyFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   return convertBooleanFilter({
     ...filter,
     test: 'has_trade_supply'
-  });
+  }, ctx);
 };

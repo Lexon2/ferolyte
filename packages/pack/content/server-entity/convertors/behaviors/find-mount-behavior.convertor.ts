@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FindMountBehavior } from '../../interfaces/behaviors/find-mount-behavior';
 import { validateBoolean, validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateBoolean, validateInteger, validateNumber } from '../common/vali
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertFindMountBehavior = (
-  behavior: Partial<FindMountBehavior>
+  behavior: Partial<FindMountBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.find_mount': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RandomSearchAndDigBehavior } from '../../interfaces/behaviors/random-search-and-dig-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -9,7 +10,8 @@ import { validateNumber, validateString, validateStringArray } from '../common/v
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRandomSearchAndDigBehavior = (
-  behavior: Partial<RandomSearchAndDigBehavior>
+  behavior: Partial<RandomSearchAndDigBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.random_search_and_dig': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -77,7 +79,7 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onDiggingStart
   if (behavior.onDiggingStart !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onDiggingStart);
+    const convertedTrigger = convertTrigger(behavior.onDiggingStart, withFieldPath(ctx, 'onDiggingStart'));
     if (!convertedTrigger) {
       return undefined;
     }
@@ -86,7 +88,7 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onFailDuringDigging
   if (behavior.onFailDuringDigging !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onFailDuringDigging);
+    const convertedTrigger = convertTrigger(behavior.onFailDuringDigging, withFieldPath(ctx, 'onFailDuringDigging'));
     if (!convertedTrigger) {
       return undefined;
     }
@@ -95,7 +97,7 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onFailDuringSearching
   if (behavior.onFailDuringSearching !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onFailDuringSearching);
+    const convertedTrigger = convertTrigger(behavior.onFailDuringSearching, withFieldPath(ctx, 'onFailDuringSearching'));
     if (!convertedTrigger) {
       return undefined;
     }
@@ -104,7 +106,7 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onItemFound
   if (behavior.onItemFound !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onItemFound);
+    const convertedTrigger = convertTrigger(behavior.onItemFound, withFieldPath(ctx, 'onItemFound'));
     if (!convertedTrigger) {
       return undefined;
     }
@@ -113,7 +115,7 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onSearchingStart
   if (behavior.onSearchingStart !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onSearchingStart);
+    const convertedTrigger = convertTrigger(behavior.onSearchingStart, withFieldPath(ctx, 'onSearchingStart'));
     if (!convertedTrigger) {
       return undefined;
     }
@@ -122,7 +124,7 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onSuccess
   if (behavior.onSuccess !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onSuccess);
+    const convertedTrigger = convertTrigger(behavior.onSuccess, withFieldPath(ctx, 'onSuccess'));
     if (!convertedTrigger) {
       return undefined;
     }

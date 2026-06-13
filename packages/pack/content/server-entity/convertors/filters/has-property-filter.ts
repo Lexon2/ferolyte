@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertStringNumberFilter } from './common/convert-string-number';
 import { HasPropertyFilter } from '../../interfaces/filters/has-property-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -8,10 +9,11 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertHasPropertyFilter = (
-  filter: Partial<HasPropertyFilter>
+  filter: Partial<HasPropertyFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   return convertStringNumberFilter({
     ...filter,
     test: 'has_property'
-  });
+  }, ctx);
 };

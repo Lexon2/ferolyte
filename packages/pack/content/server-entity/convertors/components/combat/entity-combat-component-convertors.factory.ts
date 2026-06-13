@@ -1,4 +1,5 @@
 import { convertAdmireItemComponent } from './admire-item-component.convertor';
+import { convertApplyKnockbackRulesComponent } from './apply-knockback-rules-component.convertor';
 import { convertAreaAttackComponent } from './area-attack-component.convertor';
 import { convertAttackComponent } from './attack-component.convertor';
 import { convertAttackCooldownComponent } from './attack-cooldown-component.convertor';
@@ -13,6 +14,7 @@ import { convertShooterComponent } from './shooter-component.convertor';
 
 export const entityCombatComponentConvertorsFactory = {
   admireItem: convertAdmireItemComponent,
+  applyKnockbackRules: convertApplyKnockbackRulesComponent,
   areaAttack: convertAreaAttackComponent,
   attack: convertAttackComponent,
   attackCooldown: convertAttackCooldownComponent,

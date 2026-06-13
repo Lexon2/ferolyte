@@ -14,6 +14,8 @@ export type EntityFilterTest =
   | 'has_damage'
   | 'has_damaged_equipment'
   | 'has_equipment'
+  | 'has_item_with_component'
+  | 'has_same_equipment_in_slot_as'
   | 'has_equipment_tag'
   | 'has_mob_effect'
   | 'has_nametag'
@@ -44,6 +46,7 @@ export type EntityFilterTest =
   | 'is_brightness'
   | 'is_climbing'
   | 'is_color'
+  | 'is_controlling_passenger_family'
   | 'is_daytime'
   | 'is_difficulty'
   | 'is_family'
@@ -60,11 +63,14 @@ export type EntityFilterTest =
   | 'is_owner'
   | 'is_persistent'
   | 'is_riding'
+  | 'is_riding_self'
   | 'is_sitting'
   | 'is_skin_id'
   | 'is_sleeping'
   | 'is_sneak_held'
   | 'is_sneaking'
+  | 'is_sprinting'
+  | 'is_tamed'
   | 'is_snow_covered'
   | 'is_target'
   | 'is_temperature_type'
@@ -72,6 +78,8 @@ export type EntityFilterTest =
   | 'is_underground'
   | 'is_underwater'
   | 'is_variant'
+  | 'is_vehicle_family'
+  | 'is_weather'
   | 'is_visible'
   | 'is_waterlogged'
   | 'light_level'
@@ -87,7 +95,8 @@ export type EntityFilterTest =
   | 'target_distance'
   | 'trusts'
   | 'weather'
-  | 'weather_at_position';
+  | 'weather_at_position'
+  | 'y_rotation';
 
 export const FILTER_TESTS: EntityFilterTest[] = [
   'actor_health',
@@ -105,6 +114,8 @@ export const FILTER_TESTS: EntityFilterTest[] = [
   'has_damage',
   'has_damaged_equipment',
   'has_equipment',
+  'has_item_with_component',
+  'has_same_equipment_in_slot_as',
   'has_equipment_tag',
   'has_mob_effect',
   'has_nametag',
@@ -135,6 +146,7 @@ export const FILTER_TESTS: EntityFilterTest[] = [
   'is_brightness',
   'is_climbing',
   'is_color',
+  'is_controlling_passenger_family',
   'is_daytime',
   'is_difficulty',
   'is_family',
@@ -151,11 +163,14 @@ export const FILTER_TESTS: EntityFilterTest[] = [
   'is_owner',
   'is_persistent',
   'is_riding',
+  'is_riding_self',
   'is_sitting',
   'is_skin_id',
   'is_sleeping',
   'is_sneak_held',
   'is_sneaking',
+  'is_sprinting',
+  'is_tamed',
   'is_snow_covered',
   'is_target',
   'is_temperature_type',
@@ -163,6 +178,8 @@ export const FILTER_TESTS: EntityFilterTest[] = [
   'is_underground',
   'is_underwater',
   'is_variant',
+  'is_vehicle_family',
+  'is_weather',
   'is_visible',
   'is_waterlogged',
   'light_level',
@@ -178,5 +195,6 @@ export const FILTER_TESTS: EntityFilterTest[] = [
   'target_distance',
   'trusts',
   'weather',
-  'weather_at_position'
+  'weather_at_position',
+  'y_rotation'
 ];

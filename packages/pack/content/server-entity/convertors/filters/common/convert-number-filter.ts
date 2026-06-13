@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertFilterBase } from './convert-filter-base';
 import { FilterOperator } from '../../../constants/filter-operators';
 import { FilterSubject } from '../../../constants/filter-subjects';
@@ -10,21 +11,24 @@ import { validateNumber } from '../../common/validation';
  * @returns The converted filter or undefined if validation fails
  */
 
-export const convertNumberFilter = (filter: {
+export const convertNumberFilter = (
+  filter: {
   test: string;
   operator?: FilterOperator;
   subject?: FilterSubject;
   value?: number;
-}): any | undefined => {
+},
+  ctx?: ContentDiagnosticContext
+): any | undefined => {
   if (!filter) {
     return undefined;
   }
-  const result: any = convertFilterBase(filter);
+  const result: any = convertFilterBase(filter, ctx);
   if (!result) {
     return undefined;
   }
 
-  if (filter.value === undefined || !validateNumber(filter.value, 'value')) {
+  if (filter.value === undefined || !validateNumber(filter.value, 'value', undefined, undefined, ctx)) {
     return undefined;
   }
 

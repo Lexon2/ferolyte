@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RamAttackBehavior } from '../../interfaces/behaviors/ram-attack-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -9,7 +10,8 @@ import { validateNumber, validateSoundEvent } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRamAttackBehavior = (
-  behavior: Partial<RamAttackBehavior>
+  behavior: Partial<RamAttackBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.ram_attack': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -68,7 +70,7 @@ export const convertRamAttackBehavior = (
 
   // Validate onStart
   if (behavior.onStart !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onStart);
+    const convertedTrigger = convertTrigger(behavior.onStart, withFieldPath(ctx, 'onStart'));
     if (!convertedTrigger) {
       return undefined;
     }
@@ -117,7 +119,7 @@ export const convertRamAttackBehavior = (
 
   // Validate trigger
   if (behavior.trigger !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.trigger);
+    const convertedTrigger = convertTrigger(behavior.trigger, withFieldPath(ctx, 'trigger'));
     if (!convertedTrigger) {
       return undefined;
     }

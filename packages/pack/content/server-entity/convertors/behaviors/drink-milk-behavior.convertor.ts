@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DrinkMilkBehavior } from '../../interfaces/behaviors/drink-milk-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertDrinkMilkBehavior = (
-  behavior: Partial<DrinkMilkBehavior>
+  behavior: Partial<DrinkMilkBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.drink_milk': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,7 +36,7 @@ export const convertDrinkMilkBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters);
+    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
     if (convertedFilters === undefined) {
       return undefined;
     }

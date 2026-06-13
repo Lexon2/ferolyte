@@ -1,3 +1,7 @@
+import {
+  ContentDiagnosticContext,
+  withFieldPath,
+} from '../../../../common/diagnostics/content-diagnostic';
 import { convertEntityFilters } from './filters.convertor';
 import { ENTITY_EVENT_TARGETS } from '../../constants/event-target';
 import { EntityEventTrigger } from '../../interfaces/trigger';
@@ -9,6 +13,7 @@ import { EntityEventTrigger } from '../../interfaces/trigger';
  */
 export const convertTrigger = (
   trigger: Partial<EntityEventTrigger>,
+  ctx?: ContentDiagnosticContext,
 ): any | undefined => {
   if (!trigger) {
     return undefined;
@@ -16,7 +21,6 @@ export const convertTrigger = (
 
   const result: any = {};
 
-  // Validate event
   if (trigger.event !== undefined) {
     if (typeof trigger.event !== 'string') {
       return undefined;
@@ -24,7 +28,6 @@ export const convertTrigger = (
     result.event = trigger.event;
   }
 
-  // Validate target
   if (trigger.target !== undefined) {
     if (!ENTITY_EVENT_TARGETS.includes(trigger.target)) {
       return undefined;
@@ -32,9 +35,11 @@ export const convertTrigger = (
     result.target = trigger.target;
   }
 
-  // Validate filters
   if (trigger.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(trigger.filters);
+    const convertedFilters = convertEntityFilters(
+      trigger.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }

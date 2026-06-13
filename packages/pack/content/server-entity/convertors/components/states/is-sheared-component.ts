@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { IsShearedComponent } from '../../../interfaces/components/states/is-sheared-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertIsShearedComponent = (
   component: Partial<IsShearedComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:is_sheared': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

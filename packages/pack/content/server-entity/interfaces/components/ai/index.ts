@@ -24,6 +24,8 @@ export { MobEffectImmunityComponent } from './mob-effect-immunity-component';
 
 export { NpcComponent } from './npc-component';
 
+export { OffspringComponent } from './offspring-component';
+
 export { OutOfControlComponent } from './out-of-control-component';
 
 export { PersistentComponent } from './persistent-component';

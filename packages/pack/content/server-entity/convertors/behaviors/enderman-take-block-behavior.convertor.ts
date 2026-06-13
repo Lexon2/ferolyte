@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EndermanTakeBlockBehavior } from '../../interfaces/behaviors/enderman-take-block-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertEndermanTakeBlockBehavior = (
-  behavior: Partial<EndermanTakeBlockBehavior>
+  behavior: Partial<EndermanTakeBlockBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.enderman_take_block': any } | undefined => {
   if (!behavior) {
     return undefined;

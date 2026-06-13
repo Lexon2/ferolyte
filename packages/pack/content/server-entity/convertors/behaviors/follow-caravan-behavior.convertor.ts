@@ -1,3 +1,7 @@
+import {
+  ContentDiagnosticContext,
+  withFieldPath,
+} from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FollowCaravanBehavior } from '../../interfaces/behaviors/follow-caravan-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -8,7 +12,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertFollowCaravanBehavior = (
-  behavior: Partial<FollowCaravanBehavior>
+  behavior: Partial<FollowCaravanBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.follow_caravan': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,7 +47,10 @@ export const convertFollowCaravanBehavior = (
 
   // Validate entityTypes
   if (behavior.entityTypes !== undefined) {
-    const convertedEntityTypes = convertEntityDefinition(behavior.entityTypes);
+    const convertedEntityTypes = convertEntityDefinition(
+      behavior.entityTypes,
+      withFieldPath(ctx, 'entityTypes'),
+    );
     if (!convertedEntityTypes) {
       return undefined;
     }

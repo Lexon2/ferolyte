@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertFilterBase } from './common/convert-filter-base';
 import { IsGameRuleFilter } from '../../interfaces/filters/is-game-rule-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -8,7 +9,8 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertIsGameRuleFilter = (
-  filter: Partial<IsGameRuleFilter>
+  filter: Partial<IsGameRuleFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
@@ -19,7 +21,7 @@ export const convertIsGameRuleFilter = (
     return undefined;
   }
 
-  const baseResult = convertFilterBase(filter);
+  const baseResult = convertFilterBase(filter, ctx);
   if (!baseResult) {
     return undefined;
   }

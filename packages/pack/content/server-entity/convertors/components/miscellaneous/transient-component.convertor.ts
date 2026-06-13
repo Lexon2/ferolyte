@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TransientComponent } from '../../../interfaces/components/miscellaneous/transient-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertTransientComponent = (
   component: Partial<TransientComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:transient': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

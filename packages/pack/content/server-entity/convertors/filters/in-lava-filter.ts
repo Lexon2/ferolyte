@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { InLavaFilter } from '../../interfaces/filters/in-lava-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -9,9 +10,10 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertInLavaFilter = (
   filter: Partial<InLavaFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   return convertBooleanFilter({
     ...filter,
     test: 'in_lava',
-  });
+  }, ctx);
 };

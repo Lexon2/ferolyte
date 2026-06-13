@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RavagerBlockedComponent } from '../../../interfaces/components/miscellaneous/ravager-blocked-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertRavagerBlockedComponent = (
-  component: Partial<RavagerBlockedComponent>
+  component: Partial<RavagerBlockedComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:ravager_blocked': any } | undefined => {
   if (!component) {
     return undefined;
@@ -39,7 +41,7 @@ export const convertRavagerBlockedComponent = (
         return undefined;
       }
 
-      const convertedValue = convertTrigger(choice.value);
+      const convertedValue = convertTrigger(choice.value, withFieldPath(ctx, 'value'));
       if (!convertedValue) {
         return undefined;
       }

@@ -50,8 +50,15 @@ const replaceTrailingZeroFloats = (obj: any): void => {
 export const buildServerEntityJson = async (
   filePath: string,
   builder: ServerEntityBuilder,
-  _options: ContentBuildOptions = { debug: true, diagnostics: true },
+  options: ContentBuildOptions = { debug: true, diagnostics: true },
 ): Promise<string | undefined> => {
+  builder.withBuildContext({
+    sourceFile: filePath,
+    identifier: builder.cloneConfig().identifier,
+    diagnostics: options.diagnostics,
+    contentType: 'server-entity',
+  });
+
   const json = builder.build();
   replaceTrailingZeroFloats(json);
 

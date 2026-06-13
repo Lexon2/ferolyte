@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RandomLookAroundBehavior } from '../../interfaces/behaviors/random-look-around-behavior';
 import { convertRange } from '../common/convertors';
 import { validateDegrees, validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateDegrees, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRandomLookAroundBehavior = (
-  behavior: Partial<RandomLookAroundBehavior>
+  behavior: Partial<RandomLookAroundBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.random_look_around': any } | undefined => {
   if (!behavior) {
     return undefined;

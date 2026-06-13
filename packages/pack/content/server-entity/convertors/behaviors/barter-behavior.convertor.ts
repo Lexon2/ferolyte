@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BarterBehavior } from '../../interfaces/behaviors/barter-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertBarterBehavior = (
-  behavior: Partial<BarterBehavior>
+  behavior: Partial<BarterBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.barter': any } | undefined => {
   if (!behavior) {
     return undefined;

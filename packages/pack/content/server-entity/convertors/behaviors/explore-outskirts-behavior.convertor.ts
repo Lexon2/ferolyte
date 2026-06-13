@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ExploreOutskirtsBehavior } from '../../interfaces/behaviors/explore-outskirts-behavior';
 import { validateNumber, validateVector3 } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateVector3 } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertExploreOutskirtsBehavior = (
-  behavior: Partial<ExploreOutskirtsBehavior>
+  behavior: Partial<ExploreOutskirtsBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.explore_outskirts': any } | undefined => {
   if (!behavior) {
     return undefined;

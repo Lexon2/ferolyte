@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { LookAtEntityBehavior } from '../../interfaces/behaviors/look-at-entity-behavior';
 import { convertRange } from '../common/convertors';
 import { convertEntityFilters } from '../common/filters.convertor';
@@ -9,7 +10,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertLookAtEntityBehavior = (
-  behavior: Partial<LookAtEntityBehavior>
+  behavior: Partial<LookAtEntityBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.look_at_entity': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -68,7 +70,7 @@ export const convertLookAtEntityBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters);
+    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }

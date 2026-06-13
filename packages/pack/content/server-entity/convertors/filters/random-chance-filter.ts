@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { RandomChanceFilter } from '../../interfaces/filters/random-chance-filter';
 
@@ -7,7 +8,8 @@ import { RandomChanceFilter } from '../../interfaces/filters/random-chance-filte
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertRandomChanceFilter = (
-  filter: Partial<RandomChanceFilter>
+  filter: Partial<RandomChanceFilter>,
+  ctx?: ContentDiagnosticContext
 ): ReturnType<typeof convertNumberFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
@@ -15,5 +17,5 @@ export const convertRandomChanceFilter = (
   return convertNumberFilter({
     ...filter,
     test: 'random_chance'
-  });
+  }, ctx);
 };

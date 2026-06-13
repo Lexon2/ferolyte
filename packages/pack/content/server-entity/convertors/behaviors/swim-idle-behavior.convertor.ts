@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SwimIdleBehavior } from '../../interfaces/behaviors/swim-idle-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSwimIdleBehavior = (
-  behavior: Partial<SwimIdleBehavior>
+  behavior: Partial<SwimIdleBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.swim_idle': any } | undefined => {
   if (!behavior) {
     return undefined;

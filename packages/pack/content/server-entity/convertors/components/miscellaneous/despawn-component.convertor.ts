@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DespawnComponent } from '../../../interfaces/components/miscellaneous/despawn-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber } from '../../common/validation';
@@ -9,6 +10,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertDespawnComponent = (
   component: Partial<DespawnComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:despawn': any } | undefined => {
   if (!component) {
     return undefined;
@@ -66,7 +68,7 @@ export const convertDespawnComponent = (
 
   // Validate filters
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters);
+    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }

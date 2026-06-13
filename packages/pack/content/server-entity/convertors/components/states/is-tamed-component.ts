@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { IsTamedComponent } from '../../../interfaces/components/states/is-tamed-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertIsTamedComponent = (
   component: Partial<IsTamedComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:is_tamed': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

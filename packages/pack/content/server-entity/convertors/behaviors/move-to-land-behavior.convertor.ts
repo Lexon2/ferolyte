@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MoveToLandBehavior } from '../../interfaces/behaviors/move-to-land-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertMoveToLandBehavior = (
-  behavior: Partial<MoveToLandBehavior>
+  behavior: Partial<MoveToLandBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.move_to_land': any } | undefined => {
   if (!behavior) {
     return undefined;

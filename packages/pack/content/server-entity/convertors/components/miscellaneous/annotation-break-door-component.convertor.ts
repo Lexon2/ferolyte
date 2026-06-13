@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AnnotationBreakDoorComponent } from '../../../interfaces/components/miscellaneous/annotation-break-door-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertAnnotationBreakDoorComponent = (
   component: Partial<AnnotationBreakDoorComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:annotation.break_door': any } | undefined => {
   if (!component) {
     return undefined;

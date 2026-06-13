@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DragonDeathBehavior } from '../../interfaces/behaviors/dragon-death-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertDragonDeathBehavior = (
-  behavior: Partial<DragonDeathBehavior>
+  behavior: Partial<DragonDeathBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.dragondeath': any } | undefined => {
   if (!behavior) {
     return undefined;

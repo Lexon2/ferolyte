@@ -13,6 +13,8 @@ import { convertHasContainerOpenFilter } from './filters/has-container-open-filt
 import { convertHasDamageFilter } from './filters/has-damage-filter';
 import { convertHasDamagedEquipmentFilter } from './filters/has-damaged-equipment-filter';
 import { convertHasEquipmentFilter } from './filters/has-equipment-filter';
+import { convertHasItemWithComponentFilter } from './filters/has-item-with-component-filter';
+import { convertHasSameEquipmentInSlotAsFilter } from './filters/has-same-equipment-in-slot-as-filter';
 import { convertHasEquipmentTagFilter } from './filters/has-equipment-tag-filter';
 import { convertHasMobEffectFilter } from './filters/has-mob-effect-filter';
 import { convertHasNametagFilter } from './filters/has-nametag-filter';
@@ -43,6 +45,7 @@ import { convertIsBoundToCreakingHeartFilter } from './filters/is-bound-to-creak
 import { convertIsBrightnessFilter } from './filters/is-brightness-filter';
 import { convertIsClimbingFilter } from './filters/is-climbing-filter';
 import { convertIsColorFilter } from './filters/is-color-filter';
+import { convertIsControllingPassengerFamilyFilter } from './filters/is-controlling-passenger-family-filter';
 import { convertIsDaytimeFilter } from './filters/is-daytime-filter';
 import { convertIsDifficultyFilter } from './filters/is-difficulty-filter';
 import { convertIsFamilyFilter } from './filters/is-family-filter';
@@ -59,11 +62,14 @@ import { convertIsNavigatingFilter } from './filters/is-navigating-filter';
 import { convertIsOwnerFilter } from './filters/is-owner-filter';
 import { convertIsPersistentFilter } from './filters/is-persistent-filter';
 import { convertIsRidingFilter } from './filters/is-riding-filter';
+import { convertIsRidingSelfFilter } from './filters/is-riding-self-filter';
 import { convertIsSittingFilter } from './filters/is-sitting-filter';
 import { convertIsSkinIdFilter } from './filters/is-skin-id-filter';
 import { convertIsSleepingFilter } from './filters/is-sleeping-filter';
 import { convertIsSneakHeldFilter } from './filters/is-sneak-held-filter';
 import { convertIsSneakingFilter } from './filters/is-sneaking-filter';
+import { convertIsSprintingFilter } from './filters/is-sprinting-filter';
+import { convertIsTamedFilter } from './filters/is-tamed-filter';
 import { convertIsSnowCoveredFilter } from './filters/is-snow-covered-filter';
 import { convertIsTargetFilter } from './filters/is-target-filter';
 import { convertIsTemperatureTypeFilter } from './filters/is-temperature-type-filter';
@@ -71,6 +77,8 @@ import { convertIsTemperatureValueFilter } from './filters/is-temperature-value-
 import { convertIsUndergroundFilter } from './filters/is-underground-filter';
 import { convertIsUnderwaterFilter } from './filters/is-underwater-filter';
 import { convertIsVariantFilter } from './filters/is-variant-filter';
+import { convertIsVehicleFamilyFilter } from './filters/is-vehicle-family-filter';
+import { convertIsWeatherFilter } from './filters/is-weather-filter';
 import { convertIsVisibleFilter } from './filters/is-visible-filter';
 import { convertIsWaterloggedFilter } from './filters/is-waterlogged-filter';
 import { convertLightLevelFilter } from './filters/light-level-filter';
@@ -87,6 +95,7 @@ import { convertTargetDistanceFilter } from './filters/target-distance-filter';
 import { convertTrustsFilter } from './filters/trusts-filter';
 import { convertWeatherAtPositionFilter } from './filters/weather-at-position-filter';
 import { convertWeatherFilter } from './filters/weather-filter';
+import { convertYRotationFilter } from './filters/y-rotation-filter';
 
 export const entityFilterConvertorsFactory: Record<string, (v?: any) => any> = {
   actor_health: convertActorHealthFilter,
@@ -104,6 +113,8 @@ export const entityFilterConvertorsFactory: Record<string, (v?: any) => any> = {
   has_damage: convertHasDamageFilter,
   has_damaged_equipment: convertHasDamagedEquipmentFilter,
   has_equipment: convertHasEquipmentFilter,
+  has_item_with_component: convertHasItemWithComponentFilter,
+  has_same_equipment_in_slot_as: convertHasSameEquipmentInSlotAsFilter,
   has_equipment_tag: convertHasEquipmentTagFilter,
   has_mob_effect: convertHasMobEffectFilter,
   has_nametag: convertHasNametagFilter,
@@ -134,6 +145,7 @@ export const entityFilterConvertorsFactory: Record<string, (v?: any) => any> = {
   is_brightness: convertIsBrightnessFilter,
   is_climbing: convertIsClimbingFilter,
   is_color: convertIsColorFilter,
+  is_controlling_passenger_family: convertIsControllingPassengerFamilyFilter,
   is_daytime: convertIsDaytimeFilter,
   is_difficulty: convertIsDifficultyFilter,
   is_family: convertIsFamilyFilter,
@@ -150,11 +162,14 @@ export const entityFilterConvertorsFactory: Record<string, (v?: any) => any> = {
   is_owner: convertIsOwnerFilter,
   is_persistent: convertIsPersistentFilter,
   is_riding: convertIsRidingFilter,
+  is_riding_self: convertIsRidingSelfFilter,
   is_sitting: convertIsSittingFilter,
   is_skin_id: convertIsSkinIdFilter,
   is_sleeping: convertIsSleepingFilter,
   is_sneak_held: convertIsSneakHeldFilter,
   is_sneaking: convertIsSneakingFilter,
+  is_sprinting: convertIsSprintingFilter,
+  is_tamed: convertIsTamedFilter,
   is_snow_covered: convertIsSnowCoveredFilter,
   is_target: convertIsTargetFilter,
   is_temperature_type: convertIsTemperatureTypeFilter,
@@ -162,6 +177,8 @@ export const entityFilterConvertorsFactory: Record<string, (v?: any) => any> = {
   is_underground: convertIsUndergroundFilter,
   is_underwater: convertIsUnderwaterFilter,
   is_variant: convertIsVariantFilter,
+  is_vehicle_family: convertIsVehicleFamilyFilter,
+  is_weather: convertIsWeatherFilter,
   is_visible: convertIsVisibleFilter,
   is_waterlogged: convertIsWaterloggedFilter,
   light_level: convertLightLevelFilter,
@@ -178,4 +195,5 @@ export const entityFilterConvertorsFactory: Record<string, (v?: any) => any> = {
   trusts: convertTrustsFilter,
   weather: convertWeatherFilter,
   weather_at_position: convertWeatherAtPositionFilter,
+  y_rotation: convertYRotationFilter,
 };

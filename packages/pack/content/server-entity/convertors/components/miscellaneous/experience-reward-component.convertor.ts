@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ExperienceRewardComponent } from '../../../interfaces/components/miscellaneous/experience-reward-component';
 // TODO: Validate molang expression
 /**
@@ -34,6 +35,7 @@ const validateMolangExpression = (
  */
 export const convertExperienceRewardComponent = (
   component: Partial<ExperienceRewardComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:experience_reward': any } | undefined => {
   if (!component) {
     return undefined;

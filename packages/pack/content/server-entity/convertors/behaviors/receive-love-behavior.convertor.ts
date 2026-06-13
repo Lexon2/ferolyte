@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ReceiveLoveBehavior } from '../../interfaces/behaviors/receive-love-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertReceiveLoveBehavior = (
-  behavior: Partial<ReceiveLoveBehavior>
+  behavior: Partial<ReceiveLoveBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.receive_love': any } | undefined => {
   if (!behavior) {
     return undefined;

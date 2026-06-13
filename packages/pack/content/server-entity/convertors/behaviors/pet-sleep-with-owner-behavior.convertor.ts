@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PetSleepWithOwnerBehavior } from '../../interfaces/behaviors/pet-sleep-with-owner-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertPetSleepWithOwnerBehavior = (
-  behavior: Partial<PetSleepWithOwnerBehavior>
+  behavior: Partial<PetSleepWithOwnerBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.pet_sleep_with_owner': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { JumpAroundTargetBehavior } from '../../interfaces/behaviors/jump-around-target-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateBoolean, validateDegrees, validateInteger, validateNumber, validateNumberArray, validateVector2 } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateBoolean, validateDegrees, validateInteger, validateNumber, vali
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertJumpAroundTargetBehavior = (
-  behavior: Partial<JumpAroundTargetBehavior>
+  behavior: Partial<JumpAroundTargetBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.jump_around_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -138,7 +140,7 @@ export const convertJumpAroundTargetBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters);
+    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }

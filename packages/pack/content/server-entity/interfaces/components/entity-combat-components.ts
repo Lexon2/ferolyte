@@ -1,5 +1,6 @@
 import {
   AdmireItemComponent,
+  ApplyKnockbackRulesComponent,
   AreaAttackComponent,
   AttackComponent,
   AttackCooldownComponent,
@@ -15,6 +16,7 @@ import {
 
 export interface EntityCombatComponents {
   admireItem?: AdmireItemComponent;
+  applyKnockbackRules?: ApplyKnockbackRulesComponent;
   areaAttack?: AreaAttackComponent;
   attack?: AttackComponent;
   attackCooldown?: AttackCooldownComponent;

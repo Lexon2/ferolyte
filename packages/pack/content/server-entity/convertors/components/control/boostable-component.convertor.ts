@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BoostableComponent } from '../../../interfaces/components/control/boostable-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -39,6 +40,7 @@ const validateBoostItem = (
  */
 export const convertBoostableComponent = (
   component: Partial<BoostableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:boostable': any } | undefined => {
   if (!component) {
     return undefined;

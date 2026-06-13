@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PlayerSaturationComponent } from '../../../interfaces/components/miscellaneous/player-saturation-component';
 import { validateInteger } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertPlayerSaturationComponent = (
-  component: Partial<PlayerSaturationComponent>
+  component: Partial<PlayerSaturationComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:player.saturation': any } | undefined => {
   if (!component) {
     return undefined;

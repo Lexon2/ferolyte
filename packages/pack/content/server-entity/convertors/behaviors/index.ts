@@ -102,6 +102,8 @@ export { convertFollowParentBehavior } from './follow-parent-behavior.convertor'
 
 export { convertFollowTargetCaptainBehavior } from './follow-target-captain-behavior.convertor';
 
+export { convertFollowTargetLeaderBehavior } from './follow-target-leader-behavior.convertor';
+
 export { convertGoAndGiveItemsToNoteblockBehavior } from './go-and-give-items-to-noteblock-behavior.convertor';
 
 export { convertGoAndGiveItemsToOwnerBehavior } from './go-and-give-items-to-owner-behavior.convertor';
@@ -207,6 +209,8 @@ export { convertPanicBehavior } from './panic-behavior.convertor';
 export { convertPetSleepWithOwnerBehavior } from './pet-sleep-with-owner-behavior.convertor';
 
 export { convertPickupItemsBehavior } from './pickup-items-behavior.convertor';
+
+export { convertPlaceBlockBehavior } from './place-block-behavior.convertor';
 
 export { convertPlayBehavior } from './play-behavior.convertor';
 
@@ -318,6 +322,8 @@ export { convertSwimWithEntityBehavior } from './swim-with-entity-behavior.conve
 
 export { convertSwoopAttackBehavior } from './swoop-attack-behavior.convertor';
 
+export { convertTakeBlockBehavior } from './take-block-behavior.convertor';
+
 export { convertTakeFlowerBehavior } from './take-flower-behavior.convertor';
 
 export { convertTargetWhenPushedBehavior } from './target-when-pushed-behavior.convertor';
@@ -335,6 +341,10 @@ export { convertTimerFlag3Behavior } from './timer-flag-3-behavior.convertor';
 export { convertTradeInterestBehavior } from './trade-interest-behavior.convertor';
 
 export { convertTradeWithPlayerBehavior } from './trade-with-player-behavior.convertor';
+
+export { convertTransportItemsBehavior } from './transport-items-behavior.convertor';
+
+export { convertUseKineticWeaponBehavior } from './use-kinetic-weapon-behavior.convertor';
 
 export { convertVexCopyOwnerTargetBehavior } from './vex-copy-owner-target-behavior.convertor';
 

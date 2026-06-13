@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationSwimComponent } from '../../../interfaces/components/navigation-movement/navigation-swim-component';
 
@@ -7,7 +8,8 @@ import { NavigationSwimComponent } from '../../../interfaces/components/navigati
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertNavigationSwimComponent = (
-  component: Partial<NavigationSwimComponent>
+  component: Partial<NavigationSwimComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:navigation.swim': any } | undefined => {
   if (!component) {
     return undefined;

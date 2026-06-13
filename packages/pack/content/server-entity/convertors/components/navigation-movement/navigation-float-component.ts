@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationFloatComponent } from '../../../interfaces/components/navigation-movement/navigation-float-component';
 
@@ -7,7 +8,8 @@ import { NavigationFloatComponent } from '../../../interfaces/components/navigat
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertNavigationFloatComponent = (
-  component: Partial<NavigationFloatComponent>
+  component: Partial<NavigationFloatComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:navigation.float': any } | undefined => {
   if (!component) {
     return undefined;

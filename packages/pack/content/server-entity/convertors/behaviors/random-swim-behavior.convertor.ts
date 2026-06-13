@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RandomSwimBehavior } from '../../interfaces/behaviors/random-swim-behavior';
 import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateBoolean, validateInteger } from '../common/vali
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRandomSwimBehavior = (
-  behavior: Partial<RandomSwimBehavior>
+  behavior: Partial<RandomSwimBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.random_swim': any } | undefined => {
   if (!behavior) {
     return undefined;

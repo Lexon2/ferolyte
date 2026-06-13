@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { InventoryComponent } from '../../../interfaces/components/interaction/inventory-component';
 import { validateNumberRange } from '../../common/validation';
 import { validateContainerType } from '../../common/validation';
@@ -9,7 +10,8 @@ import { validateBoolean } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertInventoryComponent = (
-  component: Partial<InventoryComponent>
+  component: Partial<InventoryComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:inventory': any } | undefined => {
   if (!component) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ChargeHeldItemBehavior } from '../../interfaces/behaviors/charge-held-item-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertChargeHeldItemBehavior = (
-  behavior: Partial<ChargeHeldItemBehavior>
+  behavior: Partial<ChargeHeldItemBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.charge_held_item': any } | undefined => {
   if (!behavior) {
     return undefined;

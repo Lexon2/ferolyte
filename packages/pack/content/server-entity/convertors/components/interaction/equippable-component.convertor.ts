@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EquippableComponent, EquippableSlot } from '../../../interfaces/components/interaction/equippable-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber, validateString } from '../../common/validation';
@@ -41,6 +42,7 @@ const validateEquippableSlot = (
  */
 export const convertEquippableComponent = (
   component: Partial<EquippableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:equippable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -73,14 +75,14 @@ export const convertEquippableComponent = (
       }
 
       if (slot.onEquip !== undefined) {
-        const convertedOnEquip = convertTrigger(slot.onEquip);
+        const convertedOnEquip = convertTrigger(slot.onEquip, withFieldPath(ctx, 'onEquip'));
         if (!convertedOnEquip) {
           return undefined;
         }
         validatedSlot.on_equip = convertedOnEquip;
       }
       if (slot.onUnequip !== undefined) {
-        const convertedOnUnequip = convertTrigger(slot.onUnequip);
+        const convertedOnUnequip = convertTrigger(slot.onUnequip, withFieldPath(ctx, 'onUnequip'));
         if (!convertedOnUnequip) {
           return undefined;
         }

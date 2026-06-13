@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BossComponent } from '../../../interfaces/components/ai/boss-component';
 import { validateNumber } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertBossComponent = (
-  component: Partial<BossComponent>
+  component: Partial<BossComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:boss': any } | undefined => {
   if (!component) {
     return undefined;

@@ -1,25 +1,35 @@
 import {
-  BodyRotationAxisAlignedComponent,
+  AirDragModifierComponent,
   BodyRotationBlockedComponent,
+  BouncinessComponent,
   CustomHitTestComponent,
   CollisionBoxComponent,
   FrictionModifierComponent,
   PhysicsComponent,
   PushThroughComponent,
-  PushableComponent,
+  PushableByBlockComponent,
+  PushableByEntityComponent,
+  RotationAxisAlignedComponent,
   ScaleByAgeComponent,
-  ScaleComponent
+  ScaleComponent,
+  UsesLegacyFrictionComponent,
+  UsesUniformAirDragComponent,
 } from './physical';
 
 export interface EntityPhysicalComponents {
-  bodyRotationAxisAligned?: BodyRotationAxisAlignedComponent;
+  airDragModifier?: AirDragModifierComponent;
   bodyRotationBlocked?: BodyRotationBlockedComponent;
+  bounciness?: BouncinessComponent;
   customHitTest?: CustomHitTestComponent;
   collisionBox?: CollisionBoxComponent;
   frictionModifier?: FrictionModifierComponent;
   physics?: PhysicsComponent;
   pushThrough?: PushThroughComponent;
-  pushable?: PushableComponent;
+  pushableByBlock?: PushableByBlockComponent;
+  pushableByEntity?: PushableByEntityComponent;
+  rotationAxisAligned?: RotationAxisAlignedComponent;
   scaleByAge?: ScaleByAgeComponent;
   scale?: ScaleComponent;
+  usesLegacyFriction?: UsesLegacyFrictionComponent;
+  usesUniformAirDrag?: UsesUniformAirDragComponent;
 }

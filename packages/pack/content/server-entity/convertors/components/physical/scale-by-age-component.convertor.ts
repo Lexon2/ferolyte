@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ScaleByAgeComponent } from '../../../interfaces/components/physical/scale-by-age-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertScaleByAgeComponent = (
-  component: Partial<ScaleByAgeComponent>
+  component: Partial<ScaleByAgeComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:scale_by_age': any } | undefined => {
   if (!component) {
     return undefined;

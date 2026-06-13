@@ -104,6 +104,8 @@ export { FollowParentBehavior } from './follow-parent-behavior';
 
 export { FollowTargetCaptainBehavior } from './follow-target-captain-behavior';
 
+export { FollowTargetLeaderBehavior } from './follow-target-leader-behavior';
+
 export { GoAndGiveItemsToNoteblockBehavior } from './go-and-give-items-to-noteblock-behavior';
 
 export { GoAndGiveItemsToOwnerBehavior } from './go-and-give-items-to-owner-behavior';
@@ -209,6 +211,8 @@ export { PanicBehavior } from './panic-behavior';
 export { PetSleepWithOwnerBehavior } from './pet-sleep-with-owner-behavior';
 
 export { PickupItemsBehavior } from './pickup-items-behavior';
+
+export { PlaceBlockBehavior } from './place-block-behavior';
 
 export { PlayBehavior } from './play-behavior';
 
@@ -320,6 +324,8 @@ export { SwimWithEntityBehavior } from './swim-with-entity-behavior';
 
 export { SwoopAttackBehavior } from './swoop-attack-behavior';
 
+export { TakeBlockBehavior } from './take-block-behavior';
+
 export { TakeFlowerBehavior } from './take-flower-behavior';
 
 export { TargetWhenPushedBehavior } from './target-when-pushed-behavior';
@@ -337,6 +343,10 @@ export { TimerFlag3Behavior } from './timer-flag-3-behavior';
 export { TradeInterestBehavior } from './trade-interest-behavior';
 
 export { TradeWithPlayerBehavior } from './trade-with-player-behavior';
+
+export { TransportItemsBehavior } from './transport-items-behavior';
+
+export { UseKineticWeaponBehavior } from './use-kinetic-weapon-behavior';
 
 export { VexCopyOwnerTargetBehavior } from './vex-copy-owner-target-behavior';
 

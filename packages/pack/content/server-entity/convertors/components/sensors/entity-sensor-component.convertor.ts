@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import {
   EntitySensorComponent,
   Subsensor,
@@ -17,6 +18,7 @@ import {
  */
 const convertSubsensor = (
   subsensor: Subsensor,
+  ctx?: ContentDiagnosticContext,
 ): Record<string, any> | undefined => {
   const result: Record<string, any> = {};
 
@@ -35,7 +37,7 @@ const convertSubsensor = (
   }
 
   if (subsensor.eventFilters) {
-    const eventFilters = convertEntityFilters(subsensor.eventFilters);
+    const eventFilters = convertEntityFilters(subsensor.eventFilters, withFieldPath(ctx, 'eventFilters'));
     if (!eventFilters) {
       return undefined;
     }
@@ -93,6 +95,7 @@ const convertSubsensor = (
  */
 export const convertEntitySensorComponent = (
   component: Partial<EntitySensorComponent>,
+  ctx?: ContentDiagnosticContext
 ): Record<string, any> | undefined => {
   if (!component) {
     return undefined;
@@ -111,7 +114,9 @@ export const convertEntitySensorComponent = (
 
   if (component.subsensors) {
     const subsensors = component.subsensors
-      .map(convertSubsensor)
+      .map((subsensor, index) =>
+        convertSubsensor(subsensor, withFieldPath(ctx, `subsensors[${index}]`)),
+      )
       .filter(Boolean);
 
     if (subsensors.length > 0) {

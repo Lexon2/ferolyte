@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FollowTargetCaptainBehavior } from '../../interfaces/behaviors/follow-target-captain-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertFollowTargetCaptainBehavior = (
-  behavior: Partial<FollowTargetCaptainBehavior>
+  behavior: Partial<FollowTargetCaptainBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.follow_target_captain': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,21 +1,22 @@
-import { InputAirControlledComponent } from '../../../interfaces/components/control/input-air-controlled-component';
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { FreeCameraControlledComponent } from '../../../interfaces/components/control/free-camera-controlled-component';
 import { validateNumber } from '../../common/validation';
 
 /**
- * Converts an InputAirControlledComponent to Minecraft format
+ * Converts a FreeCameraControlledComponent to Minecraft format
  * @param component The component to convert
  * @returns The component in Minecraft format or undefined if validation fails
  */
-export const convertInputAirControlledComponent = (
-  component: Partial<InputAirControlledComponent>,
-): { 'minecraft:input_air_controlled': any } | undefined => {
+export const convertFreeCameraControlledComponent = (
+  component: Partial<FreeCameraControlledComponent>,
+  ctx?: ContentDiagnosticContext,
+): { 'minecraft:free_camera_controlled': Record<string, unknown> } | undefined => {
   if (!component) {
     return undefined;
   }
 
-  const result: any = {};
+  const result: Record<string, unknown> = {};
 
-  // Validate backwardsMovementModifier
   if (component.backwardsMovementModifier !== undefined) {
     if (
       !validateNumber(
@@ -23,6 +24,7 @@ export const convertInputAirControlledComponent = (
         'backwardsMovementModifier',
         0,
         Number.MAX_VALUE,
+        ctx,
       )
     ) {
       return undefined;
@@ -30,7 +32,6 @@ export const convertInputAirControlledComponent = (
     result.backwards_movement_modifier = component.backwardsMovementModifier;
   }
 
-  // Validate strafeSpeedModifier
   if (component.strafeSpeedModifier !== undefined) {
     if (
       !validateNumber(
@@ -38,6 +39,7 @@ export const convertInputAirControlledComponent = (
         'strafeSpeedModifier',
         0,
         Number.MAX_VALUE,
+        ctx,
       )
     ) {
       return undefined;
@@ -46,6 +48,6 @@ export const convertInputAirControlledComponent = (
   }
 
   return {
-    'minecraft:input_air_controlled': result,
+    'minecraft:free_camera_controlled': result,
   };
 };

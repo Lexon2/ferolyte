@@ -1,3 +1,7 @@
+import {
+  ContentDiagnosticContext,
+  withFieldPath,
+} from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { NearestAttackableTargetBehavior } from '../../interfaces/behaviors/nearest-attackable-target-behavior';
 import {
   convertEntityDefinition,
@@ -15,6 +19,7 @@ import {
  */
 export const convertNearestAttackableTargetBehavior = (
   behavior: Partial<NearestAttackableTargetBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.nearest_attackable_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -157,7 +162,10 @@ export const convertNearestAttackableTargetBehavior = (
 
   // Validate entityTypes
   if (behavior.entityTypes !== undefined) {
-    const convertedEntityTypes = convertEntityDefinition(behavior.entityTypes);
+    const convertedEntityTypes = convertEntityDefinition(
+      behavior.entityTypes,
+      withFieldPath(ctx, 'entityTypes'),
+    );
     if (!convertedEntityTypes) {
       return undefined;
     }

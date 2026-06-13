@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TypeFamilyComponent } from '../../../interfaces/components/transformation-and-variants/type-family-component';
 import { validateStringArray } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateStringArray } from '../../common/validation';
  * @returns The converted component in Minecraft format or undefined if validation fails
  */
 export const convertTypeFamilyComponent = (
-  component: Partial<TypeFamilyComponent>
+  component: Partial<TypeFamilyComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:type_family': any } | undefined => {
   if (!component) {
     return undefined;

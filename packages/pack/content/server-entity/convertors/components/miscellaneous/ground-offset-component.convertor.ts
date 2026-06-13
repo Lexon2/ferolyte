@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { GroundOffsetComponent } from '../../../interfaces/components/miscellaneous/ground-offset-component';
 import { validateNumber } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertGroundOffsetComponent = (
   component: Partial<GroundOffsetComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:ground_offset': any } | undefined => {
   if (!component) {
     return undefined;

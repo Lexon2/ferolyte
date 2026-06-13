@@ -1,5 +1,7 @@
 export { AdmireItemComponent } from './admire-item-component';
 
+export { ApplyKnockbackRulesComponent } from './apply-knockback-rules-component';
+
 export { AreaAttackComponent } from './area-attack-component';
 
 export { AttackComponent } from './attack-component';

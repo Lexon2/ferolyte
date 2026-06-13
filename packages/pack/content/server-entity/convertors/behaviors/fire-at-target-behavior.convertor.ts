@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FireAtTargetBehavior } from '../../interfaces/behaviors/fire-at-target-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateInteger, validateNumber, validateString, validateVector3 } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateInteger, validateNumber, validateString, validateVector3 } from
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertFireAtTargetBehavior = (
-  behavior: Partial<FireAtTargetBehavior>
+  behavior: Partial<FireAtTargetBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.fire_at_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -122,7 +124,7 @@ export const convertFireAtTargetBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters);
+    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }

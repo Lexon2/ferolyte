@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { NpcComponent } from '../../../interfaces/components/ai/npc-component';
 import { validateNumber } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertNpcComponent = (
-  component: Partial<NpcComponent>
+  component: Partial<NpcComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:npc': any } | undefined => {
   if (!component) {
     return undefined;

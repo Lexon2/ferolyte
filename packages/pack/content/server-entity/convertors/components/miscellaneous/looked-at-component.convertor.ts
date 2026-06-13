@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { LookedAtComponent } from '../../../interfaces/components/miscellaneous/looked-at-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { convertTrigger } from '../../common/trigger.convertor';
@@ -41,6 +42,7 @@ const validateLookAtLocation = (
  */
 export const convertLookedAtComponent = (
   component: Partial<LookedAtComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:looked_at': any } | undefined => {
   if (!component) {
     return undefined;
@@ -58,7 +60,7 @@ export const convertLookedAtComponent = (
 
   // Validate filters
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters);
+    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }
@@ -134,7 +136,7 @@ export const convertLookedAtComponent = (
 
   // Validate lookedAtEvent
   if (component.lookedAtEvent !== undefined) {
-    const convertedLookedAtEvent = convertTrigger(component.lookedAtEvent);
+    const convertedLookedAtEvent = convertTrigger(component.lookedAtEvent, withFieldPath(ctx, 'lookedAtEvent'));
     if (!convertedLookedAtEvent) {
       return undefined;
     }
@@ -143,7 +145,7 @@ export const convertLookedAtComponent = (
 
   // Validate notLookedAtEvent
   if (component.notLookedAtEvent !== undefined) {
-    const convertedNotLookedAtEvent = convertTrigger(component.notLookedAtEvent);
+    const convertedNotLookedAtEvent = convertTrigger(component.notLookedAtEvent, withFieldPath(ctx, 'notLookedAtEvent'));
     if (!convertedNotLookedAtEvent) {
       return undefined;
     }

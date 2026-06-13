@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AgeableComponent } from '../../../interfaces/components/miscellaneous/ageable-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { convertTrigger } from '../../common/trigger.convertor';
@@ -31,6 +32,7 @@ const validateFeedItem = (
  */
 export const convertAgeableComponent = (
   component: Partial<AgeableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:ageable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -100,7 +102,7 @@ export const convertAgeableComponent = (
 
   // Validate growUp
   if (component.growUp !== undefined) {
-    const convertedGrowUp = convertTrigger(component.growUp);
+    const convertedGrowUp = convertTrigger(component.growUp, withFieldPath(ctx, 'growUp'));
     if (!convertedGrowUp) {
       return undefined;
     }
@@ -117,7 +119,7 @@ export const convertAgeableComponent = (
 
   // Validate interactFilters
   if (component.interactFilters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.interactFilters);
+    const convertedFilters = convertEntityFilters(component.interactFilters, withFieldPath(ctx, 'interactFilters'));
     if (!convertedFilters) {
       return undefined;
     }

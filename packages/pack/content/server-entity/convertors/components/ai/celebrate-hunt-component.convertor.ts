@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { CelebrateHuntComponent } from '../../../interfaces/components/ai/celebrate-hunt-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -45,6 +46,7 @@ const validateSoundInterval = (
  */
 export const convertCelebrateHuntComponent = (
   component: Partial<CelebrateHuntComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:celebrate_hunt': any } | undefined => {
   if (!component) {
     return undefined;

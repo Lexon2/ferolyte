@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FleeSunBehavior } from '../../interfaces/behaviors/flee-sun-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertFleeSunBehavior = (
-  behavior: Partial<FleeSunBehavior>
+  behavior: Partial<FleeSunBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.flee_sun': any } | undefined => {
   if (!behavior) {
     return undefined;

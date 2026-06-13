@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { TakingFireDamageFilter } from '../../interfaces/filters/taking-fire-damage-filter';
 
@@ -7,7 +8,8 @@ import { TakingFireDamageFilter } from '../../interfaces/filters/taking-fire-dam
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertTakingFireDamageFilter = (
-  filter: Partial<TakingFireDamageFilter>
+  filter: Partial<TakingFireDamageFilter>,
+  ctx?: ContentDiagnosticContext
 ): ReturnType<typeof convertBooleanFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
@@ -15,5 +17,5 @@ export const convertTakingFireDamageFilter = (
   return convertBooleanFilter({
     ...filter,
     test: 'taking_fire_damage'
-  });
+  }, ctx);
 };

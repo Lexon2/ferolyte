@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { InspectBookshelfBehavior } from '../../interfaces/behaviors/inspect-bookshelf-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertInspectBookshelfBehavior = (
-  behavior: Partial<InspectBookshelfBehavior>
+  behavior: Partial<InspectBookshelfBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.inspect_bookshelf': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { WEATHER_TYPES } from '../../constants/weather-type';
 import { WeatherAtPositionFilter } from '../../interfaces/filters/weather-at-position-filter';
@@ -8,7 +9,8 @@ import { WeatherAtPositionFilter } from '../../interfaces/filters/weather-at-pos
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertWeatherAtPositionFilter = (
-  filter: Partial<WeatherAtPositionFilter>
+  filter: Partial<WeatherAtPositionFilter>,
+  ctx?: ContentDiagnosticContext
 ): ReturnType<typeof convertWithInputValues> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
@@ -17,5 +19,5 @@ export const convertWeatherAtPositionFilter = (
   return convertWithInputValues({
     ...filter,
     test: 'weather_at_position'
-  }, WEATHER_TYPES);
+  }, WEATHER_TYPES, ctx);
 };

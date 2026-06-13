@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MovementGenericComponent } from '../../../interfaces/components/navigation-movement/movement-generic-component';
 import { validateMaxTurn } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateMaxTurn } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertMovementGenericComponent = (
-  component: Partial<MovementGenericComponent>
+  component: Partial<MovementGenericComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:movement.generic': any } | undefined => {
   if (!component) {
     return undefined;

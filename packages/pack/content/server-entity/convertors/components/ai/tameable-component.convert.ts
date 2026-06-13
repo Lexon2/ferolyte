@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TameableComponent } from '../../../interfaces/components/ai/tameable-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertTameableComponent = (
-  component: Partial<TameableComponent>
+  component: Partial<TameableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:tameable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -26,7 +28,7 @@ export const convertTameableComponent = (
 
   // Validate tameEvent
   if (component.tameEvent !== undefined) {
-    const convertedTameEvent = convertTrigger(component.tameEvent);
+    const convertedTameEvent = convertTrigger(component.tameEvent, withFieldPath(ctx, 'tameEvent'));
     if (!convertedTameEvent) {
       return undefined;
     }

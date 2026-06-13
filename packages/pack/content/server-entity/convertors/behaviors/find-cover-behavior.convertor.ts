@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FindCoverBehavior } from '../../interfaces/behaviors/find-cover-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertFindCoverBehavior = (
-  behavior: Partial<FindCoverBehavior>
+  behavior: Partial<FindCoverBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.find_cover': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { GuardianAttackBehavior } from '../../interfaces/behaviors/guardian-attack-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertGuardianAttackBehavior = (
-  behavior: Partial<GuardianAttackBehavior>
+  behavior: Partial<GuardianAttackBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.guardian_attack': any } | undefined => {
   if (!behavior) {
     return undefined;

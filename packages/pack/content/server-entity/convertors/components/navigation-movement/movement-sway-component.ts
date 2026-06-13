@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MovementSwayComponent } from '../../../interfaces/components/navigation-movement/movement-sway-component';
 import { validateMaxTurn } from '../../common/validation';
 import { validateNumberRange } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertMovementSwayComponent = (
-  component: Partial<MovementSwayComponent>
+  component: Partial<MovementSwayComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:movement.sway': any } | undefined => {
   if (!component) {
     return undefined;

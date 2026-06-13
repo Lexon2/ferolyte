@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ManagedWanderingTraderComponent } from '../../../interfaces/components/ai/managed-wandering-trader-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertManagedWanderingTraderComponent = (
   component: Partial<ManagedWanderingTraderComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:managed_wandering_trader': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

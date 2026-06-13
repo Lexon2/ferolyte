@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BodyRotationBlockedComponent } from '../../../interfaces/components/physical/body-rotation-blocked-component';
 import { validateBoolean } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertBodyRotationBlockedComponent = (
   component: Partial<BodyRotationBlockedComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:body_rotation_blocked': any } | undefined => {
   if (!component) {
     return undefined;

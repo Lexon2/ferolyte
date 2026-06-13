@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ShooterComponent } from '../../../interfaces/components/combat/shooter-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertShooterComponent = (
-  component: Partial<ShooterComponent>
+  component: Partial<ShooterComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:shooter': any } | undefined => {
   if (!component) {
     return undefined;
@@ -87,7 +89,10 @@ export const convertShooterComponent = (
 
       // Validate filters
       if (projectile.filters !== undefined) {
-        const convertedFilters = convertEntityFilters(projectile.filters);
+        const convertedFilters = convertEntityFilters(
+          projectile.filters,
+          withFieldPath(ctx, `projectiles[${index}].filters`),
+        );
         if (!convertedFilters) {
           return undefined;
         }

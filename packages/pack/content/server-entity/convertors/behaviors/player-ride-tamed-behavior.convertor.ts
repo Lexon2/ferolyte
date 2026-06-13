@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PlayerRideTamedBehavior } from '../../interfaces/behaviors/player-ride-tamed-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertPlayerRideTamedBehavior = (
-  behavior: Partial<PlayerRideTamedBehavior>
+  behavior: Partial<PlayerRideTamedBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.player_ride_tamed': any } | undefined => {
   if (!behavior) {
     return undefined;

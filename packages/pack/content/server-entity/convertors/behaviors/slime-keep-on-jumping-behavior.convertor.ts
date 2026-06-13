@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SlimeKeepOnJumpingBehavior } from '../../interfaces/behaviors/slime-keep-on-jumping-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSlimeKeepOnJumpingBehavior = (
-  behavior: Partial<SlimeKeepOnJumpingBehavior>
+  behavior: Partial<SlimeKeepOnJumpingBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.slime_keep_on_jumping': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ItemControllableComponent } from '../../../interfaces/components/control/item-controllable-component';
 import { validateStringArray } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateStringArray } from '../../common/validation';
  */
 export const convertItemControllableComponent = (
   component: Partial<ItemControllableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:item_controllable': any } | undefined => {
   if (!component) {
     return undefined;

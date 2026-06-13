@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { IsSaddledComponent } from '../../../interfaces/components/states/is-saddled-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertIsSaddledComponent = (
   component: Partial<IsSaddledComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:is_saddled': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EconomyTradeTableComponent } from '../../../interfaces/components/trade/economy-trade-table-component';
 import { validateBoolean } from '../../common/validation';
 import { validateNumber } from '../../common/validation';
@@ -41,7 +42,8 @@ export const validateTradeDiscount = (
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertEconomyTradeTableComponent = (
-  component: Partial<EconomyTradeTableComponent>
+  component: Partial<EconomyTradeTableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:economy_trade_table': any } | undefined => {
   if (!component) {
     return undefined;

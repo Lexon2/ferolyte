@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { Color2Component } from '../../../interfaces/components/transformation-and-variants/color2-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The converted component in Minecraft format or undefined if validation fails
  */
 export const convertColor2Component = (
-  component: Partial<Color2Component>
+  component: Partial<Color2Component>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:color2': { value: number } } | undefined => {
   if (!component) {
     return undefined;

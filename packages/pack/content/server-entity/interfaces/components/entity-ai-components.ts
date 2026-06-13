@@ -12,6 +12,7 @@ import {
   MobEffectComponent,
   MobEffectImmunityComponent,
   NpcComponent,
+  OffspringComponent,
   OutOfControlComponent,
   PersistentComponent,
   TameableComponent,
@@ -34,6 +35,7 @@ export interface EntityAIComponents {
   mobEffect?: MobEffectComponent;
   mobEffectImmunity?: MobEffectImmunityComponent;
   npc?: NpcComponent;
+  offspring?: OffspringComponent;
   outOfControl?: OutOfControlComponent;
   persistent?: PersistentComponent;
   tameable?: TameableComponent;

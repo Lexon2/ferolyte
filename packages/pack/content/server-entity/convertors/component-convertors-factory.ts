@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '../../common/diagnostics/content-diagnostic';
 import { entityAiComponentConvertorsFactory } from './components/ai/entity-ai-component-convertors.factory';
 import { entityAttributeComponentConvertorsFactory } from './components/attribute/entity-attribute-component-convertors.factory';
 import { entityCombatComponentConvertorsFactory } from './components/combat/entity-combat-component-convertors.factory';
@@ -13,9 +14,14 @@ import { entityTimerComponentConvertorsFactory } from './components/timers-and-s
 import { entityTradeComponentConvertorsFactory } from './components/trade/entity-trade-component-convertors.factory';
 import { entityTransformationComponentConvertorsFactory } from './components/transformation-and-variants/entity-transformation-component-convertors.factory';
 
+export type EntityComponentConvertor = (
+  value?: unknown,
+  ctx?: ContentDiagnosticContext,
+) => Record<string, unknown> | undefined;
+
 export const entityComponentConvertorsFactory: Record<
   string,
-  (v?: any) => any
+  EntityComponentConvertor
 > = {
   ...entityAiComponentConvertorsFactory,
   ...entityAttributeComponentConvertorsFactory,

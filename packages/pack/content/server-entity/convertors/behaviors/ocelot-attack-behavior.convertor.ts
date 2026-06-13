@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { OcelotAttackBehavior } from '../../interfaces/behaviors/ocelot-attack-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertOcelotAttackBehavior = (
-  behavior: Partial<OcelotAttackBehavior>
+  behavior: Partial<OcelotAttackBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.ocelotattack': any } | undefined => {
   if (!behavior) {
     return undefined;

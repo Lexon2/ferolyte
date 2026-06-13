@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import {
   HurtOnConditionComponent,
   HurtOnConditionDamageCondition,
@@ -16,6 +17,7 @@ import {
  */
 const validateDamageCondition = (
   condition: HurtOnConditionDamageCondition,
+  ctx?: ContentDiagnosticContext,
 ): any | undefined => {
   if (!condition) {
     return undefined;
@@ -25,7 +27,7 @@ const validateDamageCondition = (
 
   // Validate filters
   if (condition.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(condition.filters);
+    const convertedFilters = convertEntityFilters(condition.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }
@@ -65,6 +67,7 @@ const validateDamageCondition = (
  */
 export const convertHurtOnConditionComponent = (
   component: Partial<HurtOnConditionComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:hurt_on_condition': any } | undefined => {
   if (!component) {
     return undefined;
@@ -80,22 +83,19 @@ export const convertHurtOnConditionComponent = (
       return undefined;
     }
 
-    const validatedConditions = component.damageConditions.map((condition) => {
-      if (!validateDamageCondition(condition)) {
-        return undefined;
-      }
+    const validatedConditions = component.damageConditions.map(
+      (condition, index) => {
+        const converted = validateDamageCondition(
+          condition,
+          withFieldPath(ctx, `damageConditions[${index}]`),
+        );
+        if (!converted) {
+          return undefined;
+        }
 
-      const validatedCondition: any = {};
-      if (condition.filters !== undefined) {
-        validatedCondition.filters = condition.filters;
-      }
-      if (condition.cause !== undefined) {
-        validatedCondition.cause = condition.cause;
-      }
-      validatedCondition.damage_per_tick = condition.damagePerTick;
-
-      return validatedCondition;
-    });
+        return converted;
+      },
+    );
 
     if (validatedConditions.includes(undefined)) {
       return undefined;

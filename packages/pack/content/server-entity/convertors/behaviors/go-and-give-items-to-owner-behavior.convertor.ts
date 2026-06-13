@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { GoAndGiveItemsToOwnerBehavior } from '../../interfaces/behaviors/go-and-give-items-to-owner-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateNumber, validateSoundEvent } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber, validateSoundEvent } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertGoAndGiveItemsToOwnerBehavior = (
-  behavior: Partial<GoAndGiveItemsToOwnerBehavior>
+  behavior: Partial<GoAndGiveItemsToOwnerBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.go_and_give_items_to_owner': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,7 +28,7 @@ export const convertGoAndGiveItemsToOwnerBehavior = (
 
   // Validate onItemThrow
   if (behavior.onItemThrow !== undefined) {
-    const convertedOnItemThrow = convertTrigger(behavior.onItemThrow);
+    const convertedOnItemThrow = convertTrigger(behavior.onItemThrow, withFieldPath(ctx, 'onItemThrow'));
     if (!convertedOnItemThrow) {
       return undefined;
     }

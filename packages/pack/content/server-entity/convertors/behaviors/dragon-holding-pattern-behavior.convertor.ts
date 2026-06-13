@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DragonHoldingPatternBehavior } from '../../interfaces/behaviors/dragon-holding-pattern-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertDragonHoldingPatternBehavior = (
-  behavior: Partial<DragonHoldingPatternBehavior>
+  behavior: Partial<DragonHoldingPatternBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.dragonholdingpattern': any } | undefined => {
   if (!behavior) {
     return undefined;

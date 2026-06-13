@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { LootComponent } from '../../../interfaces/components/miscellaneous/loot-component';
 import { validateString } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateString } from '../../common/validation';
  */
 export const convertLootComponent = (
   component: Partial<LootComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:loot': any } | undefined => {
   if (!component || !component.table) {
     return undefined;

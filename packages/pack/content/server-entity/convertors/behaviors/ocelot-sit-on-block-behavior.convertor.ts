@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { OcelotSitOnBlockBehavior } from '../../interfaces/behaviors/ocelot-sit-on-block-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertOcelotSitOnBlockBehavior = (
-  behavior: Partial<OcelotSitOnBlockBehavior>
+  behavior: Partial<OcelotSitOnBlockBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.ocelot_sit_on_block': any } | undefined => {
   if (!behavior) {
     return undefined;

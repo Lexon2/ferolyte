@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EmergeBehavior } from '../../interfaces/behaviors/emerge-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertEmergeBehavior = (
-  behavior: Partial<EmergeBehavior>
+  behavior: Partial<EmergeBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.emerge': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,7 +44,7 @@ export const convertEmergeBehavior = (
 
   // Validate onDone
   if (behavior.onDone !== undefined) {
-    const onDone = convertTrigger(behavior.onDone);
+    const onDone = convertTrigger(behavior.onDone, withFieldPath(ctx, 'onDone'));
     if (!onDone) {
       return undefined;
     }

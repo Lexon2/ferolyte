@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TeleportComponent } from '../../../interfaces/components/miscellaneous/teleport-component';
 import { validateBoolean, validateNumber } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateBoolean, validateNumber } from '../../common/validation';
  */
 export const convertTeleportComponent = (
   component: TeleportComponent,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:teleport': any } | undefined => {
 
   if (!component) {

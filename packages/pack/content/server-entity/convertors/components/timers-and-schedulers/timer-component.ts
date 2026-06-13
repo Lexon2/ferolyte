@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TimerComponent } from '../../../interfaces/components/timers-and-schedulers/timer-component';
 import { validateBoolean } from '../../common/validation';
 import { validateTime } from '../../common/validation';
@@ -9,7 +10,8 @@ import { validateWeight } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertTimerComponent = (
-  component: Partial<TimerComponent>
+  component: Partial<TimerComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:timer': any } | undefined => {
   if (!component) {
     return undefined;

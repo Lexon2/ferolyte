@@ -30,6 +30,10 @@ export { HasDamagedEquipmentFilter } from './has-damaged-equipment-filter';
 
 export { HasEquipmentFilter } from './has-equipment-filter';
 
+export { HasItemWithComponentFilter } from './has-item-with-component-filter';
+
+export { HasSameEquipmentInSlotAsFilter } from './has-same-equipment-in-slot-as-filter';
+
 export { HasEquipmentTagFilter } from './has-equipment-tag-filter';
 
 export { HasMobEffectFilter } from './has-mob-effect-filter';
@@ -90,6 +94,8 @@ export { IsClimbingFilter } from './is-climbing-filter';
 
 export { IsColorFilter } from './is-color-filter';
 
+export { IsControllingPassengerFamilyFilter } from './is-controlling-passenger-family-filter';
+
 export { IsDaytimeFilter } from './is-daytime-filter';
 
 export { IsDifficultyFilter } from './is-difficulty-filter';
@@ -122,6 +128,8 @@ export { IsPersistentFilter } from './is-persistent-filter';
 
 export { IsRidingFilter } from './is-riding-filter';
 
+export { IsRidingSelfFilter } from './is-riding-self-filter';
+
 export { IsSittingFilter } from './is-sitting-filter';
 
 export { IsSkinIdFilter } from './is-skin-id-filter';
@@ -131,6 +139,10 @@ export { IsSleepingFilter } from './is-sleeping-filter';
 export { IsSneakHeldFilter } from './is-sneak-held-filter';
 
 export { IsSneakingFilter } from './is-sneaking-filter';
+
+export { IsSprintingFilter } from './is-sprinting-filter';
+
+export { IsTamedFilter } from './is-tamed-filter';
 
 export { IsSnowCoveredFilter } from './is-snow-covered-filter';
 
@@ -145,6 +157,10 @@ export { IsUndergroundFilter } from './is-underground-filter';
 export { IsUnderwaterFilter } from './is-underwater-filter';
 
 export { IsVariantFilter } from './is-variant-filter';
+
+export { IsVehicleFamilyFilter } from './is-vehicle-family-filter';
+
+export { IsWeatherFilter } from './is-weather-filter';
 
 export { IsVisibleFilter } from './is-visible-filter';
 
@@ -179,3 +195,5 @@ export { TrustsFilter } from './trusts-filter';
 export { WeatherAtPositionFilter } from './weather-at-position-filter';
 
 export { WeatherFilter } from './weather-filter';
+
+export { YRotationFilter } from './y-rotation-filter';

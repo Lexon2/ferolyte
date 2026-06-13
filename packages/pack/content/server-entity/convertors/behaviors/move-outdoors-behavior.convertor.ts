@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MoveOutdoorsBehavior } from '../../interfaces/behaviors/move-outdoors-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertMoveOutdoorsBehavior = (
-  behavior: Partial<MoveOutdoorsBehavior>
+  behavior: Partial<MoveOutdoorsBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.move_outdoors': any } | undefined => {
   if (!behavior) {
     return undefined;

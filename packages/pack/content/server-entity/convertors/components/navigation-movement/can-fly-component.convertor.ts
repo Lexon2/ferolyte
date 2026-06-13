@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { CanFlyComponent } from '../../../interfaces/components/navigation-movement/can-fly-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertCanFlyComponent = (
   component: Partial<CanFlyComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:can_fly': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

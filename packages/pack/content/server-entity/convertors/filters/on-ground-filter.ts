@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { OnGroundFilter } from '../../interfaces/filters/on-ground-filter';
 
@@ -8,9 +9,10 @@ import { OnGroundFilter } from '../../interfaces/filters/on-ground-filter';
  */
 export const convertOnGroundFilter = (
   filter: Partial<OnGroundFilter>,
+  ctx?: ContentDiagnosticContext
 ): ReturnType<typeof convertBooleanFilter> | undefined => {
   return convertBooleanFilter({
     ...filter,
     test: 'on_ground',
-  });
+  }, ctx);
 };

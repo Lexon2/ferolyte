@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { StalkAndPounceOnTargetBehavior } from '../../interfaces/behaviors/stalk-and-pounce-on-target-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber, validateBoolean } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber, validateBoolean } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertStalkAndPounceOnTargetBehavior = (
-  behavior: Partial<StalkAndPounceOnTargetBehavior>
+  behavior: Partial<StalkAndPounceOnTargetBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.stalk_and_pounce_on_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -106,7 +108,7 @@ export const convertStalkAndPounceOnTargetBehavior = (
 
   // Validate stuckBlocks
   if (behavior.stuckBlocks !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.stuckBlocks);
+    const convertedFilters = convertEntityFilters(behavior.stuckBlocks, withFieldPath(ctx, 'stuckBlocks'));
     if (!convertedFilters) {
       return undefined;
     }

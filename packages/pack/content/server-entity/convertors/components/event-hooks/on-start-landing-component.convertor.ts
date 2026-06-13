@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { OnStartLandingComponent } from '../../../interfaces/components/event-hooks/on-start-landing-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -8,12 +9,13 @@ import { convertTrigger } from '../../common/trigger.convertor';
  */
 export const convertOnStartLandingComponent = (
   component: Partial<OnStartLandingComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:on_start_landing': any } | undefined => {
   if (!component) {
     return undefined;
   }
 
-  const result: any = convertTrigger(component);
+  const result: any = convertTrigger(component, ctx);
   if (!result) {
     return undefined;
   }

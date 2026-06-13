@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SkinIdComponent } from '../../../interfaces/components/transformation-and-variants/skin-id-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertSkinIdComponent = (
-  component: Partial<SkinIdComponent>
+  component: Partial<SkinIdComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:skin_id': { value: number } } | undefined => {
   if (!component) {
     return undefined;

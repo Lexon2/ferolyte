@@ -1,3 +1,7 @@
+import {
+  ContentDiagnosticContext,
+  withFieldPath,
+} from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { NearestPrioritizedAttackableTargetBehavior } from '../../interfaces/behaviors/nearest-prioritized-attackable-target-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateBoolean, validateInteger, validateNumber } from '../common/validation';
@@ -8,7 +12,8 @@ import { validateBoolean, validateInteger, validateNumber } from '../common/vali
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertNearestPrioritizedAttackableTargetBehavior = (
-  behavior: Partial<NearestPrioritizedAttackableTargetBehavior>
+  behavior: Partial<NearestPrioritizedAttackableTargetBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.nearest_prioritized_attackable_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,7 +31,10 @@ export const convertNearestPrioritizedAttackableTargetBehavior = (
 
   // Validate entityTypes
   if (behavior.entityTypes !== undefined) {
-    const convertedEntityTypes = convertEntityDefinition(behavior.entityTypes);
+    const convertedEntityTypes = convertEntityDefinition(
+      behavior.entityTypes,
+      withFieldPath(ctx, 'entityTypes'),
+    );
     if (!convertedEntityTypes) {
       return undefined;
     }

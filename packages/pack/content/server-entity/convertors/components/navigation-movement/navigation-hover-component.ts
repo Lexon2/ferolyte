@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationHoverComponent } from '../../../interfaces/components/navigation-movement/navigation-hover-component';
 
@@ -7,7 +8,8 @@ import { NavigationHoverComponent } from '../../../interfaces/components/navigat
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertNavigationHoverComponent = (
-  component: Partial<NavigationHoverComponent>
+  component: Partial<NavigationHoverComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:navigation.hover': any } | undefined => {
   if (!component) {
     return undefined;

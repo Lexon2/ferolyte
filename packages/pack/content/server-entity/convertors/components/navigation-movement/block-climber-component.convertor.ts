@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BlockClimberComponent } from '../../../interfaces/components/navigation-movement/block-climber-component';
 import { validateBoolean } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertBlockClimberComponent = (
   component: Partial<BlockClimberComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:block_climber': any } | undefined => {
   if (!component) {
     return undefined;

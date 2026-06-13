@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DefendVillageTargetBehavior } from '../../interfaces/behaviors/defend-village-target-behavior';
 import { convertSingleEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertDefendVillageTargetBehavior = (
-  behavior: Partial<DefendVillageTargetBehavior>
+  behavior: Partial<DefendVillageTargetBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.defend_village_target': any } | undefined => {
   if (!behavior) {
     return undefined;

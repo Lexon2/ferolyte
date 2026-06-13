@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ControlledByPlayerBehavior } from '../../interfaces/behaviors/controlled-by-player-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertControlledByPlayerBehavior = (
-  behavior: Partial<ControlledByPlayerBehavior>
+  behavior: Partial<ControlledByPlayerBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.controlled_by_player': any } | undefined => {
   if (!behavior) {
     return undefined;

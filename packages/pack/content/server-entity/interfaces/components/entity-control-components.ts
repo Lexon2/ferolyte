@@ -1,25 +1,29 @@
 import {
   AddRiderComponent,
   BoostableComponent,
-  DashComponent,
+  DashActionComponent,
+  FreeCameraControlledComponent,
   HorseJumpStrengthComponent,
-  InputAirControlledComponent,
   InputGroundControlledComponent,
   ItemControllableComponent,
   LeashableComponent,
   LeashableToComponent,
   RideableComponent,
+  RotationLockedToVehicleComponent,
+  VerticalMovementActionComponent,
 } from './control';
 
 export interface EntityControlComponents {
   addRider?: AddRiderComponent;
   boostable?: BoostableComponent;
-  dash?: DashComponent;
+  dashAction?: DashActionComponent;
+  freeCameraControlled?: FreeCameraControlledComponent;
   horseJumpStrength?: HorseJumpStrengthComponent;
-  inputAirControlled?: InputAirControlledComponent;
   inputGroundControlled?: InputGroundControlledComponent;
   itemControllable?: ItemControllableComponent;
   leashable?: LeashableComponent;
   leashableTo?: LeashableToComponent;
   rideable?: RideableComponent;
+  rotationLockedToVehicle?: RotationLockedToVehicleComponent;
+  verticalMovementAction?: VerticalMovementActionComponent;
 }

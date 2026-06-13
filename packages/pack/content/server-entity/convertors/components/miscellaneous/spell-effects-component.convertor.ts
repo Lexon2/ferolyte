@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SpellEffectsComponent } from '../../../interfaces/components/miscellaneous/spell-effects-component';
 import { validateBoolean, validateInteger } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateBoolean, validateInteger } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertSpellEffectsComponent = (
-  component: Partial<SpellEffectsComponent>
+  component: Partial<SpellEffectsComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:spell_effects': any } | undefined => {
   if (!component) {
     return undefined;

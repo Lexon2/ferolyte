@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { CelebrateBehavior } from '../../interfaces/behaviors/celebrate-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -9,7 +10,8 @@ import { validateNumber, validateSoundEvent } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertCelebrateBehavior = (
-  behavior: Partial<CelebrateBehavior>
+  behavior: Partial<CelebrateBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.celebrate': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -53,7 +55,7 @@ export const convertCelebrateBehavior = (
 
   // Validate onCelebrationEndEvent
   if (behavior.onCelebrationEndEvent !== undefined) {
-    const convertedOnCelebrationEndEvent = convertTrigger(behavior.onCelebrationEndEvent);
+    const convertedOnCelebrationEndEvent = convertTrigger(behavior.onCelebrationEndEvent, withFieldPath(ctx, 'onCelebrationEndEvent'));
     if (!convertedOnCelebrationEndEvent) {
       return undefined;
     }

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PhysicsComponent } from '../../../interfaces/components/physical/physics-component';
 import { validateBoolean } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateBoolean } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertPhysicsComponent = (
-  component: Partial<PhysicsComponent>
+  component: Partial<PhysicsComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:physics': any } | undefined => {
   if (!component) {
     return undefined;

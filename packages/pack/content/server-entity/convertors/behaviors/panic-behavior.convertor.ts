@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PanicBehavior } from '../../interfaces/behaviors/panic-behavior';
 import { convertRange } from '../common/convertors';
 import {
@@ -14,6 +15,7 @@ import { validateDamageSourceType } from '../common/validation';
  */
 export const convertPanicBehavior = (
   behavior: Partial<PanicBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.panic': any } | undefined => {
   if (!behavior) {
     return undefined;

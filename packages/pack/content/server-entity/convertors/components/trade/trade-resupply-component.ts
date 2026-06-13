@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TradeResupplyComponent } from '../../../interfaces/components/trade/trade-resupply-component';
 
 /**
@@ -6,7 +7,8 @@ import { TradeResupplyComponent } from '../../../interfaces/components/trade/tra
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertTradeResupplyComponent = (
-  component: Partial<TradeResupplyComponent>
+  component: Partial<TradeResupplyComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:trade_resupply': any } | undefined => {
   if (!component) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { StompTurtleEggBehavior } from '../../interfaces/behaviors/stomp-turtle-egg-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertStompTurtleEggBehavior = (
-  behavior: Partial<StompTurtleEggBehavior>
+  behavior: Partial<StompTurtleEggBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.stomp_turtle_egg': any } | undefined => {
   if (!behavior) {
     return undefined;

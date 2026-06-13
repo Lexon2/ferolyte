@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DropItemForBehavior } from '../../interfaces/behaviors/drop-item-for-behavior';
 import { convertRange } from '../common/convertors';
 import { convertSingleEntityDefinition } from '../common/entity-definition.convertor';
@@ -15,6 +16,7 @@ import {
  */
 export const convertDropItemForBehavior = (
   behavior: Partial<DropItemForBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.drop_item_for': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -111,7 +113,7 @@ export const convertDropItemForBehavior = (
 
   // Validate onDropAttempt
   if (behavior.onDropAttempt !== undefined) {
-    const onDropAttempt = convertTrigger(behavior.onDropAttempt);
+    const onDropAttempt = convertTrigger(behavior.onDropAttempt, withFieldPath(ctx, 'onDropAttempt'));
     if (!onDropAttempt) {
       return undefined;
     }

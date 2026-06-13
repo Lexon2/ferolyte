@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RandomLookAroundAndSitBehavior } from '../../interfaces/behaviors/random-look-around-and-sit-behavior';
 import { validateNumber, validateBoolean, validateDegrees, validateInteger } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateBoolean, validateDegrees, validateInteger } fro
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRandomLookAroundAndSitBehavior = (
-  behavior: Partial<RandomLookAroundAndSitBehavior>
+  behavior: Partial<RandomLookAroundAndSitBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.random_look_around_and_sit': any } | undefined => {
   if (!behavior) {
     return undefined;

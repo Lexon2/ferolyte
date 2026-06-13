@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SpawnEntityComponent } from '../../../interfaces/components/miscellaneous/spawn-entity-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateBoolean, validateInteger } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateBoolean, validateInteger } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertSpawnEntityComponent = (
-  component: Partial<SpawnEntityComponent>
+  component: Partial<SpawnEntityComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:spawn_entity': any } | undefined => {
   if (!component) {
     return undefined;
@@ -125,7 +127,7 @@ export const convertSpawnEntityComponent = (
 
       // Validate spawnItemEvent
       if (entity.spawnItemEvent !== undefined) {
-        const convertedSpawnItemEvent = convertTrigger(entity.spawnItemEvent);
+        const convertedSpawnItemEvent = convertTrigger(entity.spawnItemEvent, withFieldPath(ctx, 'spawnItemEvent'));
         if (!convertedSpawnItemEvent) {
           return undefined;
         }

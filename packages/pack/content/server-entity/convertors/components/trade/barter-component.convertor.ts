@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BarterComponent } from '../../../interfaces/components/trade/barter-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertBarterComponent = (
   component: Partial<BarterComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:barter': any } | undefined => {
   if (!component) {
     return undefined;

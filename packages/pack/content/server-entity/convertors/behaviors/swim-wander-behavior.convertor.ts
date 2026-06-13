@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SwimWanderBehavior } from '../../interfaces/behaviors/swim-wander-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSwimWanderBehavior = (
-  behavior: Partial<SwimWanderBehavior>
+  behavior: Partial<SwimWanderBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.swim_wander': any } | undefined => {
   if (!behavior) {
     return undefined;

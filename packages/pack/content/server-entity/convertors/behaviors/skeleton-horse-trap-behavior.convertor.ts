@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SkeletonHorseTrapBehavior } from '../../interfaces/behaviors/skeleton-horse-trap-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSkeletonHorseTrapBehavior = (
-  behavior: Partial<SkeletonHorseTrapBehavior>
+  behavior: Partial<SkeletonHorseTrapBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.skeleton_horse_trap': any } | undefined => {
   if (!behavior) {
     return undefined;

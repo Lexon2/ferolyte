@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RandomHoverBehavior } from '../../interfaces/behaviors/random-hover-behavior';
 import { convertRange } from '../common/convertors';
 import { validateInteger, validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRandomHoverBehavior = (
-  behavior: Partial<RandomHoverBehavior>
+  behavior: Partial<RandomHoverBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.random_hover': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { WantsJockeyComponent } from '../../../interfaces/components/miscellaneous/wants-jockey-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertWantsJockeyComponent = (
   component: Partial<WantsJockeyComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:wants_jockey': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

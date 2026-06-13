@@ -19,7 +19,6 @@ import {
   GameEventMovementTrackingComponent,
   GeneticsComponent,
   GroundOffsetComponent,
-  GoalSelectorComponent,
   GrowsCropComponent,
   HealableComponent,
   HeartbeatComponent,
@@ -41,11 +40,13 @@ import {
   PreferredPathComponent,
   RaidTriggerComponent,
   RavagerBlockedComponent,
+  RemoveInPeacefulComponent,
   RendersWhenInvisibleComponent,
   ScaffoldingClimberComponent,
   ShareablesComponent,
   SoundVolumeComponent,
   SpawnEntityComponent,
+  SpawnOnDeathComponent,
   StrengthComponent,
   SpellEffectsComponent,
   SuspectTrackingComponent,
@@ -80,7 +81,6 @@ export interface EntityMiscellaneousComponents {
   gameEventMovementTracking?: GameEventMovementTrackingComponent;
   genetics?: GeneticsComponent;
   groundOffset?: GroundOffsetComponent;
-  goalSelector?: GoalSelectorComponent;
   growsCrop?: GrowsCropComponent;
   healable?: HealableComponent;
   heartbeat?: HeartbeatComponent;
@@ -102,11 +102,13 @@ export interface EntityMiscellaneousComponents {
   preferredPath?: PreferredPathComponent;
   raidTrigger?: RaidTriggerComponent;
   ravagerBlocked?: RavagerBlockedComponent;
+  removeInPeaceful?: RemoveInPeacefulComponent;
   rendersWhenInvisible?: RendersWhenInvisibleComponent;
   scaffoldingClimber?: ScaffoldingClimberComponent;
   shareables?: ShareablesComponent;
   soundVolume?: SoundVolumeComponent;
   spawnEntity?: SpawnEntityComponent;
+  spawnOnDeath?: SpawnOnDeathComponent;
   strength?: StrengthComponent;
   spellEffects?: SpellEffectsComponent;
   suspectTracking?: SuspectTrackingComponent;

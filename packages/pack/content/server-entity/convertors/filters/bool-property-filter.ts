@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertFilterBase } from './common/convert-filter-base';
 import { BoolPropertyFilter } from '../../interfaces/filters/bool-property-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -9,17 +10,18 @@ import { validateString } from '../common/validation';
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertBoolPropertyFilter = (
-  filter: Partial<BoolPropertyFilter>
+  filter: Partial<BoolPropertyFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
   }
 
-  if (!filter.domain || !validateString(filter.domain, 'domain')) {
+  if (!filter.domain || !validateString(filter.domain, 'domain', ctx)) {
     return undefined;
   }
 
-  const baseResult = convertFilterBase(filter);
+  const baseResult = convertFilterBase(filter, ctx);
   if (!baseResult) {
     return undefined;
   }

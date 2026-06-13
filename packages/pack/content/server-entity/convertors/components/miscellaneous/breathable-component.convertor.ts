@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BreathableComponent } from '../../../interfaces/components/miscellaneous/breathable-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertBreathableComponent = (
   component: Partial<BreathableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:breathable': any } | undefined => {
   if (!component) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { HomeComponent } from '../../../interfaces/components/miscellaneous/home-component';
 import { validateNumber, validateStringArray } from '../../common/validation';
 import { validateHomeRestrictionType } from '../../validation/home-restriction-type';
@@ -9,6 +10,7 @@ import { validateHomeRestrictionType } from '../../validation/home-restriction-t
  */
 export const convertHomeComponent = (
   component: Partial<HomeComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:home': any } | undefined => {
   if (!component) {
     return undefined;

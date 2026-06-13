@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EnumPropertyFilter } from '../../interfaces/filters/enum-property-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
 import { validateString } from '../common/validation';
@@ -9,22 +10,23 @@ import { convertFilterBase } from './common/convert-filter-base';
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertEnumPropertyFilter = (
-  filter: Partial<EnumPropertyFilter>
+  filter: Partial<EnumPropertyFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
   }
 
   // Validate domain and value properties
-  if (!filter.domain || !validateString(filter.domain, 'domain')) {
+  if (!filter.domain || !validateString(filter.domain, 'domain', ctx)) {
     return undefined;
   }
 
-  if (filter.value === undefined || !validateString(filter.value, 'value')) {
+  if (filter.value === undefined || !validateString(filter.value, 'value', ctx)) {
     return undefined;
   }
 
-  const baseResult = convertFilterBase(filter);
+  const baseResult = convertFilterBase(filter, ctx);
   if (!baseResult) {
     return undefined;
   }

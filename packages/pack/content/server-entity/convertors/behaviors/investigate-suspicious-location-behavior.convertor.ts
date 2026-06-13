@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { InvestigateSuspiciousLocationBehavior } from '../../interfaces/behaviors/investigate-suspicious-location-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertInvestigateSuspiciousLocationBehavior = (
-  behavior: Partial<InvestigateSuspiciousLocationBehavior>
+  behavior: Partial<InvestigateSuspiciousLocationBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.investigate_suspicious_location': any } | undefined => {
   if (!behavior) {
     return undefined;

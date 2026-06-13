@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { WorkBehavior } from '../../interfaces/behaviors/work-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber, validateBoolean, validateInteger } from '../common/vali
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertWorkBehavior = (
-  behavior: Partial<WorkBehavior>
+  behavior: Partial<WorkBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.work': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -59,7 +61,7 @@ export const convertWorkBehavior = (
 
   // Validate onArrival
   if (behavior.onArrival !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onArrival);
+    const convertedTrigger = convertTrigger(behavior.onArrival, withFieldPath(ctx, 'onArrival'));
     if (!convertedTrigger) {
       return undefined;
     }

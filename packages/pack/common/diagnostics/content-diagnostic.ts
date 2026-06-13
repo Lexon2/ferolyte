@@ -5,7 +5,10 @@ export type ContentSection =
   | 'states'
   | 'traits'
   | 'permutations'
-  | 'menuCategory';
+  | 'menuCategory'
+  | 'behaviors'
+  | 'events'
+  | 'filters';
 
 export interface ContentDiagnosticContext {
   sourceFile?: string;
@@ -39,6 +42,15 @@ export const buildFieldPath = (ctx: ContentDiagnosticContext): string => {
       break;
     case 'menuCategory':
       parts.push('menuCategory');
+      break;
+    case 'behaviors':
+      parts.push('components', 'behaviors');
+      break;
+    case 'events':
+      parts.push('events');
+      break;
+    case 'filters':
+      parts.push('filters');
       break;
     default:
       if (ctx.component !== undefined) {

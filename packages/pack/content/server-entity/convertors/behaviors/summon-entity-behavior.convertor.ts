@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ENTITY_EVENT_TARGETS } from '../../constants/event-target';
 import { SummonEntityBehavior, SummonChoice, SummonSequence } from '../../interfaces/behaviors/summon-entity-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
@@ -128,7 +129,10 @@ const convertSummonSequence = (sequence: Partial<SummonSequence>): any | undefin
  * @param choice The choice to convert
  * @returns The choice in Minecraft format or undefined if validation fails
  */
-const convertSummonChoice = (choice: Partial<SummonChoice>): any | undefined => {
+const convertSummonChoice = (
+  choice: Partial<SummonChoice>,
+  ctx?: ContentDiagnosticContext,
+): any | undefined => {
   if (!choice) {
     return undefined;
   }
@@ -161,7 +165,7 @@ const convertSummonChoice = (choice: Partial<SummonChoice>): any | undefined => 
 
   // Validate filters
   if (choice.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(choice.filters);
+    const convertedFilters = convertEntityFilters(choice.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }
@@ -226,7 +230,8 @@ const convertSummonChoice = (choice: Partial<SummonChoice>): any | undefined => 
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSummonEntityBehavior = (
-  behavior: Partial<SummonEntityBehavior>
+  behavior: Partial<SummonEntityBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.summon_entity': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -244,7 +249,11 @@ export const convertSummonEntityBehavior = (
 
   // Validate summonChoices
   if (behavior.summonChoices !== undefined) {
-    const convertedChoices = behavior.summonChoices.map(convertSummonChoice).filter(Boolean);
+    const convertedChoices = behavior.summonChoices
+      .map((choice, index) =>
+        convertSummonChoice(choice, withFieldPath(ctx, `summonChoices[${index}]`)),
+      )
+      .filter(Boolean);
     if (convertedChoices.length !== behavior.summonChoices.length) {
       return undefined;
     }

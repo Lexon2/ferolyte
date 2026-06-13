@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import {
   RideableComponent,
   SeatsSpec,
@@ -94,6 +95,7 @@ const convertSeat = (seat: SeatsSpec): any => {
  */
 export const convertRideableComponent = (
   component: RideableComponent,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:rideable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -175,7 +177,7 @@ export const convertRideableComponent = (
   }
 
   if (component.onRiderEnterEvent !== undefined) {
-    const converted = convertTrigger(component.onRiderEnterEvent);
+    const converted = convertTrigger(component.onRiderEnterEvent, withFieldPath(ctx, 'onRiderEnterEvent'));
     if (converted === undefined) {
       return undefined;
     }
@@ -184,7 +186,7 @@ export const convertRideableComponent = (
   }
 
   if (component.onRiderExitEvent !== undefined) {
-    const converted = convertTrigger(component.onRiderExitEvent);
+    const converted = convertTrigger(component.onRiderExitEvent, withFieldPath(ctx, 'onRiderExitEvent'));
     if (converted === undefined) {
       return undefined;
     }

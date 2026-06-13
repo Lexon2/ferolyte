@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SittableComponent } from '../../../interfaces/components/interaction/sittable-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -7,7 +8,8 @@ import { convertTrigger } from '../../common/trigger.convertor';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertSittableComponent = (
-  component: Partial<SittableComponent>
+  component: Partial<SittableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:sittable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -17,7 +19,7 @@ export const convertSittableComponent = (
 
   // Validate sitEvent
   if (component.sitEvent !== undefined) {
-    const convertedSitEvent = convertTrigger(component.sitEvent);
+    const convertedSitEvent = convertTrigger(component.sitEvent, withFieldPath(ctx, 'sitEvent'));
     if (!convertedSitEvent) {
       return undefined;
     }
@@ -26,7 +28,7 @@ export const convertSittableComponent = (
 
   // Validate standEvent
   if (component.standEvent !== undefined) {
-    const convertedStandEvent = convertTrigger(component.standEvent);
+    const convertedStandEvent = convertTrigger(component.standEvent, withFieldPath(ctx, 'standEvent'));
     if (!convertedStandEvent) {
       return undefined;
     }

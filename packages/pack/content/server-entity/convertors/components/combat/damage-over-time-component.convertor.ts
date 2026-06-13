@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DamageOverTimeComponent } from '../../../interfaces/components/combat/damage-over-time-component';
 import { validateNumber } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertDamageOverTimeComponent = (
   component: Partial<DamageOverTimeComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:damage_over_time': any } | undefined => {
   if (!component) {
     return undefined;

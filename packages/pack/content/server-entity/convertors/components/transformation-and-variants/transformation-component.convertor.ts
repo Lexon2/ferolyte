@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TransformationComponent } from '../../../interfaces/components/transformation-and-variants/transformation-component';
 import { validateString } from '../../common/validation';
 import { validateStringArray } from '../../common/validation';
@@ -10,7 +11,8 @@ import { validateBoolean } from '../../common/validation';
  * @returns The converted component in Minecraft format or undefined if validation fails
  */
 export const convertTransformationComponent = (
-  component: Partial<TransformationComponent>
+  component: Partial<TransformationComponent>,
+  ctx?: ContentDiagnosticContext
 ): Record<string, any> | undefined => {
   if (!component) {
     return undefined;

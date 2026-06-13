@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { TargetDistanceFilter } from '../../interfaces/filters/target-distance-filter';
 
@@ -7,7 +8,8 @@ import { TargetDistanceFilter } from '../../interfaces/filters/target-distance-f
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertTargetDistanceFilter = (
-  filter: Partial<TargetDistanceFilter>
+  filter: Partial<TargetDistanceFilter>,
+  ctx?: ContentDiagnosticContext
 ): ReturnType<typeof convertNumberFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
@@ -15,5 +17,5 @@ export const convertTargetDistanceFilter = (
   return convertNumberFilter({
     ...filter,
     test: 'target_distance'
-  });
+  }, ctx);
 };

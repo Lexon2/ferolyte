@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TradeTableComponent } from '../../../interfaces/components/trade/trade-table-component';
 import { validateBoolean } from '../../common/validation';
 import { validateTradeOrLootTablePath } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateTradeOrLootTablePath } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertTradeTableComponent = (
-  component: Partial<TradeTableComponent>
+  component: Partial<TradeTableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:trade_table': any } | undefined => {
   if (!component) {
     return undefined;

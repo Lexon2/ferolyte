@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PeekComponent } from '../../../interfaces/components/miscellaneous/peek-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -8,6 +9,7 @@ import { convertTrigger } from '../../common/trigger.convertor';
  */
 export const convertPeekComponent = (
   component: Partial<PeekComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:peek': any } | undefined => {
   if (!component) {
     return undefined;
@@ -17,7 +19,7 @@ export const convertPeekComponent = (
 
   // Validate onClose
   if (component.onClose !== undefined) {
-    const convertedOnClose = convertTrigger(component.onClose);
+    const convertedOnClose = convertTrigger(component.onClose, withFieldPath(ctx, 'onClose'));
     if (!convertedOnClose) {
       return undefined;
     }
@@ -26,7 +28,7 @@ export const convertPeekComponent = (
 
   // Validate onOpen
   if (component.onOpen !== undefined) {
-    const convertedOnOpen = convertTrigger(component.onOpen);
+    const convertedOnOpen = convertTrigger(component.onOpen, withFieldPath(ctx, 'onOpen'));
     if (!convertedOnOpen) {
       return undefined;
     }
@@ -35,7 +37,7 @@ export const convertPeekComponent = (
 
   // Validate onTargetOpen
   if (component.onTargetOpen !== undefined) {
-    const convertedOnTargetOpen = convertTrigger(component.onTargetOpen);
+    const convertedOnTargetOpen = convertTrigger(component.onTargetOpen, withFieldPath(ctx, 'onTargetOpen'));
     if (!convertedOnTargetOpen) {
       return undefined;
     }

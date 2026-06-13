@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { HarvestFarmBlockBehavior } from '../../interfaces/behaviors/harvest-farm-block-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertHarvestFarmBlockBehavior = (
-  behavior: Partial<HarvestFarmBlockBehavior>
+  behavior: Partial<HarvestFarmBlockBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.harvest_farm_block': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RailSensorComponent } from '../../../interfaces/components/sensors/rail-sensor-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateBoolean } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateBoolean } from '../../common/validation';
  * @returns The converted component in Minecraft format or undefined if validation fails
  */
 export const convertRailSensorComponent = (
-  component: Partial<RailSensorComponent>
+  component: Partial<RailSensorComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:rail_sensor': any } | undefined => {
   if (!component) {
     return undefined;
@@ -38,7 +40,7 @@ export const convertRailSensorComponent = (
   }
 
   if (component.onActivate !== undefined) {
-    const convertedOnActivate = convertTrigger(component.onActivate);
+    const convertedOnActivate = convertTrigger(component.onActivate, withFieldPath(ctx, 'onActivate'));
     if (!convertedOnActivate) {
       return undefined;
     }
@@ -46,7 +48,7 @@ export const convertRailSensorComponent = (
   }
 
   if (component.onDeactivate !== undefined) {
-    const convertedOnDeactivate = convertTrigger(component.onDeactivate);
+    const convertedOnDeactivate = convertTrigger(component.onDeactivate, withFieldPath(ctx, 'onDeactivate'));
     if (!convertedOnDeactivate) {
       return undefined;
     }

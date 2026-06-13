@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PlayerExperienceComponent } from '../../../interfaces/components/miscellaneous/player-experience-component';
 import { validateInteger } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertPlayerExperienceComponent = (
-  component: Partial<PlayerExperienceComponent>
+  component: Partial<PlayerExperienceComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:player.experience': any } | undefined => {
   if (!component) {
     return undefined;

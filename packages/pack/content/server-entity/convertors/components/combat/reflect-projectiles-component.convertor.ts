@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ReflectProjectilesComponent } from '../../../interfaces/components/combat/reflect-projectiles-component';
 
 /**
@@ -6,7 +7,8 @@ import { ReflectProjectilesComponent } from '../../../interfaces/components/comb
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertReflectProjectilesComponent = (
-  component: Partial<ReflectProjectilesComponent>
+  component: Partial<ReflectProjectilesComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:reflect_projectiles': any } | undefined => {
   if (!component) {
     return undefined;

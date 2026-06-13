@@ -1,7 +1,20 @@
 /**
- * Common validation functions for entity filters
+ * Entity convertor validation helpers — thin wrappers over shared content-validation.
  */
 
+import {
+  ContentDiagnosticContext,
+  logContentError,
+  withFieldPath,
+} from '../../../../common/diagnostics/content-diagnostic';
+import {
+  validateAllowedValue,
+  validateBooleanValue,
+  validateNumber as validateNumberValue,
+  validateNumberRange as validateSharedNumberRange,
+  validateString as validateStringValue,
+  validateVector3 as validateSharedVector3,
+} from '../../../../common/validation/content-validation';
 import {
   CONTAINER_TYPES,
   ContainerType,
@@ -12,137 +25,131 @@ import {
 } from '../../constants/damage-source-types';
 import { EFFECT_TYPES, EffectType } from '../../constants/effect-types';
 
-/**
- * Validates that a value is a number
- * @param value The value to validate
- * @param field The name of the field being validated (for error messages)
- * @returns Whether the value is a valid number
- */
+const fieldCtx = (
+  ctx: ContentDiagnosticContext | undefined,
+  fieldName: string,
+): ContentDiagnosticContext | undefined => withFieldPath(ctx, fieldName);
+
 export const validateNumber = (
-  value: any,
+  value: unknown,
   fieldName: string,
   min?: number,
   max?: number,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
-  if (typeof value !== 'number') {
-    console.error(`${fieldName} must be a number`);
-
+  if (
+    !validateNumberValue(
+      value,
+      ctx,
+      `${fieldName} must be a number`,
+      fieldName,
+    )
+  ) {
     return false;
   }
-  if (min !== undefined && value < min) {
-    console.error(`${fieldName} must be greater than or equal to ${min}`);
 
+  if (min !== undefined && (value as number) < min) {
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must be greater than or equal to ${min}`,
+    );
     return false;
   }
-  if (max !== undefined && value > max) {
-    console.error(`${fieldName} must be less than or equal to ${max}`);
 
+  if (max !== undefined && (value as number) > max) {
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must be less than or equal to ${max}`,
+    );
     return false;
   }
+
   return true;
 };
 
-/**
- * Validates that a value is an integer
- * @param value The value to validate
- * @param fieldName The name of the field for error messages
- * @returns Whether the value is valid
- */
 export const validateInteger = (
-  value: any,
+  value: unknown,
   fieldName: string,
   min?: number,
   max?: number,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
   if (typeof value !== 'number' || !Number.isInteger(value)) {
-    console.error(`${fieldName} must be an integer`);
-
+    logContentError(fieldCtx(ctx, fieldName), `${fieldName} must be an integer`);
     return false;
   }
+
   if (min !== undefined && value < min) {
-    console.error(`${fieldName} must be greater than or equal to ${min}`);
-
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must be greater than or equal to ${min}`,
+    );
     return false;
   }
+
   if (max !== undefined && value > max) {
-    console.error(`${fieldName} must be less than or equal to ${max}`);
-
-    return false;
-  }
-  return true;
-};
-
-/**
- * Validates if a value is a boolean
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns true if valid, false otherwise
- */
-export const validateBoolean = (value: boolean, fieldName: string): boolean => {
-  if (typeof value !== 'boolean') {
-    console.error(`${fieldName} must be a boolean`);
-
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must be less than or equal to ${max}`,
+    );
     return false;
   }
 
   return true;
 };
 
-/**
- * Validates that a value is a string
- * @param value The value to validate
- * @param field The name of the field being validated (for error messages)
- * @returns Whether the value is a valid string
- */
-export const validateString = (value: any, fieldName: string): boolean => {
-  if (typeof value !== 'string') {
-    console.error(`${fieldName} must be a string`);
+export const validateBoolean = (
+  value: unknown,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): boolean =>
+  validateBooleanValue(
+    value,
+    ctx,
+    `${fieldName} must be a boolean`,
+    fieldName,
+  );
 
-    return false;
-  }
-  return true;
-};
+export const validateString = (
+  value: unknown,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): boolean =>
+  validateStringValue(value, ctx, `${fieldName} must be a string`, fieldName);
 
-/**
- * Validates a range value that can be in several formats:
- * - A number
- * - An array of two numbers [min, max]
- * - An object with rangeMin and rangeMax properties
- *
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @param min Optional minimum allowed value
- * @param max Optional maximum allowed value
- * @returns Whether the value is valid
- */
 export const validateComplexRange = (
   value: number | [number, number] | { rangeMin: number; rangeMax: number },
   fieldName: string,
   min?: number,
   max?: number,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
   if (typeof value === 'number') {
-    return validateNumber(value, fieldName, min, max);
+    return validateNumber(value, fieldName, min, max, ctx);
   }
 
   if (Array.isArray(value)) {
     if (value.length !== 2) {
-      console.error(`${fieldName} array must contain exactly 2 numbers`);
-
+      logContentError(
+        fieldCtx(ctx, fieldName),
+        `${fieldName} array must contain exactly 2 numbers`,
+      );
       return false;
     }
 
     if (
-      !value.every((n) => validateNumber(n, `${fieldName} element`, min, max))
+      !value.every((n) =>
+        validateNumber(n, `${fieldName} element`, min, max, ctx),
+      )
     ) {
       return false;
     }
 
     if (value[0] > value[1]) {
-      console.error(
+      logContentError(
+        fieldCtx(ctx, fieldName),
         `${fieldName} minimum value must be less than or equal to maximum value`,
       );
-
       return false;
     }
 
@@ -151,169 +158,153 @@ export const validateComplexRange = (
 
   if (typeof value === 'object' && value !== null) {
     if (
-      !validateNumber(value.rangeMin, `${fieldName}.rangeMin`, min, max) ||
-      !validateNumber(value.rangeMax, `${fieldName}.rangeMax`, min, max)
+      !validateNumber(value.rangeMin, `${fieldName}.rangeMin`, min, max, ctx) ||
+      !validateNumber(value.rangeMax, `${fieldName}.rangeMax`, min, max, ctx)
     ) {
       return false;
     }
 
     if (value.rangeMin > value.rangeMax) {
-      console.error(
+      logContentError(
+        fieldCtx(ctx, fieldName),
         `${fieldName}.rangeMin must be less than or equal to ${fieldName}.rangeMax`,
       );
-
       return false;
     }
 
     return true;
   }
 
-  console.error(
+  logContentError(
+    fieldCtx(ctx, fieldName),
     `${fieldName} must be a number, an array of two numbers, or an object with rangeMin and rangeMax properties`,
   );
 
   return false;
 };
 
-/**
- * Validates if a number is within a specified range
- * @param value The number to validate
- * @param min The minimum allowed value
- * @param max The maximum allowed value
- * @param fieldName The name of the field being validated
- * @returns true if valid, false otherwise
- */
 export const validateNumberRange = (
   value: number,
   min: number,
   max: number,
   fieldName: string,
-): boolean => {
-  if (typeof value !== 'number' || isNaN(value)) {
-    console.error(`${fieldName} must be a number`);
+  ctx?: ContentDiagnosticContext,
+): boolean =>
+  validateSharedNumberRange(
+    value,
+    min,
+    max,
+    ctx,
+    `${fieldName} must be between ${min} and ${max}`,
+    fieldName,
+  );
 
-    return false;
-  }
-
-  if (value < min || value > max) {
-    console.error(`${fieldName} must be between ${min} and ${max}`);
-
-    return false;
-  }
-
-  return true;
-};
-
-/**
- * Validates a vector2 value
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns true if valid, false otherwise
- */
 export const validateVector2 = (
-  value: any,
+  value: unknown,
   fieldName: string,
   min?: number,
   max?: number,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
   if (
     !Array.isArray(value) ||
     value.length !== 2 ||
-    !value.every((n) => validateNumber(n, `${fieldName} element`, min, max))
+    !value.every((n) => validateNumber(n, `${fieldName} element`, min, max, ctx))
   ) {
-    console.error(`${fieldName} must be an array of exactly 2 numbers`);
-
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must be an array of exactly 2 numbers`,
+    );
     return false;
   }
+
   return true;
 };
 
-/**
- * Validates a vector3 value
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns true if valid, false otherwise
- */
 export const validateVector3 = (
-  value: any,
+  value: unknown,
   fieldName: string,
   min?: number,
   max?: number,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
-  if (
-    !Array.isArray(value) ||
-    value.length !== 3 ||
-    !value.every((n) => validateNumber(n, `${fieldName} element`, min, max))
-  ) {
-    console.error(`${fieldName} must be an array of exactly 3 numbers`);
+  if (min !== undefined || max !== undefined) {
+    if (
+      !Array.isArray(value) ||
+      value.length !== 3 ||
+      !value.every((n) =>
+        validateNumber(n, `${fieldName} element`, min, max, ctx),
+      )
+    ) {
+      logContentError(
+        fieldCtx(ctx, fieldName),
+        `${fieldName} must be an array of exactly 3 numbers`,
+      );
+      return false;
+    }
 
-    return false;
+    return true;
   }
-  return true;
+
+  return validateSharedVector3(
+    value,
+    ctx,
+    `${fieldName} must be an array of exactly 3 numbers`,
+    fieldName,
+  );
 };
 
-/**
- * Validates that a value is one of the allowed values
- * @param value The value to validate
- * @param allowedValues Array of allowed values
- * @param field The name of the field being validated (for error messages)
- * @returns Whether the value is valid
- */
 export const validateAllowedValues = (
-  value: any,
+  value: unknown,
   allowedValues: readonly string[],
   fieldName: string,
-): boolean => {
-  if (!allowedValues.includes(value)) {
-    console.error(`${fieldName} must be one of: ${allowedValues.join(', ')}`);
+  ctx?: ContentDiagnosticContext,
+): boolean =>
+  validateAllowedValue(
+    value,
+    allowedValues,
+    ctx,
+    `${fieldName} must be one of: ${allowedValues.join(', ')}`,
+    fieldName,
+  );
 
-    return false;
-  }
-  return true;
-};
-
-/**
- * Validates a container type
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns true if valid, false otherwise
- */
 export const validateContainerType = (
-  value: any,
+  value: unknown,
   fieldName: string,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
   if (typeof value !== 'string') {
-    console.error(`${fieldName} must be a string`);
-
+    logContentError(fieldCtx(ctx, fieldName), `${fieldName} must be a string`);
     return false;
   }
 
   if (!CONTAINER_TYPES.includes(value as ContainerType)) {
-    console.error(`${fieldName} must be one of: ${CONTAINER_TYPES.join(', ')}`);
-
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must be one of: ${CONTAINER_TYPES.join(', ')}`,
+    );
     return false;
   }
 
   return true;
 };
 
-/**
- * Validates a string array
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns true if valid, false otherwise
- */
-export const validateStringArray = (value: any, fieldName: string): boolean => {
+export const validateStringArray = (
+  value: unknown,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): boolean => {
   if (!Array.isArray(value)) {
-    console.error(`${fieldName} must be an array`);
-
+    logContentError(fieldCtx(ctx, fieldName), `${fieldName} must be an array`);
     return false;
   }
 
   for (const item of value) {
     if (typeof item !== 'string') {
-      console.error(`${fieldName} must contain only strings`);
-
+      logContentError(
+        fieldCtx(ctx, fieldName),
+        `${fieldName} must contain only strings`,
+      );
       return false;
     }
   }
@@ -321,101 +312,91 @@ export const validateStringArray = (value: any, fieldName: string): boolean => {
   return true;
 };
 
-export const validateNumberArray = (value: any, fieldName: string): boolean => {
+export const validateNumberArray = (
+  value: unknown,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): boolean => {
   if (!Array.isArray(value)) {
-    console.error(`${fieldName} must be an array`);
-
+    logContentError(fieldCtx(ctx, fieldName), `${fieldName} must be an array`);
     return false;
   }
-  return value.every((n) => validateNumber(n, `${fieldName} element`));
+
+  return value.every((n) => validateNumber(n, `${fieldName} element`, undefined, undefined, ctx));
 };
 
-/**
- * Validates a max turn value
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns true if valid, false otherwise
- */
-export const validateMaxTurn = (value: any, fieldName: string): boolean => {
-  if (typeof value !== 'number' || isNaN(value)) {
-    console.error(`${fieldName} must be a number`);
+export const validateMaxTurn = (
+  value: unknown,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): boolean => validateNumberRange(value as number, 0, 360, fieldName, ctx);
 
-    return false;
-  }
-
-  if (value < 0 || value > 360) {
-    console.error(`${fieldName} must be between 0 and 360 degrees`);
-
-    return false;
-  }
-
-  return true;
-};
-
-/**
- * Validates if a value is a valid time value
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns True if the value is valid, false otherwise
- */
-export const validateTime = (value: any, fieldName: string): boolean => {
+export const validateTime = (
+  value: unknown,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): boolean => {
   if (typeof value === 'number') {
     if (value < 0) {
-      console.error(`${fieldName} must be a positive number`);
-
+      logContentError(
+        fieldCtx(ctx, fieldName),
+        `${fieldName} must be a positive number`,
+      );
       return false;
     }
     return true;
   }
+
   if (typeof value === 'string') {
-    return true; // Assuming string is a valid Molang expression
+    return true;
   }
-  console.error(
+
+  logContentError(
+    fieldCtx(ctx, fieldName),
     `${fieldName} must be a positive number or a Molang expression`,
   );
 
   return false;
 };
 
-/**
- * Validates if a value is a valid weight value
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns True if the value is valid, false otherwise
- */
-export const validateWeight = (value: any, fieldName: string): boolean => {
+export const validateWeight = (
+  value: unknown,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): boolean => {
   if (typeof value === 'number') {
     if (value < 0) {
-      console.error(`${fieldName} must be a positive number`);
-
+      logContentError(
+        fieldCtx(ctx, fieldName),
+        `${fieldName} must be a positive number`,
+      );
       return false;
     }
     return true;
   }
-  console.error(`${fieldName} must be a positive number`);
+
+  logContentError(
+    fieldCtx(ctx, fieldName),
+    `${fieldName} must be a positive number`,
+  );
 
   return false;
 };
 
-/**
- * Validates if a value is a valid trade table path
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns True if the value is valid, false otherwise
- */
 export const validateTradeOrLootTablePath = (
-  value: any,
+  value: unknown,
   fieldName: string,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
-  if (typeof value !== 'string') {
-    console.error(`${fieldName} must be a string`);
-
+  if (!validateString(value, fieldName, ctx)) {
     return false;
   }
 
-  if (!value.endsWith('.json')) {
-    console.error(`${fieldName} must end with .json`);
-
+  if (!(value as string).endsWith('.json')) {
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must end with .json`,
+    );
     return false;
   }
 
@@ -423,142 +404,134 @@ export const validateTradeOrLootTablePath = (
 };
 
 export const validateDegrees = (
-  value: any,
+  value: unknown,
   fieldName: string,
   hasNegative: boolean = false,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
   if (
     typeof value !== 'number' ||
     value < (hasNegative ? -360 : 0) ||
     value > 360
   ) {
-    console.error(
+    logContentError(
+      fieldCtx(ctx, fieldName),
       `${fieldName} must be a number between ${
         hasNegative ? '-360' : '0'
       } and 360`,
     );
-
     return false;
   }
+
   return true;
 };
 
-/**
- * Validates a percentage value between 0 and 1
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns True if valid, false otherwise
- */
-export const validatePercentage = (value: any, fieldName: string): boolean => {
+export const validatePercentage = (
+  value: unknown,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): boolean => {
   if (typeof value !== 'number' || value < 0 || value > 1) {
-    console.error(`${fieldName} must be a number between 0 and 1`);
-
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must be a number between 0 and 1`,
+    );
     return false;
   }
+
   return true;
 };
 
-/**
- * Validates a sound event
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns True if valid, false otherwise
- */
-export const validateSoundEvent = (value: any, fieldName: string): boolean => {
-  if (typeof value !== 'string') {
-    console.error(`${fieldName} must be a string`);
+export const validateSoundEvent = (
+  value: unknown,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): boolean => validateString(value, fieldName, ctx);
 
-    return false;
-  }
-  return true;
-};
-
-/**
- * Validates a damage source type
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns true if valid, false otherwise
- */
 export const validateDamageSourceType = (
   value: DamageSourceType,
   fieldName: string,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
   if (typeof value !== 'string') {
-    console.error(`${fieldName} must be a string`);
-
+    logContentError(fieldCtx(ctx, fieldName), `${fieldName} must be a string`);
     return false;
   }
 
   if (!DAMAGE_SOURCE_TYPES.includes(value)) {
-    console.error(
+    logContentError(
+      fieldCtx(ctx, fieldName),
       `${fieldName} must be one of: ${DAMAGE_SOURCE_TYPES.join(', ')}`,
     );
-
     return false;
   }
 
   return true;
 };
 
-/**
- * Validates an array of damage source types
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns True if valid, false otherwise
- */
 export const validateDamageSourceTypes = (
   value: DamageSourceType[],
   fieldName: string,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
   if (!Array.isArray(value)) {
-    console.error(`${fieldName} must be an array`);
-
+    logContentError(fieldCtx(ctx, fieldName), `${fieldName} must be an array`);
     return false;
   }
+
   return value.every((n) =>
-    validateDamageSourceType(n, `${fieldName} element`),
+    validateDamageSourceType(n, `${fieldName} element`, ctx),
   );
 };
 
-/**
- * Validates a color value
- * @param value The value to validate
- * @param fieldName The name of the field being validated
- * @returns True if valid, false otherwise
- */
 export const validateEffectType = (
   value: EffectType,
   fieldName: string,
+  ctx?: ContentDiagnosticContext,
 ): boolean => {
   if (!EFFECT_TYPES.includes(value)) {
-    console.error(`${fieldName} must be one of: ${EFFECT_TYPES.join(', ')}`);
-
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must be one of: ${EFFECT_TYPES.join(', ')}`,
+    );
     return false;
   }
+
   return true;
 };
 
-export const validateHexColor = (value: any, fieldName: string): boolean => {
-  if (typeof value !== 'string') {
-    console.error(`${fieldName} must be a string`);
-
-    return false;
-  }
-  if (!value.startsWith('#')) {
-    console.error(`${fieldName} must start with #`);
-
+export const validateHexColor = (
+  value: unknown,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): boolean => {
+  if (!validateString(value, fieldName, ctx)) {
     return false;
   }
 
-  if (value.length !== 7 && value.length !== 9) {
-    console.error(`${fieldName} must be 7 or 9 characters long`);
+  const color = value as string;
 
+  if (!color.startsWith('#')) {
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must start with #`,
+    );
     return false;
   }
 
-  if (!/^[0-9A-Fa-f]+$/.test(value.slice(1))) {
-    console.error(`${fieldName} must contain only hexadecimal characters`);
+  if (color.length !== 7 && color.length !== 9) {
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must be 7 or 9 characters long`,
+    );
+    return false;
+  }
 
+  if (!/^[0-9A-Fa-f]+$/.test(color.slice(1))) {
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must contain only hexadecimal characters`,
+    );
     return false;
   }
 

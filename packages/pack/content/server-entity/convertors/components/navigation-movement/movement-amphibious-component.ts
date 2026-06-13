@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MovementAmphibiousComponent } from '../../../interfaces/components/navigation-movement/movement-amphibious-component';
 import { validateMaxTurn } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateMaxTurn } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertMovementAmphibiousComponent = (
-  component: Partial<MovementAmphibiousComponent>
+  component: Partial<MovementAmphibiousComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:movement.amphibious': any } | undefined => {
   if (!component) {
     return undefined;

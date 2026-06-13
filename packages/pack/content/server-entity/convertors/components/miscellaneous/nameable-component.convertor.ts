@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { NameableComponent } from '../../../interfaces/components/miscellaneous/nameable-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateBoolean } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateBoolean } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertNameableComponent = (
-  component: Partial<NameableComponent>
+  component: Partial<NameableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:nameable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -34,7 +36,7 @@ export const convertNameableComponent = (
 
   // Validate defaultTrigger
   if (component.defaultTrigger !== undefined) {
-    const convertedDefaultTrigger = convertTrigger(component.defaultTrigger);
+    const convertedDefaultTrigger = convertTrigger(component.defaultTrigger, withFieldPath(ctx, 'defaultTrigger'));
     if (!convertedDefaultTrigger) {
       return undefined;
     }
@@ -57,7 +59,7 @@ export const convertNameableComponent = (
         }
 
         if (action.onNamed !== undefined) {
-          const convertedOnNamed = convertTrigger(action.onNamed);
+          const convertedOnNamed = convertTrigger(action.onNamed, withFieldPath(ctx, 'onNamed'));
           if (!convertedOnNamed) {
             return undefined;
           }

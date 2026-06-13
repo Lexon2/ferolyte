@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TradeWithPlayerBehavior } from '../../interfaces/behaviors/trade-with-player-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertTradeWithPlayerBehavior = (
-  behavior: Partial<TradeWithPlayerBehavior>
+  behavior: Partial<TradeWithPlayerBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.trade_with_player': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,7 +28,7 @@ export const convertTradeWithPlayerBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters);
+    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }

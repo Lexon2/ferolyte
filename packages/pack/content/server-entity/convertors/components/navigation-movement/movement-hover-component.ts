@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MovementHoverComponent } from '../../../interfaces/components/navigation-movement/movement-hover-component';
 import { validateMaxTurn } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateMaxTurn } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertMovementHoverComponent = (
-  component: Partial<MovementHoverComponent>
+  component: Partial<MovementHoverComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:movement.hover': any } | undefined => {
   if (!component) {
     return undefined;

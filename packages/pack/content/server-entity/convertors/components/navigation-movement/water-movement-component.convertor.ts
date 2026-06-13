@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { WaterMovementComponent } from '../../../interfaces/components/navigation-movement/water-movement';
 import { validateNumber } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertWaterMovementComponent = (
-  component: Partial<WaterMovementComponent>
+  component: Partial<WaterMovementComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:water_movement': any } | undefined => {
   if (!component) {
     return undefined;

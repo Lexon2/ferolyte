@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ExhaustionValuesComponent } from '../../../interfaces/components/miscellaneous/exhaustion-values-component';
 import { validateNumber } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertExhaustionValuesComponent = (
   component: Partial<ExhaustionValuesComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:exhaustion_values': any } | undefined => {
   if (!component) {
     return undefined;

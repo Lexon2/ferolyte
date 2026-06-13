@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SonicBoomBehavior } from '../../interfaces/behaviors/sonic-boom-behavior';
 import { validateNumber, validateSoundEvent } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateSoundEvent } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSonicBoomBehavior = (
-  behavior: Partial<SonicBoomBehavior>
+  behavior: Partial<SonicBoomBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.sonic_boom': any } | undefined => {
   if (!behavior) {
     return undefined;

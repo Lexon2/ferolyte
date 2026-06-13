@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { CroakBehavior } from '../../interfaces/behaviors/croak-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber, validateComplexRange } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber, validateComplexRange } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertCroakBehavior = (
-  behavior: Partial<CroakBehavior>
+  behavior: Partial<CroakBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.croak': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -44,7 +46,7 @@ export const convertCroakBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters);
+    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FireImmuneComponent } from '../../../interfaces/components/miscellaneous/fire-immune-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertFireImmuneComponent = (
   component: Partial<FireImmuneComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:fire_immune': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AdmireItemComponent } from '../../../interfaces/components/combat/admire-item-component';
 import { validateNumber } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertAdmireItemComponent = (
   component: Partial<AdmireItemComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:admire_item': any } | undefined => {
   if (!component) {
     return undefined;

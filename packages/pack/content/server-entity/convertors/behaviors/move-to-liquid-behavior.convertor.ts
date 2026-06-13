@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { LIQUID_MATERIAL_TYPE } from '../../constants/liquid-material-type';
 import { MoveToLiquidBehavior } from '../../interfaces/behaviors/move-to-liquid-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
@@ -9,6 +10,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertMoveToLiquidBehavior = (
   behavior: Partial<MoveToLiquidBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.move_to_liquid': any } | undefined => {
   if (!behavior) {
     return undefined;

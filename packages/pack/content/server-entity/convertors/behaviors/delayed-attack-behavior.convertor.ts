@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DelayedAttackBehavior } from '../../interfaces/behaviors/delayed-attack-behavior';
 import { validateBoolean, validateNumber, validateString } from '../common/validation';
 
@@ -8,6 +9,7 @@ import { validateBoolean, validateNumber, validateString } from '../common/valid
  */
 export const convertDelayedAttackBehavior = (
   behavior: Partial<DelayedAttackBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.delayed_attack': any } | undefined => {
   if (!behavior) {
     return undefined;

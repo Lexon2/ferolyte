@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AttackCooldownComponent } from '../../../interfaces/components/combat/attack-cooldown-component';
 import { convertRange } from '../../common/convertors';
 import { convertTrigger } from '../../common/trigger.convertor';
@@ -9,6 +10,7 @@ import { convertTrigger } from '../../common/trigger.convertor';
  */
 export const convertAttackCooldownComponent = (
   component: Partial<AttackCooldownComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:attack_cooldown': any } | undefined => {
   if (!component) {
     return undefined;
@@ -18,7 +20,7 @@ export const convertAttackCooldownComponent = (
 
   // Validate attackCooldownCompleteEvent
   if (component.attackCooldownCompleteEvent !== undefined) {
-    const convertedAttackCooldownCompleteEvent = convertTrigger(component.attackCooldownCompleteEvent);
+    const convertedAttackCooldownCompleteEvent = convertTrigger(component.attackCooldownCompleteEvent, withFieldPath(ctx, 'attackCooldownCompleteEvent'));
     if (!convertedAttackCooldownCompleteEvent) {
       return undefined;
     }

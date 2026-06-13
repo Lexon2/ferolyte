@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FloatWanderBehavior } from '../../interfaces/behaviors/float-wander-behavior';
 import { convertRange } from '../common/convertors';
 import { validateBoolean, validateInteger, validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateBoolean, validateInteger, validateNumber } from '../common/vali
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertFloatWanderBehavior = (
-  behavior: Partial<FloatWanderBehavior>
+  behavior: Partial<FloatWanderBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.float_wander': any } | undefined => {
   if (!behavior) {
     return undefined;

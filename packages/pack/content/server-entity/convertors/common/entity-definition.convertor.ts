@@ -1,15 +1,31 @@
+import {
+  ContentDiagnosticContext,
+  withFieldPath,
+} from '../../../../common/diagnostics/content-diagnostic';
 import { convertEntityFilters } from './filters.convertor';
-import { validateNumber } from './validation';
+import { validateBoolean, validateNumber } from './validation';
 import { EntityDefinition, EntityTypes } from '../../types/entity-types';
 
-export const convertEntityDefinition = (definitions: EntityTypes): any[] | undefined => {
+export const convertEntityDefinition = (
+  definitions: EntityTypes,
+  ctx?: ContentDiagnosticContext,
+): any[] | undefined => {
   if (!definitions) {
     return undefined;
   }
   if (Array.isArray(definitions)) {
-    return definitions.map(definition => convertSingleEntityDefinition(definition)).filter(definition => definition !== undefined);
+    return definitions
+      .map((definition, index) =>
+        convertSingleEntityDefinition(
+          definition,
+          ctx !== undefined
+            ? { ...ctx, fieldPath: `${ctx.fieldPath}[${index}]` }
+            : undefined,
+        ),
+      )
+      .filter((definition) => definition !== undefined);
   }
-  return convertSingleEntityDefinition(definitions);
+  return convertSingleEntityDefinition(definitions, ctx);
 };
 
 /**
@@ -18,7 +34,8 @@ export const convertEntityDefinition = (definitions: EntityTypes): any[] | undef
  * @returns The entity definition in Minecraft format or undefined if validation fails
  */
 export const convertSingleEntityDefinition = (
-  definition: Partial<EntityDefinition>
+  definition: Partial<EntityDefinition>,
+  ctx?: ContentDiagnosticContext,
 ): any | undefined => {
   if (!definition) {
     return undefined;
@@ -26,112 +43,96 @@ export const convertSingleEntityDefinition = (
 
   const result: any = {};
 
-  // Validate filters
   if (definition.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(definition.filters);
+    const convertedFilters = convertEntityFilters(
+      definition.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
     result.filters = convertedFilters;
   }
 
-  // Validate cooldown
   if (definition.cooldown !== undefined) {
-    if (!validateNumber(definition.cooldown, 'cooldown')) {
+    if (!validateNumber(definition.cooldown, 'cooldown', undefined, undefined, ctx)) {
       return undefined;
     }
     result.cooldown = definition.cooldown;
   }
 
-  // Validate maxDist
   if (definition.maxDist !== undefined) {
-    if (!validateNumber(definition.maxDist, 'maxDist')) {
+    if (!validateNumber(definition.maxDist, 'maxDist', undefined, undefined, ctx)) {
       return undefined;
     }
     result.max_dist = definition.maxDist;
   }
 
-  // Validate maxHeight
   if (definition.maxHeight !== undefined) {
-    if (!validateNumber(definition.maxHeight, 'maxHeight')) {
+    if (!validateNumber(definition.maxHeight, 'maxHeight', undefined, undefined, ctx)) {
       return undefined;
     }
     result.max_height = definition.maxHeight;
   }
 
-  // Validate maxFlee
   if (definition.maxFlee !== undefined) {
-    if (!validateNumber(definition.maxFlee, 'maxFlee')) {
+    if (!validateNumber(definition.maxFlee, 'maxFlee', undefined, undefined, ctx)) {
       return undefined;
     }
     result.max_flee = definition.maxFlee;
   }
 
-  // Validate priority
   if (definition.priority !== undefined) {
-    if (!validateNumber(definition.priority, 'priority')) {
+    if (!validateNumber(definition.priority, 'priority', undefined, undefined, ctx)) {
       return undefined;
     }
     result.priority = definition.priority;
   }
 
-  // Validate withinDefault
   if (definition.withinDefault !== undefined) {
-    if (!validateNumber(definition.withinDefault, 'withinDefault')) {
+    if (!validateNumber(definition.withinDefault, 'withinDefault', undefined, undefined, ctx)) {
       return undefined;
     }
     result.within_default = definition.withinDefault;
   }
 
-  // Validate checkIfOutnumbered
   if (definition.checkIfOutnumbered !== undefined) {
-    if (typeof definition.checkIfOutnumbered !== 'boolean') {
-      console.error('checkIfOutnumbered must be a boolean');
-
+    if (!validateBoolean(definition.checkIfOutnumbered, 'checkIfOutnumbered', ctx)) {
       return undefined;
     }
     result.check_if_outnumbered = definition.checkIfOutnumbered;
   }
 
-  // Validate mustSee
   if (definition.mustSee !== undefined) {
-    if (typeof definition.mustSee !== 'boolean') {
-      console.error('mustSee must be a boolean');
-
+    if (!validateBoolean(definition.mustSee, 'mustSee', ctx)) {
       return undefined;
     }
     result.must_see = definition.mustSee;
   }
 
-  // Validate mustSeeForgetDuration
   if (definition.mustSeeForgetDuration !== undefined) {
-    if (!validateNumber(definition.mustSeeForgetDuration, 'mustSeeForgetDuration')) {
+    if (!validateNumber(definition.mustSeeForgetDuration, 'mustSeeForgetDuration', undefined, undefined, ctx)) {
       return undefined;
     }
     result.must_see_forget_duration = definition.mustSeeForgetDuration;
   }
 
-  // Validate reevaluateDescription
   if (definition.reevaluateDescription !== undefined) {
-    if (typeof definition.reevaluateDescription !== 'boolean') {
-      console.error('reevaluateDescription must be a boolean');
-
+    if (!validateBoolean(definition.reevaluateDescription, 'reevaluateDescription', ctx)) {
       return undefined;
     }
     result.reevaluate_description = definition.reevaluateDescription;
   }
 
-  // Validate sprintSpeedMultiplier
   if (definition.sprintSpeedMultiplier !== undefined) {
-    if (!validateNumber(definition.sprintSpeedMultiplier, 'sprintSpeedMultiplier')) {
+    if (!validateNumber(definition.sprintSpeedMultiplier, 'sprintSpeedMultiplier', undefined, undefined, ctx)) {
       return undefined;
     }
     result.sprint_speed_multiplier = definition.sprintSpeedMultiplier;
   }
 
-  // Validate walkSpeedMultiplier
   if (definition.walkSpeedMultiplier !== undefined) {
-    if (!validateNumber(definition.walkSpeedMultiplier, 'walkSpeedMultiplier')) {
+    if (!validateNumber(definition.walkSpeedMultiplier, 'walkSpeedMultiplier', undefined, undefined, ctx)) {
       return undefined;
     }
     result.walk_speed_multiplier = definition.walkSpeedMultiplier;

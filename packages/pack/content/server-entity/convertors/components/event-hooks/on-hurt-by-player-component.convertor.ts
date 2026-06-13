@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { OnHurtByPlayerComponent } from '../../../interfaces/components/event-hooks/on-hurt-by-player-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -7,13 +8,14 @@ import { convertTrigger } from '../../common/trigger.convertor';
  * @returns The converted component in Minecraft format or undefined if validation fails
  */
 export const convertOnHurtByPlayerComponent = (
-  component: Partial<OnHurtByPlayerComponent>
+  component: Partial<OnHurtByPlayerComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:on_hurt_by_player': any } | undefined => {
   if (!component) {
     return undefined;
   }
 
-  const result: any = convertTrigger(component);
+  const result: any = convertTrigger(component, ctx);
   if (!result) {
     return undefined;
   }

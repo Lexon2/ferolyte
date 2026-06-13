@@ -71,6 +71,40 @@ describe('buildFieldPath', () => {
       }),
     ).toBe('components.collisionBox.origin');
   });
+
+  it('builds server-entity section field paths', () => {
+    expect(
+      buildFieldPath({
+        section: 'behaviors',
+        fieldPath: 'float',
+        contentType: 'server-entity',
+      }),
+    ).toBe('components.behaviors.float');
+
+    expect(
+      buildFieldPath({
+        section: 'events',
+        fieldPath: 'minecraft:entity_spawned.queueCommand.command',
+        contentType: 'server-entity',
+      }),
+    ).toBe('events.minecraft:entity_spawned.queueCommand.command');
+
+    expect(
+      buildFieldPath({
+        section: 'filters',
+        fieldPath: 'allOf[0].value',
+        contentType: 'server-entity',
+      }),
+    ).toBe('filters.allOf[0].value');
+
+    expect(
+      buildFieldPath({
+        component: 'shareables',
+        fieldPath: 'items[0].item',
+        contentType: 'server-entity',
+      }),
+    ).toBe('components.shareables.items[0].item');
+  });
 });
 
 describe('logContentError', () => {

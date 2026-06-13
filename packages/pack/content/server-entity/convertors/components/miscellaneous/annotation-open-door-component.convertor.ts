@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AnnotationOpenDoorComponent } from '../../../interfaces/components/miscellaneous/annotation-open-door-component';
 import { validateBoolean } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertAnnotationOpenDoorComponent = (
   component: Partial<AnnotationOpenDoorComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:annotation.open_door': any } | undefined => {
   if (!component) {
     return undefined;

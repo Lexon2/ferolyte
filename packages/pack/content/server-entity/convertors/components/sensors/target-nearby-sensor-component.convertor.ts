@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TargetNearbySensorComponent } from '../../../interfaces/components/sensors/target-nearby-sensor-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateBoolean, validateNumber } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateBoolean, validateNumber } from '../../common/validation';
  * @returns The converted component in Minecraft format or undefined if validation fails
  */
 export const convertTargetNearbySensorComponent = (
-  component: Partial<TargetNearbySensorComponent>
+  component: Partial<TargetNearbySensorComponent>,
+  ctx?: ContentDiagnosticContext
 ): Record<string, any> | undefined => {
   if (!component) {
     return undefined;
@@ -33,7 +35,7 @@ export const convertTargetNearbySensorComponent = (
   }
 
   if (component.onInsideRange !== undefined) {
-    const convertedOnInsideRange = convertTrigger(component.onInsideRange);
+    const convertedOnInsideRange = convertTrigger(component.onInsideRange, withFieldPath(ctx, 'onInsideRange'));
     if (!convertedOnInsideRange) {
       return undefined;
     }
@@ -41,7 +43,7 @@ export const convertTargetNearbySensorComponent = (
   }
 
   if (component.onOutsideRange !== undefined) {
-    const convertedOnOutsideRange = convertTrigger(component.onOutsideRange);
+    const convertedOnOutsideRange = convertTrigger(component.onOutsideRange, withFieldPath(ctx, 'onOutsideRange'));
     if (!convertedOnOutsideRange) {
       return undefined;
     }
@@ -49,7 +51,7 @@ export const convertTargetNearbySensorComponent = (
   }
 
   if (component.onVisionLostInsideRange !== undefined) {
-    const convertedOnVisionLostInsideRange = convertTrigger(component.onVisionLostInsideRange);
+    const convertedOnVisionLostInsideRange = convertTrigger(component.onVisionLostInsideRange, withFieldPath(ctx, 'onVisionLostInsideRange'));
     if (!convertedOnVisionLostInsideRange) {
       return undefined;
     }

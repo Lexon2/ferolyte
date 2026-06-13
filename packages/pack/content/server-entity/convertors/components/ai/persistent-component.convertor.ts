@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PersistentComponent } from '../../../interfaces/components/ai/persistent-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertPersistentComponent = (
   component: Partial<PersistentComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:persistent': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

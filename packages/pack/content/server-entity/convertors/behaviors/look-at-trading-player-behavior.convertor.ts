@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { LookAtTradingPlayerBehavior } from '../../interfaces/behaviors/look-at-trading-player-behavior';
 import { convertRange } from '../common/convertors';
 import { validateInteger, validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertLookAtTradingPlayerBehavior = (
-  behavior: Partial<LookAtTradingPlayerBehavior>
+  behavior: Partial<LookAtTradingPlayerBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.look_at_trading_player': any } | undefined => {
   if (!behavior) {
     return undefined;

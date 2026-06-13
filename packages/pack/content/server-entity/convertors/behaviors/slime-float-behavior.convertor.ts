@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SlimeFloatBehavior } from '../../interfaces/behaviors/slime-float-behavior';
 import { validateNumber, validatePercentage } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validatePercentage } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSlimeFloatBehavior = (
-  behavior: Partial<SlimeFloatBehavior>
+  behavior: Partial<SlimeFloatBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.slime_float': any } | undefined => {
   if (!behavior) {
     return undefined;

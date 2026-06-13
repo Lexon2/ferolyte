@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SuspectTrackingComponent } from '../../../interfaces/components/miscellaneous/suspect-tracking-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertSuspectTrackingComponent = (
   component: SuspectTrackingComponent,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:suspect_tracking': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

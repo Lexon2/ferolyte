@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import {
   ProjectileComponent,
   ProjectileOnHit,
@@ -570,6 +571,7 @@ const convertOnHit = (onHit: ProjectileOnHit): any => {
  */
 export const convertProjectileComponent = (
   component: Partial<ProjectileComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:projectile': any } | undefined => {
   if (!component) {
     return undefined;
@@ -621,7 +623,7 @@ export const convertProjectileComponent = (
 
   // Validate filter
   if (component.filter !== undefined) {
-    const convertedFilter = convertEntityFilters(component.filter);
+    const convertedFilter = convertEntityFilters(component.filter, withFieldPath(ctx, 'filter'));
     if (!convertedFilter) {
       return undefined;
     }

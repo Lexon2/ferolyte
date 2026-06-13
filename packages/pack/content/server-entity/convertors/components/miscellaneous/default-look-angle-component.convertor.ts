@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DefaultLookAngleComponent } from '../../../interfaces/components/miscellaneous/default-look-angle-component';
 import { validateNumber } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertDefaultLookAngleComponent = (
   component: Partial<DefaultLookAngleComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:default_look_angle': any } | undefined => {
   if (!component) {
     return undefined;

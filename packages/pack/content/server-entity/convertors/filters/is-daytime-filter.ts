@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { IsDaytimeFilter } from '../../interfaces/filters/is-daytime-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -8,10 +9,11 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertIsDaytimeFilter = (
-  filter: Partial<IsDaytimeFilter>
+  filter: Partial<IsDaytimeFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   return convertBooleanFilter({
     ...filter,
     test: 'is_daytime'
-  });
+  }, ctx);
 };

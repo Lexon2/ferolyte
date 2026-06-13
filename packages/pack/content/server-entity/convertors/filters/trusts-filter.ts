@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { TrustsFilter } from '../../interfaces/filters/trusts-filter';
 
@@ -7,7 +8,8 @@ import { TrustsFilter } from '../../interfaces/filters/trusts-filter';
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertTrustsFilter = (
-  filter: Partial<TrustsFilter>
+  filter: Partial<TrustsFilter>,
+  ctx?: ContentDiagnosticContext
 ): ReturnType<typeof convertBooleanFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
@@ -15,5 +17,5 @@ export const convertTrustsFilter = (
   return convertBooleanFilter({
     ...filter,
     test: 'trusts'
-  });
+  }, ctx);
 };

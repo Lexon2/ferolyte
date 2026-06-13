@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertStringNumberFilter } from './common/convert-string-number';
 import { IsSkinIdFilter } from "../../interfaces/filters/is-skin-id-filter";
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -8,10 +9,11 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertIsSkinIdFilter = (
-  filter: Partial<IsSkinIdFilter>
+  filter: Partial<IsSkinIdFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   return convertStringNumberFilter({
     ...filter,
     test: 'is_skin_id'
-  });
+  }, ctx);
 };

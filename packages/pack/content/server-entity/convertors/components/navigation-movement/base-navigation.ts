@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BaseNavigation } from '../../../interfaces/components/navigation-movement/base-navigation';
 import { validateBoolean } from '../../common/validation';
 import { validateStringArray } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateStringArray } from '../../common/validation';
  * @returns The navigation properties in Minecraft format or undefined if validation fails
  */
 export const convertBaseNavigation = (
-  navigation: Partial<BaseNavigation>
+  navigation: Partial<BaseNavigation>,
+  ctx?: ContentDiagnosticContext
 ): any | undefined => {
   if (!navigation) {
     return undefined;

@@ -38,8 +38,6 @@ export { GeneticsComponent } from './genetics-component';
 
 export { GroundOffsetComponent } from './ground-offset-component';
 
-export { GoalSelectorComponent } from './goal-selector-component';
-
 export { GrowsCropComponent } from './grows-crop-component';
 
 export { HealableComponent } from './healable-component';
@@ -82,6 +80,8 @@ export { RaidTriggerComponent } from './raid-trigger-component';
 
 export { RavagerBlockedComponent } from './ravager-blocked-component';
 
+export { RemoveInPeacefulComponent } from './remove-in-peaceful-component';
+
 export { RendersWhenInvisibleComponent } from './renders-when-invisible-component';
 
 export { ScaffoldingClimberComponent } from './scaffolding-climber-component';
@@ -91,6 +91,8 @@ export { ShareablesComponent } from './shareables-component';
 export { SoundVolumeComponent } from './sound-volume-component';
 
 export { SpawnEntityComponent } from './spawn-entity-component';
+
+export { SpawnOnDeathComponent } from './spawn-on-death-component';
 
 export { StrengthComponent } from './strength-component';
 

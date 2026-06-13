@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RunAroundLikeCrazyBehavior } from '../../interfaces/behaviors/run-around-like-crazy-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRunAroundLikeCrazyBehavior = (
-  behavior: Partial<RunAroundLikeCrazyBehavior>
+  behavior: Partial<RunAroundLikeCrazyBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.run_around_like_crazy': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { HeartbeatComponent } from '../../../interfaces/components/miscellaneous/heartbeat-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertHeartbeatComponent = (
   component: Partial<HeartbeatComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:heartbeat': any } | undefined => {
   if (!component) {
     return undefined;

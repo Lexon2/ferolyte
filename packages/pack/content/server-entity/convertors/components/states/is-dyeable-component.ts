@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { IsDyeableComponent } from '../../../interfaces/components/states/is-dyeable-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertIsDyeableComponent = (
   component: Partial<IsDyeableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:is_dyeable': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

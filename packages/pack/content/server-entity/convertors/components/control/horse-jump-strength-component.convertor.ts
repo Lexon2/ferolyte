@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { HorseJumpStrengthComponent } from '../../../interfaces/components/control/horse-jump-strength-component';
 import { validateNumber } from '../../common/validation';
 
@@ -33,6 +34,7 @@ const validateRange = (
  */
 export const convertHorseJumpStrengthComponent = (
   component: Partial<HorseJumpStrengthComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:horse.jump_strength': any } | undefined => {
   if (!component) {
     return undefined;

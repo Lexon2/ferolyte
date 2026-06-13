@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EatCarriedItemBehavior } from '../../interfaces/behaviors/eat-carried-item-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertEatCarriedItemBehavior = (
-  behavior: Partial<EatCarriedItemBehavior>
+  behavior: Partial<EatCarriedItemBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.eat_carried_item': any } | undefined => {
   if (!behavior) {
     return undefined;

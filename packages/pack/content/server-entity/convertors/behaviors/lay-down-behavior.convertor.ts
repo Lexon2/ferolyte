@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { LayDownBehavior } from '../../interfaces/behaviors/lay-down-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertLayDownBehavior = (
-  behavior: Partial<LayDownBehavior>
+  behavior: Partial<LayDownBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.lay_down': any } | undefined => {
   if (!behavior) {
     return undefined;

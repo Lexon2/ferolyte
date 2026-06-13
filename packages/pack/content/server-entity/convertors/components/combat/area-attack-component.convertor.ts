@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AreaAttackComponent } from '../../../interfaces/components/combat/area-attack-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber, validateString, validateBoolean } from '../../common/validation';
@@ -9,6 +10,7 @@ import { validateNumber, validateString, validateBoolean } from '../../common/va
  */
 export const convertAreaAttackComponent = (
   component: Partial<AreaAttackComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:area_attack': any } | undefined => {
   if (!component) {
     return undefined;
@@ -50,7 +52,7 @@ export const convertAreaAttackComponent = (
 
   // Validate entityFilter
   if (component.entityFilter !== undefined) {
-    const convertedEntityFilter = convertEntityFilters(component.entityFilter);
+    const convertedEntityFilter = convertEntityFilters(component.entityFilter, withFieldPath(ctx, 'entityFilter'));
     if (!convertedEntityFilter) {
       return undefined;
     }

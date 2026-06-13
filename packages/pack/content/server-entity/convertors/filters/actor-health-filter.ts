@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { ActorHealthFilter } from '../../interfaces/filters/actor-health-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -8,10 +9,11 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertActorHealthFilter = (
-  filter: Partial<ActorHealthFilter>
+  filter: Partial<ActorHealthFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   return convertNumberFilter({
     ...filter,
     test: 'actor_health',
-  });
+  }, ctx);
 };

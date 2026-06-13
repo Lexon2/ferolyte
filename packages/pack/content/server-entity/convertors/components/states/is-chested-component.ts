@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { IsChestedComponent } from '../../../interfaces/components/states/is-chested-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertIsChestedComponent = (
   component: Partial<IsChestedComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:is_chested': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { AddRiderComponent } from '../../../interfaces/components/control/addrider-component';
 import { validateString } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateString } from '../../common/validation';
  */
 export const convertAddriderComponent = (
   component: Partial<AddRiderComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:addrider': any } | undefined => {
   if (!component) {
     return undefined;

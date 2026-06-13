@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SniffBehavior } from '../../interfaces/behaviors/sniff-behavior';
 import { convertRange } from '../common/convertors';
 import { validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSniffBehavior = (
-  behavior: Partial<SniffBehavior>
+  behavior: Partial<SniffBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.sniff': any } | undefined => {
   if (!behavior) {
     return undefined;

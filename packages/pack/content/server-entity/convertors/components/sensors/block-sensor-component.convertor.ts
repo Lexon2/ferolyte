@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BlockSensorComponent } from '../../../interfaces/components/sensors/block-sensor-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -42,6 +43,7 @@ const validateBlockListItem = (
  */
 export const convertBlockSensorComponent = (
   component: Partial<BlockSensorComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:block_sensor': any } | undefined => {
   if (!component) {
     return undefined;

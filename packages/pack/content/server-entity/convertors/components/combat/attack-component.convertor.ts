@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EFFECT_TYPES } from '../../../constants/effect-types';
 import { AttackComponent } from '../../../interfaces/components/combat/attack-component';
 import { validateNumber, validateString } from '../../common/validation';
@@ -68,6 +69,7 @@ const validateEffectName = (
  */
 export const convertAttackComponent = (
   component: Partial<AttackComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:attack': any } | undefined => {
   if (!component) {
     return undefined;

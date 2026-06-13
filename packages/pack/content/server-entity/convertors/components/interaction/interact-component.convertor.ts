@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import {
   InteractComponent,
   InteractComponentInteraction,
@@ -17,6 +18,7 @@ import {
  */
 export const convertInteractComponent = (
   component: Partial<InteractComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:interact': any } | undefined => {
   if (!component) {
     return undefined;
@@ -141,7 +143,7 @@ export const convertInteractComponent = (
 
         // Validate onInteract
         if (interaction.onInteract !== undefined) {
-          const convertedOnInteract = convertTrigger(interaction.onInteract);
+          const convertedOnInteract = convertTrigger(interaction.onInteract, withFieldPath(ctx, 'onInteract'));
           if (!convertedOnInteract) {
             return undefined;
           }

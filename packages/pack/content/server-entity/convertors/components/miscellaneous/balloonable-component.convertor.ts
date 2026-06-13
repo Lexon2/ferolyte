@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { BalloonableComponent } from '../../../interfaces/components/miscellaneous/balloonable-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -8,6 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertBalloonableComponent = (
   component: Partial<BalloonableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:balloonable': any } | undefined => {
   if (!component) {
     return undefined;

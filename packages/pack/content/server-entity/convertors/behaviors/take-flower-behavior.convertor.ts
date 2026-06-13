@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TakeFlowerBehavior } from '../../interfaces/behaviors/take-flower-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber, validateVector3 } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber, validateVector3 } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertTakeFlowerBehavior = (
-  behavior: Partial<TakeFlowerBehavior>
+  behavior: Partial<TakeFlowerBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.take_flower': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,7 +36,7 @@ export const convertTakeFlowerBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters);
+    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { PushThroughComponent } from '../../../interfaces/components/physical/push-through-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertPushThroughComponent = (
-  component: Partial<PushThroughComponent>
+  component: Partial<PushThroughComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:push_through': { value: number } } | undefined => {
   if (!component) {
     return undefined;

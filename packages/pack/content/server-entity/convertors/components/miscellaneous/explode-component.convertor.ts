@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ExplodeComponent } from '../../../interfaces/components/miscellaneous/explode-component';
 import { validateNumber } from '../../common/validation';
 
@@ -35,6 +36,7 @@ const validateFuseLength = (
  */
 export const convertExplodeComponent = (
   component: Partial<ExplodeComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:explode': any } | undefined => {
   if (!component) {
     return undefined;

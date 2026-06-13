@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SleepBehavior } from '../../interfaces/behaviors/sleep-behavior';
 import { validateNumber, validateBoolean } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateBoolean } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSleepBehavior = (
-  behavior: Partial<SleepBehavior>
+  behavior: Partial<SleepBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.sleep': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RangedAttackBehavior } from '../../interfaces/behaviors/ranged-attack-behavior';
 import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateBoolean, validateInteger } from '../common/vali
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRangedAttackBehavior = (
-  behavior: Partial<RangedAttackBehavior>
+  behavior: Partial<RangedAttackBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.ranged_attack': any } | undefined => {
   if (!behavior) {
     return undefined;

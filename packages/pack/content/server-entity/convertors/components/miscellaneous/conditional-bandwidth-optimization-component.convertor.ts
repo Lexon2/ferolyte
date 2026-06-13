@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ConditionalBandwidthOptimizationComponent, ConditionalBandwidthOptimizationConditionalValue } from '../../../interfaces/components/miscellaneous/conditional-bandwidth-optimization-component';
 import { validateNumber } from '../../common/validation';
 
@@ -42,6 +43,7 @@ const validateConditionalValue = (
  */
 export const convertConditionalBandwidthOptimizationComponent = (
   component: Partial<ConditionalBandwidthOptimizationComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:conditional_bandwidth_optimization': any } | undefined => {
   if (!component) {
     return undefined;

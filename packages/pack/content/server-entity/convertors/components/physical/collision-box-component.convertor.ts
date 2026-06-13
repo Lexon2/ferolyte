@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { CollisionBoxComponent } from '../../../interfaces/components/physical/collision-box-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertCollisionBoxComponent = (
-  component: Partial<CollisionBoxComponent>
+  component: Partial<CollisionBoxComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:collision_box': { width: number; height: number } } | undefined => {
   if (!component) {
     return undefined;

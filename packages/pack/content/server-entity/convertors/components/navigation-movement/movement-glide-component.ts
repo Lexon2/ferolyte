@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { MovementGlideComponent } from '../../../interfaces/components/navigation-movement/movement-glide-component';
 import { validateMaxTurn } from '../../common/validation';
 import { validateNumberRange } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertMovementGlideComponent = (
-  component: Partial<MovementGlideComponent>
+  component: Partial<MovementGlideComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:movement.glide': any } | undefined => {
   if (!component) {
     return undefined;

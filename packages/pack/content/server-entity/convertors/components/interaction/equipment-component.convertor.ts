@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { EQUIPMENT_SLOTS, EquipmentSlot } from '../../../constants/equipment-slots';
 import { EquipmentComponent } from '../../../interfaces/components/interaction/equipment-component';
 import { validateString } from '../../common/validation';
@@ -39,6 +40,7 @@ const validateSlotDropChance = (
  */
 export const convertEquipmentComponent = (
   component: Partial<EquipmentComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:equipment': any } | undefined => {
   if (!component) {
     return undefined;

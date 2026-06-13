@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { EQUIPMENT_LOCATION_VALUES } from '../../constants/equipment-location';
 import { AllSlotsEmptyFilter } from '../../interfaces/filters/all-slots-empty-filter';
@@ -10,12 +11,11 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertAllSlotsEmptyFilter = (
   filter: Partial<AllSlotsEmptyFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
-  return convertWithInputValues(
-    {
+  return convertWithInputValues({
       ...filter,
       test: 'all_slots_empty',
     },
-    EQUIPMENT_LOCATION_VALUES,
-  );
+    EQUIPMENT_LOCATION_VALUES, ctx);
 };

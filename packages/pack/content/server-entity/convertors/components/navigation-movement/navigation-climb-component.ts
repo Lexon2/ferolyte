@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationClimbComponent } from '../../../interfaces/components/navigation-movement/navigation-climb-component';
 
@@ -7,7 +8,8 @@ import { NavigationClimbComponent } from '../../../interfaces/components/navigat
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertNavigationClimbComponent = (
-  component: Partial<NavigationClimbComponent>
+  component: Partial<NavigationClimbComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:navigation.climb': any } | undefined => {
   if (!component) {
     return undefined;

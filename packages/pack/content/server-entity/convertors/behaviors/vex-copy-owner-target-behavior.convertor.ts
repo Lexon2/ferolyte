@@ -1,3 +1,7 @@
+import {
+  ContentDiagnosticContext,
+  withFieldPath,
+} from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { VexCopyOwnerTargetBehavior } from '../../interfaces/behaviors/vex-copy-owner-target-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -8,7 +12,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertVexCopyOwnerTargetBehavior = (
-  behavior: Partial<VexCopyOwnerTargetBehavior>
+  behavior: Partial<VexCopyOwnerTargetBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.vex_copy_owner_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,7 +31,10 @@ export const convertVexCopyOwnerTargetBehavior = (
 
   // Validate entityTypes
   if (behavior.entityTypes !== undefined) {
-    const convertedEntityTypes = convertEntityDefinition(behavior.entityTypes);
+    const convertedEntityTypes = convertEntityDefinition(
+      behavior.entityTypes,
+      withFieldPath(ctx, 'entityTypes'),
+    );
     if (!convertedEntityTypes) {
       return undefined;
     }

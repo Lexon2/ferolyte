@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SlimeRandomDirectionBehavior } from '../../interfaces/behaviors/slime-random-direction-behavior';
 import { validateDegrees, validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateDegrees, validateInteger, validateNumber } from '../common/vali
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSlimeRandomDirectionBehavior = (
-  behavior: Partial<SlimeRandomDirectionBehavior>
+  behavior: Partial<SlimeRandomDirectionBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.slime_random_direction': any } | undefined => {
   if (!behavior) {
     return undefined;

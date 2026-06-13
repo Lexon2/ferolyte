@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { POI_TYPE } from '../../constants/poi-type';
 import { MoveToPoiBehavior } from '../../interfaces/behaviors/move-to-poi-behavior';
 import { validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertMoveToPoiBehavior = (
-  behavior: Partial<MoveToPoiBehavior>
+  behavior: Partial<MoveToPoiBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.move_to_poi': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { DigBehavior } from '../../interfaces/behaviors/dig-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateBoolean, validateNumber } from '../common/validation';
@@ -8,7 +9,8 @@ import { validateBoolean, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertDigBehavior = (
-  behavior: Partial<DigBehavior>
+  behavior: Partial<DigBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.dig': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -78,7 +80,7 @@ export const convertDigBehavior = (
 
   // Validate onStart
   if (behavior.onStart !== undefined) {
-    const onStart = convertTrigger(behavior.onStart);
+    const onStart = convertTrigger(behavior.onStart, withFieldPath(ctx, 'onStart'));
     if (!onStart) {
       return undefined;
     }

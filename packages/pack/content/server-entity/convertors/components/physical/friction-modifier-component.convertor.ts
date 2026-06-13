@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FrictionModifierComponent } from '../../../interfaces/components/physical/friction-modifier-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertFrictionModifierComponent = (
-  component: Partial<FrictionModifierComponent>
+  component: Partial<FrictionModifierComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:friction_modifier': { value: number } } | undefined => {
   if (!component) {
     return undefined;

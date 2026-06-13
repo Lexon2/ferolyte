@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationGenericComponent } from '../../../interfaces/components/navigation-movement/navigation-generic-component';
 
@@ -7,7 +8,8 @@ import { NavigationGenericComponent } from '../../../interfaces/components/navig
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertNavigationGenericComponent = (
-  component: Partial<NavigationGenericComponent>
+  component: Partial<NavigationGenericComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:navigation.generic': any } | undefined => {
   if (!component) {
     return undefined;

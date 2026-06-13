@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FloatBehavior } from '../../interfaces/behaviors/float-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateBoolean, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertFloatBehavior = (
-  behavior: Partial<FloatBehavior>
+  behavior: Partial<FloatBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.float': any } | undefined => {
   if (!behavior) {
     return undefined;

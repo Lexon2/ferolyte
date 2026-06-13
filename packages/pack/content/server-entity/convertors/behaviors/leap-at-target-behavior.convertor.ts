@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { LeapAtTargetBehavior } from '../../interfaces/behaviors/leap-at-target-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateBoolean, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertLeapAtTargetBehavior = (
-  behavior: Partial<LeapAtTargetBehavior>
+  behavior: Partial<LeapAtTargetBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.leap_at_target': any } | undefined => {
   if (!behavior) {
     return undefined;

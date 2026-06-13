@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import {
   HealableComponent,
   HealableEffect,
@@ -73,7 +74,11 @@ const convertHealableEffect = (
  * @param fieldName The name of the field for error messages
  * @returns Whether the item is valid
  */
-const convertHealableItem = (item: any, fieldName: string): any | undefined => {
+const convertHealableItem = (
+  item: any,
+  fieldName: string,
+  ctx?: ContentDiagnosticContext,
+): any | undefined => {
   if (!item) {
     return undefined;
   }
@@ -82,7 +87,7 @@ const convertHealableItem = (item: any, fieldName: string): any | undefined => {
 
   // Validate filters
   if (item.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(item.filters);
+    const convertedFilters = convertEntityFilters(item.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }
@@ -149,6 +154,7 @@ const convertHealableItem = (item: any, fieldName: string): any | undefined => {
  */
 export const convertHealableComponent = (
   component: Partial<HealableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:healable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -158,7 +164,7 @@ export const convertHealableComponent = (
 
   // Validate filters
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters);
+    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
     if (!convertedFilters) {
       return undefined;
     }
@@ -180,7 +186,11 @@ export const convertHealableComponent = (
     }
 
     const validatedItems = component.items.map((item, index) => {
-      const convertedItem = convertHealableItem(item, `items[${index}]`);
+      const convertedItem = convertHealableItem(
+        item,
+        `items[${index}]`,
+        withFieldPath(ctx, `items[${index}]`),
+      );
       if (!convertedItem) {
         return undefined;
       }

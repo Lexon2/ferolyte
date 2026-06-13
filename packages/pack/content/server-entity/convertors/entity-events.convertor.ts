@@ -1,4 +1,8 @@
 import {
+  ContentDiagnosticContext,
+  withFieldPath,
+} from '../../../common/diagnostics/content-diagnostic';
+import {
   EntityEventBase,
   EntityEventRandomize,
   EntityEvents,
@@ -12,24 +16,48 @@ import {
   validateStringArray,
 } from './common/validation';
 
+const eventContext = (
+  ctx: ContentDiagnosticContext | undefined,
+  fieldPath?: string,
+): ContentDiagnosticContext | undefined => {
+  if (ctx === undefined) {
+    return fieldPath !== undefined
+      ? { section: 'events', fieldPath, contentType: 'server-entity' }
+      : undefined;
+  }
+
+  return {
+    ...ctx,
+    section: 'events',
+    component: undefined,
+    fieldPath,
+  };
+};
+
 export const convertEntityEventBase = (
   event: EntityEventBase,
+  ctx?: ContentDiagnosticContext,
 ): { [key: string]: any } | undefined => {
   const result: any = {};
 
-  // Validate filters
   if (event.filters) {
-    const convertedFilters = convertEntityFilters(event.filters);
+    const convertedFilters = convertEntityFilters(
+      event.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
     result.filters = convertedFilters;
   }
 
-  // Validate add
   if (event.add) {
     if (
-      !validateStringArray(event.add.componentGroups, 'add.componentGroups')
+      !validateStringArray(
+        event.add.componentGroups,
+        'add.componentGroups',
+        ctx,
+      )
     ) {
       return undefined;
     }
@@ -37,12 +65,12 @@ export const convertEntityEventBase = (
     result.add.component_groups = event.add.componentGroups;
   }
 
-  // Validate remove
   if (event.remove) {
     if (
       !validateStringArray(
         event.remove.componentGroups,
         'remove.componentGroups',
+        ctx,
       )
     ) {
       return undefined;
@@ -51,33 +79,39 @@ export const convertEntityEventBase = (
     result.remove.component_groups = event.remove.componentGroups;
   }
 
-  // Validate trigger
   if (event.trigger) {
-    if (!validateString(event.trigger, 'trigger')) {
+    if (!validateString(event.trigger, 'trigger', ctx)) {
       return undefined;
     }
     result.trigger = event.trigger;
   }
 
-  // Validate queueCommand
   if (event.queueCommand) {
     if (!Array.isArray(event.queueCommand.command)) {
-      if (!validateString(event.queueCommand.command, 'queueCommand.command')) {
-        return undefined;
-      }
-    } else {
       if (
-        !validateStringArray(event.queueCommand.command, 'queueCommand.command')
+        !validateString(event.queueCommand.command, 'queueCommand.command', ctx)
       ) {
         return undefined;
       }
+    } else if (
+      !validateStringArray(
+        event.queueCommand.command,
+        'queueCommand.command',
+        ctx,
+      )
+    ) {
+      return undefined;
     }
-    result.queue_command = event.queueCommand;
+
+    result.queue_command = {
+      command: event.queueCommand.command,
+      ...(event.queueCommand.target !== undefined && {
+        target: event.queueCommand.target,
+      }),
+    };
   }
 
-  // Validate setProperty
   if (event.setProperty) {
-    // This field does not need to be validated as it is a freeform object
     result.set_property = event.setProperty;
   }
 
@@ -86,16 +120,19 @@ export const convertEntityEventBase = (
 
 export const convertEntityEventRandomize = (
   event: EntityEventRandomize,
+  ctx?: ContentDiagnosticContext,
 ): { [key: string]: any } | undefined => {
   const result: any = {};
 
-  const base = convertEntityEventBase(event);
+  const base = convertEntityEventBase(event, ctx);
   if (!base) {
     return undefined;
   }
 
+  Object.assign(result, base);
+
   if (event.weight !== undefined) {
-    if (!validateNumber(event.weight, 'weight')) {
+    if (!validateNumber(event.weight, 'weight', undefined, undefined, ctx)) {
       return undefined;
     }
     result.weight = event.weight;
@@ -111,16 +148,19 @@ export const convertEntityEventRandomize = (
  */
 export const convertEntityEvent = (
   event: EntityEvents | undefined,
+  ctx?: ContentDiagnosticContext,
 ): { [key: string]: any } | undefined => {
   if (event === undefined) {
     return undefined;
   }
 
-  const result: { [key: string]: any } = convertEntityEventBase(event) ?? {};
+  const result: { [key: string]: any } =
+    convertEntityEventBase(event, ctx) ?? {};
 
-  // Validate sequence
   if (event.sequence) {
-    const convertedSequence = event.sequence.map(convertEntityEventBase);
+    const convertedSequence = event.sequence.map((item, index) =>
+      convertEntityEventBase(item, withFieldPath(ctx, `sequence[${index}]`)),
+    );
     if (convertedSequence.some((item) => !item)) {
       return undefined;
     }
@@ -128,9 +168,13 @@ export const convertEntityEvent = (
     result.sequence = convertedSequence;
   }
 
-  // Validate randomize
   if (event.randomize) {
-    const convertedRandomize = event.randomize.map(convertEntityEventRandomize);
+    const convertedRandomize = event.randomize.map((item, index) =>
+      convertEntityEventRandomize(
+        item,
+        withFieldPath(ctx, `randomize[${index}]`),
+      ),
+    );
     if (convertedRandomize.some((item) => !item)) {
       return undefined;
     }
@@ -138,15 +182,17 @@ export const convertEntityEvent = (
     result.randomize = convertedRandomize;
   }
 
-  // Validate firstValid
   if (event.firstValid) {
-    const convertedFirstValid = event.firstValid.map(convertEntityEventBase);
+    const convertedFirstValid = event.firstValid.map((item, index) =>
+      convertEntityEventBase(item, withFieldPath(ctx, `firstValid[${index}]`)),
+    );
     if (convertedFirstValid.some((item) => !item)) {
       return undefined;
     }
+
+    result.first_valid = convertedFirstValid;
   }
 
-  // Validate stopMovement
   if (event.stopMovement) {
     if (
       event.stopMovement.stopVerticalMovement === undefined ||
@@ -158,20 +204,24 @@ export const convertEntityEvent = (
       !validateBoolean(
         event.stopMovement.stopVerticalMovement,
         'stopMovement.stopVerticalMovement',
+        ctx,
       ) ||
       !validateBoolean(
         event.stopMovement.stopHorizontalMovement,
         'stopMovement.stopHorizontalMovement',
+        ctx,
       )
     ) {
       return undefined;
     }
-    result.stop_movement = event.stopMovement;
+    result.stop_movement = {
+      stop_vertical_movement: event.stopMovement.stopVerticalMovement,
+      stop_horizontal_movement: event.stopMovement.stopHorizontalMovement,
+    };
   }
 
-  // Validate setHomePosition
   if (event.setHomePosition) {
-    if (!validateBoolean(event.setHomePosition, 'setHomePosition')) {
+    if (!validateBoolean(event.setHomePosition, 'setHomePosition', ctx)) {
       return undefined;
     }
     if (event.setHomePosition) {
@@ -179,41 +229,42 @@ export const convertEntityEvent = (
     }
   }
 
-  // Validate playSound
   if (event.playSound) {
-    if (!validateString(event.playSound.sound, 'playSound.sound')) {
+    if (!validateString(event.playSound.sound, 'playSound.sound', ctx)) {
       return undefined;
     }
-    result.play_sound = event.playSound;
+    result.play_sound = { sound: event.playSound.sound };
   }
 
-  // Validate emitParticle
   if (event.emitParticle) {
-    if (!validateString(event.emitParticle.particle, 'emitParticle.particle')) {
+    if (
+      !validateString(event.emitParticle.particle, 'emitParticle.particle', ctx)
+    ) {
       return undefined;
     }
-    result.emit_particle = event.emitParticle;
+    result.emit_particle = { particle: event.emitParticle.particle };
   }
 
-  // Validate resetTarget
   if (event.resetTarget) {
-    if (!validateBoolean(event.resetTarget, 'resetTarget')) {
+    if (!validateBoolean(event.resetTarget, 'resetTarget', ctx)) {
       return undefined;
     }
     result.reset_target = event.resetTarget;
   }
 
-  // Validate executeEventOnHomeBlock
   if (event.executeEventOnHomeBlock) {
     if (
       !validateString(
         event.executeEventOnHomeBlock.event,
         'executeEventOnHomeBlock.event',
+        ctx,
       )
     ) {
       return undefined;
     }
-    result.execute_event_on_home_block = event.executeEventOnHomeBlock;
+    result.execute_event_on_home_block = {
+      event: event.executeEventOnHomeBlock.event,
+    };
   }
 
   return result;
@@ -221,13 +272,17 @@ export const convertEntityEvent = (
 
 export const convertEntityEvents = (
   events: ServerEntityEvents,
+  ctx?: ContentDiagnosticContext,
 ): { [key: string]: any } | undefined => {
   const result: { [key: string]: any } = {};
 
-  for (const event in events) {
-    const convertedEvent = convertEntityEvent(events[event]);
+  for (const eventName in events) {
+    const convertedEvent = convertEntityEvent(
+      events[eventName],
+      eventContext(ctx, eventName),
+    );
     if (convertedEvent) {
-      result[event] = convertedEvent;
+      result[eventName] = convertedEvent;
     }
   }
 

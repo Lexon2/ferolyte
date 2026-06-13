@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SquidFleeBehavior } from '../../interfaces/behaviors/squid-flee-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSquidFleeBehavior = (
-  behavior: Partial<SquidFleeBehavior>
+  behavior: Partial<SquidFleeBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.squid_flee': any } | undefined => {
   if (!behavior) {
     return undefined;

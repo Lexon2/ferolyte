@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { InsideBlockNotifierComponent, BlockNotifierEntry } from '../../../interfaces/components/sensors/inside-block-notifier-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateString } from '../../common/validation';
@@ -17,7 +18,7 @@ const convertBlockNotifierEntry = (entry: BlockNotifierEntry): Record<string, an
   };
 
   if (entry.enteredBlockEvent !== undefined) {
-    const convertedEnteredBlockEvent = convertTrigger(entry.enteredBlockEvent);
+    const convertedEnteredBlockEvent = convertTrigger(entry.enteredBlockEvent, withFieldPath(ctx, 'enteredBlockEvent'));
     if (!convertedEnteredBlockEvent) {
       return undefined;
     }
@@ -25,7 +26,7 @@ const convertBlockNotifierEntry = (entry: BlockNotifierEntry): Record<string, an
   }
 
   if (entry.exitedBlockEvent !== undefined) {
-    const convertedExitedBlockEvent = convertTrigger(entry.exitedBlockEvent);
+    const convertedExitedBlockEvent = convertTrigger(entry.exitedBlockEvent, withFieldPath(ctx, 'exitedBlockEvent'));
     if (!convertedExitedBlockEvent) {
       return undefined;
     }
@@ -41,7 +42,8 @@ const convertBlockNotifierEntry = (entry: BlockNotifierEntry): Record<string, an
  * @returns The converted component in Minecraft format or undefined if validation fails
  */
 export const convertInsideBlockNotifierComponent = (
-  component: Partial<InsideBlockNotifierComponent>
+  component: Partial<InsideBlockNotifierComponent>,
+  ctx?: ContentDiagnosticContext
 ): Record<string, any> | undefined => {
   if (!component) {
     return undefined;

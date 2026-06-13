@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { HideBehavior } from '../../interfaces/behaviors/hide-behavior';
 import { validateNumber, validateString } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber, validateString } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertHideBehavior = (
-  behavior: Partial<HideBehavior>
+  behavior: Partial<HideBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.hide': any } | undefined => {
   if (!behavior) {
     return undefined;

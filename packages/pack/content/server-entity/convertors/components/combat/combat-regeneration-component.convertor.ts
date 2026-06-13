@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { CombatRegenerationComponent } from '../../../interfaces/components/combat/combat-regeneration-component';
 import { validateBoolean } from '../../common/validation';
 
@@ -33,7 +34,8 @@ export const validateRegenerationDuration = (
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertCombatRegenerationComponent = (
-  component: Partial<CombatRegenerationComponent>
+  component: Partial<CombatRegenerationComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:combat_regeneration': any } | undefined => {
   if (!component) {
     return undefined;

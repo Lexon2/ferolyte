@@ -1,8 +1,10 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FollowRangeComponent } from '../../../interfaces/components/combat/follow-range-component';
 import { validateNumber } from '../../common/validation';
 
 export const convertFollowRangeComponent = (
   component: FollowRangeComponent,
+  ctx?: ContentDiagnosticContext
 ): any => {
   if (component.value === undefined) {
     return undefined;

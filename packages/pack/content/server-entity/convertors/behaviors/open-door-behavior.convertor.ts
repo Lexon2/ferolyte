@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { OpenDoorBehavior } from '../../interfaces/behaviors/open-door-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateBoolean, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertOpenDoorBehavior = (
-  behavior: Partial<OpenDoorBehavior>
+  behavior: Partial<OpenDoorBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.open_door': any } | undefined => {
   if (!behavior) {
     return undefined;

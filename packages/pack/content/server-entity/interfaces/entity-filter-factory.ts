@@ -14,6 +14,8 @@ import {
   HasDamageFilter,
   HasDamagedEquipmentFilter,
   HasEquipmentFilter,
+  HasItemWithComponentFilter,
+  HasSameEquipmentInSlotAsFilter,
   HasEquipmentTagFilter,
   HasMobEffectFilter,
   HasNametagFilter,
@@ -44,6 +46,7 @@ import {
   IsBrightnessFilter,
   IsClimbingFilter,
   IsColorFilter,
+  IsControllingPassengerFamilyFilter,
   IsDaytimeFilter,
   IsDifficultyFilter,
   IsFamilyFilter,
@@ -60,11 +63,14 @@ import {
   IsOwnerFilter,
   IsPersistentFilter,
   IsRidingFilter,
+  IsRidingSelfFilter,
   IsSittingFilter,
   IsSkinIdFilter,
   IsSleepingFilter,
   IsSneakHeldFilter,
   IsSneakingFilter,
+  IsSprintingFilter,
+  IsTamedFilter,
   IsSnowCoveredFilter,
   IsTargetFilter,
   IsTemperatureTypeFilter,
@@ -72,6 +78,8 @@ import {
   IsUndergroundFilter,
   IsUnderwaterFilter,
   IsVariantFilter,
+  IsVehicleFamilyFilter,
+  IsWeatherFilter,
   IsVisibleFilter,
   IsWaterloggedFilter,
   LightLevelFilter,
@@ -88,6 +96,7 @@ import {
   TrustsFilter,
   WeatherAtPositionFilter,
   WeatherFilter,
+  YRotationFilter,
 } from './filters/index';
 
 export interface EntityFilterFactory {
@@ -106,6 +115,8 @@ export interface EntityFilterFactory {
   has_damage: HasDamageFilter;
   has_damaged_equipment: HasDamagedEquipmentFilter;
   has_equipment: HasEquipmentFilter;
+  has_item_with_component: HasItemWithComponentFilter;
+  has_same_equipment_in_slot_as: HasSameEquipmentInSlotAsFilter;
   has_equipment_tag: HasEquipmentTagFilter;
   has_mob_effect: HasMobEffectFilter;
   has_nametag: HasNametagFilter;
@@ -136,6 +147,7 @@ export interface EntityFilterFactory {
   is_brightness: IsBrightnessFilter;
   is_climbing: IsClimbingFilter;
   is_color: IsColorFilter;
+  is_controlling_passenger_family: IsControllingPassengerFamilyFilter;
   is_daytime: IsDaytimeFilter;
   is_difficulty: IsDifficultyFilter;
   is_family: IsFamilyFilter;
@@ -152,11 +164,14 @@ export interface EntityFilterFactory {
   is_owner: IsOwnerFilter;
   is_persistent: IsPersistentFilter;
   is_riding: IsRidingFilter;
+  is_riding_self: IsRidingSelfFilter;
   is_sitting: IsSittingFilter;
   is_skin_id: IsSkinIdFilter;
   is_sleeping: IsSleepingFilter;
   is_sneak_held: IsSneakHeldFilter;
   is_sneaking: IsSneakingFilter;
+  is_sprinting: IsSprintingFilter;
+  is_tamed: IsTamedFilter;
   is_snow_covered: IsSnowCoveredFilter;
   is_target: IsTargetFilter;
   is_temperature_type: IsTemperatureTypeFilter;
@@ -164,6 +179,8 @@ export interface EntityFilterFactory {
   is_underground: IsUndergroundFilter;
   is_underwater: IsUnderwaterFilter;
   is_variant: IsVariantFilter;
+  is_vehicle_family: IsVehicleFamilyFilter;
+  is_weather: IsWeatherFilter;
   is_visible: IsVisibleFilter;
   is_waterlogged: IsWaterloggedFilter;
   light_level: LightLevelFilter;
@@ -180,4 +197,5 @@ export interface EntityFilterFactory {
   trusts: TrustsFilter;
   weather: WeatherFilter;
   weather_at_position: WeatherAtPositionFilter;
+  y_rotation: YRotationFilter;
 }

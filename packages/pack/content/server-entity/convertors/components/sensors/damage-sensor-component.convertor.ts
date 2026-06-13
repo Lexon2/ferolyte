@@ -1,33 +1,43 @@
 import {
+  ContentDiagnosticContext,
+  withFieldPath,
+} from '@artifex/pack/common/diagnostics/content-diagnostic';
+import {
   DamageSensorComponent,
   DamageTrigger,
 } from '../../../interfaces/components/sensors/damage-sensor-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import {
+  validateAllowedValues,
   validateNumber,
   validateDamageSourceType,
   validateSoundEvent,
 } from '../../common/validation';
 
-const convertDamageTrigger = (trigger: DamageTrigger) => {
+const DEALS_DAMAGE_VALUES = ['yes', 'no', 'no_but_side_effects_apply'] as const;
+
+const convertDamageTrigger = (
+  trigger: DamageTrigger,
+  ctx?: ContentDiagnosticContext,
+) => {
   const result: any = {};
 
   if (trigger.cause !== undefined) {
-    if (!validateDamageSourceType(trigger.cause, 'cause')) {
+    if (!validateDamageSourceType(trigger.cause, 'cause', ctx)) {
       return undefined;
     }
     result.cause = trigger.cause;
   }
 
   if (trigger.damageModifier !== undefined) {
-    if (!validateNumber(trigger.damageModifier, 'damage_modifier')) {
+    if (!validateNumber(trigger.damageModifier, 'damageModifier', undefined, undefined, ctx)) {
       return undefined;
     }
     result.damage_modifier = trigger.damageModifier;
   }
 
   if (trigger.damageMultiplier !== undefined) {
-    if (!validateNumber(trigger.damageMultiplier, 'damage_multiplier')) {
+    if (!validateNumber(trigger.damageMultiplier, 'damageMultiplier', undefined, undefined, ctx)) {
       return undefined;
     }
     result.damage_multiplier = trigger.damageMultiplier;
@@ -35,19 +45,23 @@ const convertDamageTrigger = (trigger: DamageTrigger) => {
 
   if (trigger.dealsDamage !== undefined) {
     if (
-      !['yes', 'no', 'no_but_side_effects_apply'].includes(trigger.dealsDamage)
+      !validateAllowedValues(
+        trigger.dealsDamage,
+        DEALS_DAMAGE_VALUES,
+        'dealsDamage',
+        ctx,
+      )
     ) {
-      console.error(
-        'deals_damage must be one of: yes, no, no_but_side_effects_apply',
-      );
-
       return undefined;
     }
     result.deals_damage = trigger.dealsDamage;
   }
 
   if (trigger.onDamage !== undefined) {
-    const convertedOnDamage = convertTrigger(trigger.onDamage);
+    const convertedOnDamage = convertTrigger(
+      trigger.onDamage,
+      withFieldPath(ctx, 'onDamage'),
+    );
     if (!convertedOnDamage) {
       return undefined;
     }
@@ -55,9 +69,7 @@ const convertDamageTrigger = (trigger: DamageTrigger) => {
   }
 
   if (trigger.onDamageSoundEvent !== undefined) {
-    if (
-      !validateSoundEvent(trigger.onDamageSoundEvent, 'on_damage_sound_event')
-    ) {
+    if (!validateSoundEvent(trigger.onDamageSoundEvent, 'onDamageSoundEvent', ctx)) {
       return undefined;
     }
     result.on_damage_sound_event = trigger.onDamageSoundEvent;
@@ -73,6 +85,7 @@ const convertDamageTrigger = (trigger: DamageTrigger) => {
  */
 export const convertDamageSensorComponent = (
   component: Partial<DamageSensorComponent>,
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:damage_sensor': any } | undefined => {
   if (!component) {
     return undefined;
@@ -82,7 +95,9 @@ export const convertDamageSensorComponent = (
 
   if (component.triggers) {
     const triggers = component.triggers
-      .map(convertDamageTrigger)
+      .map((trigger, index) =>
+        convertDamageTrigger(trigger, withFieldPath(ctx, `triggers[${index}]`)),
+      )
       .filter(Boolean);
 
     if (triggers.length > 0) {

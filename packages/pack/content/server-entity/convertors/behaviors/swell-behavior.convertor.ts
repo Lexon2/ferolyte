@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SwellBehavior } from '../../interfaces/behaviors/swell-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSwellBehavior = (
-  behavior: Partial<SwellBehavior>
+  behavior: Partial<SwellBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.swell': any } | undefined => {
   if (!behavior) {
     return undefined;

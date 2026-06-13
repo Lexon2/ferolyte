@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { WalkAnimationSpeedComponent } from '../../../interfaces/components/navigation-movement/walk-animation-speed-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumberRange } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertWalkAnimationSpeedComponent = (
-  component: Partial<WalkAnimationSpeedComponent>
+  component: Partial<WalkAnimationSpeedComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:walk_animation_speed': { value: number } } | undefined => {
   if (!component) {
     return undefined;

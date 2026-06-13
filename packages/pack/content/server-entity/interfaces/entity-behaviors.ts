@@ -51,6 +51,7 @@ import {
   FollowOwnerBehavior,
   FollowParentBehavior,
   FollowTargetCaptainBehavior,
+  FollowTargetLeaderBehavior,
   GoAndGiveItemsToNoteblockBehavior,
   GoAndGiveItemsToOwnerBehavior,
   GoHomeBehavior,
@@ -104,6 +105,7 @@ import {
   PanicBehavior,
   PetSleepWithOwnerBehavior,
   PickupItemsBehavior,
+  PlaceBlockBehavior,
   PlayBehavior,
   PlayDeadBehavior,
   PlayerRideTamedBehavior,
@@ -159,6 +161,7 @@ import {
   SwimWanderBehavior,
   SwimWithEntityBehavior,
   SwoopAttackBehavior,
+  TakeBlockBehavior,
   TakeFlowerBehavior,
   TargetWhenPushedBehavior,
   TeleportToOwnerBehavior,
@@ -168,6 +171,8 @@ import {
   TimerFlag3Behavior,
   TradeInterestBehavior,
   TradeWithPlayerBehavior,
+  TransportItemsBehavior,
+  UseKineticWeaponBehavior,
   VexCopyOwnerTargetBehavior,
   VexRandomMoveBehavior,
   WitherRandomAttackPosGoalBehavior,
@@ -229,6 +234,7 @@ export interface EntityBehaviors {
   followOwner: FollowOwnerBehavior;
   followParent: FollowParentBehavior;
   followTargetCaptain: FollowTargetCaptainBehavior;
+  followTargetLeader: FollowTargetLeaderBehavior;
   goAndGiveItemsToNoteblock: GoAndGiveItemsToNoteblockBehavior;
   goAndGiveItemsToOwner: GoAndGiveItemsToOwnerBehavior;
   goHome: GoHomeBehavior;
@@ -282,6 +288,7 @@ export interface EntityBehaviors {
   panic: PanicBehavior;
   petSleepWithOwner: PetSleepWithOwnerBehavior;
   pickupItems: PickupItemsBehavior;
+  placeBlock: PlaceBlockBehavior;
   play: PlayBehavior;
   playDead: PlayDeadBehavior;
   playerRideTamed: PlayerRideTamedBehavior;
@@ -337,6 +344,7 @@ export interface EntityBehaviors {
   swimWander: SwimWanderBehavior;
   swimWithEntity: SwimWithEntityBehavior;
   swoopAttack: SwoopAttackBehavior;
+  takeBlock: TakeBlockBehavior;
   takeFlower: TakeFlowerBehavior;
   targetWhenPushed: TargetWhenPushedBehavior;
   teleportToOwner: TeleportToOwnerBehavior;
@@ -346,6 +354,8 @@ export interface EntityBehaviors {
   timerFlag3: TimerFlag3Behavior;
   tradeInterest: TradeInterestBehavior;
   tradeWithPlayer: TradeWithPlayerBehavior;
+  transportItems: TransportItemsBehavior;
+  useKineticWeapon: UseKineticWeaponBehavior;
   vexCopyOwnerTarget: VexCopyOwnerTargetBehavior;
   vexRandomMove: VexRandomMoveBehavior;
   witherRandomAttackPosGoal: WitherRandomAttackPosGoalBehavior;

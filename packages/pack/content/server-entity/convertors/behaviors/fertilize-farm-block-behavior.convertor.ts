@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { FertilizeFarmBlockBehavior } from '../../interfaces/behaviors/fertilize-farm-block-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertFertilizeFarmBlockBehavior = (
-  behavior: Partial<FertilizeFarmBlockBehavior>
+  behavior: Partial<FertilizeFarmBlockBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.fertilize_farm_block': any } | undefined => {
   if (!behavior) {
     return undefined;

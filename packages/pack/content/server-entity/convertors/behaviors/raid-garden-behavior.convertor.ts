@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RaidGardenBehavior } from '../../interfaces/behaviors/raid-garden-behavior';
 import { validateInteger, validateNumber, validateStringArray } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber, validateStringArray } from '../common/
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRaidGardenBehavior = (
-  behavior: Partial<RaidGardenBehavior>
+  behavior: Partial<RaidGardenBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.raid_garden': any } | undefined => {
   if (!behavior) {
     return undefined;

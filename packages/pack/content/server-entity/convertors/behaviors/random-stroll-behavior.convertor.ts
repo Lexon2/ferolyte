@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RandomStrollBehavior } from '../../interfaces/behaviors/random-stroll-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRandomStrollBehavior = (
-  behavior: Partial<RandomStrollBehavior>
+  behavior: Partial<RandomStrollBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.random_stroll': any } | undefined => {
   if (!behavior) {
     return undefined;

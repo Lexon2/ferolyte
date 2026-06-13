@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { LeashableComponent } from '../../../interfaces/components/control/leashable-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { convertTrigger } from '../../common/trigger.convertor';
@@ -13,6 +14,7 @@ import { validateSpringType } from '../../validation/leashable-string-type';
 const convertLeashablePreset = (
   preset: any,
   fieldName: string,
+  ctx?: ContentDiagnosticContext,
 ): any | undefined => {
   if (!preset) {
     return undefined;
@@ -22,7 +24,7 @@ const convertLeashablePreset = (
 
   // Validate filter'
   if (preset.filter !== undefined) {
-    const convertedFilter = convertEntityFilters(preset.filter);
+    const convertedFilter = convertEntityFilters(preset.filter, withFieldPath(ctx, 'filter'));
     if (!convertedFilter) {
       return undefined;
     }
@@ -91,6 +93,7 @@ const convertLeashablePreset = (
  */
 export const convertLeashableComponent = (
   component: Partial<LeashableComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:leashable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -143,7 +146,7 @@ export const convertLeashableComponent = (
 
   // Validate onLeash
   if (component.onLeash !== undefined) {
-    const convertedOnLeash = convertTrigger(component.onLeash);
+    const convertedOnLeash = convertTrigger(component.onLeash, withFieldPath(ctx, 'onLeash'));
     if (!convertedOnLeash) {
       return undefined;
     }
@@ -152,7 +155,7 @@ export const convertLeashableComponent = (
 
   // Validate onUnleash
   if (component.onUnleash !== undefined) {
-    const convertedOnUnleash = convertTrigger(component.onUnleash);
+    const convertedOnUnleash = convertTrigger(component.onUnleash, withFieldPath(ctx, 'onUnleash'));
     if (!convertedOnUnleash) {
       return undefined;
     }
@@ -183,7 +186,11 @@ export const convertLeashableComponent = (
     }
 
     const validatedPresets = component.presets.map((preset, index) => {
-      return convertLeashablePreset(preset, `presets[${index}]`);
+      return convertLeashablePreset(
+        preset,
+        `presets[${index}]`,
+        withFieldPath(ctx, `presets[${index}]`),
+      );
     });
 
     if (validatedPresets.includes(undefined)) {

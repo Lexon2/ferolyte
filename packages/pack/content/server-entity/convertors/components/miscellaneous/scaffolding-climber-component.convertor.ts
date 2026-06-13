@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { ScaffoldingClimberComponent } from '../../../interfaces/components/miscellaneous/scaffolding-climber-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -8,6 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertScaffoldingClimberComponent = (
   component: ScaffoldingClimberComponent,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:scaffolding_climber': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

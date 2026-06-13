@@ -6,6 +6,7 @@ import {
   InteractComponent,
   ItemHopperComponent,
   InventoryComponent,
+  OnEquipmentChangedComponent,
   SittableComponent,
 } from './interaction';
 
@@ -17,5 +18,6 @@ export interface EntityInteractionComponents {
   interact?: InteractComponent;
   itemHopper?: ItemHopperComponent;
   inventory?: InventoryComponent;
+  onEquipmentChanged?: OnEquipmentChangedComponent;
   sittable?: SittableComponent;
 }

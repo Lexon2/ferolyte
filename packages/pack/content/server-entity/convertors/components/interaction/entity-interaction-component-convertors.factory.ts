@@ -5,6 +5,7 @@ import { convertGiveableComponent } from './giveable-component.convertor';
 import { convertInteractComponent } from './interact-component.convertor';
 import { convertInventoryComponent } from './inventory-component.convertor';
 import { convertItemHopperComponent } from './item-hopper-component';
+import { convertOnEquipmentChangedComponent } from './on-equipment-changed-component.convertor';
 import { convertSittableComponent } from './sittable-component.convertor';
 
 export const entityInteractionComponentConvertorsFactory = {
@@ -15,5 +16,6 @@ export const entityInteractionComponentConvertorsFactory = {
   interact: convertInteractComponent,
   inventory: convertInventoryComponent,
   itemHopper: convertItemHopperComponent,
-  sittable: convertSittableComponent
+  onEquipmentChanged: convertOnEquipmentChangedComponent,
+  sittable: convertSittableComponent,
 };

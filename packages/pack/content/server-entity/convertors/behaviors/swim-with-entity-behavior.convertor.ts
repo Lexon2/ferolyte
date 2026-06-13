@@ -1,3 +1,7 @@
+import {
+  ContentDiagnosticContext,
+  withFieldPath,
+} from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SwimWithEntityBehavior } from '../../interfaces/behaviors/swim-with-entity-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber, validatePercentage } from '../common/validation';
@@ -8,7 +12,8 @@ import { validateNumber, validatePercentage } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSwimWithEntityBehavior = (
-  behavior: Partial<SwimWithEntityBehavior>
+  behavior: Partial<SwimWithEntityBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.swim_with_entity': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -98,7 +103,10 @@ export const convertSwimWithEntityBehavior = (
 
   // Validate entityTypes
   if (behavior.entityTypes !== undefined) {
-    const convertedEntityTypes = convertEntityDefinition(behavior.entityTypes);
+    const convertedEntityTypes = convertEntityDefinition(
+      behavior.entityTypes,
+      withFieldPath(ctx, 'entityTypes'),
+    );
     if (!convertedEntityTypes) {
       return undefined;
     }

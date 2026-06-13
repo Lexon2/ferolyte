@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { CustomHitTestComponent, Hitbox } from '../../../interfaces/components/physical/custom-hit-test-component';
 import { validateNumber } from '../../common/validation';
 
@@ -41,6 +42,7 @@ const validateHitbox = (
  */
 export const convertCustomHitTestComponent = (
   component: Partial<CustomHitTestComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:custom_hit_test': any } | undefined => {
   if (!component) {
     return undefined;

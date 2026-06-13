@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { RandomBreachBehavior } from '../../interfaces/behaviors/random-breach-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateInteger, validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertRandomBreachBehavior = (
-  behavior: Partial<RandomBreachBehavior>
+  behavior: Partial<RandomBreachBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.random_breach': any } | undefined => {
   if (!behavior) {
     return undefined;

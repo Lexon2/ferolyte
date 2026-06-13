@@ -1,3 +1,4 @@
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { TamemountComponent } from '../../../interfaces/components/ai/tamemount-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber, validateString } from '../../common/validation';
@@ -8,7 +9,8 @@ import { validateNumber, validateString } from '../../common/validation';
  * @returns The component in Minecraft format or undefined if validation fails
  */
 export const convertTamemountComponent = (
-  component: Partial<TamemountComponent>
+  component: Partial<TamemountComponent>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:tamemount': any } | undefined => {
   if (!component) {
     return undefined;
@@ -118,7 +120,7 @@ export const convertTamemountComponent = (
 
   // Validate tameEvent
   if (component.tameEvent !== undefined) {
-    const convertedTameEvent = convertTrigger(component.tameEvent);
+    const convertedTameEvent = convertTrigger(component.tameEvent, withFieldPath(ctx, 'tameEvent'));
     if (!convertedTameEvent) {
       return undefined;
     }

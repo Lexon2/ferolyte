@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { IsSnowCoveredFilter } from '../../interfaces/filters/is-snow-covered-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -8,10 +9,11 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  * @returns The filter in Minecraft format or undefined if validation fails
  */
 export const convertIsSnowCoveredFilter = (
-  filter: Partial<IsSnowCoveredFilter>
+  filter: Partial<IsSnowCoveredFilter>,
+  ctx?: ContentDiagnosticContext
 ): MinecraftJsonFilter | undefined => {
   return convertBooleanFilter({
     ...filter,
     test: 'is_snow_covered'
-  });
+  }, ctx);
 };

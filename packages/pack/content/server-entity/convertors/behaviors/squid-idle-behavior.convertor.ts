@@ -1,3 +1,4 @@
+import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
 import { SquidIdleBehavior } from '../../interfaces/behaviors/squid-idle-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -7,7 +8,8 @@ import { validateNumber } from '../common/validation';
  * @returns The behavior in Minecraft format or undefined if validation fails
  */
 export const convertSquidIdleBehavior = (
-  behavior: Partial<SquidIdleBehavior>
+  behavior: Partial<SquidIdleBehavior>,
+  ctx?: ContentDiagnosticContext
 ): { 'minecraft:behavior.squid_idle': any } | undefined => {
   if (!behavior) {
     return undefined;
