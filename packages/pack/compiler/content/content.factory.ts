@@ -16,20 +16,20 @@ const contentFactory = {
 
 export const importContent = async (
   filePath: string,
-): Promise<ContentBuilder | undefined> => {
+): Promise<ContentBuilder | ContentBuilder[] | undefined> => {
   try {
     const content = await import(filePath);
     const { default: contentModule } = content;
     if (contentModule === undefined) {
       return;
     }
-    return contentModule as ContentBuilder;
+    return contentModule as ContentBuilder | ContentBuilder[];
   } catch {}
 };
 
 export interface BuildContentJsonResult {
   source: string;
-  outFile: string;
+  outFile: string | string[];
 }
 
 export const buildContentJson = async (
@@ -47,33 +47,40 @@ export const buildContentJson = async (
     return;
   }
 
-  const metadata = contentBuilder.metadata ?? CONTENT_METADATA.UNKNOWN;
-  if (metadata === CONTENT_METADATA.UNKNOWN) {
-    if (debug) {
-      return new Error(`\n🛑 Unknown content type for file: ${filename}\n`);
-    }
-    return;
-  }
-  const buildFunction = contentFactory[metadata];
-  if (!buildFunction) {
-    if (debug) {
-      return new Error(
-        `\n🛑 No build function found for metadata: ${metadata}\n`,
-      );
-    }
-    return;
-  }
+  const outFiles: string[] = [];
 
-  const outFile = await buildFunction(filePath, contentBuilder as any);
-  if (outFile === undefined) {
-    if (debug) {
-      return new Error(`\n🛑 Failed to build: ${filename}\n`);
+  for (const builder of Array.isArray(contentBuilder)
+    ? contentBuilder
+    : [contentBuilder]) {
+    const metadata = builder.metadata ?? CONTENT_METADATA.UNKNOWN;
+    if (metadata === CONTENT_METADATA.UNKNOWN) {
+      if (debug) {
+        return new Error(`\n🛑 Unknown content type for file: ${filename}\n`);
+      }
+      return;
     }
-    return;
+    const buildFunction = contentFactory[metadata];
+    if (!buildFunction) {
+      if (debug) {
+        return new Error(
+          `\n🛑 No build function found for metadata: ${metadata}\n`,
+        );
+      }
+      return;
+    }
+
+    const outFile = await buildFunction(filePath, builder as any);
+    if (outFile === undefined) {
+      if (debug) {
+        return new Error(`\n🛑 Failed to build: ${filename}\n`);
+      }
+      return;
+    }
+    outFiles.push(outFile);
   }
 
   return {
     source: filePath,
-    outFile,
+    outFile: outFiles,
   };
 };

@@ -1,6 +1,9 @@
+import { join } from 'path';
+
 import { Float } from '../../../common/tools/float';
 import { ServerEntityBuilder } from '../../../content/server-entity/server-entity-builder';
-import { createContentPath } from '../utils/create-content-path';
+import { BUILD_CONTEXT } from '../../build-context';
+import { formatFileName } from '../utils/format-file-name';
 import { writeFileByPath } from '../utils/write-file-by-path';
 
 // TODO: Remove this once we have a better way to handle floats
@@ -16,7 +19,7 @@ const replaceTrailingZeroFloats = (obj: any): void => {
     const str = `${val}`;
     const match = str.match(/^(-?\d+\.\d+)$/);
     if (match) {
-      return new Float(val, 1);
+      return new Float(val, 10);
     }
 
     return val;
@@ -52,7 +55,23 @@ export const buildServerEntityJson = async (
 
   const jsonString = JSON.stringify(json, null, 2);
 
-  const outFile = createContentPath(filePath, builder.metadata);
+  const identifier = builder.cloneConfig().identifier ?? '';
+  const fileName = formatFileName(identifier.split(':')[1], '.se.json');
+  if (identifier === undefined || fileName === undefined) {
+    console.error(`Error creating content path for ${filePath}`);
+
+    return;
+  }
+
+  const { OUTPUT_NAMESPACE_PATH, OUTPUT_BEHAVIOR_PACK_PATH } =
+    BUILD_CONTEXT.PACKS;
+
+  const outFile = join(
+    OUTPUT_BEHAVIOR_PACK_PATH,
+    'entities',
+    OUTPUT_NAMESPACE_PATH,
+    fileName,
+  );
   if (outFile === undefined) {
     console.error(`Error creating content path for ${filePath}`);
 

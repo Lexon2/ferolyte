@@ -50,8 +50,17 @@ export const buildFile = async (filePath: string, debug: boolean = true) => {
   if (debug && result !== undefined) {
     const endTime = Date.now();
     const duration = endTime - startTime;
+
+    const path = !Array.isArray(result.outFile)
+      ? [result.outFile]
+      : result.outFile;
+
+    const link = path.map(
+      (p) =>
+        `\u001b]8;;file:///${p.replace(/\\/g, '/')}\u0007${p}\u001b]8;;\u0007`,
+    );
     console.log(
-      `\n✅ Built: ${result.source}\n   Path: ${result.outFile}\n   Time: ${duration}ms\n`,
+      `\n✅ Built: ${result.source}\n   Path: ${link.join('\n         ')}\n   Time: ${duration}ms\n`,
     );
   }
 };

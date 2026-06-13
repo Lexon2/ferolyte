@@ -41,7 +41,12 @@ export const createContentPath = (
         BUILD_CONTEXT.PACKS;
 
       return fileName
-        ? join(OUTPUT_BEHAVIOR_PACK_PATH, 'entities', OUTPUT_NAMESPACE_PATH, fileName)
+        ? join(
+            OUTPUT_BEHAVIOR_PACK_PATH,
+            'entities',
+            OUTPUT_NAMESPACE_PATH,
+            fileName,
+          )
         : undefined;
     },
     [CONTENT_METADATA.CLIENT_ENTITY]: () => {
@@ -51,7 +56,12 @@ export const createContentPath = (
         BUILD_CONTEXT.PACKS;
 
       return fileName
-        ? join(OUTPUT_RESOURCE_PACK_PATH, 'entity', OUTPUT_NAMESPACE_PATH, fileName)
+        ? join(
+            OUTPUT_RESOURCE_PACK_PATH,
+            'entity',
+            OUTPUT_NAMESPACE_PATH,
+            fileName,
+          )
         : undefined;
     },
     [CONTENT_METADATA.ITEM]: () => {
@@ -61,7 +71,12 @@ export const createContentPath = (
         BUILD_CONTEXT.PACKS;
 
       return fileName
-        ? join(OUTPUT_BEHAVIOR_PACK_PATH, 'items', OUTPUT_NAMESPACE_PATH, fileName)
+        ? join(
+            OUTPUT_BEHAVIOR_PACK_PATH,
+            'items',
+            OUTPUT_NAMESPACE_PATH,
+            fileName,
+          )
         : undefined;
     },
     [CONTENT_METADATA.BLOCK]: () => {
@@ -71,7 +86,12 @@ export const createContentPath = (
         BUILD_CONTEXT.PACKS;
 
       return fileName
-        ? join(OUTPUT_BEHAVIOR_PACK_PATH, 'blocks', OUTPUT_NAMESPACE_PATH, fileName)
+        ? join(
+            OUTPUT_BEHAVIOR_PACK_PATH,
+            'blocks',
+            OUTPUT_NAMESPACE_PATH,
+            fileName,
+          )
         : undefined;
     },
     [CONTENT_METADATA.UNKNOWN]: () => {
