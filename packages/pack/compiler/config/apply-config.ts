@@ -2,11 +2,11 @@ import { readFile } from 'fs/promises';
 import { join } from 'path';
 
 import { BUILD_CONTEXT } from '../build-context';
-import { ArtifexConfig, ArtifexPackOutput } from './interfaces/config';
+import { ArtifexProfileConfig, ArtifexPackOutput } from './interfaces/config';
 import { getMinecraftDirectory } from './utils/get-minecraft-directory';
 import { MinecraftPackType } from '../../common/types/minecraft-pack-types';
 
-const applyTsConfig = async (config: ArtifexConfig) => {
+const applyTsConfig = async (config: ArtifexProfileConfig) => {
   BUILD_CONTEXT.TS.CONFIG_PATH =
     config.tsconfig ?? join(process.cwd(), 'tsconfig.json');
 
@@ -20,10 +20,13 @@ const applyTsConfig = async (config: ArtifexConfig) => {
   }
 };
 
-export const applyConfig = async (config: ArtifexConfig) => {
-  const { alias, output, minGameVersion, input, namespace } = config.packs;
+export const applyConfig = async (config: ArtifexProfileConfig) => {
+  const { packs, scripts } = config;
+  const { alias, output, minGameVersion, input, namespace } = packs;
 
   await applyTsConfig(config);
+
+  const currentWorkingDirectory = process.cwd();
 
   const createPackPath = (alias: string, type: MinecraftPackType) =>
     `${alias.toUpperCase()}_${type}`;
@@ -75,7 +78,7 @@ export const applyConfig = async (config: ArtifexConfig) => {
      * The output path for the pack in the build directory.
      */
     build: (alias: string, type: MinecraftPackType) =>
-      join(process.cwd(), 'build', createPackPath(alias, type)),
+      join(currentWorkingDirectory, 'build', createPackPath(alias, type)),
   };
 
   const outputPath = outputPathFactory[output ?? 'minecraft'];
@@ -102,12 +105,23 @@ export const applyConfig = async (config: ArtifexConfig) => {
   const namespacePath = namespace.toLowerCase().split('_').join('\\');
   BUILD_CONTEXT.PACKS.OUTPUT_NAMESPACE_PATH = namespacePath;
 
-  const inputPath = input ?? join(process.cwd(), 'packs');
+  BUILD_CONTEXT.PACKS.SCRIPT_ENTRY_PATH = scripts?.entry
+    ? join(currentWorkingDirectory, scripts.entry)
+    : join(currentWorkingDirectory, 'scripts', 'main.ts');
+  BUILD_CONTEXT.PACKS.SCRIPT_MINIFY = scripts?.minify ?? false;
+
+  const inputPath = packs.input
+    ? join(currentWorkingDirectory, packs.input)
+    : join(currentWorkingDirectory, 'packs');
+
   BUILD_CONTEXT.PACKS.INPUT_BASE_PATH = inputPath;
   BUILD_CONTEXT.PACKS.INPUT_BEHAVIOR_PACK_PATH = join(inputPath, 'BP');
   BUILD_CONTEXT.PACKS.INPUT_RESOURCE_PACK_PATH = join(inputPath, 'RP');
 
   BUILD_CONTEXT.PACKS.MIN_GAME_VERSION = minGameVersion ?? '1.21.80';
 
-  BUILD_CONTEXT.PACKS.CACHE_PATH = join(process.cwd(), '.artifex/cache');
+  BUILD_CONTEXT.PACKS.CACHE_PATH = join(
+    currentWorkingDirectory,
+    '.artifex/cache',
+  );
 };

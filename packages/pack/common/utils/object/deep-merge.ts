@@ -1,9 +1,11 @@
 export const deepMerge = (target: any, source: any): any => {
-  if (typeof target !== 'object' || target === null) {
-    return source;
-  }
   if (typeof source !== 'object' || source === null) {
     return source;
+  }
+
+  // If both are arrays, concatenate them
+  if (Array.isArray(target) && Array.isArray(source)) {
+    return [...target, ...source];
   }
 
   const result: any = Array.isArray(target) ? [...target] : { ...target };

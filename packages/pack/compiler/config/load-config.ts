@@ -4,17 +4,23 @@ import { BUILD_CONTEXT } from '../build-context';
 import { applyConfig } from './apply-config';
 import { importArtifexConfig } from './utils/import-config';
 
-export const loadConfig = async () => {
+export async function loadConfig(profileName: string) {
   if (BUILD_CONTEXT.IS_LOADED) {
     return;
   }
   const configPath = join(process.cwd(), 'artifex.config.mts');
-  const config = await importArtifexConfig(configPath);
-  if (!config) {
+  const root = await importArtifexConfig(configPath);
+  if (!root) {
     throw new Error('Artifex config not found');
+  }
+
+  const config = root.profiles?.[profileName];
+  if (!config) {
+    const names = Object.keys(root.profiles ?? {}).join(', ') || '(none)';
+    throw new Error(`Profile "${profileName}" not found. Available: ${names}`);
   }
 
   await applyConfig(config);
 
   BUILD_CONTEXT.IS_LOADED = true;
-};
+}

@@ -44,16 +44,33 @@ export interface ArtifexPackConfig {
    * The input directory for the pack.
    *
    * This is used to resolve the paths to the files in the pack.
+   * @default 'packs'
    */
   input?: string;
 }
 
-export interface ArtifexConfig {
+export interface ArtifexScriptsConfig {
+  /**
+   * The entry file for the scripts.
+   *
+   * This is used to resolve the paths to the files in the scripts.
+   * @default 'scripts/main.ts'
+   */
+  entry?: string;
+  minify?: boolean;
+}
+
+export interface ArtifexProfileConfig {
   packs: ArtifexPackConfig;
+  scripts?: ArtifexScriptsConfig;
   /**
    * The path to the tsconfig file for the pack.
    *
    * This is used to resolve the paths to the files in the pack.
    */
   tsconfig?: string;
+}
+
+export interface ArtifexConfig {
+  profiles: Record<string, ArtifexProfileConfig>;
 }

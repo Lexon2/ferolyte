@@ -40,7 +40,7 @@ const createBuildDictionary = async (): Promise<
 
   for await (const file of walkFiles(INPUT_BASE_PATH)) {
     if (!file.endsWith('.ts')) {
-      const outputPath = createPacksOutputPathFromInputPath(file);
+      const outputPath: string = createPacksOutputPathFromInputPath(file);
 
       if (outputPath) {
         copyFilePaths[file] = outputPath;
@@ -60,21 +60,23 @@ const clearBuildDirectory = async () => {
   const { OUTPUT_BEHAVIOR_PACK_PATH, OUTPUT_RESOURCE_PACK_PATH } =
     BUILD_CONTEXT.PACKS;
 
-  await rm(getBuildCacheDistDir(), { recursive: true, force: true });
-  await rm(OUTPUT_BEHAVIOR_PACK_PATH, { recursive: true, force: true });
-  await rm(OUTPUT_RESOURCE_PACK_PATH, { recursive: true, force: true });
+  await Promise.all([
+    rm(getBuildCacheDistDir(), { recursive: true, force: true }),
+    rm(OUTPUT_BEHAVIOR_PACK_PATH, { recursive: true, force: true }),
+    rm(OUTPUT_RESOURCE_PACK_PATH, { recursive: true, force: true }),
+  ]);
 };
 
 /**
  * Builds the content.
  */
-export const build = async (debug: boolean = true) => {
+export const build = async (debug: boolean = true, profile: string) => {
   if (debug) {
     console.log('🔄 Building...');
   }
   const startTime = Date.now();
 
-  await loadConfig();
+  await loadConfig(profile);
   await clearBuildDirectory();
 
   const [copyFilePaths, buildFilePaths] = await createBuildDictionary();
