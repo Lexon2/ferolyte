@@ -38,7 +38,7 @@ const validCauses = [
 ];
 
 interface DamageAbsorptionOptions {
-  absorbableCauses: string[];
+  causes: string[];
 }
 
 /**
@@ -54,8 +54,8 @@ export const createDamageAbsorption = (
   }
 
   if (
-    !Array.isArray(options.absorbableCauses) ||
-    options.absorbableCauses.length === 0
+    !Array.isArray(options.causes) ||
+    options.causes.length === 0
   ) {
     // @TODO: Add error handling
     console.error('Absorbable causes must be a non-empty array');
@@ -64,7 +64,7 @@ export const createDamageAbsorption = (
   }
 
   // Validate all causes are strings
-  for (const cause of options.absorbableCauses) {
+  for (const cause of options.causes) {
     if (typeof cause !== 'string' || cause.length === 0) {
       // @TODO: Add error handling
       console.error('Absorbable causes must be non-empty strings');
@@ -80,7 +80,7 @@ export const createDamageAbsorption = (
 
   return {
     'minecraft:damage_absorption': {
-      absorbable_causes: [...options.absorbableCauses],
+      absorbable_causes: [...options.causes],
     },
   };
 };
