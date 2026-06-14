@@ -1,8 +1,14 @@
+import { createIcon } from './convertors/components/icon';
 import { itemComponentCreatorsFactory } from './convertors/components';
 import { ItemComponentCreator } from './convertors/components/index';
 import { convertMenuCategory } from './convertors/components/menu-category/convert-category';
 import { ItemConfig } from './interfaces/item-config';
 import { MinecraftItem } from './interfaces/minecraft-item';
+import {
+  ItemIconPackConfig,
+  ItemTextureEntry,
+  resolveItemIcon,
+} from './utils/resolve-item-icon';
 import { ContentBuilder } from '@artifex/common/content/interfaces/content-builder';
 import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { CONTENT_METADATA } from '@artifex/common/content/metadata';
@@ -12,6 +18,8 @@ export class ItemBuilder implements ContentBuilder {
 
   private config: ItemConfig;
   private buildContext?: ContentDiagnosticContext;
+  private packConfig?: ItemIconPackConfig;
+  private itemTextureEntries: ItemTextureEntry[] = [];
 
   constructor(config: ItemConfig) {
     this.config = config;
@@ -22,11 +30,21 @@ export class ItemBuilder implements ContentBuilder {
     return this;
   }
 
+  public withPackConfig(packConfig: ItemIconPackConfig): this {
+    this.packConfig = packConfig;
+    return this;
+  }
+
   public cloneConfig(): ItemConfig {
     return structuredClone(this.config);
   }
 
+  public getItemTextureEntries(): ItemTextureEntry[] {
+    return this.itemTextureEntries;
+  }
+
   public build(): MinecraftItem {
+    this.itemTextureEntries = [];
     const { config } = this;
 
     const item: MinecraftItem = {
@@ -96,7 +114,32 @@ export class ItemBuilder implements ContentBuilder {
           ? { ...this.buildContext, component, fieldPath: undefined }
           : undefined;
 
-      const minecraftComponent = factory(componentData, componentContext);
+      let minecraftComponent: Record<string, unknown> | undefined;
+
+      if (
+        component === 'icon' &&
+        this.packConfig !== undefined &&
+        componentData !== undefined
+      ) {
+        const resolved = resolveItemIcon(
+          componentData as Parameters<typeof resolveItemIcon>[0],
+          this.config.identifier,
+          this.packConfig,
+        );
+
+        if (resolved !== undefined) {
+          this.itemTextureEntries.push(...resolved.textureEntries);
+          minecraftComponent = createIcon(
+            { textures: resolved.iconTextures },
+            componentContext,
+          );
+        }
+      }
+
+      if (minecraftComponent === undefined) {
+        minecraftComponent = factory(componentData, componentContext);
+      }
+
       if (minecraftComponent === undefined) {
         continue;
       }

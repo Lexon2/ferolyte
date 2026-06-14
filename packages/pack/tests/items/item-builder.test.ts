@@ -87,4 +87,29 @@ describe('ItemBuilder', () => {
 
     expect(builder.cloneConfig().components?.glint).toBe(true);
   });
+
+  it('resolves icon path into atlas entry and texture key', () => {
+    const builder = new ItemBuilder(
+      minimalItemConfig({
+        identifier: 'artifex:test',
+        components: {
+          icon: 'textures/arfex/test/items/test',
+        },
+      }),
+    ).withPackConfig({ namespace: 'arfex_test' });
+
+    const item = builder.build();
+
+    expect(item['minecraft:item'].components).toEqual({
+      'minecraft:icon': {
+        textures: { default: 'artifex:test' },
+      },
+    });
+    expect(builder.getItemTextureEntries()).toEqual([
+      {
+        key: 'artifex:test',
+        textures: 'textures/arfex/test/items/test',
+      },
+    ]);
+  });
 });

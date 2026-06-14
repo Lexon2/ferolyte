@@ -1,8 +1,10 @@
 import { ItemBuilder } from '@artifex/pack/content/item/item-builder';
 import { ContentBuildOptions } from '../../actions/options';
+import { BUILD_CONTEXT } from '../../build-context';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
 import { createContentPath } from '../utils/create-content-path';
+import { registerItemTexture } from './item-texture-atlas';
 
 export const buildItemJson = async (
   filePath: string,
@@ -15,6 +17,7 @@ export const buildItemJson = async (
     diagnostics: options.diagnostics,
     contentType: 'item',
   });
+  builder.withPackConfig({ namespace: BUILD_CONTEXT.PACKS.NAMESPACE });
 
   const json = builder.build();
   const jsonString = serializeJson(json);
@@ -25,6 +28,10 @@ export const buildItemJson = async (
     console.error(`Error creating content path for ${filePath}`);
 
     return;
+  }
+
+  for (const entry of builder.getItemTextureEntries()) {
+    registerItemTexture(entry.key, entry.textures);
   }
 
   const writeResult = await writeWithPlugins(

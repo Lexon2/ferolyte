@@ -11,17 +11,17 @@ describe('createIcon', () => {
     expectUndefined(createIcon, '');
   });
 
-  it('maps string icon', () => {
-    expectComponent(createIcon, 'textures/items/stone.png', 'minecraft:icon', {
-      textures: { default: 'textures/items/stone.png' },
+  it('maps string icon texture key', () => {
+    expectComponent(createIcon, 'artifex:test', 'minecraft:icon', {
+      textures: { default: 'artifex:test' },
     });
   });
 
-  it('maps textures object', () => {
+  it('maps textures object with atlas keys', () => {
     expectComponent(createIcon, {
-      textures: { default: 'textures/items/stone.png', damaged: 'textures/items/stone_damaged.png' },
+      textures: { default: 'artifex:test', damaged: 'artifex:test_damaged' },
     }, 'minecraft:icon', {
-      textures: { default: 'textures/items/stone.png', damaged: 'textures/items/stone_damaged.png' },
+      textures: { default: 'artifex:test', damaged: 'artifex:test_damaged' },
     });
   });
 });

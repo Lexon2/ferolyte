@@ -8,6 +8,7 @@ export const BUILD_CONTEXT = {
   },
   PACKS: {
     PACK_ALIAS: '',
+    NAMESPACE: '',
     MIN_GAME_VERSION: '',
     OUTPUT_NAMESPACE_PATH: '',
     OUTPUT_BEHAVIOR_PACK_PATH: '',

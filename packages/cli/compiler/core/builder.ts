@@ -14,6 +14,7 @@ import { isArtifexContentFile } from './utils/is-content-file';
 import { getBuildCacheDistDir } from '../content/utils/build-cache-dist-dir';
 import { createContentPath } from '../content/utils/create-content-path';
 import { ContentBuildOptions } from '../actions/options';
+import { flushItemTextures } from '../content/items/item-texture-atlas';
 
 /**
  * Builds a file using esbuild and imports it.
@@ -99,6 +100,8 @@ export const rebuildFile = async (
       }
     }),
   );
+
+  await flushItemTextures({ preferOutput: true });
 
   return results;
 };

@@ -17,6 +17,10 @@ import {
   scheduleAfterLoad,
 } from '../plugins/plugin-host';
 import { copyWithPlugins } from '../plugins/write-with-plugins';
+import {
+  clearItemTextureRegistry,
+  flushItemTextures,
+} from '../content/items/item-texture-atlas';
 
 const SKIP_DIRECTORIES = new Set(['node_modules', '.git', '.artifex', 'dist']);
 
@@ -106,6 +110,8 @@ export const build = async (options: CompilerActionOptions) => {
 
   const [copyFilePaths, buildFilePaths] = await createBuildDictionary();
 
+  clearItemTextureRegistry();
+
   await Promise.all(
     buildFilePaths.map(async (file) => {
       const result = await ArtifexContentBuilder.buildFile(file, {
@@ -138,6 +144,8 @@ export const build = async (options: CompilerActionOptions) => {
       );
     }),
   );
+
+  await flushItemTextures();
 
   await emitHook('afterBuild', createBuildEvent());
   scheduleAfterLoad(
