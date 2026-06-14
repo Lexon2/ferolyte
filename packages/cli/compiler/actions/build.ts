@@ -115,7 +115,7 @@ export const build = async (options: CompilerActionOptions) => {
   await Promise.all(
     buildFilePaths.map(async (file) => {
       const result = await ArtifexContentBuilder.buildFile(file, {
-        debug,
+        debug: false, // Initial build is not verbose
         diagnostics,
       });
 
