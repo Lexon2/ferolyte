@@ -51,6 +51,7 @@ export const createBlockPermutation = (
       ctx !== undefined ? { ...ctx, fieldPath: 'condition' } : undefined,
       'Invalid permutation condition',
     );
+
     return undefined;
   }
 
@@ -75,6 +76,7 @@ export const createBlockPermutation = (
       ctx !== undefined ? { ...ctx, fieldPath: 'components' } : undefined,
       'Invalid components',
     );
+
     return undefined;
   }
 
@@ -86,7 +88,7 @@ export const createBlockPermutation = (
 
 export const parseBlockPermutationCondition = (
   condition: BlockPermutationCondition,
-  _ctx?: ContentDiagnosticContext,
+  ctx?: ContentDiagnosticContext,
 ): string | undefined => {
   let result: string | undefined = '';
 
@@ -112,9 +114,16 @@ export const parseBlockPermutationCondition = (
     }
   }
 
-  if (query) {
-    result += `${query}`;
+  if (!query) {
+    return result;
   }
+
+  if (typeof query === 'string') {
+    result += `${query}`;
+  } else {
+    result += `${query.build()}`;
+  }
+
   return result;
 };
 

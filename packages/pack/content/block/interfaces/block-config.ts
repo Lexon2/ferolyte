@@ -3,6 +3,7 @@ import { Identifier } from '@artifex/common/types';
 import { ColorValue } from '../../../content/common/types/color-value';
 import { ItemMenuCategory } from '../../item/interfaces/item-menu-category';
 import { BlockTags } from '../components/tags';
+import { Molang } from '../../molang';
 
 // Interface for block states
 export interface BlockStates {
@@ -46,9 +47,9 @@ export interface BlockPermutationConfig {
 
 export interface BlockPermutationCondition {
   /**
-   * A Molang expression that evaluates to true or false
+   * A Molang expression that evaluates to true or false.
    */
-  query?: string;
+  query?: string | Molang;
   /**
    * Block States for this permutation
    */
