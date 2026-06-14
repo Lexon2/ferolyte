@@ -1,6 +1,6 @@
 import { readdir } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
-import { join, relative } from 'node:path';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import * as esbuild from 'esbuild';
@@ -89,17 +89,5 @@ if (tsc.status !== 0) {
 }
 
 await fixDistModuleSpecifiers(join(rootDir, 'dist'));
-
-for (const entry of entryPoints) {
-  if (relative(rootDir, entry).replace(/\\/g, '/').startsWith('cli/index.ts')) {
-    const outFile = join(rootDir, 'dist/cli/index.js');
-    const { readFile, writeFile } = await import('node:fs/promises');
-    const content = await readFile(outFile, 'utf8');
-
-    if (!content.startsWith('#!')) {
-      await writeFile(outFile, `#!/usr/bin/env node\n${content}`);
-    }
-  }
-}
 
 console.log(`Built ${entryPoints.length} JS and declaration files to dist/`);

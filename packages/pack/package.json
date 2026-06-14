@@ -4,6 +4,19 @@
   "description": "Artifex content SDK for Minecraft BE addons",
   "license": "MIT",
   "type": "module",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lexon2/artifex.git",
+    "directory": "packages/pack"
+  },
+  "bugs": {
+    "url": "https://github.com/Lexon2/artifex/issues"
+  },
+  "homepage": "https://github.com/Lexon2/artifex#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     "./*": {
       "types": "./dist/*.d.ts",
@@ -16,11 +29,10 @@
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
-    "prepare": "npm run build",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@artifex/common": "*"
+    "@artifex/common": "^0.1.0"
   },
   "devDependencies": {
     "esbuild": "^0.28.1",

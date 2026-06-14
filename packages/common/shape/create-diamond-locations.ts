@@ -1,4 +1,4 @@
-import { Vector3 } from '@minecraft/server';
+import type { Vector3 } from '@minecraft/server';
 
 /**
  * Creates a list of locations in a diamond/rhombus shape around a center point

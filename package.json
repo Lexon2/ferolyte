@@ -1,10 +1,18 @@
 {
-  "name": "@artifex",
+  "name": "artifex",
+  "private": true,
   "license": "MIT",
   "version": "0.1.0",
   "description": "Craft your Minecraft BE addons easialy with Artifex framework.",
-  "main": "src/main.ts",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lexon2/artifex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lexon2/artifex/issues"
+  },
+  "homepage": "https://github.com/Lexon2/artifex#readme",
   "workspaces": [
     "packages/common",
     "packages/pack",
@@ -16,7 +24,12 @@
     }
   },
   "scripts": {
+    "postinstall": "npm run build:packages",
     "build:packages": "npm run build -w @artifex/common && npm run build -w @artifex/pack && npm run build -w @artifex/cli",
+    "pack:check": "npm run build:packages && npm pack -w @artifex/common --dry-run && npm pack -w @artifex/pack --dry-run && npm pack -w @artifex/cli --dry-run",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "npm run build:packages && changeset publish",
     "lint": "eslint \"./packages/**/*.ts\"",
     "lint:fix": "eslint \"./packages/**/*.ts\" --fix",
     "artifex:build": "artifex run",
@@ -34,9 +47,10 @@
     "esbuild": "^0.28.1"
   },
   "devDependencies": {
-    "@artifex/cli": "*",
-    "@artifex/common": "*",
-    "@artifex/pack": "*",
+    "@artifex/cli": "workspace:*",
+    "@artifex/common": "workspace:*",
+    "@artifex/pack": "workspace:*",
+    "@changesets/cli": "^2.29.8",
     "@eslint/config-array": "^0.23.5",
     "@eslint/js": "^9.39.4",
     "@eslint/object-schema": "^2.1.7",
