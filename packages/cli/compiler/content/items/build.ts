@@ -3,6 +3,7 @@ import { join } from 'path';
 import { ItemBuilder } from '@artifex/pack/content/item/item-builder';
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
+import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
 import { ContentBuildOptions } from '../../actions/options';
 
@@ -19,7 +20,7 @@ export const buildItemJson = async (
   });
 
   const json = builder.build();
-  const jsonString = JSON.stringify(json, null, 2);
+  const jsonString = serializeJson(json);
 
   const identifier = builder.cloneConfig().identifier ?? '';
   const fileName = formatFileName(identifier.split(':')[1], '.item.json');

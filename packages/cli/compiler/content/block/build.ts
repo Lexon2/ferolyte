@@ -4,6 +4,7 @@ import { BlockBuilder } from '@artifex/pack/content/block/block-builder';
 import { ContentBuildOptions } from '../../actions/options';
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
+import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
 
 export const buildBlockJson = async (
@@ -19,7 +20,7 @@ export const buildBlockJson = async (
   });
 
   const json = builder.build();
-  const jsonString = JSON.stringify(json, null, 2);
+  const jsonString = serializeJson(json);
 
   const identifier = builder.cloneConfig().identifier ?? '';
   const fileName = formatFileName(identifier.split(':')[1], '.block.json');

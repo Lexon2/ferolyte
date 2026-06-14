@@ -3,6 +3,7 @@ import { join } from 'path';
 import { ClientEntityBuilder } from '@artifex/pack/content/client-entity/client-entity-builder';
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
+import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
 import { ContentBuildOptions } from '../../actions/options';
 
@@ -12,7 +13,7 @@ export const buildClientEntityJson = async (
   _options: ContentBuildOptions = { debug: true, diagnostics: true },
 ): Promise<string | undefined> => {
   const json = builder.build();
-  const jsonString = JSON.stringify(json, null, 2);
+  const jsonString = serializeJson(json);
 
   const identifier = builder.cloneConfig().identifier ?? '';
   const fileName = formatFileName(identifier.split(':')[1], '.ce.json');

@@ -110,6 +110,9 @@ export const applyConfig = async (config: ArtifexProfileConfig) => {
     ? join(currentWorkingDirectory, scripts.entry)
     : join(currentWorkingDirectory, 'scripts', 'main.ts');
   BUILD_CONTEXT.PACKS.SCRIPT_MINIFY = scripts?.minify ?? false;
+  BUILD_CONTEXT.PACKS.PACK_ALIAS = alias;
+  BUILD_CONTEXT.PACKS.MINIFY_JSON = packs.minifyJSON ?? false;
+  BUILD_CONTEXT.PACKS.ARCHIVE = packs.archive ?? false;
 
   const inputPath = packs.input
     ? join(currentWorkingDirectory, packs.input)

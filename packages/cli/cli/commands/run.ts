@@ -1,6 +1,7 @@
 import { defineCommand } from 'citty';
 
 import { ArtifexPack } from '../../artifex-pack';
+import { archivePacksIfEnabled } from '../../compiler/archive/create-mcaddon';
 import { buildScriptsOnce } from '../../compiler/scripts/watch-esbuild';
 import {
   compilerCommandArgs,
@@ -17,6 +18,7 @@ export const runCommand = defineCommand({
     const options = toCompilerOptions(args);
     await ArtifexPack.build(options);
     await buildScriptsOnce(options.profile);
+    await archivePacksIfEnabled();
     process.exit(0);
   },
 });

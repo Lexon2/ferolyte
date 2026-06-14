@@ -49,6 +49,19 @@ export interface ArtifexPackConfig {
    * @default 'packs'
    */
   input?: string;
+
+  /**
+   * Minifies all output JSON files (compiled from TS and copied JSON).
+   * @default false
+   */
+  minifyJSON?: boolean;
+
+  /**
+   * Creates a `{alias}.mcaddon` archive in the project root after a full build.
+   * The archive contains `{alias}_BP` and `{alias}_RP` pack folders.
+   * @default false
+   */
+  archive?: boolean;
 }
 
 export interface ArtifexScriptsConfig {

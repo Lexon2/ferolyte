@@ -4,6 +4,8 @@
 node_modules
 yarn.lock
 *.zip
+*.mcpack
+*.mcaddon
 package-lock.json
 
 dist

@@ -4,6 +4,7 @@ import { Float } from '@artifex/common/content/tools/float';
 import { ServerEntityBuilder } from '@artifex/pack/content/server-entity/server-entity-builder';
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
+import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
 import { ContentBuildOptions } from '../../actions/options';
 
@@ -62,7 +63,7 @@ export const buildServerEntityJson = async (
   const json = builder.build();
   replaceTrailingZeroFloats(json);
 
-  const jsonString = JSON.stringify(json, null, 2);
+  const jsonString = serializeJson(json);
 
   const identifier = builder.cloneConfig().identifier ?? '';
   const fileName = formatFileName(identifier.split(':')[1], '.se.json');
