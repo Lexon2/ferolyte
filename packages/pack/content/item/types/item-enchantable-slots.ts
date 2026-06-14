@@ -1,0 +1,16 @@
+export type ItemEnchantableSlots =
+  | 'axe'
+  | 'bow'
+  | 'armor_feet'
+  | 'armor_torso'
+  | 'armor_head'
+  | 'armor_legs'
+  | 'hoe'
+  | 'pickaxe'
+  | 'shovel'
+  | 'elytra'
+  | 'fishing_rod'
+  | 'flintsteel'
+  | 'sword'
+  | 'shears'
+  | 'cosmetic_head';

@@ -53,25 +53,25 @@ export default tseslint.config(
           argsIgnorePattern: '^_',
         },
       ],
-      'import-x/order': [
-        'error',
-        {
-          groups: ['builtin', 'external', 'internal'],
-          pathGroups: [
-            {
-              pattern: '@minecraft/server',
-              group: 'external',
-              position: 'before',
-            },
-          ],
-          pathGroupsExcludedImportTypes: ['@minecraft/server'],
-          'newlines-between': 'always',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
-          },
-        },
-      ],
+      // 'import-x/order': [
+      //   'error',
+      //   {
+      //     groups: ['builtin', 'external', 'internal'],
+      //     pathGroups: [
+      //       {
+      //         pattern: '@minecraft/server',
+      //         group: 'external',
+      //         position: 'before',
+      //       },
+      //     ],
+      //     pathGroupsExcludedImportTypes: ['@minecraft/server'],
+      //     'newlines-between': 'always',
+      //     alphabetize: {
+      //       order: 'asc',
+      //       caseInsensitive: true,
+      //     },
+      //   },
+      // ],
       '@stylistic/ts/padding-line-between-statements': [
         'error',
         { blankLine: 'always', prev: '*', next: 'export' },

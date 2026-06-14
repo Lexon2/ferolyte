@@ -1,0 +1,41 @@
+{
+  "name": "@artifex/common",
+  "version": "0.1.0",
+  "description": "Shared utilities and content foundation for Artifex",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lexon2/artifex.git",
+    "directory": "packages/common"
+  },
+  "bugs": {
+    "url": "https://github.com/Lexon2/artifex/issues"
+  },
+  "homepage": "https://github.com/Lexon2/artifex#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.1",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

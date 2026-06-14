@@ -1,0 +1,1 @@
+export type EntityGeometriesCollection = string | Record<string, string>;

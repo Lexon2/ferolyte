@@ -1,0 +1,1 @@
+export type MinecraftPackType = 'BP' | 'RP';

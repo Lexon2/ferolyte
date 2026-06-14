@@ -1,0 +1,1 @@
+export type ItemHoverTextColor = "black" | "blue" | "brown" | "cyan" | "gray" | "green" | "light_blue" | "light_green" | "magenta" | "orange" | "pink" | "purple" | "red" | "silver" | "white" | "yellow"

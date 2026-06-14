@@ -1,0 +1,1 @@
+export type EntityTexturesCollection = string | Record<string, string>;

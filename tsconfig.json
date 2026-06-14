@@ -2,37 +2,34 @@
   "compilerOptions": {
     "module": "ES2020",
     "target": "es2020",
-    "lib": ["es2020", "dom"],
+    "lib": ["es2020"],
     "moduleResolution": "node",
     "rootDir": ".",
-    "outDir": "./dist",
     "baseUrl": ".",
     "declaration": false,
+    "noEmit": true,
     "noEmitHelpers": true,
-    "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": false,
     "pretty": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "allowUnreachableCode": true,
-    "allowUnusedLabels": true,
     "noImplicitAny": true,
     "noImplicitReturns": false,
     "noImplicitUseStrict": false,
-    "listFiles": false,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@artifex/common/*": ["packages/common/*"],
-      "@artifex/events/*": ["packages/events/*"],
-      "@artifex/packs/*": ["packages/packs/*"],
-      "@artifex/world/*": ["packages/world/*"],
-      "@artifex/utils/*": ["packages/utils/*"]
+      "@artifex/pack/*": ["packages/pack/*"],
+      "@artifex/cli/*": ["packages/cli/*"]
     }
   },
-  "include": ["packages/**/*", "test/**/*"],
-  "exclude": ["node_modules"],
-  "compileOnSave": false
+  "include": [
+    "packages/common/**/*",
+    "packages/pack/**/*",
+    "packages/cli/**/*"
+  ],
+  "exclude": ["node_modules", "**/*.d.ts", "**/*.d.ts.map"]
 }

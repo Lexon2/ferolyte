@@ -1,0 +1,54 @@
+{
+  "name": "@artifex/cli",
+  "version": "0.1.0",
+  "description": "Artifex CLI and pack compiler for Minecraft BE addons",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lexon2/artifex.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/Lexon2/artifex/issues"
+  },
+  "homepage": "https://github.com/Lexon2/artifex#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "artifex": "./dist/cli/index.js"
+  },
+  "exports": {
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@artifex/common": "^0.1.0",
+    "@artifex/pack": "^0.1.0",
+    "chokidar": "^4.0.3",
+    "citty": "^0.2.2",
+    "esbuild": "^0.28.1",
+    "jsonc-parser": "^3.3.1",
+    "uuid": "^13.0.2",
+    "ws": "^8.21.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.1",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
