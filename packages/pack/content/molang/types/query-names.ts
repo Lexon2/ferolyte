@@ -1,306 +1,640 @@
 /**
  * @description https://bedrock.dev/docs/stable/Molang#List%20of%20Entity%20Queries
  */
-export type MolangQuery = `query.${MolangQueryNames}` | (string & {});
+export type MolangQuery = `query.${MolangQueryName}` | (string & {});
 
-export type MolangQueryNames =
-  | 'above_top_solid'
-  | 'actor_count'
-  | 'all'
-  | 'all_animations_finished'
-  | 'all_tags'
-  | 'anger_level'
-  | 'anim_time'
-  | 'any'
-  | 'any_animation_finished'
-  | 'any_tag'
-  | 'approx_eq'
-  | 'armor_color_slot'
-  | 'armor_damage_slot'
-  | 'armor_material_slot'
-  | 'armor_texture_slot'
-  | 'average_frame_time'
-  | 'block_face'
-  | 'block_has_all_tags'
-  | 'block_has_any_tag'
-  | 'block_neighbor_has_all_tags'
-  | 'block_neighbor_has_any_tag'
-  | 'block_property'
-  | 'block_state'
-  | 'blocking'
-  | 'body_x_rotation'
-  | 'body_y_rotation'
-  | 'bone_aabb'
-  | 'bone_orientation_matrix'
-  | 'bone_orientation_trs'
-  | 'bone_origin'
-  | 'bone_rotation'
-  | 'camera_distance_range_lerp'
-  | 'camera_rotation'
-  | 'can_climb'
-  | 'can_damage_nearby_mobs'
-  | 'can_dash'
-  | 'can_fly'
-  | 'can_power_jump'
-  | 'can_swim'
-  | 'can_walk'
-  | 'cape_flap_amount'
-  | 'cardinal_block_face_placed_on'
-  | 'cardinal_facing'
-  | 'cardinal_facing_2d'
-  | 'cardinal_player_facing'
-  | 'client_max_render_distance'
-  | 'client_memory_tier'
-  | 'combine_entities'
-  | 'cooldown_time'
-  | 'cooldown_time_remaining'
-  | 'count'
-  | 'current_squish_value'
-  | 'dash_cooldown_progress'
-  | 'day'
-  | 'death_ticks'
-  | 'debug_output'
-  | 'delta_time'
-  | 'distance_from_camera'
-  | 'effect_emitter_count'
-  | 'effect_particle_count'
-  | 'equipment_count'
-  | 'equipped_item_all_tags'
-  | 'equipped_item_any_tag'
-  | 'equipped_item_is_attachable'
-  | 'eye_target_x_rotation'
-  | 'eye_target_y_rotation'
-  | 'facing_target_to_range_attack'
-  | 'frame_alpha'
-  | 'get_actor_info_id'
-  | 'get_animation_frame'
-  | 'get_default_bone_pivot'
-  | 'get_equipped_item_name'
-  | 'get_locator_offset'
-  | 'get_name'
-  | 'get_root_locator_offset'
-  | 'graphics_mode_is_any'
-  | 'ground_speed'
-  | 'had_component_group'
-  | 'has_any_family'
-  | 'has_any_leashed_entity_of_type'
-  | 'has_armor_slot'
-  | 'has_biome_tag'
-  | 'has_block_property'
-  | 'has_block_state'
-  | 'has_cape'
-  | 'has_collision'
-  | 'has_dash_cooldown'
-  | 'has_gravity'
-  | 'has_head_gear'
-  | 'has_owner'
-  | 'has_player_rider'
-  | 'has_property'
-  | 'has_rider'
-  | 'has_target'
-  | 'head_roll_angle'
-  | 'head_x_rotation'
-  | 'head_y_rotation'
-  | 'health'
-  | 'heartbeat_interval'
-  | 'heartbeat_phase'
-  | 'heightmap'
-  | 'hurt_direction'
-  | 'hurt_time'
-  | 'in_range'
-  | 'invulnerable_ticks'
-  | 'is_admiring'
-  | 'is_alive'
-  | 'is_angry'
-  | 'is_attached'
-  | 'is_attached_to_entity'
-  | 'is_avoiding_block'
-  | 'is_avoiding_mobs'
-  | 'is_baby'
-  | 'is_breathing'
-  | 'is_bribed'
-  | 'is_carrying_block'
-  | 'is_casting'
-  | 'is_celebrating'
-  | 'is_celebrating_special'
-  | 'is_charged'
-  | 'is_charging'
-  | 'is_chested'
-  | 'is_cooldown_type'
-  | 'is_crawling'
-  | 'is_critical'
-  | 'is_croaking'
-  | 'is_dancing'
-  | 'is_delayed_attacking'
-  | 'is_digging'
-  | 'is_eating'
-  | 'is_eating_mob'
-  | 'is_elder'
-  | 'is_emerging'
-  | 'is_emoting'
-  | 'is_enchanted'
-  | 'is_feeling_happy'
-  | 'is_fire_immune'
-  | 'is_first_person'
-  | 'is_ghost'
-  | 'is_gliding'
-  | 'is_grazing'
-  | 'is_idling'
-  | 'is_ignited'
-  | 'is_illager_captain'
-  | 'is_in_contact_with_water'
-  | 'is_in_lava'
-  | 'is_in_love'
-  | 'is_in_ui'
-  | 'is_in_water'
-  | 'is_in_water_or_rain'
-  | 'is_interested'
-  | 'is_invisible'
-  | 'is_item_equipped'
-  | 'is_item_name_any'
-  | 'is_jump_goal_jumping'
-  | 'is_jumping'
-  | 'is_laying_down'
-  | 'is_laying_egg'
-  | 'is_leashed'
-  | 'is_levitating'
-  | 'is_lingering'
-  | 'is_local_player'
-  | 'is_moving'
-  | 'is_name_any'
-  | 'is_on_fire'
-  | 'is_on_ground'
-  | 'is_on_screen'
-  | 'is_onfire'
-  | 'is_orphaned'
-  | 'is_owner_identifier_any'
-  | 'is_persona_or_premium_skin'
-  | 'is_playing_dead'
-  | 'is_powered'
-  | 'is_pregnant'
-  | 'is_ram_attacking'
-  | 'is_resting'
-  | 'is_riding'
-  | 'is_rising'
-  | 'is_roaring'
-  | 'is_rolling'
-  | 'is_saddled'
-  | 'is_scared'
-  | 'is_scenting'
-  | 'is_searching'
-  | 'is_selected_item'
-  | 'is_shaking'
-  | 'is_shaking_wetness'
-  | 'is_sheared'
-  | 'is_shield_powered'
-  | 'is_silent'
-  | 'is_sitting'
-  | 'is_sleeping'
-  | 'is_sneaking'
-  | 'is_sneezing'
-  | 'is_sniffing'
-  | 'is_sonic_boom'
-  | 'is_spectator'
-  | 'is_sprinting'
-  | 'is_stackable'
-  | 'is_stalking'
-  | 'is_standing'
-  | 'is_stunned'
-  | 'is_swimming'
-  | 'is_tamed'
-  | 'is_transforming'
-  | 'is_using_item'
-  | 'is_wall_climbing'
-  | 'item_in_use_duration'
-  | 'item_is_charged'
-  | 'item_max_use_duration'
-  | 'item_remaining_use_duration'
-  | 'item_slot_to_bone_name'
-  | 'key_frame_lerp_time'
-  | 'last_frame_time'
-  | 'last_hit_by_player'
-  | 'last_input_mode_is_any'
-  | 'leashed_entity_count'
-  | 'lie_amount'
-  | 'life_span'
-  | 'life_time'
-  | 'lod_index'
-  | 'log'
-  | 'main_hand_item_max_duration'
-  | 'main_hand_item_use_duration'
-  | 'mark_variant'
-  | 'max_durability'
-  | 'max_health'
-  | 'max_trade_tier'
-  | 'maximum_frame_time'
-  | 'minimum_frame_time'
-  | 'model_scale'
-  | 'modified_distance_moved'
-  | 'modified_move_speed'
-  | 'moon_brightness'
-  | 'moon_phase'
-  | 'movement_direction'
-  | 'noise'
-  | 'on_fire_time'
-  | 'out_of_control'
-  | 'overlay_alpha'
-  | 'owner_identifier'
-  | 'player_level'
-  | 'position'
-  | 'position_delta'
-  | 'previous_squish_value'
-  | 'property'
-  | 'relative_block_has_all_tags'
-  | 'relative_block_has_any_tag'
-  | 'remaining_durability'
-  | 'ride_body_x_rotation'
-  | 'ride_body_y_rotation'
-  | 'ride_head_x_rotation'
-  | 'ride_head_y_rotation'
-  | 'rider_body_x_rotation'
-  | 'rider_body_y_rotation'
-  | 'rider_head_x_rotation'
-  | 'rider_head_y_rotation'
-  | 'roll_counter'
-  | 'rotation_to_camera'
-  | 'scoreboard'
-  | 'server_memory_tier'
-  | 'shake_angle'
-  | 'shake_time'
-  | 'shield_blocking_bob'
-  | 'show_bottom'
-  | 'sit_amount'
-  | 'skin_id'
-  | 'sleep_rotation'
-  | 'sneeze_counter'
-  | 'spellcolor'
-  | 'standing_scale'
-  | 'state_time'
-  | 'structural_integrity'
-  | 'surface_particle_color'
-  | 'surface_particle_texture_coordinate'
-  | 'surface_particle_texture_size'
-  | 'swell_amount'
-  | 'swelling_dir'
-  | 'swim_amount'
-  | 'tail_angle'
-  | 'target_x_rotation'
-  | 'target_y_rotation'
-  | 'texture_frame_index'
-  | 'time_of_day'
-  | 'time_since_last_vibration_detection'
-  | 'time_stamp'
-  | 'timer_flag_1'
-  | 'timer_flag_2'
-  | 'timer_flag_3'
-  | 'total_emitter_count'
-  | 'total_particle_count'
-  | 'touch_only_affects_hotbar'
-  | 'trade_tier'
-  | 'unhappy_counter'
-  | 'variant'
-  | 'vertical_speed'
-  | 'walk_distance'
-  | 'wing_flap_position'
-  | 'wing_flap_speed'
-  | 'yaw_speed';
+export const enum MolangQueryName {
+  AboveTopSolid = 'above_top_solid',
+  ActorCount = 'actor_count',
+  All = 'all',
+  AllAnimationsFinished = 'all_animations_finished',
+  AllTags = 'all_tags',
+  AngerLevel = 'anger_level',
+  AnimTime = 'anim_time',
+  Any = 'any',
+  AnyAnimationFinished = 'any_animation_finished',
+  AnyTag = 'any_tag',
+  ApproxEq = 'approx_eq',
+  ArmorColorSlot = 'armor_color_slot',
+  ArmorDamageSlot = 'armor_damage_slot',
+  ArmorMaterialSlot = 'armor_material_slot',
+  ArmorTextureSlot = 'armor_texture_slot',
+  AverageFrameTime = 'average_frame_time',
+  BaseSwingDuration = 'base_swing_duration',
+  BlockFace = 'block_face',
+  BlockHasAllTags = 'block_has_all_tags',
+  BlockHasAnyTag = 'block_has_any_tag',
+  BlockNeighborHasAllTags = 'block_neighbor_has_all_tags',
+  BlockNeighborHasAnyTag = 'block_neighbor_has_any_tag',
+  BlockProperty = 'block_property',
+  BlockState = 'block_state',
+  Blocking = 'blocking',
+  BodyXRotation = 'body_x_rotation',
+  BodyYRotation = 'body_y_rotation',
+  BoneAabb = 'bone_aabb',
+  BoneOrientationMatrix = 'bone_orientation_matrix',
+  BoneOrientationTrs = 'bone_orientation_trs',
+  BoneOrigin = 'bone_origin',
+  BoneRotation = 'bone_rotation',
+  CameraDistanceRangeLerp = 'camera_distance_range_lerp',
+  CameraRotation = 'camera_rotation',
+  CanClimb = 'can_climb',
+  CanDamageNearbyMobs = 'can_damage_nearby_mobs',
+  CanDash = 'can_dash',
+  CanFly = 'can_fly',
+  CanPowerJump = 'can_power_jump',
+  CanSwim = 'can_swim',
+  CanWalk = 'can_walk',
+  CapeFlapAmount = 'cape_flap_amount',
+  CardinalBlockFacePlacedOn = 'cardinal_block_face_placed_on',
+  CardinalFacing = 'cardinal_facing',
+  CardinalFacing2d = 'cardinal_facing_2d',
+  CardinalPlayerFacing = 'cardinal_player_facing',
+  ClientMaxRenderDistance = 'client_max_render_distance',
+  ClientMemoryTier = 'client_memory_tier',
+  CombineEntities = 'combine_entities',
+  CooldownTime = 'cooldown_time',
+  CooldownTimeRemaining = 'cooldown_time_remaining',
+  Count = 'count',
+  CurrentSquishValue = 'current_squish_value',
+  DashCooldownProgress = 'dash_cooldown_progress',
+  Day = 'day',
+  DeathTicks = 'death_ticks',
+  DebugOutput = 'debug_output',
+  DeltaTime = 'delta_time',
+  DistanceFromCamera = 'distance_from_camera',
+  EffectEmitterCount = 'effect_emitter_count',
+  EffectParticleCount = 'effect_particle_count',
+  EntityBiomeHasAllTags = 'entity_biome_has_all_tags',
+  EntityBiomeHasAnyIdentifier = 'entity_biome_has_any_identifier',
+  EntityBiomeHasAnyTags = 'entity_biome_has_any_tags',
+  EquipmentCount = 'equipment_count',
+  EquippedItemAllTags = 'equipped_item_all_tags',
+  EquippedItemAnyTag = 'equipped_item_any_tag',
+  EquippedItemIsAttachable = 'equipped_item_is_attachable',
+  EyeTargetXRotation = 'eye_target_x_rotation',
+  EyeTargetYRotation = 'eye_target_y_rotation',
+  FacingTargetToRangeAttack = 'facing_target_to_range_attack',
+  FrameAlpha = 'frame_alpha',
+  GetActorInfoId = 'get_actor_info_id',
+  GetAnimationFrame = 'get_animation_frame',
+  GetDefaultBonePivot = 'get_default_bone_pivot',
+  GetEquippedItemName = 'get_equipped_item_name',
+  GetLevelSeedBasedFraction = 'get_level_seed_based_fraction',
+  GetLocatorOffset = 'get_locator_offset',
+  GetName = 'get_name',
+  GetPackSetting = 'get_pack_setting',
+  GetRootLocatorOffset = 'get_root_locator_offset',
+  GraphicsModeIsAny = 'graphics_mode_is_any',
+  GroundSpeed = 'ground_speed',
+  HadComponentGroup = 'had_component_group',
+  HasAnyFamily = 'has_any_family',
+  HasAnyLeashedEntityOfType = 'has_any_leashed_entity_of_type',
+  HasArmorSlot = 'has_armor_slot',
+  HasBiomeTag = 'has_biome_tag',
+  HasBlockProperty = 'has_block_property',
+  HasBlockState = 'has_block_state',
+  HasCape = 'has_cape',
+  HasCollision = 'has_collision',
+  HasDashCooldown = 'has_dash_cooldown',
+  HasGravity = 'has_gravity',
+  HasHeadGear = 'has_head_gear',
+  HasOwner = 'has_owner',
+  HasPlayerRider = 'has_player_rider',
+  HasProperty = 'has_property',
+  HasRider = 'has_rider',
+  HasTarget = 'has_target',
+  HeadRollAngle = 'head_roll_angle',
+  HeadXRotation = 'head_x_rotation',
+  HeadYRotation = 'head_y_rotation',
+  Health = 'health',
+  HeartbeatInterval = 'heartbeat_interval',
+  HeartbeatPhase = 'heartbeat_phase',
+  Heightmap = 'heightmap',
+  HurtDirection = 'hurt_direction',
+  HurtTime = 'hurt_time',
+  InRange = 'in_range',
+  InvulnerableTicks = 'invulnerable_ticks',
+  IsAdmiring = 'is_admiring',
+  IsAlive = 'is_alive',
+  IsAngry = 'is_angry',
+  IsAttached = 'is_attached',
+  IsAttachedToEntity = 'is_attached_to_entity',
+  IsAvoidingBlock = 'is_avoiding_block',
+  IsAvoidingMobs = 'is_avoiding_mobs',
+  IsBaby = 'is_baby',
+  IsBreathing = 'is_breathing',
+  IsBribed = 'is_bribed',
+  IsCarryingBlock = 'is_carrying_block',
+  IsCasting = 'is_casting',
+  IsCelebrating = 'is_celebrating',
+  IsCelebratingSpecial = 'is_celebrating_special',
+  IsCharged = 'is_charged',
+  IsCharging = 'is_charging',
+  IsChested = 'is_chested',
+  IsCooldownCategory = 'is_cooldown_category',
+  IsCrawling = 'is_crawling',
+  IsCritical = 'is_critical',
+  IsCroaking = 'is_croaking',
+  IsDancing = 'is_dancing',
+  IsDelayedAttacking = 'is_delayed_attacking',
+  IsDigging = 'is_digging',
+  IsEating = 'is_eating',
+  IsEatingMob = 'is_eating_mob',
+  IsElder = 'is_elder',
+  IsEmerging = 'is_emerging',
+  IsEmoting = 'is_emoting',
+  IsEnchanted = 'is_enchanted',
+  IsFeelingHappy = 'is_feeling_happy',
+  IsFireImmune = 'is_fire_immune',
+  IsFirstPerson = 'is_first_person',
+  IsGhost = 'is_ghost',
+  IsGliding = 'is_gliding',
+  IsGrazing = 'is_grazing',
+  IsIdling = 'is_idling',
+  IsIgnited = 'is_ignited',
+  IsIllagerCaptain = 'is_illager_captain',
+  IsInContactWithWater = 'is_in_contact_with_water',
+  IsInLava = 'is_in_lava',
+  IsInLove = 'is_in_love',
+  IsInUi = 'is_in_ui',
+  IsInWater = 'is_in_water',
+  IsInWaterOrRain = 'is_in_water_or_rain',
+  IsInterested = 'is_interested',
+  IsInvisible = 'is_invisible',
+  IsItemEquipped = 'is_item_equipped',
+  IsItemNameAny = 'is_item_name_any',
+  IsJumpGoalJumping = 'is_jump_goal_jumping',
+  IsJumping = 'is_jumping',
+  IsLayingDown = 'is_laying_down',
+  IsLayingEgg = 'is_laying_egg',
+  IsLeashed = 'is_leashed',
+  IsLevitating = 'is_levitating',
+  IsLingering = 'is_lingering',
+  IsLocalPlayer = 'is_local_player',
+  IsMoving = 'is_moving',
+  IsNameAny = 'is_name_any',
+  IsOnFire = 'is_on_fire',
+  IsOnGround = 'is_on_ground',
+  IsOnScreen = 'is_on_screen',
+  IsOnfire = 'is_onfire',
+  IsOrphaned = 'is_orphaned',
+  IsOwnerIdentifierAny = 'is_owner_identifier_any',
+  IsPackSettingEnabled = 'is_pack_setting_enabled',
+  IsPackSettingSelected = 'is_pack_setting_selected',
+  IsPersonaOrPremiumSkin = 'is_persona_or_premium_skin',
+  IsPlayingDead = 'is_playing_dead',
+  IsPowered = 'is_powered',
+  IsPregnant = 'is_pregnant',
+  IsRamAttacking = 'is_ram_attacking',
+  IsResting = 'is_resting',
+  IsRiding = 'is_riding',
+  IsRidingAnyEntityOfType = 'is_riding_any_entity_of_type',
+  IsRising = 'is_rising',
+  IsRoaring = 'is_roaring',
+  IsRolling = 'is_rolling',
+  IsSaddled = 'is_saddled',
+  IsScared = 'is_scared',
+  IsScenting = 'is_scenting',
+  IsSearching = 'is_searching',
+  IsSelectedItem = 'is_selected_item',
+  IsShaking = 'is_shaking',
+  IsShakingWetness = 'is_shaking_wetness',
+  IsSheared = 'is_sheared',
+  IsShieldPowered = 'is_shield_powered',
+  IsSilent = 'is_silent',
+  IsSitting = 'is_sitting',
+  IsSleeping = 'is_sleeping',
+  IsSneaking = 'is_sneaking',
+  IsSneezing = 'is_sneezing',
+  IsSniffing = 'is_sniffing',
+  IsSonicBoom = 'is_sonic_boom',
+  IsSpectator = 'is_spectator',
+  IsSprinting = 'is_sprinting',
+  IsStackable = 'is_stackable',
+  IsStalking = 'is_stalking',
+  IsStanding = 'is_standing',
+  IsStunned = 'is_stunned',
+  IsSwimming = 'is_swimming',
+  IsTamed = 'is_tamed',
+  IsTransforming = 'is_transforming',
+  IsUsingItem = 'is_using_item',
+  IsWallClimbing = 'is_wall_climbing',
+  ItemInUseDuration = 'item_in_use_duration',
+  ItemIsCharged = 'item_is_charged',
+  ItemMaxUseDuration = 'item_max_use_duration',
+  ItemRemainingUseDuration = 'item_remaining_use_duration',
+  ItemSlotToBoneName = 'item_slot_to_bone_name',
+  KeyFrameLerpTime = 'key_frame_lerp_time',
+  KineticWeaponDamageDuration = 'kinetic_weapon_damage_duration',
+  KineticWeaponDelay = 'kinetic_weapon_delay',
+  KineticWeaponDismountDuration = 'kinetic_weapon_dismount_duration',
+  KineticWeaponKnockbackDuration = 'kinetic_weapon_knockback_duration',
+  LastFrameTime = 'last_frame_time',
+  LastHitByPlayer = 'last_hit_by_player',
+  LastInputModeIsAny = 'last_input_mode_is_any',
+  LeashedEntityCount = 'leashed_entity_count',
+  LieAmount = 'lie_amount',
+  LifeSpan = 'life_span',
+  LifeTime = 'life_time',
+  LodIndex = 'lod_index',
+  Log = 'log',
+  MainHandItemMaxDuration = 'main_hand_item_max_duration',
+  MainHandItemUseDuration = 'main_hand_item_use_duration',
+  MarkVariant = 'mark_variant',
+  MaxDurability = 'max_durability',
+  MaxHealth = 'max_health',
+  MaxTradeTier = 'max_trade_tier',
+  MaximumFrameTime = 'maximum_frame_time',
+  MinimumFrameTime = 'minimum_frame_time',
+  ModelScale = 'model_scale',
+  ModifiedDistanceMoved = 'modified_distance_moved',
+  ModifiedMoveSpeed = 'modified_move_speed',
+  ModifiedSwingDuration = 'modified_swing_duration',
+  MoonBrightness = 'moon_brightness',
+  MoonPhase = 'moon_phase',
+  MovementDirection = 'movement_direction',
+  Noise = 'noise',
+  OnFireTime = 'on_fire_time',
+  OutOfControl = 'out_of_control',
+  OverlayAlpha = 'overlay_alpha',
+  OwnerIdentifier = 'owner_identifier',
+  PlayerLevel = 'player_level',
+  Position = 'position',
+  PositionDelta = 'position_delta',
+  PreviousSquishValue = 'previous_squish_value',
+  Property = 'property',
+  RelativeBlockHasAllTags = 'relative_block_has_all_tags',
+  RelativeBlockHasAnyTag = 'relative_block_has_any_tag',
+  RemainingDurability = 'remaining_durability',
+  RideBodyXRotation = 'ride_body_x_rotation',
+  RideBodyYRotation = 'ride_body_y_rotation',
+  RideHeadXRotation = 'ride_head_x_rotation',
+  RideHeadYRotation = 'ride_head_y_rotation',
+  RiderBodyXRotation = 'rider_body_x_rotation',
+  RiderBodyYRotation = 'rider_body_y_rotation',
+  RiderHeadXRotation = 'rider_head_x_rotation',
+  RiderHeadYRotation = 'rider_head_y_rotation',
+  RollCounter = 'roll_counter',
+  RotationToCamera = 'rotation_to_camera',
+  Scoreboard = 'scoreboard',
+  ServerMemoryTier = 'server_memory_tier',
+  ShakeAngle = 'shake_angle',
+  ShakeTime = 'shake_time',
+  ShieldBlockingBob = 'shield_blocking_bob',
+  ShowBottom = 'show_bottom',
+  SitAmount = 'sit_amount',
+  SkinId = 'skin_id',
+  SleepRotation = 'sleep_rotation',
+  SneezeCounter = 'sneeze_counter',
+  Spellcolor = 'spellcolor',
+  StandingScale = 'standing_scale',
+  StateTime = 'state_time',
+  StructuralIntegrity = 'structural_integrity',
+  SurfaceParticleColor = 'surface_particle_color',
+  SurfaceParticleTextureCoordinate = 'surface_particle_texture_coordinate',
+  SurfaceParticleTextureSize = 'surface_particle_texture_size',
+  SwellAmount = 'swell_amount',
+  SwellingDir = 'swelling_dir',
+  SwimAmount = 'swim_amount',
+  TailAngle = 'tail_angle',
+  TargetXRotation = 'target_x_rotation',
+  TargetYRotation = 'target_y_rotation',
+  TextureFrameIndex = 'texture_frame_index',
+  TicksSinceLastKineticWeaponHit = 'ticks_since_last_kinetic_weapon_hit',
+  TimeOfDay = 'time_of_day',
+  TimeSinceLastVibrationDetection = 'time_since_last_vibration_detection',
+  TimeStamp = 'time_stamp',
+  TimerFlag1 = 'timer_flag_1',
+  TimerFlag2 = 'timer_flag_2',
+  TimerFlag3 = 'timer_flag_3',
+  TotalEmitterCount = 'total_emitter_count',
+  TotalParticleCount = 'total_particle_count',
+  TouchOnlyAffectsHotbar = 'touch_only_affects_hotbar',
+  TradeTier = 'trade_tier',
+  UnhappyCounter = 'unhappy_counter',
+  Variant = 'variant',
+  VerticalSpeed = 'vertical_speed',
+  WalkDistance = 'walk_distance',
+  WingFlapPosition = 'wing_flap_position',
+  WingFlapSpeed = 'wing_flap_speed',
+  YawSpeed = 'yaw_speed',
+}
+
+export const MOLANG_QUERY_NAMES = [
+  'above_top_solid',
+  'actor_count',
+  'all',
+  'all_animations_finished',
+  'all_tags',
+  'anger_level',
+  'anim_time',
+  'any',
+  'any_animation_finished',
+  'any_tag',
+  'approx_eq',
+  'armor_color_slot',
+  'armor_damage_slot',
+  'armor_material_slot',
+  'armor_texture_slot',
+  'average_frame_time',
+  'base_swing_duration',
+  'block_face',
+  'block_has_all_tags',
+  'block_has_any_tag',
+  'block_neighbor_has_all_tags',
+  'block_neighbor_has_any_tag',
+  'block_property',
+  'block_state',
+  'blocking',
+  'body_x_rotation',
+  'body_y_rotation',
+  'bone_aabb',
+  'bone_orientation_matrix',
+  'bone_orientation_trs',
+  'bone_origin',
+  'bone_rotation',
+  'camera_distance_range_lerp',
+  'camera_rotation',
+  'can_climb',
+  'can_damage_nearby_mobs',
+  'can_dash',
+  'can_fly',
+  'can_power_jump',
+  'can_swim',
+  'can_walk',
+  'cape_flap_amount',
+  'cardinal_block_face_placed_on',
+  'cardinal_facing',
+  'cardinal_facing_2d',
+  'cardinal_player_facing',
+  'client_max_render_distance',
+  'client_memory_tier',
+  'combine_entities',
+  'cooldown_time',
+  'cooldown_time_remaining',
+  'count',
+  'current_squish_value',
+  'dash_cooldown_progress',
+  'day',
+  'death_ticks',
+  'debug_output',
+  'delta_time',
+  'distance_from_camera',
+  'effect_emitter_count',
+  'effect_particle_count',
+  'entity_biome_has_all_tags',
+  'entity_biome_has_any_identifier',
+  'entity_biome_has_any_tags',
+  'equipment_count',
+  'equipped_item_all_tags',
+  'equipped_item_any_tag',
+  'equipped_item_is_attachable',
+  'eye_target_x_rotation',
+  'eye_target_y_rotation',
+  'facing_target_to_range_attack',
+  'frame_alpha',
+  'get_actor_info_id',
+  'get_animation_frame',
+  'get_default_bone_pivot',
+  'get_equipped_item_name',
+  'get_level_seed_based_fraction',
+  'get_locator_offset',
+  'get_name',
+  'get_pack_setting',
+  'get_root_locator_offset',
+  'graphics_mode_is_any',
+  'ground_speed',
+  'had_component_group',
+  'has_any_family',
+  'has_any_leashed_entity_of_type',
+  'has_armor_slot',
+  'has_biome_tag',
+  'has_block_property',
+  'has_block_state',
+  'has_cape',
+  'has_collision',
+  'has_dash_cooldown',
+  'has_gravity',
+  'has_head_gear',
+  'has_owner',
+  'has_player_rider',
+  'has_property',
+  'has_rider',
+  'has_target',
+  'head_roll_angle',
+  'head_x_rotation',
+  'head_y_rotation',
+  'health',
+  'heartbeat_interval',
+  'heartbeat_phase',
+  'heightmap',
+  'hurt_direction',
+  'hurt_time',
+  'in_range',
+  'invulnerable_ticks',
+  'is_admiring',
+  'is_alive',
+  'is_angry',
+  'is_attached',
+  'is_attached_to_entity',
+  'is_avoiding_block',
+  'is_avoiding_mobs',
+  'is_baby',
+  'is_breathing',
+  'is_bribed',
+  'is_carrying_block',
+  'is_casting',
+  'is_celebrating',
+  'is_celebrating_special',
+  'is_charged',
+  'is_charging',
+  'is_chested',
+  'is_cooldown_category',
+  'is_crawling',
+  'is_critical',
+  'is_croaking',
+  'is_dancing',
+  'is_delayed_attacking',
+  'is_digging',
+  'is_eating',
+  'is_eating_mob',
+  'is_elder',
+  'is_emerging',
+  'is_emoting',
+  'is_enchanted',
+  'is_feeling_happy',
+  'is_fire_immune',
+  'is_first_person',
+  'is_ghost',
+  'is_gliding',
+  'is_grazing',
+  'is_idling',
+  'is_ignited',
+  'is_illager_captain',
+  'is_in_contact_with_water',
+  'is_in_lava',
+  'is_in_love',
+  'is_in_ui',
+  'is_in_water',
+  'is_in_water_or_rain',
+  'is_interested',
+  'is_invisible',
+  'is_item_equipped',
+  'is_item_name_any',
+  'is_jump_goal_jumping',
+  'is_jumping',
+  'is_laying_down',
+  'is_laying_egg',
+  'is_leashed',
+  'is_levitating',
+  'is_lingering',
+  'is_local_player',
+  'is_moving',
+  'is_name_any',
+  'is_on_fire',
+  'is_on_ground',
+  'is_on_screen',
+  'is_onfire',
+  'is_orphaned',
+  'is_owner_identifier_any',
+  'is_pack_setting_enabled',
+  'is_pack_setting_selected',
+  'is_persona_or_premium_skin',
+  'is_playing_dead',
+  'is_powered',
+  'is_pregnant',
+  'is_ram_attacking',
+  'is_resting',
+  'is_riding',
+  'is_riding_any_entity_of_type',
+  'is_rising',
+  'is_roaring',
+  'is_rolling',
+  'is_saddled',
+  'is_scared',
+  'is_scenting',
+  'is_searching',
+  'is_selected_item',
+  'is_shaking',
+  'is_shaking_wetness',
+  'is_sheared',
+  'is_shield_powered',
+  'is_silent',
+  'is_sitting',
+  'is_sleeping',
+  'is_sneaking',
+  'is_sneezing',
+  'is_sniffing',
+  'is_sonic_boom',
+  'is_spectator',
+  'is_sprinting',
+  'is_stackable',
+  'is_stalking',
+  'is_standing',
+  'is_stunned',
+  'is_swimming',
+  'is_tamed',
+  'is_transforming',
+  'is_using_item',
+  'is_wall_climbing',
+  'item_in_use_duration',
+  'item_is_charged',
+  'item_max_use_duration',
+  'item_remaining_use_duration',
+  'item_slot_to_bone_name',
+  'key_frame_lerp_time',
+  'kinetic_weapon_damage_duration',
+  'kinetic_weapon_delay',
+  'kinetic_weapon_dismount_duration',
+  'kinetic_weapon_knockback_duration',
+  'last_frame_time',
+  'last_hit_by_player',
+  'last_input_mode_is_any',
+  'leashed_entity_count',
+  'lie_amount',
+  'life_span',
+  'life_time',
+  'lod_index',
+  'log',
+  'main_hand_item_max_duration',
+  'main_hand_item_use_duration',
+  'mark_variant',
+  'max_durability',
+  'max_health',
+  'max_trade_tier',
+  'maximum_frame_time',
+  'minimum_frame_time',
+  'model_scale',
+  'modified_distance_moved',
+  'modified_move_speed',
+  'modified_swing_duration',
+  'moon_brightness',
+  'moon_phase',
+  'movement_direction',
+  'noise',
+  'on_fire_time',
+  'out_of_control',
+  'overlay_alpha',
+  'owner_identifier',
+  'player_level',
+  'position',
+  'position_delta',
+  'previous_squish_value',
+  'property',
+  'relative_block_has_all_tags',
+  'relative_block_has_any_tag',
+  'remaining_durability',
+  'ride_body_x_rotation',
+  'ride_body_y_rotation',
+  'ride_head_x_rotation',
+  'ride_head_y_rotation',
+  'rider_body_x_rotation',
+  'rider_body_y_rotation',
+  'rider_head_x_rotation',
+  'rider_head_y_rotation',
+  'roll_counter',
+  'rotation_to_camera',
+  'scoreboard',
+  'server_memory_tier',
+  'shake_angle',
+  'shake_time',
+  'shield_blocking_bob',
+  'show_bottom',
+  'sit_amount',
+  'skin_id',
+  'sleep_rotation',
+  'sneeze_counter',
+  'spellcolor',
+  'standing_scale',
+  'state_time',
+  'structural_integrity',
+  'surface_particle_color',
+  'surface_particle_texture_coordinate',
+  'surface_particle_texture_size',
+  'swell_amount',
+  'swelling_dir',
+  'swim_amount',
+  'tail_angle',
+  'target_x_rotation',
+  'target_y_rotation',
+  'texture_frame_index',
+  'ticks_since_last_kinetic_weapon_hit',
+  'time_of_day',
+  'time_since_last_vibration_detection',
+  'time_stamp',
+  'timer_flag_1',
+  'timer_flag_2',
+  'timer_flag_3',
+  'total_emitter_count',
+  'total_particle_count',
+  'touch_only_affects_hotbar',
+  'trade_tier',
+  'unhappy_counter',
+  'variant',
+  'vertical_speed',
+  'walk_distance',
+  'wing_flap_position',
+  'wing_flap_speed',
+  'yaw_speed',
+] as const satisfies readonly `${MolangQueryName}`[];
