@@ -1,4 +1,4 @@
-import { readdir } from 'node:fs/promises';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -57,12 +57,13 @@ const fixRelativeImports = (content) =>
 
 async function fixDistModuleSpecifiers(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
+  const tasks = [];
 
   for (const entry of entries) {
     const path = join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      await fixDistModuleSpecifiers(path);
+      tasks.push(fixDistModuleSpecifiers(path));
       continue;
     }
 
@@ -70,13 +71,13 @@ async function fixDistModuleSpecifiers(dir) {
       continue;
     }
 
-    const { readFile, writeFile } = await import('node:fs/promises');
-    const content = await readFile(path, 'utf8');
-    await writeFile(path, fixRelativeImports(content));
+    tasks.push(
+      readFile(path, 'utf8').then((content) => writeFile(path, fixRelativeImports(content))),
+    );
   }
-}
 
-await fixDistModuleSpecifiers(join(rootDir, 'dist'));
+  await Promise.all(tasks);
+}
 
 const tsc = spawnSync('npx', ['tsc', '-p', 'tsconfig.dts.json'], {
   cwd: rootDir,
