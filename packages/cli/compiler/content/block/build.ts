@@ -4,7 +4,7 @@ import { BlockBuilder } from '@artifex/pack/content/block/block-builder';
 import { ContentBuildOptions } from '../../actions/options';
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
-import { writeFileByPath } from '../utils/write-file-by-path';
+import { writeWithPlugins } from '../../plugins/write-with-plugins';
 
 export const buildBlockJson = async (
   filePath: string,
@@ -45,7 +45,17 @@ export const buildBlockJson = async (
   //   return;
   // }
 
-  await writeFileByPath(outFile, jsonString, 'utf-8');
+  const writeResult = await writeWithPlugins(
+    filePath,
+    outFile,
+    jsonString,
+    'content',
+    'utf-8',
+  );
 
-  return outFile;
+  if (!writeResult.written) {
+    return;
+  }
+
+  return writeResult.destinationPath;
 };

@@ -1,5 +1,5 @@
-import { copyFile, mkdir, readdir, rm } from 'fs/promises';
-import { join, dirname } from 'path';
+import { readdir, rm } from 'fs/promises';
+import { join } from 'path';
 
 import { BUILD_CONTEXT } from '../build-context';
 import { CompilerActionOptions, resolveCompilerOptions } from './options';
@@ -8,13 +8,17 @@ import { createPacksOutputPathFromInputPath } from './utils/create-output-path';
 import { getBuildCacheDistDir } from '../content/utils/build-cache-dist-dir';
 import { ArtifexContentBuilder } from '../core/builder';
 import { isArtifexContentFile } from '../core/utils/is-content-file';
+import {
+  createAfterLoadEvent,
+  createBuildEvent,
+  createFileEvent,
+  emitAfterLoad,
+  emitHook,
+  scheduleAfterLoad,
+} from '../plugins/plugin-host';
+import { copyWithPlugins } from '../plugins/write-with-plugins';
 
-const SKIP_DIRECTORIES = new Set([
-  'node_modules',
-  '.git',
-  '.artifex',
-  'dist',
-]);
+const SKIP_DIRECTORIES = new Set(['node_modules', '.git', '.artifex', 'dist']);
 
 /**
  * Walks through a directory and yields all files.
@@ -97,25 +101,52 @@ export const build = async (options: CompilerActionOptions) => {
   const startTime = Date.now();
 
   await loadConfig(profile);
+  await emitHook('beforeBuild', createBuildEvent());
   await clearBuildDirectory();
 
   const [copyFilePaths, buildFilePaths] = await createBuildDictionary();
 
   await Promise.all(
-    buildFilePaths.map((file) =>
-      ArtifexContentBuilder.buildFile(file, { debug, diagnostics }),
-    ),
-  );
+    buildFilePaths.map(async (file) => {
+      const result = await ArtifexContentBuilder.buildFile(file, {
+        debug,
+        diagnostics,
+      });
 
-  await Promise.all(
-    Object.entries(copyFilePaths).map(([source, destination]) => {
-      const dir = dirname(destination);
+      if (!result) {
+        return;
+      }
 
-      return mkdir(dir, { recursive: true }).then(() =>
-        copyFile(source, destination),
+      await emitHook(
+        'afterFileAdd',
+        createFileEvent(file, 'content', result.outFile),
       );
     }),
   );
+
+  await Promise.all(
+    Object.entries(copyFilePaths).map(async ([source, destination]) => {
+      const copyResult = await copyWithPlugins(source, destination);
+
+      if (!copyResult.written) {
+        return;
+      }
+
+      await emitHook(
+        'afterFileAdd',
+        createFileEvent(source, 'copy', copyResult.destinationPath),
+      );
+    }),
+  );
+
+  await emitHook('afterBuild', createBuildEvent());
+  scheduleAfterLoad(
+    createAfterLoadEvent({
+      content: buildFilePaths,
+      copy: Object.keys(copyFilePaths),
+    }),
+  );
+  await emitAfterLoad();
 
   if (debug) {
     console.log(`🔄 Complete build in ${Date.now() - startTime}ms`);

@@ -23,7 +23,7 @@ import { ContentBuildOptions } from '../actions/options';
 export const buildFile = async (
   filePath: string,
   options: ContentBuildOptions = { debug: true, diagnostics: true },
-) => {
+): Promise<BuildContentJsonResult | undefined> => {
   const { debug, diagnostics } = options;
   const startTime = Date.now();
   const fileName = basename(filePath, '.ts') + Date.now().toString() + '.js';
@@ -51,6 +51,8 @@ export const buildFile = async (
     if (debug) {
       console.error(`\n🛑 Error building file: ${error}\n`);
     }
+
+    return;
   }
 
   await unlink(outFile);
@@ -71,6 +73,8 @@ export const buildFile = async (
       `\n✅ Built: ${result.source}\n   Path: ${link.join('\n         ')}\n   Time: ${duration}ms\n`,
     );
   }
+
+  return result;
 };
 
 /**
@@ -81,14 +85,22 @@ export const buildFile = async (
 export const rebuildFile = async (
   filePath: string,
   options: ContentBuildOptions = { debug: true, diagnostics: true },
-) => {
+): Promise<BuildContentJsonResult[]> => {
   await rm(getBuildCacheDistDir(), { recursive: true, force: true });
 
   const filesToRebuild = await addFile(filePath);
+  const results: BuildContentJsonResult[] = [];
 
-  for (const file of [...filesToRebuild].filter(isArtifexContentFile)) {
-    await buildFile(file, options);
-  }
+  await Promise.all(
+    [...filesToRebuild].filter(isArtifexContentFile).map(async (file) => {
+      const result = await buildFile(file, options);
+      if (result) {
+        results.push(result);
+      }
+    }),
+  );
+
+  return results;
 };
 
 /**
@@ -98,7 +110,7 @@ export const rebuildFile = async (
 export const unlinkContentFile = async (
   filePath: string,
   options: ContentBuildOptions = { debug: true, diagnostics: true },
-) => {
+): Promise<string | undefined> => {
   const { debug } = options;
   const distPath = createContentPath(filePath);
   if (!distPath) {
@@ -119,6 +131,8 @@ export const unlinkContentFile = async (
   if (debug) {
     console.log(`\n🗑️ Deleted: ${filename}\n`);
   }
+
+  return distPath;
 };
 
 const ArtifexContentBuilder = {

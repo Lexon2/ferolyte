@@ -3,7 +3,7 @@ import { join } from 'path';
 import { ClientEntityBuilder } from '@artifex/pack/content/client-entity/client-entity-builder';
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
-import { writeFileByPath } from '../utils/write-file-by-path';
+import { writeWithPlugins } from '../../plugins/write-with-plugins';
 import { ContentBuildOptions } from '../../actions/options';
 
 export const buildClientEntityJson = async (
@@ -39,7 +39,17 @@ export const buildClientEntityJson = async (
     return;
   }
 
-  await writeFileByPath(outFile, jsonString, 'utf-8');
+  const writeResult = await writeWithPlugins(
+    filePath,
+    outFile,
+    jsonString,
+    'content',
+    'utf-8',
+  );
 
-  return outFile;
+  if (!writeResult.written) {
+    return;
+  }
+
+  return writeResult.destinationPath;
 };

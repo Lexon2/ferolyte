@@ -1,4 +1,4 @@
-import { copyFile, unlink } from 'fs/promises';
+import { unlink } from 'fs/promises';
 
 import chokidar from 'chokidar';
 
@@ -13,20 +13,70 @@ import {
   ContentBuildOptions,
   resolveCompilerOptions,
 } from './options';
+import {
+  createFileEvent,
+  createWatchReadyEvent,
+  emitHook,
+} from '../plugins/plugin-host';
+import { copyWithPlugins } from '../plugins/write-with-plugins';
 
-const createProcessEdit =
+const createProcessAdd =
   (buildOptions: ContentBuildOptions) => async (filePath: string) => {
     try {
       if (!filePath.endsWith('.ts')) {
         const outputPath = createPacksOutputPathFromInputPath(filePath);
         if (outputPath) {
-          await copyFile(filePath, outputPath);
-          console.log(`\n🔄 Copied ${filePath}\n       To ${outputPath}\n`);
+          const copyResult = await copyWithPlugins(filePath, outputPath);
+          if (copyResult.written) {
+            console.log(
+              `\n🔄 Copied ${filePath}\n       To ${copyResult.destinationPath}\n`,
+            );
+            await emitHook(
+              'afterFileAdd',
+              createFileEvent(filePath, 'copy', copyResult.destinationPath),
+            );
+          }
         }
         return;
       }
 
-      await rebuildFile(filePath, buildOptions);
+      const results = await rebuildFile(filePath, buildOptions);
+      for (const result of results) {
+        await emitHook(
+          'afterFileAdd',
+          createFileEvent(result.source, 'content', result.outFile),
+        );
+      }
+    } catch {}
+  };
+
+const createProcessChange =
+  (buildOptions: ContentBuildOptions) => async (filePath: string) => {
+    try {
+      if (!filePath.endsWith('.ts')) {
+        const outputPath = createPacksOutputPathFromInputPath(filePath);
+        if (outputPath) {
+          const copyResult = await copyWithPlugins(filePath, outputPath);
+          if (copyResult.written) {
+            console.log(
+              `\n🔄 Copied ${filePath}\n       To ${copyResult.destinationPath}\n`,
+            );
+            await emitHook(
+              'afterFileUpdate',
+              createFileEvent(filePath, 'copy', copyResult.destinationPath),
+            );
+          }
+        }
+        return;
+      }
+
+      const results = await rebuildFile(filePath, buildOptions);
+      for (const result of results) {
+        await emitHook(
+          'afterFileUpdate',
+          createFileEvent(result.source, 'content', result.outFile),
+        );
+      }
     } catch {}
   };
 
@@ -38,11 +88,19 @@ const createProcessUnlink =
         if (outputPath) {
           await unlink(outputPath);
           console.log(`\n🔄 Deleted ${filePath}\n       To ${outputPath}\n`);
+          await emitHook(
+            'afterFileRemove',
+            createFileEvent(filePath, 'copy', outputPath),
+          );
         }
         return;
       }
 
-      await unlinkContentFile(filePath, buildOptions);
+      const outputPath = await unlinkContentFile(filePath, buildOptions);
+      await emitHook(
+        'afterFileRemove',
+        createFileEvent(filePath, 'content', outputPath),
+      );
     } catch {}
   };
 
@@ -82,16 +140,19 @@ export const watch = async (options: CompilerActionOptions) => {
     },
   );
 
-  const processEdit = createProcessEdit(buildOptions);
+  const processAdd = createProcessAdd(buildOptions);
+  const processChange = createProcessChange(buildOptions);
   const processUnlink = createProcessUnlink(buildOptions);
 
   watcher
-    .on('add', processEdit)
-    .on('change', processEdit)
+    .on('add', processAdd)
+    .on('change', processChange)
     .on('unlink', processUnlink)
     .on('addDir', (dirPath) => {
       watcher.add(dirPath);
     });
+
+  await emitHook('afterWatchReady', createWatchReadyEvent());
 
   console.log('🚀 Watcher is running');
 };

@@ -4,7 +4,7 @@ import { Float } from '@artifex/common/content/tools/float';
 import { ServerEntityBuilder } from '@artifex/pack/content/server-entity/server-entity-builder';
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from '../utils/format-file-name';
-import { writeFileByPath } from '../utils/write-file-by-path';
+import { writeWithPlugins } from '../../plugins/write-with-plugins';
 import { ContentBuildOptions } from '../../actions/options';
 
 // TODO: Remove this once we have a better way to handle floats
@@ -89,7 +89,17 @@ export const buildServerEntityJson = async (
 
   const replacedJsonString = replaceArtifexFloatsInJsonString(jsonString);
 
-  await writeFileByPath(outFile, replacedJsonString, 'utf-8');
+  const writeResult = await writeWithPlugins(
+    filePath,
+    outFile,
+    replacedJsonString,
+    'content',
+    'utf-8',
+  );
 
-  return outFile;
+  if (!writeResult.written) {
+    return;
+  }
+
+  return writeResult.destinationPath;
 };

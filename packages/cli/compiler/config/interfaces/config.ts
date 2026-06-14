@@ -1,3 +1,5 @@
+import { ArtifexPlugin } from '../../plugins/types';
+
 export type ArtifexPackOutput =
   | 'minecraft'
   | 'minecraft-dev'
@@ -73,4 +75,5 @@ export interface ArtifexProfileConfig {
 
 export interface ArtifexConfig {
   profiles: Record<string, ArtifexProfileConfig>;
+  plugins?: ArtifexPlugin[];
 }

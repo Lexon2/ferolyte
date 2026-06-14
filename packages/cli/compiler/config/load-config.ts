@@ -1,6 +1,7 @@
 import { join } from 'path';
 
 import { BUILD_CONTEXT } from '../build-context';
+import { initPlugins } from '../plugins/plugin-host';
 import { applyConfig } from './apply-config';
 import { importArtifexConfig } from './utils/import-config';
 
@@ -20,6 +21,7 @@ export async function loadConfig(profileName: string) {
     throw new Error(`Profile "${profileName}" not found. Available: ${names}`);
   }
 
+  initPlugins(root.plugins ?? [], profileName);
   await applyConfig(config);
 
   BUILD_CONTEXT.IS_LOADED = true;
