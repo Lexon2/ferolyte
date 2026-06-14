@@ -25,6 +25,7 @@ export class ServerEntityBuilder implements ContentBuilder {
 
   public withBuildContext(ctx: ContentDiagnosticContext): this {
     this.buildContext = { contentType: 'server-entity', ...ctx };
+
     return this;
   }
 

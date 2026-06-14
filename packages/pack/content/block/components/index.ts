@@ -33,7 +33,7 @@ import { createBlockTags } from './tags';
 import { createSupport } from './support';
 import { createTick } from './tick';
 import { createTransformation } from './transformation';
-import { createDisplayName } from '../../item/convertors/components/display-name';
+import { createDisplayName } from './display-name';
 import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 
 export type BlockComponentCreator = (
@@ -44,7 +44,10 @@ export type BlockComponentCreator = (
 /**
  * Mapping of BlockConfig component properties to their creator functions
  */
-export const blockComponentCreatorsFactory: Record<string, BlockComponentCreator> = {
+export const blockComponentCreatorsFactory: Record<
+  string,
+  BlockComponentCreator
+> = {
   chestObstruction: createChestObstruction,
   collisionBox: createCollisionBox,
   connectionRule: createConnectionRule,
@@ -84,37 +87,71 @@ export const blockComponentCreatorsFactory: Record<string, BlockComponentCreator
 };
 
 export * from './chest-obstruction';
+
 export * from './collision-box';
+
 export * from './connection-rule';
+
 export * from './crafting-table';
+
 export * from './custom-components';
+
 export * from './destructible-by-explosion';
+
 export * from './destructible-by-mining';
+
 export * from './destruction-particles';
+
 export * from './embedded-visual';
+
 export * from './entity-fall-on';
+
 export * from './flammable';
+
 export * from './flower-pottable';
+
 export * from './friction';
+
 export * from './geometry';
+
 export * from './item-visual';
+
 export * from './leashable';
+
 export * from './light-dampening';
+
 export * from './light-emission';
+
 export * from './liquid-detection';
+
 export * from './loot';
+
 export * from './map-color';
+
 export * from './material-instances';
+
 export * from './movable';
+
 export * from './placement-filter';
+
 export * from './precipitation-interactions';
+
 export * from './random-offset';
+
 export * from './redstone-conductivity';
+
 export * from './redstone-consumer';
+
 export * from './redstone-producer';
+
 export * from './replaceable';
+
 export * from './selection-box';
+
 export * from './support';
+
 export * from './tags';
+
 export * from './tick';
+
 export * from './transformation';
