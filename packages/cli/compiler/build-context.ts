@@ -1,3 +1,5 @@
+import { buildContentSuffixRegistry } from './content/utils/content-suffix-registry';
+
 export const BUILD_CONTEXT = {
   IS_LOADED: false,
   TS: {
@@ -18,5 +20,6 @@ export const BUILD_CONTEXT = {
     INPUT_BEHAVIOR_PACK_PATH: '',
     INPUT_RESOURCE_PACK_PATH: '',
     CACHE_PATH: '',
+    CONTENT_SUFFIX_REGISTRY: buildContentSuffixRegistry(),
   },
 };

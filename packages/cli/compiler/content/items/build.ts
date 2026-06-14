@@ -1,11 +1,8 @@
-import { join } from 'path';
-
 import { ItemBuilder } from '@artifex/pack/content/item/item-builder';
-import { BUILD_CONTEXT } from '../../build-context';
-import { formatFileName } from '../utils/format-file-name';
+import { ContentBuildOptions } from '../../actions/options';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
-import { ContentBuildOptions } from '../../actions/options';
+import { createContentPath } from '../utils/create-content-path';
 
 export const buildItemJson = async (
   filePath: string,
@@ -23,22 +20,8 @@ export const buildItemJson = async (
   const jsonString = serializeJson(json);
 
   const identifier = builder.cloneConfig().identifier ?? '';
-  const fileName = formatFileName(identifier.split(':')[1], '.item.json');
-  if (identifier === undefined || fileName === undefined) {
-    console.error(`Error creating content path for ${filePath}`);
-
-    return;
-  }
-
-  const { OUTPUT_NAMESPACE_PATH, OUTPUT_BEHAVIOR_PACK_PATH } =
-    BUILD_CONTEXT.PACKS;
-  const outFile = join(
-    OUTPUT_BEHAVIOR_PACK_PATH,
-    'items',
-    OUTPUT_NAMESPACE_PATH,
-    fileName,
-  );
-  if (outFile === undefined) {
+  const outFile = createContentPath(filePath, undefined, { identifier });
+  if (identifier === undefined || outFile === undefined) {
     console.error(`Error creating content path for ${filePath}`);
 
     return;

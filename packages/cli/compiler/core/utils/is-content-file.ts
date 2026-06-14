@@ -1,6 +1,7 @@
+import { BUILD_CONTEXT } from '../../build-context';
+
 export const isArtifexContentFile = (filePath: string) => {
-  if (/\.(se.ts|item.ts|block.ts|ce.ts)$/.test(filePath)) {
-    return true;
-  }
-  return false;
+  return BUILD_CONTEXT.PACKS.CONTENT_SUFFIX_REGISTRY.isArtifexContentFile(
+    filePath,
+  );
 };

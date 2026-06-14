@@ -2,11 +2,10 @@ import { join } from 'path';
 
 import { Float } from '@artifex/common/content/tools/float';
 import { ServerEntityBuilder } from '@artifex/pack/content/server-entity/server-entity-builder';
-import { BUILD_CONTEXT } from '../../build-context';
-import { formatFileName } from '../utils/format-file-name';
+import { ContentBuildOptions } from '../../actions/options';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
-import { ContentBuildOptions } from '../../actions/options';
+import { createContentPath } from '../utils/create-content-path';
 
 // TODO: Remove this once we have a better way to handle floats
 const replaceArtifexFloatsInJsonString = (json: string): string => {
@@ -66,23 +65,8 @@ export const buildServerEntityJson = async (
   const jsonString = serializeJson(json);
 
   const identifier = builder.cloneConfig().identifier ?? '';
-  const fileName = formatFileName(identifier.split(':')[1], '.se.json');
-  if (identifier === undefined || fileName === undefined) {
-    console.error(`Error creating content path for ${filePath}`);
-
-    return;
-  }
-
-  const { OUTPUT_NAMESPACE_PATH, OUTPUT_BEHAVIOR_PACK_PATH } =
-    BUILD_CONTEXT.PACKS;
-
-  const outFile = join(
-    OUTPUT_BEHAVIOR_PACK_PATH,
-    'entities',
-    OUTPUT_NAMESPACE_PATH,
-    fileName,
-  );
-  if (outFile === undefined) {
+  const outFile = createContentPath(filePath, undefined, { identifier });
+  if (identifier === undefined || outFile === undefined) {
     console.error(`Error creating content path for ${filePath}`);
 
     return;

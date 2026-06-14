@@ -8,6 +8,16 @@ export type ArtifexPackOutput =
   | 'build'
   | (string & {});
 
+export type ArtifexContentTypeKey =
+  | 'block'
+  | 'item'
+  | 'server-entity'
+  | 'client-entity';
+
+export type ArtifexContentSuffixConfig = Partial<
+  Record<ArtifexContentTypeKey, string | string[]>
+>;
+
 export interface ArtifexPackConfig {
   /**
    * The alias for the pack.
@@ -62,6 +72,22 @@ export interface ArtifexPackConfig {
    * @default false
    */
   archive?: boolean;
+
+  /**
+   * Input file suffixes per content type (without `.ts`).
+   *
+   * Output JSON mirrors the matched input suffix, e.g. `cow.e.bp.ts` → `cow.e.bp.json`.
+   *
+   * @example
+   * ```ts
+   * contentSuffixes: {
+   *   block: ['b', 'bl'],
+   *   'server-entity': ['e.bp'],
+   *   'client-entity': ['entity', 'e.rp'],
+   * }
+   * ```
+   */
+  contentSuffixes?: ArtifexContentSuffixConfig;
 }
 
 export interface ArtifexScriptsConfig {
@@ -69,9 +95,14 @@ export interface ArtifexScriptsConfig {
    * The entry file for the scripts.
    *
    * This is used to resolve the paths to the files in the scripts.
-   * @default 'scripts/main.ts'
+   * @default 'packs/scripts/main.ts'
    */
   entry?: string;
+
+  /**
+   * Minifies the scripts output.
+   * @default false
+   */
   minify?: boolean;
 }
 

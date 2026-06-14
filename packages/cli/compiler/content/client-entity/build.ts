@@ -1,11 +1,8 @@
-import { join } from 'path';
-
 import { ClientEntityBuilder } from '@artifex/pack/content/client-entity/client-entity-builder';
-import { BUILD_CONTEXT } from '../../build-context';
-import { formatFileName } from '../utils/format-file-name';
+import { ContentBuildOptions } from '../../actions/options';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
-import { ContentBuildOptions } from '../../actions/options';
+import { createContentPath } from '../utils/create-content-path';
 
 export const buildClientEntityJson = async (
   filePath: string,
@@ -16,25 +13,8 @@ export const buildClientEntityJson = async (
   const jsonString = serializeJson(json);
 
   const identifier = builder.cloneConfig().identifier ?? '';
-  const fileName = formatFileName(identifier.split(':')[1], '.ce.json');
-  if (identifier === undefined || fileName === undefined) {
-    console.error(`Error creating content path for ${filePath}`);
-
-    return;
-  }
-
-  const { OUTPUT_NAMESPACE_PATH, OUTPUT_RESOURCE_PACK_PATH } =
-    BUILD_CONTEXT.PACKS;
-
-  const outFile = join(
-    OUTPUT_RESOURCE_PACK_PATH,
-    'entity',
-    OUTPUT_NAMESPACE_PATH,
-    fileName,
-  );
-
-  // const outFile = createContentPath(filePath, builder.metadata);
-  if (outFile === undefined) {
+  const outFile = createContentPath(filePath, undefined, { identifier });
+  if (identifier === undefined || outFile === undefined) {
     console.error(`Error creating content path for ${filePath}`);
 
     return;

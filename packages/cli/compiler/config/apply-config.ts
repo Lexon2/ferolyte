@@ -6,6 +6,7 @@ import { BUILD_CONTEXT } from '../build-context';
 import { ArtifexProfileConfig, ArtifexPackOutput } from './interfaces/config';
 import { getMinecraftDirectory } from './utils/get-minecraft-directory';
 import { MinecraftPackType } from '@artifex/common/content/types/minecraft-pack-types';
+import { buildContentSuffixRegistry } from '../content/utils/content-suffix-registry';
 
 const applyTsConfig = async (config: ArtifexProfileConfig) => {
   BUILD_CONTEXT.TS.CONFIG_PATH =
@@ -108,7 +109,7 @@ export const applyConfig = async (config: ArtifexProfileConfig) => {
 
   BUILD_CONTEXT.PACKS.SCRIPT_ENTRY_PATH = scripts?.entry
     ? join(currentWorkingDirectory, scripts.entry)
-    : join(currentWorkingDirectory, 'scripts', 'main.ts');
+    : join(currentWorkingDirectory, 'packs', 'scripts', 'main.ts');
   BUILD_CONTEXT.PACKS.SCRIPT_MINIFY = scripts?.minify ?? false;
   BUILD_CONTEXT.PACKS.PACK_ALIAS = alias;
   BUILD_CONTEXT.PACKS.MINIFY_JSON = packs.minifyJSON ?? false;
@@ -127,5 +128,9 @@ export const applyConfig = async (config: ArtifexProfileConfig) => {
   BUILD_CONTEXT.PACKS.CACHE_PATH = join(
     currentWorkingDirectory,
     '.artifex/cache',
+  );
+
+  BUILD_CONTEXT.PACKS.CONTENT_SUFFIX_REGISTRY = buildContentSuffixRegistry(
+    packs.contentSuffixes,
   );
 };
