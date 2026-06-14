@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SwoopAttackBehavior } from '../../interfaces/behaviors/swoop-attack-behavior';
 import { convertRange } from '../common/convertors';
 import { validateNumber } from '../common/validation';

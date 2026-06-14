@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SwimUpForBreathBehavior } from '../../interfaces/behaviors/swim-up-for-breath-behavior';
 import { validateInteger, validateNumber, validateString } from '../common/validation';
 

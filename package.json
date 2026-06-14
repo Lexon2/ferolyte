@@ -6,9 +6,12 @@
   "main": "src/main.ts",
   "type": "module",
   "workspaces": [
-    "packages/pack"
+    "packages/common",
+    "packages/pack",
+    "packages/cli"
   ],
   "scripts": {
+    "build:packages": "npm run build -w @artifex/common && npm run build -w @artifex/pack && npm run build -w @artifex/cli",
     "lint": "eslint \"./packages/**/*.ts\"",
     "lint:fix": "eslint \"./packages/**/*.ts\" --fix",
     "artifex:build": "artifex run",
@@ -26,7 +29,9 @@
     "esbuild": "^0.25.2"
   },
   "devDependencies": {
-    "@artifex/pack": "workspace:*",
+    "@artifex/cli": "*",
+    "@artifex/common": "*",
+    "@artifex/pack": "*",
     "@eslint/config-array": "^0.20.0",
     "@eslint/js": "^9.24.0",
     "@eslint/object-schema": "^2.1.6",

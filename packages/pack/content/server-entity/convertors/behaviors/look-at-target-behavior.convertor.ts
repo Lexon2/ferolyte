@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { LookAtTargetBehavior } from '../../interfaces/behaviors/look-at-target-behavior';
 import { convertRange } from '../common/convertors';
 import { validateInteger, validateNumber } from '../common/validation';

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { DefendVillageTargetBehavior } from '../../interfaces/behaviors/defend-village-target-behavior';
 import { convertSingleEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';

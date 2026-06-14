@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { JumpDynamicComponent } from '../../../interfaces/components/navigation-movement/jump-dynamic-component';
 import { convertStateObject } from '../../common/state-object';
 

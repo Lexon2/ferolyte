@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { FollowParentBehavior } from '../../interfaces/behaviors/follow-parent-behavior';
 import { validateNumber } from '../common/validation';
 

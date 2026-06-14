@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { ExploreOutskirtsBehavior } from '../../interfaces/behaviors/explore-outskirts-behavior';
 import { validateNumber, validateVector3 } from '../common/validation';
 

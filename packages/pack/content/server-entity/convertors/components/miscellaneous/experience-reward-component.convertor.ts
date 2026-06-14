@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { ExperienceRewardComponent } from '../../../interfaces/components/miscellaneous/experience-reward-component';
 // TODO: Validate molang expression
 /**

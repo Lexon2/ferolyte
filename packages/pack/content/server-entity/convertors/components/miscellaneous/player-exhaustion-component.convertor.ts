@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { PlayerExhaustionComponent } from '../../../interfaces/components/miscellaneous/player-exhaustion-component';
 import { validateInteger } from '../../common/validation';
 

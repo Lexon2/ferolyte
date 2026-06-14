@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { LeapAtTargetBehavior } from '../../interfaces/behaviors/leap-at-target-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 

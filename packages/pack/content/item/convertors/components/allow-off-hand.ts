@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
-import { validateBooleanValue } from '../../../../common/validation/content-validation';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '@artifex/common/content/validation/content-validation';
 
 /**
  * Creates an allow_off_hand component for Minecraft items

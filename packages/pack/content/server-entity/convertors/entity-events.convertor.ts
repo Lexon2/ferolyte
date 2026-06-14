@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '../../../common/diagnostics/content-diagnostic';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
 import {
   EntityEventBase,
   EntityEventRandomize,

@@ -1,6 +1,6 @@
 import { ItemConfig } from './interfaces/item-config';
 import { ItemBuilder } from './item-builder';
-import { deepMerge } from '../../common/utils/object/deep-merge';
+import { deepMerge } from '@artifex/common/object/deep-merge';
 
 export const createItem = (...sources: (ItemConfig | ItemBuilder)[]) => {
   let merged: any = {};

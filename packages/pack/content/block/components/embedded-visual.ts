@@ -1,5 +1,5 @@
 import { EmbeddedVisualComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { createItemVisual } from './item-visual';
 
 /**

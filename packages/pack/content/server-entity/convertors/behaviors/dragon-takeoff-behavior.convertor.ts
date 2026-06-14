@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { DragonTakeoffBehavior } from '../../interfaces/behaviors/dragon-takeoff-behavior';
 import { validateNumber } from '../common/validation';
 

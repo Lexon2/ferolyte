@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/pack/common/diagnostics/content-diagnostic';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
 import { NearestAttackableTargetBehavior } from '../../interfaces/behaviors/nearest-attackable-target-behavior';
 import {
   convertEntityDefinition,

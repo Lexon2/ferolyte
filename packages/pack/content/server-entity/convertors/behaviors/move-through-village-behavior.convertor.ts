@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MoveThroughVillageBehavior } from '../../interfaces/behaviors/move-through-village-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 

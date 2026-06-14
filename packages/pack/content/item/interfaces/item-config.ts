@@ -1,7 +1,7 @@
 import { Identifier } from '@artifex/common/types';
 
 import { ItemMenuCategory } from './item-menu-category';
-import { DamageSourceType } from '../../../common/types/damage-source';
+import { DamageSourceType } from '@artifex/common/content/types/damage-source';
 import { ItemTags } from '../types/item-tags';
 import { ItemVersions } from '../types/item-versions';
 import { ItemRepairableComponent } from './components/repairable';

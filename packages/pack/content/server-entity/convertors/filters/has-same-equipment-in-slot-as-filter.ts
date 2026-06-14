@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { FILTER_EQUIPMENT_SLOTS } from '../../constants/equipment-slots';
 import { HasSameEquipmentInSlotAsFilter } from '../../interfaces/filters/has-same-equipment-in-slot-as-filter';

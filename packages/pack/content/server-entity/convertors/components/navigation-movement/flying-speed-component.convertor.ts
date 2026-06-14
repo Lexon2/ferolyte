@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { FlyingSpeedComponent } from '../../../interfaces/components/navigation-movement/flying-speed-component';
 import { validateNumber } from '../../common/validation';
 

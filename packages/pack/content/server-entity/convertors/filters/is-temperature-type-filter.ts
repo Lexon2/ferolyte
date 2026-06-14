@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { TEMPERATURE_TYPES } from '../../constants/temperature-types';
 import { IsTemperatureTypeFilter } from '../../interfaces/filters/is-temperature-type-filter';

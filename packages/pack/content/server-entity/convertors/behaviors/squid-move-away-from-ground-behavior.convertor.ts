@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SquidMoveAwayFromGroundBehavior } from '../../interfaces/behaviors/squid-move-away-from-ground-behavior';
 import { validateNumber } from '../common/validation';
 

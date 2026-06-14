@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { FollowTargetCaptainBehavior } from '../../interfaces/behaviors/follow-target-captain-behavior';
 import { validateNumber } from '../common/validation';
 

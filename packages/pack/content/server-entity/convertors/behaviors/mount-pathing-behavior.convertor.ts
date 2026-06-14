@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MountPathingBehavior } from '../../interfaces/behaviors/mount-pathing-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 

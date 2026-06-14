@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { IsStunnedComponent } from '../../../interfaces/components/states/is-stunned-component';
 import { convertStateObject } from '../../common/state-object';
 

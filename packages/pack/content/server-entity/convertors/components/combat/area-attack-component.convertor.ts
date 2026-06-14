@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { AreaAttackComponent } from '../../../interfaces/components/combat/area-attack-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber, validateString, validateBoolean } from '../../common/validation';

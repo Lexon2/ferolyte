@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { DashActionComponent } from '../../../interfaces/components/control/dash-action-component';
 import {
   validateAllowedValues,

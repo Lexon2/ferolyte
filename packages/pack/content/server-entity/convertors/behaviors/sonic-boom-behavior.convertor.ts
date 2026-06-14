@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SonicBoomBehavior } from '../../interfaces/behaviors/sonic-boom-behavior';
 import { validateNumber, validateSoundEvent } from '../common/validation';
 

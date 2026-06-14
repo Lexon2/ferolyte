@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { ENTITY_EVENT_TARGETS } from '../../constants/event-target';
 import { SummonEntityBehavior, SummonChoice, SummonSequence } from '../../interfaces/behaviors/summon-entity-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';

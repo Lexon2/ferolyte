@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { DefendTrustedTargetBehavior } from '../../interfaces/behaviors/defend-trusted-target-behavior';
 import { convertSingleEntityDefinition } from '../common/entity-definition.convertor';
 import { convertTrigger } from '../common/trigger.convertor';

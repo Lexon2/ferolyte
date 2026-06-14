@@ -6,7 +6,7 @@ import {
   ContentDiagnosticContext,
   logContentError,
   withFieldPath,
-} from '../../../../common/diagnostics/content-diagnostic';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateBooleanValue,
@@ -14,7 +14,7 @@ import {
   validateNumberRange as validateSharedNumberRange,
   validateString as validateStringValue,
   validateVector3 as validateSharedVector3,
-} from '../../../../common/validation/content-validation';
+} from '@artifex/common/content/validation/content-validation';
 import {
   CONTAINER_TYPES,
   ContainerType,

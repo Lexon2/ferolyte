@@ -1,6 +1,6 @@
 import { BlockTraits } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
-import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
 
 export const convertBlockTraits = (
   traits: BlockTraits,

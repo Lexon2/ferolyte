@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { RandomLookAroundAndSitBehavior } from '../../interfaces/behaviors/random-look-around-and-sit-behavior';
 import { validateNumber, validateBoolean, validateDegrees, validateInteger } from '../common/validation';
 

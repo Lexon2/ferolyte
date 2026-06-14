@@ -1,9 +1,9 @@
 import { LiquidDetectionComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateBooleanValue,
-} from '../../../common/validation/content-validation';
+} from '@artifex/common/content/validation/content-validation';
 
 type Direction =
   | 'up'

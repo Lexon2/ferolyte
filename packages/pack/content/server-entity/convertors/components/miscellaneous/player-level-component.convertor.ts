@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { PlayerLevelComponent } from '../../../interfaces/components/miscellaneous/player-level-component';
 import { validateInteger } from '../../common/validation';
 

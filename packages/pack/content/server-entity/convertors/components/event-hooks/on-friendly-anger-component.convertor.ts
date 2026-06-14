@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { OnFriendlyAngerComponent } from '../../../interfaces/components/event-hooks/on-friendly-anger-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 

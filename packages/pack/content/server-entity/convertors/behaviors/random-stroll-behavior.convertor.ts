@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { RandomStrollBehavior } from '../../interfaces/behaviors/random-stroll-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 

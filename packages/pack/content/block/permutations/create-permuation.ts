@@ -9,8 +9,8 @@ import {
 import {
   ContentDiagnosticContext,
   logContentError,
-} from '../../../common/diagnostics/content-diagnostic';
-import { validateNumber } from '../../../common/validation/content-validation';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateNumber } from '@artifex/common/content/validation/content-validation';
 
 interface BlockPermutation {
   condition: string;

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { HoldGroundBehavior } from '../../interfaces/behaviors/hold-ground-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import {

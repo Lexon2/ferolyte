@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { EatBlockBehavior } from '../../interfaces/behaviors/eat-block-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateNumber, validateString } from '../common/validation';

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { BreedableComponent, BreedsWithSpec, EnvironmentRequirements } from '../../../interfaces/components/ai/breedable-component';
 import { validateNumber, validateString } from '../../common/validation';
 

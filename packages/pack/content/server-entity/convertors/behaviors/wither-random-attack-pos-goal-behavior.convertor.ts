@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { WitherRandomAttackPosGoalBehavior } from '../../interfaces/behaviors/wither-random-attack-pos-goal-behavior';
 import { validateNumber } from '../common/validation';
 

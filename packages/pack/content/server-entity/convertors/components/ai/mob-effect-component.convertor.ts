@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MobEffectComponent } from '../../../interfaces/components/ai/mob-effect-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber } from '../../common/validation';

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { IsUnderwaterFilter } from '../../interfaces/filters/is-underwater-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';

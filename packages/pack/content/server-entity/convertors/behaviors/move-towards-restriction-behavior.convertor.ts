@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { CONTROL_FLAG } from '../../constants/control-flags';
 import { MoveTowardsRestrictionBehavior } from '../../interfaces/behaviors/move-towards-restriction-behavior';
 import { validateNumber, validateStringArray } from '../common/validation';

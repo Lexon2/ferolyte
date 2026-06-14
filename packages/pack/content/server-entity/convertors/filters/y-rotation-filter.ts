@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { YRotationFilter } from '../../interfaces/filters/y-rotation-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';

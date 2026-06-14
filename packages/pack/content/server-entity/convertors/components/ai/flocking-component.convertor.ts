@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { FlockingComponent } from '../../../interfaces/components/ai/flocking-component';
 import { validateNumber } from '../../common/validation';
 import { validateBoolean } from '../../common/validation';

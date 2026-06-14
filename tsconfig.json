@@ -8,6 +8,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "declaration": false,
+    "noEmit": true,
     "noEmitHelpers": true,
     "noLib": false,
     "emitDecoratorMetadata": true,
@@ -26,6 +27,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@artifex/common/*": ["packages/common/*"],
+      "@artifex/cli/*": ["packages/cli/*"],
       "@artifex/events/*": ["packages/events/*"],
       "@artifex/pack/*": ["packages/pack/*"],
       "@artifex/world/*": ["packages/world/*"],
@@ -33,6 +35,6 @@
     }
   },
   "include": ["packages/**/*", "test/**/*", "packs/**/*", "artifex.config.mts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "**/*.d.ts", "**/*.d.ts.map"],
   "compileOnSave": false
 }

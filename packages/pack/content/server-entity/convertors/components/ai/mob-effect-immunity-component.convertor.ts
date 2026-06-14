@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MobEffectImmunityComponent } from '../../../interfaces/components/ai/mob-effect-immunity-component';
 import { validateEffectType } from '../../common/validation';
 

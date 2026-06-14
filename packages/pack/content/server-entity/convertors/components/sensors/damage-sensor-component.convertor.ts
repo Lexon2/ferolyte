@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/pack/common/diagnostics/content-diagnostic';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
 import {
   DamageSensorComponent,
   DamageTrigger,

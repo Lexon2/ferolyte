@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { StompTurtleEggBehavior } from '../../interfaces/behaviors/stomp-turtle-egg-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 

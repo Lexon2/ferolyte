@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { BuoyantComponent } from '../../../interfaces/components/navigation-movement/buoyant-component';
 import { validateNumber, validateString } from '../../common/validation';
 

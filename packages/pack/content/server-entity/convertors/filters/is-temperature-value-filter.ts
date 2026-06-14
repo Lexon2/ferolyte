@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { IsTemperatureValueFilter } from '../../interfaces/filters/is-temperature-value-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
 import { validateNumber } from '../common/validation';

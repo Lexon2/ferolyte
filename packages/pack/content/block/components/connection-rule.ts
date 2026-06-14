@@ -1,6 +1,6 @@
 import { ConnectionRuleComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
-import { validateAllowedValue } from '../../../common/validation/content-validation';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateAllowedValue } from '@artifex/common/content/validation/content-validation';
 
 const VALID_ACCEPTS = ['all', 'none', 'only_fences'] as const;
 const VALID_DIRECTIONS = ['east', 'north', 'south', 'west'] as const;

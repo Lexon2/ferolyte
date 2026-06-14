@@ -1,6 +1,6 @@
 import { expect } from 'vitest';
 
-import type { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import type { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 
 type ComponentCreator = (
   input?: unknown,

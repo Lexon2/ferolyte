@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { GeneticsComponent, GeneticsGene, GeneticVariant } from '../../../interfaces/components/miscellaneous/genetics-component';
 import { convertRange } from '../../common/convertors';
 import { convertTrigger } from '../../common/trigger.convertor';

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertStringNumberFilter } from './common/convert-string-number';
 import { HasItemWithComponentFilter } from '../../interfaces/filters/has-item-with-component-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';

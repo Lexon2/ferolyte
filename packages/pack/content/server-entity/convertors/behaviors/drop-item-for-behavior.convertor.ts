@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { DropItemForBehavior } from '../../interfaces/behaviors/drop-item-for-behavior';
 import { convertRange } from '../common/convertors';
 import { convertSingleEntityDefinition } from '../common/entity-definition.convertor';

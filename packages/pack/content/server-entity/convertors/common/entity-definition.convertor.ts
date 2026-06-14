@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '../../../../common/diagnostics/content-diagnostic';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertEntityFilters } from './filters.convertor';
 import { validateBoolean, validateNumber } from './validation';
 import { EntityDefinition, EntityTypes } from '../../types/entity-types';

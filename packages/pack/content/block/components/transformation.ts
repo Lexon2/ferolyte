@@ -1,6 +1,6 @@
 import { TransformationComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
-import { validateVector3 } from '../../../common/validation/content-validation';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateVector3 } from '@artifex/common/content/validation/content-validation';
 
 /**
  * Creates a transformation component for Minecraft blocks

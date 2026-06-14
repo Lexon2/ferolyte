@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { HomeComponent } from '../../../interfaces/components/miscellaneous/home-component';
 import { validateNumber, validateStringArray } from '../../common/validation';
 import { validateHomeRestrictionType } from '../../validation/home-restriction-type';

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { JumpStaticComponent } from '../../../interfaces/components/navigation-movement/jump-static-component';
 import { validateNumber } from '../../common/validation';
 

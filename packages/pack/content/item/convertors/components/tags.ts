@@ -1,6 +1,6 @@
 import { ItemTags } from '../../types/item-tags';
-import { ContentDiagnosticContext, logContentError } from '../../../../common/diagnostics/content-diagnostic';
-import { validateNonEmptyArray } from '../../../../common/validation/content-validation';
+import { ContentDiagnosticContext, logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateNonEmptyArray } from '@artifex/common/content/validation/content-validation';
 
 const VALID_TAGS = new Set<string>([
   'minecraft:arrow',

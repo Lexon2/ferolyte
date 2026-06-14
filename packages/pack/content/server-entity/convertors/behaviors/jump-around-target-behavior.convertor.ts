@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { JumpAroundTargetBehavior } from '../../interfaces/behaviors/jump-around-target-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateBoolean, validateDegrees, validateInteger, validateNumber, validateNumberArray, validateVector2 } from '../common/validation';

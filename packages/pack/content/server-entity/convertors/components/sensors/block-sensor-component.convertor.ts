@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { BlockSensorComponent } from '../../../interfaces/components/sensors/block-sensor-component';
 import { validateNumber, validateString } from '../../common/validation';
 

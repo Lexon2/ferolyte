@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 
 import { TARGET_SELECTION_METHODS } from '../../constants/target-selection-method';
 import { AvoidBlockBehavior } from '../../interfaces/behaviors/avoid-block-behavior';

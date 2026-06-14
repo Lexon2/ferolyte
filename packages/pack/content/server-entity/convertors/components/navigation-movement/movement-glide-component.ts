@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MovementGlideComponent } from '../../../interfaces/components/navigation-movement/movement-glide-component';
 import { validateMaxTurn } from '../../common/validation';
 import { validateNumberRange } from '../../common/validation';

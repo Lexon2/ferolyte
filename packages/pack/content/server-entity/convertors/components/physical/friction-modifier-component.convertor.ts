@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { FrictionModifierComponent } from '../../../interfaces/components/physical/friction-modifier-component';
 import { validateNumberRange } from '../../common/validation';
 

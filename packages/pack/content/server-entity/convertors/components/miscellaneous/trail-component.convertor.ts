@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { TrailComponent } from '../../../interfaces/components/miscellaneous/trail-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 

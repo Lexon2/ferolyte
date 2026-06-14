@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { DAMAGE_TYPES } from '../../constants/damage-types';
 import { HasDamageFilter } from '../../interfaces/filters/has-damage-filter';

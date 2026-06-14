@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './convert-filter-base';
 import { FilterOperator } from '../../../constants/filter-operators';
 import { FilterSubject } from '../../../constants/filter-subjects';

@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { InsideBlockNotifierComponent, BlockNotifierEntry } from '../../../interfaces/components/sensors/inside-block-notifier-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateString } from '../../common/validation';

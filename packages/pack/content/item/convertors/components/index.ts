@@ -44,7 +44,7 @@ import { createUseAnimation } from './use-animation';
 import { createUseModifiers } from './use-modifiers';
 import { createWearable } from './wearable';
 
-import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 
 export type ItemComponentCreator = (
   value?: unknown,

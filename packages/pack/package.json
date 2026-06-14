@@ -1,15 +1,12 @@
 {
   "name": "@artifex/pack",
   "version": "0.1.0",
-  "description": "Artifex pack compiler and CLI for Minecraft BE addons",
+  "description": "Artifex content SDK for Minecraft BE addons",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/artifex-pack.js",
-  "bin": {
-    "artifex": "./dist/cli/index.js"
-  },
   "exports": {
     "./*": {
+      "types": "./dist/*.d.ts",
       "import": "./dist/*.js",
       "default": "./dist/*.js"
     }
@@ -23,16 +20,11 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "jsonc-parser": "^3.3.1",
-    "chokidar": "^4.0.3",
-    "citty": "^0.2.2",
-    "esbuild": "^0.25.2",
-    "uuid": "^13.0.0",
-    "ws": "^8.18.3"
+    "@artifex/common": "*"
   },
   "devDependencies": {
-    "@types/ws": "^8.18.1",
-    "typescript": "^5.3.3"
+    "esbuild": "^0.25.2",
+    "typescript": "^5.8.3"
   },
   "engines": {
     "node": ">=18"

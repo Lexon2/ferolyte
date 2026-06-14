@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
-import { validateCustomComponentIds } from '../../../common/validation/content-validation';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateCustomComponentIds } from '@artifex/common/content/validation/content-validation';
 
 /**
  * Creates a custom_components component for Minecraft blocks

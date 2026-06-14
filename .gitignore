@@ -9,6 +9,12 @@ package-lock.json
 dist
 packs
 build
+
+# Stray declaration files from misconfigured tsc (should only exist in dist/)
+packages/**/content/**/*.d.ts
+packages/**/content/**/*.d.ts.map
+packages/pack/tests/**/*.d.ts
+packages/pack/tests/**/*.d.ts.map
 packages/wip/*
 
 test/

@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SendEventBehavior, EventChoice, EventStep } from '../../interfaces/behaviors/send-event-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber, validateBoolean, validateHexColor, validateSoundEvent, validateString } from '../common/validation';

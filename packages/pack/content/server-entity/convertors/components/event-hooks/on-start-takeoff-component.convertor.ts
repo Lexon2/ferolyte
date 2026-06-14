@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { OnStartTakeoffComponent } from '../../../interfaces/components/event-hooks/on-start-takeoff-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 

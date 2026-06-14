@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { EquippableComponent, EquippableSlot } from '../../../interfaces/components/interaction/equippable-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber, validateString } from '../../common/validation';

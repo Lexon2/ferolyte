@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MoveTowardsDwellingRestrictionBehavior } from '../../interfaces/behaviors/move-towards-dwelling-restriction-behavior';
 import { validateNumber } from '../common/validation';
 

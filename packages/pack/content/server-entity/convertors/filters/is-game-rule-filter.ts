@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './common/convert-filter-base';
 import { IsGameRuleFilter } from '../../interfaces/filters/is-game-rule-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';

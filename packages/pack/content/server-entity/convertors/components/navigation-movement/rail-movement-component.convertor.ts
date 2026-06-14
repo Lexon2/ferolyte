@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { RailMovementComponent } from '../../../interfaces/components/navigation-movement/rail-movement-component';
 import { validateNumber } from '../../common/validation';
 

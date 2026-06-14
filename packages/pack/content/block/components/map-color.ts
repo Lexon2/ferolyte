@@ -1,11 +1,11 @@
 import { ColorValue } from '../../common/types/color-value';
 import { MapColorComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
-import { logContentError } from '../../../common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateNonEmptyString,
-} from '../../../common/validation/content-validation';
+} from '@artifex/common/content/validation/content-validation';
 
 const VALID_TINT_METHODS = ['noise', 'underwater', 'sinusoidal'] as const;
 

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { EatCarriedItemBehavior } from '../../interfaces/behaviors/eat-carried-item-behavior';
 import { validateNumber } from '../common/validation';
 

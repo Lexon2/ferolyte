@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { NameableComponent } from '../../../interfaces/components/miscellaneous/nameable-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateBoolean } from '../../common/validation';

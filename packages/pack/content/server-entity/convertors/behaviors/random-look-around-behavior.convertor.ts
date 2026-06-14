@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { RandomLookAroundBehavior } from '../../interfaces/behaviors/random-look-around-behavior';
 import { convertRange } from '../common/convertors';
 import { validateDegrees, validateNumber } from '../common/validation';

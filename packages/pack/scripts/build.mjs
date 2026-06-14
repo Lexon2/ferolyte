@@ -1,4 +1,5 @@
 import { readdir } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -21,7 +22,7 @@ async function collectTsFiles(dir, files = []) {
       continue;
     }
 
-    if (entry.name.endsWith('.ts')) {
+    if (entry.name.endsWith('.ts') && !entry.name.endsWith('.d.ts')) {
       files.push(path);
     }
   }
@@ -54,18 +55,18 @@ const fixRelativeImports = (content) =>
     },
   );
 
-async function fixDistImports(dir) {
+async function fixDistModuleSpecifiers(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
 
   for (const entry of entries) {
     const path = join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      await fixDistImports(path);
+      await fixDistModuleSpecifiers(path);
       continue;
     }
 
-    if (!entry.name.endsWith('.js')) {
+    if (!entry.name.endsWith('.js') && !entry.name.endsWith('.d.ts')) {
       continue;
     }
 
@@ -75,7 +76,19 @@ async function fixDistImports(dir) {
   }
 }
 
-await fixDistImports(join(rootDir, 'dist'));
+await fixDistModuleSpecifiers(join(rootDir, 'dist'));
+
+const tsc = spawnSync('npx', ['tsc', '-p', 'tsconfig.dts.json'], {
+  cwd: rootDir,
+  stdio: 'inherit',
+  shell: true,
+});
+
+if (tsc.status !== 0) {
+  process.exit(tsc.status ?? 1);
+}
+
+await fixDistModuleSpecifiers(join(rootDir, 'dist'));
 
 for (const entry of entryPoints) {
   if (relative(rootDir, entry).replace(/\\/g, '/').startsWith('cli/index.ts')) {
@@ -89,4 +102,4 @@ for (const entry of entryPoints) {
   }
 }
 
-console.log(`Built ${entryPoints.length} files to dist/`);
+console.log(`Built ${entryPoints.length} JS and declaration files to dist/`);

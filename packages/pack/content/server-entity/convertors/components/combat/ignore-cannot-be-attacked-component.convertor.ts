@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { IgnoreCannotBeAttackedComponent } from '../../../interfaces/components/combat/ignore-cannot-be-attacked-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 

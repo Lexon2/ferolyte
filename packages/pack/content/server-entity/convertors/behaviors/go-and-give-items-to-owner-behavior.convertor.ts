@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { GoAndGiveItemsToOwnerBehavior } from '../../interfaces/behaviors/go-and-give-items-to-owner-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateNumber, validateSoundEvent } from '../common/validation';

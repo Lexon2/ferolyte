@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/pack/common/diagnostics/content-diagnostic';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
 import { HurtByTargetBehavior } from '../../interfaces/behaviors/hurt-by-target-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateBoolean, validateNumber } from '../common/validation';

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { BaseNavigation } from '../../../interfaces/components/navigation-movement/base-navigation';
 import { validateBoolean } from '../../common/validation';
 import { validateStringArray } from '../../common/validation';

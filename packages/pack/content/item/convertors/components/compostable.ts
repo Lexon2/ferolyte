@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
-import { validateNumberRange } from '../../../../common/validation/content-validation';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateNumberRange } from '@artifex/common/content/validation/content-validation';
 
 interface CompostableOptions {
   compostingChance?: number;

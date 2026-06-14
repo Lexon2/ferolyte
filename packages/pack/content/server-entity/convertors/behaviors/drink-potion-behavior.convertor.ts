@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { DrinkPotionBehavior } from '../../interfaces/behaviors/drink-potion-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber, validatePercentage } from '../common/validation';

@@ -1,9 +1,9 @@
-import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateNonEmptyString,
   validatePositiveNumber,
-} from '../../../../common/validation/content-validation';
+} from '@artifex/common/content/validation/content-validation';
 
 interface CooldownOptions {
   category: string;

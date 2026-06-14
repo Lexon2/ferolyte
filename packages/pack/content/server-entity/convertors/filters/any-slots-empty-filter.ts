@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { EQUIPMENT_LOCATION_VALUES } from '../../constants/equipment-location';
 import { AnySlotsEmptyFilter } from '../../interfaces/filters/any-slots-empty-filter';

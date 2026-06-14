@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { OfferFlowerBehavior } from '../../interfaces/behaviors/offer-flower-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateDegrees, validateNumber, validatePercentage, validateVector3 } from '../common/validation';

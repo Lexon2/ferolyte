@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { JumpToBlockBehavior } from '../../interfaces/behaviors/jump-to-block-behavior';
 import { validateInteger, validateNumber, validatePercentage, validateStringArray, validateVector2 } from '../common/validation';
 

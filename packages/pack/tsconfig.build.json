@@ -16,15 +16,10 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@artifex/pack/*": ["./*"]
+      "@artifex/pack/*": ["./*"],
+      "@artifex/common/*": ["../common/*"]
     }
   },
-  "include": [
-    "./**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "tests"
-  ]
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules", "dist", "tests", "**/*.d.ts"]
 }

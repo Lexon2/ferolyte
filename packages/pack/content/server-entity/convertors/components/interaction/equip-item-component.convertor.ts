@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { EquipItemComponent } from '../../../interfaces/components/interaction/equip-item-component';
 
 interface ExcludedItem {

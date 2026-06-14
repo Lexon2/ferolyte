@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MingleBehavior } from '../../interfaces/behaviors/mingle-behavior';
 import { validateNumber, validateString, validateStringArray } from '../common/validation';
 

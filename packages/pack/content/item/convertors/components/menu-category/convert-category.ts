@@ -1,10 +1,10 @@
-import { ContentDiagnosticContext } from '../../../../../common/diagnostics/content-diagnostic';
-import { logContentError } from '../../../../../common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateBooleanValue,
   validateString,
-} from '../../../../../common/validation/content-validation';
+} from '@artifex/common/content/validation/content-validation';
 import { ItemMenuCategory } from '../../../interfaces/item-menu-category';
 import { ItemMenuCategoryType } from '../../../types/item-menu-category-type';
 

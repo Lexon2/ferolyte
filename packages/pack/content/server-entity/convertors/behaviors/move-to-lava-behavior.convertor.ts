@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MoveToLavaBehavior } from '../../interfaces/behaviors/move-to-lava-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 

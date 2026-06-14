@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { EatMobBehavior } from '../../interfaces/behaviors/eat-mob-behavior';
 import { validateNumber, validateSoundEvent, validateTradeOrLootTablePath } from '../common/validation';
 

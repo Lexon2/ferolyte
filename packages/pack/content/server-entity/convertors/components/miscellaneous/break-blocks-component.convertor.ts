@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { BreakBlocksComponent } from '../../../interfaces/components/miscellaneous/break-blocks-component';
 import { validateString } from '../../common/validation';
 

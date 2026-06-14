@@ -1,6 +1,6 @@
 import { ItemKineticWeaponComponent } from '../../interfaces/components/kinetic-weapon';
-import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
-import { validateNumber } from '../../../../common/validation/content-validation';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateNumber } from '@artifex/common/content/validation/content-validation';
 import {
   convertKineticWeaponConditions,
   convertWeaponReach,

@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/pack/common/diagnostics/content-diagnostic';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SwimWithEntityBehavior } from '../../interfaces/behaviors/swim-with-entity-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber, validatePercentage } from '../common/validation';

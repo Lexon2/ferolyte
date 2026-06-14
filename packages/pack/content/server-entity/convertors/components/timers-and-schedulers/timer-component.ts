@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { TimerComponent } from '../../../interfaces/components/timers-and-schedulers/timer-component';
 import { validateBoolean } from '../../common/validation';
 import { validateTime } from '../../common/validation';

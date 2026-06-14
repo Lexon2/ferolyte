@@ -1,6 +1,6 @@
 import { ItemUseAnimation } from '../../types/item-use-animation';
-import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
-import { validateAllowedValue } from '../../../../common/validation/content-validation';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateAllowedValue } from '@artifex/common/content/validation/content-validation';
 
 const VALID_ANIMATIONS: ItemUseAnimation[] = [
   'bow',

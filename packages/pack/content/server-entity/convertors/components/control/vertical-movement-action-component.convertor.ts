@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { VerticalMovementActionComponent } from '../../../interfaces/components/control/vertical-movement-action-component';
 import { validateNumber } from '../../common/validation';
 

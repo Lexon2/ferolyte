@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SleepBehavior } from '../../interfaces/behaviors/sleep-behavior';
 import { validateNumber, validateBoolean } from '../common/validation';
 

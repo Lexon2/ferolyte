@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { FloatWanderBehavior } from '../../interfaces/behaviors/float-wander-behavior';
 import { convertRange } from '../common/convertors';
 import { validateBoolean, validateInteger, validateNumber } from '../common/validation';

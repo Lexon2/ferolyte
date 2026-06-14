@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertTimerFlag1Behavior } from './timer-flag-1-behavior.convertor';
 import { TimerFlag3Behavior } from '../../interfaces/behaviors/timer-flag-3-behavior';
 

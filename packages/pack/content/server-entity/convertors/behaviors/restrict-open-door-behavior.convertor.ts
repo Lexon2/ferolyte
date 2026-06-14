@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { RestrictOpenDoorBehavior } from '../../interfaces/behaviors/restrict-open-door-behavior';
 import { validateNumber } from '../common/validation';
 

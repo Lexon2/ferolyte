@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { RandomSittingBehavior } from '../../interfaces/behaviors/random-sitting-behavior';
 import { validateNumber, validatePercentage } from '../common/validation';
 

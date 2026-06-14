@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
-import { validateNonNegativeNumber } from '../../../common/validation/content-validation';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateNonNegativeNumber } from '@artifex/common/content/validation/content-validation';
 
 /**
  * Creates an entity_fall_on component for Minecraft blocks

@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { TakeBlockBehavior } from '../../interfaces/behaviors/take-block-behavior';
 import { convertRange } from '../common/convertors';
 import { convertEntityFilters } from '../common/filters.convertor';

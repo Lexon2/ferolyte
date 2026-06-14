@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { BodyRotationBlockedComponent } from '../../../interfaces/components/physical/body-rotation-blocked-component';
 import { validateBoolean } from '../../common/validation';
 

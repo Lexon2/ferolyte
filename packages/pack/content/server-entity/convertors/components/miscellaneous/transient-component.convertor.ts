@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { TransientComponent } from '../../../interfaces/components/miscellaneous/transient-component';
 import { convertStateObject } from '../../common/state-object';
 

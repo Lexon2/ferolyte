@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { PreferredPathComponent } from '../../../interfaces/components/miscellaneous/preferred-path-component';
 import { validateNumber, validateInteger } from '../../common/validation';
 

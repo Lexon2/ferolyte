@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SwimIdleBehavior } from '../../interfaces/behaviors/swim-idle-behavior';
 import { validateNumber } from '../common/validation';
 

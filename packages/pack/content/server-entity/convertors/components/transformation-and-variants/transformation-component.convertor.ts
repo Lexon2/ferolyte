@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { TransformationComponent } from '../../../interfaces/components/transformation-and-variants/transformation-component';
 import { validateString } from '../../common/validation';
 import { validateStringArray } from '../../common/validation';

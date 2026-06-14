@@ -1,4 +1,4 @@
-import { Float } from '../../../common/tools/float';
+import { Float } from '@artifex/common/content/tools/float';
 import {
   EntityBooleanProperty,
   EntityFloatProperty,

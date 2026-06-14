@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { InputGroundControlledComponent } from '../../../interfaces/components/control/input-ground-controlled-component';
 import { convertStateObject } from '../../common/state-object';
 

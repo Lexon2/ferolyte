@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './common/convert-filter-base';
 import { IntPropertyFilter } from '../../interfaces/filters/int-property-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { BarterBehavior } from '../../interfaces/behaviors/barter-behavior';
 import { validateNumber } from '../common/validation';
 

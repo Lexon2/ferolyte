@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { BegBehavior } from '../../interfaces/behaviors/beg-behavior';
 import { validateNumber, validateComplexRange, validateStringArray } from '../common/validation';
 

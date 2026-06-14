@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { TransportItemsBehavior } from '../../interfaces/behaviors/transport-items-behavior';
 import { convertRange } from '../common/convertors';
 import {

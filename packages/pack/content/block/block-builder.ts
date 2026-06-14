@@ -3,9 +3,9 @@ import { BlockConfig } from './interfaces/block-config';
 import { createBlockPermutations } from './permutations/create-permuation';
 import { convertBlockStates } from './states/convert-states';
 import { convertBlockTraits } from './traits/convert-traits';
-import { ContentBuilder } from '../../common/interfaces/content.builder';
-import { ContentDiagnosticContext } from '../../common/diagnostics/content-diagnostic';
-import { CONTENT_METADATA } from '../../compiler/content/content.metadata';
+import { ContentBuilder } from '@artifex/common/content/interfaces/content-builder';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { CONTENT_METADATA } from '@artifex/common/content/metadata';
 import { convertMenuCategory } from '../item/convertors/components/menu-category/convert-category';
 
 export class BlockBuilder implements ContentBuilder {

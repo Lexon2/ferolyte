@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { FertilizeFarmBlockBehavior } from '../../interfaces/behaviors/fertilize-farm-block-behavior';
 import { validateNumber } from '../common/validation';
 

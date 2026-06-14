@@ -2,7 +2,7 @@ import {
   ContentDiagnosticContext,
   logContentError,
   withFieldPath,
-} from '../../../../common/diagnostics/content-diagnostic';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
 import { EntityFilters } from '../../interfaces/filters';
 import { entityFilterConvertorsFactory } from '../filter-convertors.factory';
 

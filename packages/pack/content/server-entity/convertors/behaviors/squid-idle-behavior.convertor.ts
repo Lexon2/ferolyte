@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SquidIdleBehavior } from '../../interfaces/behaviors/squid-idle-behavior';
 import { validateNumber } from '../common/validation';
 

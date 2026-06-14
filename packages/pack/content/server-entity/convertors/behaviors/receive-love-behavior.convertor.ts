@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { ReceiveLoveBehavior } from '../../interfaces/behaviors/receive-love-behavior';
 import { validateNumber } from '../common/validation';
 

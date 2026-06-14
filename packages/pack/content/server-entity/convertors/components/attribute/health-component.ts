@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { HealthComponent } from '../../../interfaces/components/attribute/health-component';
 import { convertAttributeComponent } from '../../common/attribute';
 

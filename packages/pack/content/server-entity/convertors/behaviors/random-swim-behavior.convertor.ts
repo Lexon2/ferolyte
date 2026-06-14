@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { RandomSwimBehavior } from '../../interfaces/behaviors/random-swim-behavior';
 import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
 

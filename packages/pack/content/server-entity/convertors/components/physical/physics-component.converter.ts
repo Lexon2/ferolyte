@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { PhysicsComponent } from '../../../interfaces/components/physical/physics-component';
 import { validateBoolean } from '../../common/validation';
 

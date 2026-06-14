@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { ConditionalBandwidthOptimizationComponent, ConditionalBandwidthOptimizationConditionalValue } from '../../../interfaces/components/miscellaneous/conditional-bandwidth-optimization-component';
 import { validateNumber } from '../../common/validation';
 

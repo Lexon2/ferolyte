@@ -3,9 +3,9 @@ import { ItemComponentCreator } from './convertors/components/index';
 import { convertMenuCategory } from './convertors/components/menu-category/convert-category';
 import { ItemConfig } from './interfaces/item-config';
 import { MinecraftItem } from './interfaces/minecraft-item';
-import { ContentBuilder } from '../../common/interfaces/content.builder';
-import { ContentDiagnosticContext } from '../../common/diagnostics/content-diagnostic';
-import { CONTENT_METADATA } from '../../compiler/content/content.metadata';
+import { ContentBuilder } from '@artifex/common/content/interfaces/content-builder';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { CONTENT_METADATA } from '@artifex/common/content/metadata';
 
 export class ItemBuilder implements ContentBuilder {
   readonly metadata = CONTENT_METADATA.ITEM;

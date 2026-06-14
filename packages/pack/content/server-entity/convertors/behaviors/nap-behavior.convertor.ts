@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { NapBehavior } from '../../interfaces/behaviors/nap-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber } from '../common/validation';

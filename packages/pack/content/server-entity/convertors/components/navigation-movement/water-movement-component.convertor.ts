@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { WaterMovementComponent } from '../../../interfaces/components/navigation-movement/water-movement';
 import { validateNumber } from '../../common/validation';
 

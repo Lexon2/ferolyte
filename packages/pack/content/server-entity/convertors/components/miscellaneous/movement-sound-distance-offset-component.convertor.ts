@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MovementSoundDistanceOffsetComponent } from '../../../interfaces/components/miscellaneous/movement-sound-distance-offset-component';
 import { validateNumber } from '../../common/validation';
 

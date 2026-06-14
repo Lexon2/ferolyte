@@ -1,7 +1,7 @@
 import { ItemVisualComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
-import { logContentError } from '../../../common/diagnostics/content-diagnostic';
-import { validateNonEmptyString } from '../../../common/validation/content-validation';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateNonEmptyString } from '@artifex/common/content/validation/content-validation';
 
 /**
  * Creates an item_visual component for Minecraft blocks

@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { GoHomeBehavior } from '../../interfaces/behaviors/go-home-behavior';
 import { EntityEventTrigger } from '../../interfaces/trigger';
 import { convertTrigger } from '../common/trigger.convertor';

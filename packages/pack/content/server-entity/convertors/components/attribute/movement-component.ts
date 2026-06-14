@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MovementComponent } from '../../../interfaces/components/attribute/movement-component';
 import { convertAttributeComponent } from '../../common/attribute';
 

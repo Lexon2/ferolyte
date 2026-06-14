@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { ABILITY_TYPES } from '../../constants/ability-types';
 import { HasAbilityFilter } from '../../interfaces/filters/has-ability-filter';

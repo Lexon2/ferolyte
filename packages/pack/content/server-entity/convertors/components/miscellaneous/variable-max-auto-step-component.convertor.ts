@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { VariableMaxAutoStepComponent } from '../../../interfaces/components/miscellaneous/variable-max-auto-step-component';
 import { validateNumber } from '../../common/validation';
 

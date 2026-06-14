@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { UseKineticWeaponBehavior } from '../../interfaces/behaviors/use-kinetic-weapon-behavior';
 import {
   validateBoolean,

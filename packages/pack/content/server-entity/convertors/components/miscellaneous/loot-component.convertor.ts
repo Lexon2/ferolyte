@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { LootComponent } from '../../../interfaces/components/miscellaneous/loot-component';
 import { validateString } from '../../common/validation';
 

@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
-import { logContentError } from '../../../../common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
 
 /**
  * Creates an interact_button component for Minecraft items

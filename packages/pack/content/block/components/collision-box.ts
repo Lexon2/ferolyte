@@ -1,6 +1,6 @@
-import { ContentDiagnosticContext } from '../../../common/diagnostics/content-diagnostic';
-import { logContentError } from '../../../common/diagnostics/content-diagnostic';
-import { validateVector3 } from '../../../common/validation/content-validation';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { validateVector3 } from '@artifex/common/content/validation/content-validation';
 
 type Vector3 = [number, number, number];
 

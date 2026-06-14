@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { RaidGardenBehavior } from '../../interfaces/behaviors/raid-garden-behavior';
 import { validateInteger, validateNumber, validateStringArray } from '../common/validation';
 

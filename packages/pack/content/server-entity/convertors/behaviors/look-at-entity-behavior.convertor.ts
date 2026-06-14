@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { LookAtEntityBehavior } from '../../interfaces/behaviors/look-at-entity-behavior';
 import { convertRange } from '../common/convertors';
 import { convertEntityFilters } from '../common/filters.convertor';

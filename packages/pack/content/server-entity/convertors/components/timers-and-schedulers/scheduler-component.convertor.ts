@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SchedulerComponent } from '../../../interfaces/components/timers-and-schedulers/scheduler-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber } from '../../common/validation';

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { EconomyTradeTableComponent } from '../../../interfaces/components/trade/economy-trade-table-component';
 import { validateBoolean } from '../../common/validation';
 import { validateNumber } from '../../common/validation';

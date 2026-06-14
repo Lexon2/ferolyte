@@ -1,6 +1,6 @@
 import { ClientEntityBuilder } from './client-entity-builder';
 import { ClientEntityConfig } from './interfaces/client-entity-config';
-import { deepMerge } from '../../common/utils/object/deep-merge';
+import { deepMerge } from '@artifex/common/object/deep-merge';
 
 export const createClientEntity = (
   ...sources: (ClientEntityConfig | ClientEntityBuilder)[]

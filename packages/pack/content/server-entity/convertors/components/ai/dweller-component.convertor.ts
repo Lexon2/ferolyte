@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 
 import { DWELLER_ROLES } from '../../../constants/dweller-roles';
 import { DWELLER_TYPES } from '../../../constants/dweller-types';

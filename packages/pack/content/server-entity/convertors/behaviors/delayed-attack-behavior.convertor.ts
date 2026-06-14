@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { DelayedAttackBehavior } from '../../interfaces/behaviors/delayed-attack-behavior';
 import { validateBoolean, validateNumber, validateString } from '../common/validation';
 

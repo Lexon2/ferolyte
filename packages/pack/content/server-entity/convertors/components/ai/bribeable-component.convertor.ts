@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { BribeableComponent } from '../../../interfaces/components/ai/bribeable-component';
 import { validateNumber, validateString } from '../../common/validation';
 

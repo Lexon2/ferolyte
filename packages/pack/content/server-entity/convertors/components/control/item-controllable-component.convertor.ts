@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { ItemControllableComponent } from '../../../interfaces/components/control/item-controllable-component';
 import { validateStringArray } from '../../common/validation';
 

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { RandomFlyBehavior } from '../../interfaces/behaviors/random-fly-behavior';
 import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
 

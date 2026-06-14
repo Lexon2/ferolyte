@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { MoveToLandBehavior } from '../../interfaces/behaviors/move-to-land-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 

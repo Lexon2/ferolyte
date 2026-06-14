@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { GiveableComponent } from '../../../interfaces/components/interaction/giveable-component';
 import { validateStringArray } from '../../common/validation';
 import { validateNumberRange } from '../../common/validation';

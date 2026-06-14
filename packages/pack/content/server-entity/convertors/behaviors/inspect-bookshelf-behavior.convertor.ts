@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { InspectBookshelfBehavior } from '../../interfaces/behaviors/inspect-bookshelf-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 

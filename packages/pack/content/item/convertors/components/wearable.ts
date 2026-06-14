@@ -1,10 +1,10 @@
 import { ItemWearableSlot } from '../../types/item-wearable-slot';
-import { ContentDiagnosticContext } from '../../../../common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateBooleanValue,
   validateNonNegativeNumber,
-} from '../../../../common/validation/content-validation';
+} from '@artifex/common/content/validation/content-validation';
 
 const VALID_SLOTS: ItemWearableSlot[] = [
   'none',

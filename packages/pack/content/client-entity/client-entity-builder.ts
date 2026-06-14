@@ -1,6 +1,6 @@
 import { ClientEntityConfig } from './interfaces/client-entity-config';
-import { ContentBuilder } from '../../common/interfaces/content.builder';
-import { CONTENT_METADATA } from '../../compiler/content/content.metadata';
+import { ContentBuilder } from '@artifex/common/content/interfaces/content-builder';
+import { CONTENT_METADATA } from '@artifex/common/content/metadata';
 
 export class ClientEntityBuilder implements ContentBuilder {
   readonly metadata = CONTENT_METADATA.CLIENT_ENTITY;

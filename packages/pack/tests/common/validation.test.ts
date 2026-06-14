@@ -3,13 +3,13 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   buildFieldPath,
   logContentError,
-} from '@artifex/pack/common/diagnostics/content-diagnostic';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
 import {
   validateBooleanValue,
   validateNonEmptyString,
   validatePositiveNumber,
   validateVector3,
-} from '@artifex/pack/common/validation/content-validation';
+} from '@artifex/common/content/validation/content-validation';
 
 describe('buildFieldPath', () => {
   it('builds a full component field path', () => {

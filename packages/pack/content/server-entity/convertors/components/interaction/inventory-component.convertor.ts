@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { InventoryComponent } from '../../../interfaces/components/interaction/inventory-component';
 import { validateNumberRange } from '../../common/validation';
 import { validateContainerType } from '../../common/validation';

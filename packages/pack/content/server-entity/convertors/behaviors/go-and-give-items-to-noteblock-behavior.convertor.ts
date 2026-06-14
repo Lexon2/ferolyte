@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { GoAndGiveItemsToNoteblockBehavior } from '../../interfaces/behaviors/go-and-give-items-to-noteblock-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateInteger, validateNumber, validateSoundEvent } from '../common/validation';

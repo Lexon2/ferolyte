@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { FireAtTargetBehavior } from '../../interfaces/behaviors/fire-at-target-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateInteger, validateNumber, validateString, validateVector3 } from '../common/validation';

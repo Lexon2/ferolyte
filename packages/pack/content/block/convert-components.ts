@@ -1,7 +1,7 @@
 import { blockComponentCreatorsFactory } from './components';
 import { BlockComponentCreator } from './components/index';
 import { BlockComponents } from './interfaces/block-config';
-import { ContentDiagnosticContext } from '../../common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 
 export interface MinecraftBlockComponents {
   [key: string]: any;

@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { KnockbackRoarBehavior } from '../../interfaces/behaviors/knockback-roar-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { convertTrigger } from '../common/trigger.convertor';

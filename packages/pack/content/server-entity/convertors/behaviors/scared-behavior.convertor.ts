@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { ScaredBehavior } from '../../interfaces/behaviors/scared-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 

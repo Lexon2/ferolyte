@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { DryingOutTimerComponent } from '../../../interfaces/components/timers-and-schedulers/drying-out-timer-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateTime } from '../../common/validation';

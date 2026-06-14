@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { CanClimbComponent } from '../../../interfaces/components/navigation-movement/can-climb-component';
 import { convertStateObject } from '../../common/state-object';
 

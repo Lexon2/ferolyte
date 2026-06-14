@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/pack/common/diagnostics/content-diagnostic';
+} from '@artifex/common/content/diagnostics/content-diagnostic';
 import { NearestPrioritizedAttackableTargetBehavior } from '../../interfaces/behaviors/nearest-prioritized-attackable-target-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateBoolean, validateInteger, validateNumber } from '../common/validation';

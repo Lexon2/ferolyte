@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { PetSleepWithOwnerBehavior } from '../../interfaces/behaviors/pet-sleep-with-owner-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 

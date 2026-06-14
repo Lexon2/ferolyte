@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { EnumPropertyFilter } from '../../interfaces/filters/enum-property-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
 import { validateString } from '../common/validation';

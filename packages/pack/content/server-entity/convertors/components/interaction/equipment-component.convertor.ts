@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { EQUIPMENT_SLOTS, EquipmentSlot } from '../../../constants/equipment-slots';
 import { EquipmentComponent } from '../../../interfaces/components/interaction/equipment-component';
 import { validateString } from '../../common/validation';

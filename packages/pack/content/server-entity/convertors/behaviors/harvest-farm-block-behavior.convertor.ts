@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { HarvestFarmBlockBehavior } from '../../interfaces/behaviors/harvest-farm-block-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 

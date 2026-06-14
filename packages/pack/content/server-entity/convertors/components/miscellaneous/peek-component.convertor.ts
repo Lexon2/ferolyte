@@ -1,4 +1,4 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { PeekComponent } from '../../../interfaces/components/miscellaneous/peek-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 

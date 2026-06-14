@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { UsesLegacyFrictionComponent } from '../../../interfaces/components/physical/uses-legacy-friction-component';
 import { convertStateObject } from '../../common/state-object';
 

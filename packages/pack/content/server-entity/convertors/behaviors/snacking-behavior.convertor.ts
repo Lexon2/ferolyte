@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/pack/common/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { SnackingBehavior } from '../../interfaces/behaviors/snacking-behavior';
 import { validateNumber, validatePercentage, validateStringArray } from '../common/validation';
 
