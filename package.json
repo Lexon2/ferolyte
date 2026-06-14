@@ -10,6 +10,11 @@
     "packages/pack",
     "packages/cli"
   ],
+  "overrides": {
+    "minimatch@3.1.5": {
+      "brace-expansion": "1.1.13"
+    }
+  },
   "scripts": {
     "build:packages": "npm run build -w @artifex/common && npm run build -w @artifex/pack && npm run build -w @artifex/cli",
     "lint": "eslint \"./packages/**/*.ts\"",
@@ -26,19 +31,19 @@
     "@minecraft/server-ui": "2.0.0",
     "@minecraft/vanilla-data": "^1.26.20",
     "chokidar": "^4.0.3",
-    "esbuild": "^0.25.2"
+    "esbuild": "^0.28.1"
   },
   "devDependencies": {
     "@artifex/cli": "*",
     "@artifex/common": "*",
     "@artifex/pack": "*",
-    "@eslint/config-array": "^0.20.0",
-    "@eslint/js": "^9.24.0",
-    "@eslint/object-schema": "^2.1.6",
+    "@eslint/config-array": "^0.23.5",
+    "@eslint/js": "^9.39.4",
+    "@eslint/object-schema": "^2.1.7",
     "@stylistic/eslint-plugin-ts": "^4.2.0",
     "@types/dotenv": "^6.1.1",
     "@typescript-eslint/parser": "^8.29.0",
-    "eslint": "^9.24.0",
+    "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.2",
     "eslint-import-resolver-typescript": "^4.3.1",
     "eslint-plugin-import-x": "^4.10.3",
@@ -48,11 +53,11 @@
     "source-map": "^0.7.4",
     "strip-json-comments": "^5.0.1",
     "tsconfig-paths": "^4.2.0",
-    "tsx": "^4.19.4",
+    "tsx": "^4.22.4",
     "typescript": "^5.3.3",
     "typescript-eslint": "^8.29.0",
-    "uuid": "^13.0.0",
-    "vitest": "^3.2.4",
-    "ws": "^8.18.3"
+    "uuid": "^13.0.2",
+    "vitest": "^4.1.8",
+    "ws": "^8.21.0"
   }
 }
