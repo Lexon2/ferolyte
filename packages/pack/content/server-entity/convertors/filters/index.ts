@@ -1,10 +1,10 @@
+export * from './common';
+
 export * from './actor-health-filter';
 
 export * from './all-slots-empty-filter';
 
 export * from './any-slots-empty-filter';
-
-export * from './base-filter';
 
 export * from './bool-property-filter';
 
@@ -13,8 +13,6 @@ export * from './clock-time-filter';
 export * from './distance-to-nearest-player-filter';
 
 export * from './enum-property-filter';
-
-export * from './filter-output';
 
 export * from './float-property-filter';
 
@@ -169,8 +167,6 @@ export * from './is-waterlogged-filter';
 export * from './is-weather-filter';
 
 export * from './light-level-filter';
-
-export * from './minecraft-json-filter';
 
 export * from './moon-intensity-filter';
 

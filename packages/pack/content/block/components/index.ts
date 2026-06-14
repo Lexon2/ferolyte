@@ -102,6 +102,8 @@ export * from './destructible-by-mining';
 
 export * from './destruction-particles';
 
+export * from './display-name';
+
 export * from './embedded-visual';
 
 export * from './entity-fall-on';

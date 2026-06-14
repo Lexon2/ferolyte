@@ -1,9 +1,9 @@
 /**
- * Type for dweller types
+ * Type for dweller component dwelling types
  */
-export type DwellerType = 'village';
+export type DwellerComponentType = 'village';
 
 /**
- * List of allowed dweller types
+ * List of allowed dweller component dwelling types
  */
-export const DWELLER_TYPES: DwellerType[] = ['village'];
+export const DWELLER_COMPONENT_TYPES: DwellerComponentType[] = ['village'];

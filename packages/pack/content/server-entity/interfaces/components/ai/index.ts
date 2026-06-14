@@ -1,39 +1,39 @@
-export { AngerLevelComponent } from './anger-level-component';
+export * from './anger-level-component';
 
-export { AngryComponent } from './angry-component';
+export * from './angry-component';
 
-export { BossComponent } from './boss-component';
+export * from './boss-component';
 
-export { BreedableComponent } from './breedable-component';
+export * from './breedable-component';
 
-export { BribeableComponent } from './bribeable-component';
+export * from './bribeable-component';
 
-export { CelebrateHuntComponent } from './celebrate-hunt-component';
+export * from './celebrate-hunt-component';
 
-export { DwellerComponent } from './dweller-component';
+export * from './dweller-component';
 
-export { FlockingComponent } from './flocking-component';
+export * from './flocking-component';
 
-export { GroupSizeComponent } from './group-size-component';
+export * from './group-size-component';
 
-export { ManagedWanderingTraderComponent } from './managed-wandering-trader-component';
+export * from './managed-wandering-trader-component';
 
-export { MobEffectComponent } from './mob-effect-component';
+export * from './mob-effect-component';
 
-export { MobEffectImmunityComponent } from './mob-effect-immunity-component';
+export * from './mob-effect-immunity-component';
 
-export { NpcComponent } from './npc-component';
+export * from './npc-component';
 
-export { OffspringComponent } from './offspring-component';
+export * from './offspring-component';
 
-export { OutOfControlComponent } from './out-of-control-component';
+export * from './out-of-control-component';
 
-export { PersistentComponent } from './persistent-component';
+export * from './persistent-component';
 
-export { TameableComponent } from './tameable-component';
+export * from './tameable-component';
 
-export { TamemountComponent } from './tamemount-component';
+export * from './tamemount-component';
 
-export { TrustComponent } from './trust-component';
+export * from './trust-component';
 
-export { TrustingComponent } from './trusting-component';
+export * from './trusting-component';

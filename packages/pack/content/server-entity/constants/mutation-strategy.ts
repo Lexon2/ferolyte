@@ -1,9 +1,12 @@
 /**
- * Type for mutation strategies
+ * Type for component mutation strategies
  */
-export type MutationStrategy = 'random' | 'none';
+export type ComponentMutationStrategy = 'random' | 'none';
 
 /**
- * List of allowed mutation strategies
+ * List of allowed component mutation strategies
  */
-export const MUTATION_STRATEGIES: MutationStrategy[] = ['random', 'none'];
+export const COMPONENT_MUTATION_STRATEGIES: ComponentMutationStrategy[] = [
+  'random',
+  'none',
+];

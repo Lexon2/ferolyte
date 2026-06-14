@@ -1,361 +1,363 @@
-export { AdmireItemBehavior } from './admire-item-behavior';
+export * from './admire-item-behavior';
 
-export { AvoidBlockBehavior } from './avoid-block-behavior';
+export * from './avoid-block-behavior';
 
-export { AvoidMobTypeBehavior } from './avoid-mob-type-behavior';
+export * from './avoid-mob-type-behavior';
 
-export { BarterBehavior } from './barter-behavior';
+export * from './barter-behavior';
 
-export { BegBehavior } from './beg-behavior';
+export * from './beg-behavior';
 
-export { BehaviorPriority } from './behavior-priority';
+export * from './behavior-priority';
 
-export { BreakDoorBehavior } from './break-door-behavior';
+export * from './break-door-behavior';
 
-export { BreedBehavior } from './breed-behavior';
+export * from './breed-behavior';
 
-export { CelebrateBehavior } from './celebrate-behavior';
+export * from './celebrate-behavior';
 
-export { CelebrateSurviveBehavior } from './celebrate-survive-behavior';
+export * from './celebrate-survive-behavior';
 
-export { ChargeAttackBehavior } from './charge-attack-behavior';
+export * from './charge-attack-behavior';
 
-export { ChargeHeldItemBehavior } from './charge-held-item-behavior';
+export * from './charge-held-item-behavior';
 
-export { CircleAroundAnchorBehavior } from './circle-around-anchor-behavior';
+export * from './circle-around-anchor-behavior';
 
-export { ControlledByPlayerBehavior } from './controlled-by-player-behavior';
+export * from './controlled-by-player-behavior';
 
-export { CroakBehavior } from './croak-behavior';
+export * from './croak-behavior';
 
-export { DefendTrustedTargetBehavior } from './defend-trusted-target-behavior';
+export * from './defend-trusted-target-behavior';
 
-export { DefendVillageTargetBehavior } from './defend-village-target-behavior';
+export * from './defend-village-target-behavior';
 
-export { DelayedAttackBehavior } from './delayed-attack-behavior';
+export * from './delayed-attack-behavior';
 
-export { DigBehavior } from './dig-behavior';
+export * from './dig-behavior';
 
-export { DoorInteractBehavior } from './door-interact-behavior';
+export * from './door-interact-behavior';
 
-export { DragonDeathBehavior } from './dragon-death-behavior';
+export * from './dragon-charge-player-behavior';
 
-export { DragonFlamingBehavior } from './dragon-flaming-behavior';
+export * from './dragon-death-behavior';
 
-export { DragonHoldingPatternBehavior } from './dragon-holding-pattern-behavior';
+export * from './dragon-flaming-behavior';
 
-export { DragonLandingBehavior } from './dragon-landing-behavior';
+export * from './dragon-holding-pattern-behavior';
 
-export { DragonScanningBehavior } from './dragon-scanning-behavior';
+export * from './dragon-landing-behavior';
 
-export { DragonStrafePlayerBehavior } from './dragon-strafe-player-behavior';
+export * from './dragon-scanning-behavior';
 
-export { DragonTakeoffBehavior } from './dragon-takeoff-behavior';
+export * from './dragon-strafe-player-behavior';
 
-export { DragonChargePlayerBehavior } from './dragonchargeplayer-behavior';
+export * from './dragon-takeoff-behavior';
 
-export { DrinkMilkBehavior } from './drink-milk-behavior';
+export * from './dragonchargeplayer-behavior';
 
-export { DrinkPotionBehavior } from './drink-potion-behavior';
+export * from './drink-milk-behavior';
 
-export { DropItemForBehavior } from './drop-item-for-behavior';
+export * from './drink-potion-behavior';
 
-export { EatBlockBehavior } from './eat-block-behavior';
+export * from './drop-item-for-behavior';
 
-export { EatCarriedItemBehavior } from './eat-carried-item-behavior';
+export * from './eat-block-behavior';
 
-export { EatMobBehavior } from './eat-mob-behavior';
+export * from './eat-carried-item-behavior';
 
-export { EmergeBehavior } from './emerge-behavior';
+export * from './eat-mob-behavior';
 
-export { EndermanLeaveBlockBehavior } from './enderman-leave-block-behavior';
+export * from './emerge-behavior';
 
-export { EndermanTakeBlockBehavior } from './enderman-take-block-behavior';
+export * from './enderman-leave-block-behavior';
 
-export { EquipItemBehavior } from './equip-item-behavior';
+export * from './enderman-take-block-behavior';
 
-export { ExploreOutskirtsBehavior } from './explore-outskirts-behavior';
+export * from './equip-item-behavior';
 
-export { FertilizeFarmBlockBehavior } from './fertilize-farm-block-behavior';
+export * from './explore-outskirts-behavior';
 
-export { FindCoverBehavior } from './find-cover-behavior';
+export * from './fertilize-farm-block-behavior';
 
-export { FindMountBehavior } from './find-mount-behavior';
+export * from './find-cover-behavior';
 
-export { FindUnderwaterTreasureBehavior } from './find-underwater-treasure-behavior';
+export * from './find-mount-behavior';
 
-export { FireAtTargetBehavior } from './fire-at-target-behavior';
+export * from './find-underwater-treasure-behavior';
 
-export { FleeSunBehavior } from './flee-sun-behavior';
+export * from './fire-at-target-behavior';
 
-export { FloatBehavior } from './float-behavior';
+export * from './flee-sun-behavior';
 
-export { FloatTemptBehavior } from './float-tempt-behavior';
+export * from './float-behavior';
 
-export { FloatWanderBehavior } from './float-wander-behavior';
+export * from './float-tempt-behavior';
 
-export { FollowCaravanBehavior } from './follow-caravan-behavior';
+export * from './float-wander-behavior';
 
-export { FollowMobBehavior } from './follow-mob-behavior';
+export * from './follow-caravan-behavior';
 
-export { FollowOwnerBehavior } from './follow-owner-behavior';
+export * from './follow-mob-behavior';
 
-export { FollowParentBehavior } from './follow-parent-behavior';
+export * from './follow-owner-behavior';
 
-export { FollowTargetCaptainBehavior } from './follow-target-captain-behavior';
+export * from './follow-parent-behavior';
 
-export { FollowTargetLeaderBehavior } from './follow-target-leader-behavior';
+export * from './follow-target-captain-behavior';
 
-export { GoAndGiveItemsToNoteblockBehavior } from './go-and-give-items-to-noteblock-behavior';
+export * from './follow-target-leader-behavior';
 
-export { GoAndGiveItemsToOwnerBehavior } from './go-and-give-items-to-owner-behavior';
+export * from './go-and-give-items-to-noteblock-behavior';
 
-export { GoHomeBehavior } from './go-home-behavior';
+export * from './go-and-give-items-to-owner-behavior';
 
-export { GuardianAttackBehavior } from './guardian-attack-behavior';
+export * from './go-home-behavior';
 
-export { HarvestFarmBlockBehavior } from './harvest-farm-block-behavior';
+export * from './guardian-attack-behavior';
 
-export { HideBehavior } from './hide-behavior';
+export * from './harvest-farm-block-behavior';
 
-export { HoldGroundBehavior } from './hold-ground-behavior';
+export * from './hide-behavior';
 
-export { HurtByTargetBehavior } from './hurt-by-target-behavior';
+export * from './hold-ground-behavior';
 
-export { InspectBookshelfBehavior } from './inspect-bookshelf-behavior';
+export * from './hurt-by-target-behavior';
 
-export { InvestigateSuspiciousLocationBehavior } from './investigate-suspicious-location-behavior';
+export * from './inspect-bookshelf-behavior';
 
-export { JumpAroundTargetBehavior } from './jump-around-target-behavior';
+export * from './investigate-suspicious-location-behavior';
 
-export { JumpToBlockBehavior } from './jump-to-block-behavior';
+export * from './jump-around-target-behavior';
 
-export { KnockbackRoarBehavior } from './knockback-roar-behavior';
+export * from './jump-to-block-behavior';
 
-export { LayDownBehavior } from './lay-down-behavior';
+export * from './knockback-roar-behavior';
 
-export { LayEggBehavior } from './lay-egg-behavior';
+export * from './lay-down-behavior';
 
-export { LeapAtTargetBehavior } from './leap-at-target-behavior';
+export * from './lay-egg-behavior';
 
-export { LookAtEntityBehavior } from './look-at-entity-behavior';
+export * from './leap-at-target-behavior';
 
-export { LookAtPlayerBehavior } from './look-at-player-behavior';
+export * from './look-at-entity-behavior';
 
-export { LookAtTargetBehavior } from './look-at-target-behavior';
+export * from './look-at-player-behavior';
 
-export { LookAtTradingPlayerBehavior } from './look-at-trading-player-behavior';
+export * from './look-at-target-behavior';
 
-export { MakeLoveBehavior } from './make-love-behavior';
+export * from './look-at-trading-player-behavior';
 
-export { MeleeAttackBehavior } from './melee-attack-behavior';
+export * from './make-love-behavior';
 
-export { MeleeBoxAttackBehavior } from './melee-box-attack-behavior';
+export * from './melee-attack-behavior';
 
-export { MingleBehavior } from './mingle-behavior';
+export * from './melee-box-attack-behavior';
 
-export { MountPathingBehavior } from './mount-pathing-behavior';
+export * from './mingle-behavior';
 
-export { MoveAroundTargetBehavior } from './move-around-target-behavior';
+export * from './mount-pathing-behavior';
 
-export { MoveIndoorsBehavior } from './move-indoors-behavior';
+export * from './move-around-target-behavior';
 
-export { MoveOutdoorsBehavior } from './move-outdoors-behavior';
+export * from './move-indoors-behavior';
 
-export { MoveThroughVillageBehavior } from './move-through-village-behavior';
+export * from './move-outdoors-behavior';
 
-export { MoveToBlockBehavior } from './move-to-block-behavior';
+export * from './move-through-village-behavior';
 
-export { MoveToLandBehavior } from './move-to-land-behavior';
+export * from './move-to-block-behavior';
 
-export { MoveToLavaBehavior } from './move-to-lava-behavior';
+export * from './move-to-land-behavior';
 
-export { MoveToLiquidBehavior } from './move-to-liquid-behavior';
+export * from './move-to-lava-behavior';
 
-export { MoveToPoiBehavior } from './move-to-poi-behavior';
+export * from './move-to-liquid-behavior';
 
-export { MoveToRandomBlockBehavior } from './move-to-random-block-behavior';
+export * from './move-to-poi-behavior';
 
-export { MoveToVillageBehavior } from './move-to-village-behavior';
+export * from './move-to-random-block-behavior';
 
-export { MoveToWaterBehavior } from './move-to-water-behavior';
+export * from './move-to-village-behavior';
 
-export { MoveTowardsDwellingRestrictionBehavior } from './move-towards-dwelling-restriction-behavior';
+export * from './move-to-water-behavior';
 
-export { MoveTowardsHomeRestrictionBehavior } from './move-towards-home-restriction-behavior';
+export * from './move-towards-dwelling-restriction-behavior';
 
-export { MoveTowardsRestrictionBehavior } from './move-towards-restriction-behavior';
+export * from './move-towards-home-restriction-behavior';
 
-export { MoveTowardsTargetBehavior } from './move-towards-target-behavior';
+export * from './move-towards-restriction-behavior';
 
-export { NapBehavior } from './nap-behavior';
+export * from './move-towards-target-behavior';
 
-export { NearestAttackableTargetBehavior } from './nearest-attackable-target-behavior';
+export * from './nap-behavior';
 
-export { NearestPrioritizedAttackableTargetBehavior } from './nearest-prioritized-attackable-target-behavior';
+export * from './nearest-attackable-target-behavior';
 
-export { OcelotAttackBehavior } from './ocelot-attack-behavior';
+export * from './nearest-prioritized-attackable-target-behavior';
 
-export { OcelotSitOnBlockBehavior } from './ocelot-sit-on-block-behavior';
+export * from './ocelot-attack-behavior';
 
-export { OfferFlowerBehavior } from './offer-flower-behavior';
+export * from './ocelot-sit-on-block-behavior';
 
-export { OpenDoorBehavior } from './open-door-behavior';
+export * from './offer-flower-behavior';
 
-export { OwnerHurtByTargetBehavior } from './owner-hurt-by-target-behavior';
+export * from './open-door-behavior';
 
-export { OwnerHurtTargetBehavior } from './owner-hurt-target-behavior';
+export * from './owner-hurt-by-target-behavior';
 
-export { PanicBehavior } from './panic-behavior';
+export * from './owner-hurt-target-behavior';
 
-export { PetSleepWithOwnerBehavior } from './pet-sleep-with-owner-behavior';
+export * from './panic-behavior';
 
-export { PickupItemsBehavior } from './pickup-items-behavior';
+export * from './pet-sleep-with-owner-behavior';
 
-export { PlaceBlockBehavior } from './place-block-behavior';
+export * from './pickup-items-behavior';
 
-export { PlayBehavior } from './play-behavior';
+export * from './place-block-behavior';
 
-export { PlayDeadBehavior } from './play-dead-behavior';
+export * from './play-behavior';
 
-export { PlayerRideTamedBehavior } from './player-ride-tamed-behavior';
+export * from './play-dead-behavior';
 
-export { RaidGardenBehavior } from './raid-garden-behavior';
+export * from './player-ride-tamed-behavior';
 
-export { RamAttackBehavior } from './ram-attack-behavior';
+export * from './raid-garden-behavior';
 
-export { RandomBreachBehavior } from './random-breach-behavior';
+export * from './ram-attack-behavior';
 
-export { RandomFlyBehavior } from './random-fly-behavior';
+export * from './random-breach-behavior';
 
-export { RandomHoverBehavior } from './random-hover-behavior';
+export * from './random-fly-behavior';
 
-export { RandomLookAroundAndSitBehavior } from './random-look-around-and-sit-behavior';
+export * from './random-hover-behavior';
 
-export { RandomLookAroundBehavior } from './random-look-around-behavior';
+export * from './random-look-around-and-sit-behavior';
 
-export { RandomSearchAndDigBehavior } from './random-search-and-dig-behavior';
+export * from './random-look-around-behavior';
 
-export { RandomSittingBehavior } from './random-sitting-behavior';
+export * from './random-search-and-dig-behavior';
 
-export { RandomStrollBehavior } from './random-stroll-behavior';
+export * from './random-sitting-behavior';
 
-export { RandomSwimBehavior } from './random-swim-behavior';
+export * from './random-stroll-behavior';
 
-export { RangedAttackBehavior } from './ranged-attack-behavior';
+export * from './random-swim-behavior';
 
-export { ReceiveLoveBehavior } from './receive-love-behavior';
+export * from './ranged-attack-behavior';
 
-export { RestrictOpenDoorBehavior } from './restrict-open-door-behavior';
+export * from './receive-love-behavior';
 
-export { RestrictSunBehavior } from './restrict-sun-behavior';
+export * from './restrict-open-door-behavior';
 
-export { RiseToLiquidLevelBehavior } from './rise-to-liquid-level-behavior';
+export * from './restrict-sun-behavior';
 
-export { RoarBehavior } from './roar-behavior';
+export * from './rise-to-liquid-level-behavior';
 
-export { RollBehavior } from './roll-behavior';
+export * from './roar-behavior';
 
-export { RunAroundLikeCrazyBehavior } from './run-around-like-crazy-behavior';
+export * from './roll-behavior';
 
-export { ScaredBehavior } from './scared-behavior';
+export * from './run-around-like-crazy-behavior';
 
-export { SendEventBehavior } from './send-event-behavior';
+export * from './scared-behavior';
 
-export { ShareItemsBehavior } from './share-items-behavior';
+export * from './send-event-behavior';
 
-export { SilverfishMergeWithStoneBehavior } from './silverfish-merge-with-stone-behavior';
+export * from './share-items-behavior';
 
-export { SilverfishWakeUpFriendsBehavior } from './silverfish-wake-up-friends-behavior';
+export * from './silverfish-merge-with-stone-behavior';
 
-export { SkeletonHorseTrapBehavior } from './skeleton-horse-trap-behavior';
+export * from './silverfish-wake-up-friends-behavior';
 
-export { SleepBehavior } from './sleep-behavior';
+export * from './skeleton-horse-trap-behavior';
 
-export { SlimeAttackBehavior } from './slime-attack-behavior';
+export * from './sleep-behavior';
 
-export { SlimeFloatBehavior } from './slime-float-behavior';
+export * from './slime-attack-behavior';
 
-export { SlimeKeepOnJumpingBehavior } from './slime-keep-on-jumping-behavior';
+export * from './slime-float-behavior';
 
-export { SlimeRandomDirectionBehavior } from './slime-random-direction-behavior';
+export * from './slime-keep-on-jumping-behavior';
 
-export { SnackingBehavior } from './snacking-behavior';
+export * from './slime-random-direction-behavior';
 
-export { SneezeBehavior } from './sneeze-behavior';
+export * from './snacking-behavior';
 
-export { SniffBehavior } from './sniff-behavior';
+export * from './sneeze-behavior';
 
-export { SonicBoomBehavior } from './sonic-boom-behavior';
+export * from './sniff-behavior';
 
-export { SquidDiveBehavior } from './squid-dive-behavior';
+export * from './sonic-boom-behavior';
 
-export { SquidFleeBehavior } from './squid-flee-behavior';
+export * from './squid-dive-behavior';
 
-export { SquidIdleBehavior } from './squid-idle-behavior';
+export * from './squid-flee-behavior';
 
-export { SquidMoveAwayFromGroundBehavior } from './squid-move-away-from-ground-behavior';
+export * from './squid-idle-behavior';
 
-export { SquidOutOfWaterBehavior } from './squid-out-of-water-behavior';
+export * from './squid-move-away-from-ground-behavior';
 
-export { StalkAndPounceOnTargetBehavior } from './stalk-and-pounce-on-target-behavior';
+export * from './squid-out-of-water-behavior';
 
-export { StayNearNoteBlockBehavior } from './stay-near-note-block-behavior';
+export * from './stalk-and-pounce-on-target-behavior';
 
-export { StayWhileSittingBehavior } from './stay-while-sitting-behavior';
+export * from './stay-near-note-block-behavior';
 
-export { StompAttackBehavior } from './stomp-attack-behavior';
+export * from './stay-while-sitting-behavior';
 
-export { StompTurtleEggBehavior } from './stomp-turtle-egg-behavior';
+export * from './stomp-attack-behavior';
 
-export { StrollTowardsVillageBehavior } from './stroll-towards-village-behavior';
+export * from './stomp-turtle-egg-behavior';
 
-export { SummonEntityBehavior } from './summon-entity-behavior';
+export * from './stroll-towards-village-behavior';
 
-export { SwellBehavior } from './swell-behavior';
+export * from './summon-entity-behavior';
 
-export { SwimIdleBehavior } from './swim-idle-behavior';
+export * from './swell-behavior';
 
-export { SwimUpForBreathBehavior } from './swim-up-for-breath-behavior';
+export * from './swim-idle-behavior';
 
-export { SwimWanderBehavior } from './swim-wander-behavior';
+export * from './swim-up-for-breath-behavior';
 
-export { SwimWithEntityBehavior } from './swim-with-entity-behavior';
+export * from './swim-wander-behavior';
 
-export { SwoopAttackBehavior } from './swoop-attack-behavior';
+export * from './swim-with-entity-behavior';
 
-export { TakeBlockBehavior } from './take-block-behavior';
+export * from './swoop-attack-behavior';
 
-export { TakeFlowerBehavior } from './take-flower-behavior';
+export * from './take-block-behavior';
 
-export { TargetWhenPushedBehavior } from './target-when-pushed-behavior';
+export * from './take-flower-behavior';
 
-export { TeleportToOwnerBehavior } from './teleport-to-owner-behavior';
+export * from './target-when-pushed-behavior';
 
-export { TemptBehavior } from './tempt-behavior';
+export * from './teleport-to-owner-behavior';
 
-export { TimerFlag1Behavior } from './timer-flag-1-behavior';
+export * from './tempt-behavior';
 
-export { TimerFlag2Behavior } from './timer-flag-2-behavior';
+export * from './timer-flag-1-behavior';
 
-export { TimerFlag3Behavior } from './timer-flag-3-behavior';
+export * from './timer-flag-2-behavior';
 
-export { TradeInterestBehavior } from './trade-interest-behavior';
+export * from './timer-flag-3-behavior';
 
-export { TradeWithPlayerBehavior } from './trade-with-player-behavior';
+export * from './trade-interest-behavior';
 
-export { TransportItemsBehavior } from './transport-items-behavior';
+export * from './trade-with-player-behavior';
 
-export { UseKineticWeaponBehavior } from './use-kinetic-weapon-behavior';
+export * from './transport-items-behavior';
 
-export { VexCopyOwnerTargetBehavior } from './vex-copy-owner-target-behavior';
+export * from './use-kinetic-weapon-behavior';
 
-export { VexRandomMoveBehavior } from './vex-random-move-behavior';
+export * from './vex-copy-owner-target-behavior';
 
-export { WitherRandomAttackPosGoalBehavior } from './wither-random-attack-pos-goal-behavior';
+export * from './vex-random-move-behavior';
 
-export { WitherTargetHighestDamageBehavior } from './wither-target-highest-damage-behavior';
+export * from './wither-random-attack-pos-goal-behavior';
 
-export { WorkBehavior } from './work-behavior';
+export * from './wither-target-highest-damage-behavior';
 
-export { WorkComposterBehavior } from './work-composter-behavior';
+export * from './work-behavior';
+
+export * from './work-composter-behavior';

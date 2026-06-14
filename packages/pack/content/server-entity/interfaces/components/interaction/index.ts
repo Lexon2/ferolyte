@@ -1,17 +1,17 @@
-export { EquipItemComponent } from './equip-item-component';
+export * from './equip-item-component';
 
-export { EquipmentComponent } from './equipment-component';
+export * from './equipment-component';
 
-export { EquippableComponent } from './equippable-component';
+export * from './equippable-component';
 
-export { GiveableComponent } from './giveable-component';
+export * from './giveable-component';
 
-export { InteractComponent } from './interact-component';
+export * from './interact-component';
 
-export { ItemHopperComponent } from './item-hopper-component';
+export * from './inventory-component';
 
-export { InventoryComponent } from './inventory-component';
+export * from './item-hopper-component';
 
-export { OnEquipmentChangedComponent } from './on-equipment-changed-component';
+export * from './on-equipment-changed-component';
 
-export { SittableComponent } from './sittable-component';
+export * from './sittable-component';

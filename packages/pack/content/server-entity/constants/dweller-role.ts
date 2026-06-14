@@ -1,9 +1,14 @@
 /**
- * Type for dweller roles
+ * Type for dweller component roles
  */
-export type DwellerRole = 'inhabitant' | 'defender' | 'hostile' | 'passive';
+export type DwellerComponentRole = 'inhabitant' | 'defender' | 'hostile' | 'passive';
 
 /**
- * List of allowed dweller roles
+ * List of allowed dweller component roles
  */
-export const DWELLER_ROLES: DwellerRole[] = ['inhabitant', 'defender', 'hostile', 'passive'];
+export const DWELLER_COMPONENT_ROLES: DwellerComponentRole[] = [
+  'inhabitant',
+  'defender',
+  'hostile',
+  'passive',
+];

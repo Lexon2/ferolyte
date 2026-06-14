@@ -2,7 +2,7 @@ export * from './absorption-component';
 
 export * from './attack-damage-component';
 
-export * from './attribute-component';
+export * from './entity-attribute-component-convertors.factory';
 
 export * from './health-component';
 

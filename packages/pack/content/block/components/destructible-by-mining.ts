@@ -6,14 +6,11 @@ import {
   validateNumber,
 } from '@artifex/common/content/validation/content-validation';
 
+import { DestructibleByMiningComponent } from '../interfaces/block-config';
+
 export interface ItemSpecificSpeed {
   item: string;
   destroySpeed: number;
-}
-
-export interface DestructibleByMiningComponent {
-  secondsToDestroy?: number;
-  itemSpecificSpeeds?: ItemSpecificSpeed[];
 }
 
 /**

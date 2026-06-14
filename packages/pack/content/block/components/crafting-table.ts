@@ -2,10 +2,7 @@ import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/co
 import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
 import { validateNonEmptyString } from '@artifex/common/content/validation/content-validation';
 
-export interface CraftingTableComponent {
-  craftingTags?: string[];
-  tableName?: string;
-}
+import { CraftingTableComponent } from '../interfaces/block-config';
 
 /**
  * Creates a crafting_table component for Minecraft blocks

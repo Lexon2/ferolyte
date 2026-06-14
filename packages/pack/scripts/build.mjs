@@ -1,6 +1,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import * as esbuild from 'esbuild';
@@ -43,7 +44,23 @@ await esbuild.build({
   logLevel: 'info',
 });
 
-const fixRelativeImports = (content) =>
+const resolveImportPath = (filePath, importPath) => {
+  if (importPath.endsWith('.js') || importPath.endsWith('.json')) {
+    return importPath;
+  }
+
+  const fileDir = dirname(filePath);
+  const directJs = join(fileDir, `${importPath}.js`);
+  const indexJs = join(fileDir, importPath, 'index.js');
+
+  if (existsSync(indexJs) && !existsSync(directJs)) {
+    return `${importPath}/index.js`;
+  }
+
+  return `${importPath}.js`;
+};
+
+const fixRelativeImports = (content, filePath) =>
   content.replace(
     /(from\s+["'])(\.\.?\/[^"']+)(["'])/g,
     (match, start, importPath, end) => {
@@ -51,7 +68,7 @@ const fixRelativeImports = (content) =>
         return match;
       }
 
-      return `${start}${importPath}.js${end}`;
+      return `${start}${resolveImportPath(filePath, importPath)}${end}`;
     },
   );
 
@@ -72,7 +89,9 @@ async function fixDistModuleSpecifiers(dir) {
     }
 
     tasks.push(
-      readFile(path, 'utf8').then((content) => writeFile(path, fixRelativeImports(content))),
+      readFile(path, 'utf8').then((content) =>
+        writeFile(path, fixRelativeImports(content, path)),
+      ),
     );
   }
 

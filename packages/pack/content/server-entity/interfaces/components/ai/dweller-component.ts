@@ -1,5 +1,5 @@
-import { DwellerRole } from '../../../constants/dweller-role';
-import { DwellerType } from '../../../constants/dweller-type';
+import { DwellerComponentRole } from '../../../constants/dweller-role';
+import { DwellerComponentType } from '../../../constants/dweller-type';
 
 /**
  * Interface for the dweller component
@@ -9,12 +9,12 @@ export interface DwellerComponent {
   /**
    * The type of dwelling the mob wishes to join
    */
-  dwellingType?: DwellerType;
+  dwellingType?: DwellerComponentType;
 
   /**
    * The role of which the mob plays in the dwelling
    */
-  dwellerRole?: DwellerRole;
+  dwellerRole?: DwellerComponentRole;
 
   /**
    * How often the mob checks on their dwelling status in ticks

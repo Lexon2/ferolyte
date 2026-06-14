@@ -1,7 +1,7 @@
-export { BarterComponent } from './barter-component';
+export * from './barter-component';
 
-export { EconomyTradeTableComponent } from './economy-trade-table-component';
+export * from './economy-trade-table-component';
 
-export { TradeResupplyComponent } from './trade-resupply-component';
+export * from './trade-resupply-component';
 
-export { TradeTableComponent } from './trade-table-component';
+export * from './trade-table-component';

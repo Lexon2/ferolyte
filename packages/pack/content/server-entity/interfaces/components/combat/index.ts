@@ -1,25 +1,25 @@
-export { AdmireItemComponent } from './admire-item-component';
+export * from './admire-item-component';
 
-export { ApplyKnockbackRulesComponent } from './apply-knockback-rules-component';
+export * from './apply-knockback-rules-component';
 
-export { AreaAttackComponent } from './area-attack-component';
+export * from './area-attack-component';
 
-export { AttackComponent } from './attack-component';
+export * from './attack-component';
 
-export { AttackCooldownComponent } from './attack-cooldown-component';
+export * from './attack-cooldown-component';
 
-export { CannotBeAttackedComponent } from './cannot-be-attacked-component';
+export * from './cannot-be-attacked-component';
 
-export { CombatRegenerationComponent } from './combat-regeneration-component';
+export * from './combat-regeneration-component';
 
-export { DamageOverTimeComponent } from './damage-over-time-component';
+export * from './damage-over-time-component';
 
-export { IgnoreCannotBeAttackedComponent } from './ignore-cannot-be-attacked-component';
+export * from './follow-range-component';
 
-export { ProjectileComponent } from './projectile-component';
+export * from './ignore-cannot-be-attacked-component';
 
-export { ReflectProjectilesComponent } from './reflect-projectiles-component';
+export * from './projectile-component';
 
-export { ShooterComponent } from './shooter-component';
+export * from './reflect-projectiles-component';
 
-export { FollowRangeComponent } from './follow-range-component';
+export * from './shooter-component';

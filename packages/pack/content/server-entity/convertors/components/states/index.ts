@@ -1,3 +1,5 @@
+export * from './entity-state-component-convertors.factory';
+
 export * from './is-baby-component';
 
 export * from './is-charged-component';

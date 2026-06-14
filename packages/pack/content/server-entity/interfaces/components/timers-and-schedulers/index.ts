@@ -1,5 +1,5 @@
-export { DryingOutTimerComponent } from './drying-out-timer-component';
+export * from './drying-out-timer-component';
 
-export { SchedulerComponent } from './scheduler-component';
+export * from './scheduler-component';
 
-export { TimerComponent } from './timer-component';
+export * from './timer-component';
