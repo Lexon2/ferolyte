@@ -96,10 +96,10 @@ const createProcessUnlink =
         return;
       }
 
-      const outputPath = await unlinkContentFile(filePath, buildOptions);
+      const outputPaths = await unlinkContentFile(filePath, buildOptions);
       await emitHook(
         'afterFileRemove',
-        createFileEvent(filePath, 'content', outputPath),
+        createFileEvent(filePath, 'content', outputPaths),
       );
     } catch {}
   };

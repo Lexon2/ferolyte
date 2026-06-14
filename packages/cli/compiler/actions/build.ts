@@ -17,8 +17,9 @@ import {
   scheduleAfterLoad,
 } from '../plugins/plugin-host';
 import { copyWithPlugins } from '../plugins/write-with-plugins';
+import { clearAllContentOutputs } from '../content/utils/content-output-registry';
 import {
-  clearItemTextureRegistry,
+  clearAllSourceItemTextures,
   flushItemTextures,
 } from '../content/items/item-texture-atlas';
 
@@ -110,7 +111,8 @@ export const build = async (options: CompilerActionOptions) => {
 
   const [copyFilePaths, buildFilePaths] = await createBuildDictionary();
 
-  clearItemTextureRegistry();
+  clearAllContentOutputs();
+  clearAllSourceItemTextures();
 
   await Promise.all(
     buildFilePaths.map(async (file) => {

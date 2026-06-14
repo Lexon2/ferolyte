@@ -11,8 +11,13 @@ export interface ItemTextureAtlasDocument {
   texture_data: Record<string, { textures: string }>;
 }
 
+export interface ItemTextureEntry {
+  key: string;
+  textures: string;
+}
+
 const ITEM_TEXTURE_RELATIVE_PATH = join('textures', 'item_texture.json');
-const registry = new Map<string, string>();
+const texturesBySource = new Map<string, Map<string, string>>();
 
 const getInputItemTexturePath = (basePath: string): string =>
   join(basePath, ITEM_TEXTURE_RELATIVE_PATH);
@@ -49,25 +54,29 @@ const createDefaultAtlas = (): ItemTextureAtlasDocument => ({
   texture_data: {},
 });
 
-export const registerItemTexture = (key: string, textures: string): void => {
-  registry.set(key, textures);
-};
+export const setSourceItemTextures = (
+  sourcePath: string,
+  entries: readonly ItemTextureEntry[],
+): void => {
+  const sourceTextures = new Map<string, string>();
 
-export const clearItemTextureRegistry = (): void => {
-  registry.clear();
-};
-
-export const loadItemTextureBase = async (options?: {
-  preferOutput?: boolean;
-}): Promise<ItemTextureAtlasDocument> => {
-  const { INPUT_RESOURCE_PACK_PATH, INPUT_BASE_PATH } = BUILD_CONTEXT.PACKS;
-
-  if (options?.preferOutput) {
-    const outputAtlas = await readJsonFile(getOutputItemTexturePath());
-    if (outputAtlas !== undefined) {
-      return outputAtlas;
-    }
+  for (const entry of entries) {
+    sourceTextures.set(entry.key, entry.textures);
   }
+
+  texturesBySource.set(sourcePath, sourceTextures);
+};
+
+export const removeSourceItemTextures = (sourcePath: string): void => {
+  texturesBySource.delete(sourcePath);
+};
+
+export const clearAllSourceItemTextures = (): void => {
+  texturesBySource.clear();
+};
+
+export const loadItemTextureBase = async (): Promise<ItemTextureAtlasDocument> => {
+  const { INPUT_RESOURCE_PACK_PATH, INPUT_BASE_PATH } = BUILD_CONTEXT.PACKS;
 
   const resourcePackInput = await readJsonFile(
     getInputItemTexturePath(INPUT_RESOURCE_PACK_PATH),
@@ -87,17 +96,19 @@ export const loadItemTextureBase = async (options?: {
 };
 
 export const flushItemTextures = async (options?: {
-  preferOutput?: boolean;
+  force?: boolean;
 }): Promise<string | undefined> => {
-  if (registry.size === 0) {
+  if (texturesBySource.size === 0 && !options?.force) {
     return undefined;
   }
 
-  const base = await loadItemTextureBase(options);
-  base.texture_data = base.texture_data ?? {};
+  const base = await loadItemTextureBase();
+  base.texture_data = { ...(base.texture_data ?? {}) };
 
-  for (const [key, textures] of registry) {
-    base.texture_data[key] = { textures };
+  for (const sourceTextures of texturesBySource.values()) {
+    for (const [key, textures] of sourceTextures) {
+      base.texture_data[key] = { textures };
+    }
   }
 
   const outputPath = getOutputItemTexturePath();
@@ -113,8 +124,6 @@ export const flushItemTextures = async (options?: {
     'content',
     'utf-8',
   );
-
-  registry.clear();
 
   if (!writeResult.written) {
     return undefined;

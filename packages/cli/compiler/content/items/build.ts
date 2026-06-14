@@ -4,7 +4,7 @@ import { BUILD_CONTEXT } from '../../build-context';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
 import { createContentPath } from '../utils/create-content-path';
-import { registerItemTexture } from './item-texture-atlas';
+import { setSourceItemTextures } from './item-texture-atlas';
 
 export const buildItemJson = async (
   filePath: string,
@@ -30,9 +30,7 @@ export const buildItemJson = async (
     return;
   }
 
-  for (const entry of builder.getItemTextureEntries()) {
-    registerItemTexture(entry.key, entry.textures);
-  }
+  setSourceItemTextures(filePath, builder.getItemTextureEntries());
 
   const writeResult = await writeWithPlugins(
     filePath,

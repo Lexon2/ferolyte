@@ -6,10 +6,11 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { BUILD_CONTEXT } from '../../build-context';
 import {
-  clearItemTextureRegistry,
+  clearAllSourceItemTextures,
   flushItemTextures,
   loadItemTextureBase,
-  registerItemTexture,
+  removeSourceItemTextures,
+  setSourceItemTextures,
 } from './item-texture-atlas';
 
 const tempRoots: string[] = [];
@@ -35,7 +36,7 @@ const setupBuildContext = (root: string) => {
 
 describe('item-texture-atlas', () => {
   beforeEach(() => {
-    clearItemTextureRegistry();
+    clearAllSourceItemTextures();
   });
 
   afterEach(async () => {
@@ -100,7 +101,9 @@ describe('item-texture-atlas', () => {
       'utf-8',
     );
 
-    registerItemTexture('artifex:test', 'textures/arfex/test/items/test');
+    setSourceItemTextures(join(root, 'items', 'test.item.ts'), [
+      { key: 'artifex:test', textures: 'textures/arfex/test/items/test' },
+    ]);
 
     const outputPath = await flushItemTextures();
     expect(outputPath).toBe(join(root, 'out', 'RP', 'textures', 'item_texture.json'));
@@ -117,26 +120,49 @@ describe('item-texture-atlas', () => {
     });
   });
 
-  it('prefers existing output atlas during incremental flush', async () => {
+  it('removes stale texture keys when a source is updated', async () => {
+    const root = await createTempRoot();
+    setupBuildContext(root);
+    await mkdir(join(root, 'RP', 'textures'), { recursive: true });
+    await mkdir(join(root, 'out', 'RP', 'textures'), { recursive: true });
+
+    const sourcePath = join(root, 'items', 'apples.item.ts');
+
+    setSourceItemTextures(sourcePath, [
+      { key: 'artifex:apple_a', textures: 'textures/a' },
+      { key: 'artifex:apple_b', textures: 'textures/b' },
+    ]);
+    await flushItemTextures();
+
+    setSourceItemTextures(sourcePath, [
+      { key: 'artifex:apple_a', textures: 'textures/a' },
+    ]);
+    await flushItemTextures();
+
+    const written = JSON.parse(
+      await readFile(join(root, 'out', 'RP', 'textures', 'item_texture.json'), 'utf-8'),
+    ) as {
+      texture_data: Record<string, { textures: string }>;
+    };
+
+    expect(written.texture_data).toEqual({
+      'artifex:apple_a': { textures: 'textures/a' },
+    });
+  });
+
+  it('keeps textures from other sources during incremental flush', async () => {
     const root = await createTempRoot();
     setupBuildContext(root);
     await mkdir(join(root, 'out', 'RP', 'textures'), { recursive: true });
 
-    await writeFile(
-      join(root, 'out', 'RP', 'textures', 'item_texture.json'),
-      JSON.stringify({
-        resource_pack_name: 'arfex_test',
-        texture_name: 'atlas.items',
-        texture_data: {
-          'artifex:existing': { textures: 'textures/existing' },
-        },
-      }),
-      'utf-8',
-    );
+    setSourceItemTextures(join(root, 'items', 'existing.item.ts'), [
+      { key: 'artifex:existing', textures: 'textures/existing' },
+    ]);
+    setSourceItemTextures(join(root, 'items', 'test.item.ts'), [
+      { key: 'artifex:test', textures: 'textures/arfex/test/items/test' },
+    ]);
 
-    registerItemTexture('artifex:test', 'textures/arfex/test/items/test');
-
-    await flushItemTextures({ preferOutput: true });
+    await flushItemTextures();
 
     const written = JSON.parse(
       await readFile(join(root, 'out', 'RP', 'textures', 'item_texture.json'), 'utf-8'),
@@ -148,5 +174,29 @@ describe('item-texture-atlas', () => {
       'artifex:existing': { textures: 'textures/existing' },
       'artifex:test': { textures: 'textures/arfex/test/items/test' },
     });
+  });
+
+  it('removes source textures on removeSourceItemTextures', async () => {
+    const root = await createTempRoot();
+    setupBuildContext(root);
+    await mkdir(join(root, 'out', 'RP', 'textures'), { recursive: true });
+
+    const sourcePath = join(root, 'items', 'test.item.ts');
+
+    setSourceItemTextures(sourcePath, [
+      { key: 'artifex:test', textures: 'textures/test' },
+    ]);
+    await flushItemTextures();
+
+    removeSourceItemTextures(sourcePath);
+    await flushItemTextures({ force: true });
+
+    const written = JSON.parse(
+      await readFile(join(root, 'out', 'RP', 'textures', 'item_texture.json'), 'utf-8'),
+    ) as {
+      texture_data: Record<string, { textures: string }>;
+    };
+
+    expect(written.texture_data).toEqual({});
   });
 });

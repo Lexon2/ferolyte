@@ -13,8 +13,15 @@ import { createEsbuildConfig } from './utils/build-esbuild-config';
 import { isArtifexContentFile } from './utils/is-content-file';
 import { getBuildCacheDistDir } from '../content/utils/build-cache-dist-dir';
 import { createContentPath } from '../content/utils/create-content-path';
+import {
+  deleteAllContentOutputs,
+  replaceContentOutputs,
+} from '../content/utils/content-output-registry';
 import { ContentBuildOptions } from '../actions/options';
-import { flushItemTextures } from '../content/items/item-texture-atlas';
+import {
+  flushItemTextures,
+  removeSourceItemTextures,
+} from '../content/items/item-texture-atlas';
 
 /**
  * Builds a file using esbuild and imports it.
@@ -57,6 +64,13 @@ export const buildFile = async (
   }
 
   await unlink(outFile);
+
+  if (result !== undefined) {
+    const outputs = Array.isArray(result.outFile)
+      ? result.outFile
+      : [result.outFile];
+    await replaceContentOutputs(filePath, outputs);
+  }
 
   if (debug && result !== undefined) {
     const endTime = Date.now();
@@ -101,7 +115,7 @@ export const rebuildFile = async (
     }),
   );
 
-  await flushItemTextures({ preferOutput: true });
+  await flushItemTextures();
 
   return results;
 };
@@ -113,29 +127,34 @@ export const rebuildFile = async (
 export const unlinkContentFile = async (
   filePath: string,
   options: ContentBuildOptions = { debug: true, diagnostics: true },
-): Promise<string | undefined> => {
+): Promise<string[]> => {
   const { debug } = options;
-  const distPath = createContentPath(filePath);
-  if (!distPath) {
-    return;
-  }
+  let removedOutputs = await deleteAllContentOutputs(filePath);
 
-  try {
-    await unlink(distPath);
-  } catch (error) {
-    if (debug) {
-      console.error(`\n🛑 Error deleting file: ${error}\n`);
+  if (removedOutputs.length === 0) {
+    const distPath = createContentPath(filePath);
+    if (distPath) {
+      try {
+        await unlink(distPath);
+        removedOutputs = [distPath];
+      } catch (error) {
+        if (debug) {
+          console.error(`\n🛑 Error deleting file: ${error}\n`);
+        }
+      }
     }
   }
 
+  removeSourceItemTextures(filePath);
+  await flushItemTextures({ force: true });
   removeFile(filePath);
 
   const filename = basename(filePath);
-  if (debug) {
+  if (debug && removedOutputs.length > 0) {
     console.log(`\n🗑️ Deleted: ${filename}\n`);
   }
 
-  return distPath;
+  return removedOutputs;
 };
 
 const ArtifexContentBuilder = {
