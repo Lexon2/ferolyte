@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 
 import { defineCommand, runMain } from 'citty';
 
+import { initCommand } from './commands/init';
 import { runCommand } from './commands/run';
 import { watchCommand } from './commands/watch';
 
@@ -18,6 +19,7 @@ const main = defineCommand({
     version,
   },
   subCommands: {
+    init: initCommand,
     run: runCommand,
     watch: watchCommand,
   },

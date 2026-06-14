@@ -3,6 +3,7 @@ import { parse as parseJsonc } from 'jsonc-parser';
 import { join } from 'path';
 
 import { BUILD_CONTEXT } from '../build-context';
+import { namespaceToPath } from '../utils/namespace-path';
 import { ArtifexProfileConfig, ArtifexPackOutput } from './interfaces/config';
 import { getMinecraftDirectory } from './utils/get-minecraft-directory';
 import { MinecraftPackType } from '@artifex/common/content/types/minecraft-pack-types';
@@ -104,8 +105,7 @@ export const applyConfig = async (config: ArtifexProfileConfig) => {
   }
 
   // @TODO: Add namespace validation
-  const namespacePath = namespace.toLowerCase().split('_').join('\\');
-  BUILD_CONTEXT.PACKS.OUTPUT_NAMESPACE_PATH = namespacePath;
+  BUILD_CONTEXT.PACKS.OUTPUT_NAMESPACE_PATH = namespaceToPath(namespace, '\\');
 
   BUILD_CONTEXT.PACKS.SCRIPT_ENTRY_PATH = scripts?.entry
     ? join(currentWorkingDirectory, scripts.entry)
