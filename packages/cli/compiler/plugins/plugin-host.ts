@@ -144,7 +144,7 @@ export const emitHook = async (
 export const emitBeforeFileWrite = async (
   event: BeforeFileWriteEvent,
 ): Promise<BeforeFileWriteResult> => {
-  let result: BeforeFileWriteResult = {
+  const result: BeforeFileWriteResult = {
     destinationPath: event.destinationPath,
     data: event.data,
     skip: false,
