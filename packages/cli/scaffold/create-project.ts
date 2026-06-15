@@ -61,7 +61,7 @@ export const createProject = async ({
   alias,
   cwd = process.cwd(),
   cliVersion,
-  minGameVersion = '1.21.80',
+  minGameVersion = '1.26.20',
 }: CreateProjectInput): Promise<CreateProjectResult> => {
   const slug = validateProjectName(projectName);
   validateAlias(alias);

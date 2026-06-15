@@ -38,7 +38,7 @@ export interface FerolytePackConfig {
 
   /**
    * The minimum game version for the pack.
-   * @default 1.21.80
+   * @default 1.26.20
    */
   minGameVersion?: string;
 

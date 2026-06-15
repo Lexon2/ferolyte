@@ -84,7 +84,7 @@ export const applyConfig = async (config: FerolyteProfileConfig) => {
       join(currentWorkingDirectory, 'build', createPackPath(alias, type)),
   };
 
-  const outputPath = outputPathFactory[output ?? 'minecraft'];
+  const outputPath = outputPathFactory[output ?? 'minecraft-dev'];
   if (!outputPath && output !== 'custom') {
     throw new Error(`Invalid output type: ${output}`);
   }
@@ -124,7 +124,7 @@ export const applyConfig = async (config: FerolyteProfileConfig) => {
   BUILD_CONTEXT.PACKS.INPUT_BEHAVIOR_PACK_PATH = join(inputPath, 'BP');
   BUILD_CONTEXT.PACKS.INPUT_RESOURCE_PACK_PATH = join(inputPath, 'RP');
 
-  BUILD_CONTEXT.PACKS.MIN_GAME_VERSION = minGameVersion ?? '1.21.80';
+  BUILD_CONTEXT.PACKS.MIN_GAME_VERSION = minGameVersion ?? '1.26.20';
 
   BUILD_CONTEXT.PACKS.CACHE_PATH = join(
     currentWorkingDirectory,
