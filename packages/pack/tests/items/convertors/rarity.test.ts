@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createRarity } from '@artifex/pack/content/item/convertors/components/rarity';
+import { createRarity } from '@ferolyte/pack/content/item/convertors/components/rarity';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createRarity', () => {

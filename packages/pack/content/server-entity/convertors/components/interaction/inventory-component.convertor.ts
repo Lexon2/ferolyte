@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { InventoryComponent } from '../../../interfaces/components/interaction/inventory-component';
 import { validateNumberRange } from '../../common/validation';
 import { validateContainerType } from '../../common/validation';
@@ -11,7 +11,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertInventoryComponent = (
   component: Partial<InventoryComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:inventory': any } | undefined => {
   if (!component) {
     return undefined;
@@ -21,7 +21,14 @@ export const convertInventoryComponent = (
 
   // Validate additionalSlotsPerStrength
   if (component.additionalSlotsPerStrength !== undefined) {
-    if (!validateNumberRange(component.additionalSlotsPerStrength, 0, Number.MAX_VALUE, 'additionalSlotsPerStrength')) {
+    if (
+      !validateNumberRange(
+        component.additionalSlotsPerStrength,
+        0,
+        Number.MAX_VALUE,
+        'additionalSlotsPerStrength',
+      )
+    ) {
       return undefined;
     }
     result.additional_slots_per_strength = component.additionalSlotsPerStrength;
@@ -45,7 +52,14 @@ export const convertInventoryComponent = (
 
   // Validate inventorySize
   if (component.inventorySize !== undefined) {
-    if (!validateNumberRange(component.inventorySize, 1, Number.MAX_VALUE, 'inventorySize')) {
+    if (
+      !validateNumberRange(
+        component.inventorySize,
+        1,
+        Number.MAX_VALUE,
+        'inventorySize',
+      )
+    ) {
       return undefined;
     }
     result.inventory_size = component.inventorySize;
@@ -68,6 +82,6 @@ export const convertInventoryComponent = (
   }
 
   return {
-    'minecraft:inventory': result
+    'minecraft:inventory': result,
   };
 };

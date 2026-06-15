@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationGenericComponent } from '../../../interfaces/components/navigation-movement/navigation-generic-component';
 
@@ -9,7 +9,7 @@ import { NavigationGenericComponent } from '../../../interfaces/components/navig
  */
 export const convertNavigationGenericComponent = (
   component: Partial<NavigationGenericComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:navigation.generic': any } | undefined => {
   if (!component) {
     return undefined;
@@ -21,6 +21,6 @@ export const convertNavigationGenericComponent = (
   }
 
   return {
-    'minecraft:navigation.generic': result
+    'minecraft:navigation.generic': result,
   };
 };

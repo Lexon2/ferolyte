@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BribeableComponent } from '../../../interfaces/components/ai/bribeable-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertBribeableComponent = (
   component: Partial<BribeableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:bribeable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +19,14 @@ export const convertBribeableComponent = (
 
   // Validate bribeCooldown
   if (component.bribeCooldown !== undefined) {
-    if (!validateNumber(component.bribeCooldown, 'bribeCooldown', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.bribeCooldown,
+        'bribeCooldown',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.bribe_cooldown = component.bribeCooldown;

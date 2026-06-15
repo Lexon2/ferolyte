@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { BlockBuilder } from '@artifex/pack/content/block/block-builder';
-import { createBlock } from '@artifex/pack/content/block/create-block';
+import { BlockBuilder } from '@ferolyte/pack/content/block/block-builder';
+import { createBlock } from '@ferolyte/pack/content/block/create-block';
 import { minimalBlockConfig } from './helpers/fixtures';
 
 describe('createBlock', () => {
@@ -27,8 +27,13 @@ describe('createBlock', () => {
   });
 
   it('merges BlockBuilder with BlockConfig', () => {
-    const base = new BlockBuilder(minimalBlockConfig({ components: { replaceable: true } }));
-    const builder = createBlock(base, minimalBlockConfig({ components: { friction: 0.4 } }));
+    const base = new BlockBuilder(
+      minimalBlockConfig({ components: { replaceable: true } }),
+    );
+    const builder = createBlock(
+      base,
+      minimalBlockConfig({ components: { friction: 0.4 } }),
+    );
 
     expect(builder.cloneConfig().components).toEqual({
       replaceable: true,

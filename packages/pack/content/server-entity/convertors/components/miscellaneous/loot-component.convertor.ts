@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { LootComponent } from '../../../interfaces/components/miscellaneous/loot-component';
 import { validateString } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateString } from '../../common/validation';
  */
 export const convertLootComponent = (
   component: Partial<LootComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:loot': any } | undefined => {
   if (!component || !component.table) {
     return undefined;

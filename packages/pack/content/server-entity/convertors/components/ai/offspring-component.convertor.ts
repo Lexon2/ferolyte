@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { OffspringComponent } from '../../../interfaces/components/ai/offspring-component';
 import {
   validateBoolean,
@@ -78,7 +78,15 @@ export const convertOffspringComponent = (
   if (component.mutationFactor !== undefined) {
     const validatedFactor: Record<string, number> = {};
     if (component.mutationFactor.color !== undefined) {
-      if (!validateNumber(component.mutationFactor.color, 'mutationFactor.color', 0, 1, ctx)) {
+      if (
+        !validateNumber(
+          component.mutationFactor.color,
+          'mutationFactor.color',
+          0,
+          1,
+          ctx,
+        )
+      ) {
         return undefined;
       }
       validatedFactor.color = component.mutationFactor.color;
@@ -98,7 +106,15 @@ export const convertOffspringComponent = (
       validatedFactor.extra_variant = component.mutationFactor.extraVariant;
     }
     if (component.mutationFactor.variant !== undefined) {
-      if (!validateNumber(component.mutationFactor.variant, 'mutationFactor.variant', 0, 1, ctx)) {
+      if (
+        !validateNumber(
+          component.mutationFactor.variant,
+          'mutationFactor.variant',
+          0,
+          1,
+          ctx,
+        )
+      ) {
         return undefined;
       }
       validatedFactor.variant = component.mutationFactor.variant;
@@ -107,19 +123,26 @@ export const convertOffspringComponent = (
   }
 
   if (component.mutationStrategy !== undefined) {
-    if (component.mutationStrategy !== 'random' && component.mutationStrategy !== 'none') {
+    if (
+      component.mutationStrategy !== 'random' &&
+      component.mutationStrategy !== 'none'
+    ) {
       return undefined;
     }
     result.mutation_strategy = component.mutationStrategy;
   }
 
   if (component.parentCentricAttributeBlending !== undefined) {
-    const validatedAttributes = component.parentCentricAttributeBlending.map((attr, index) => {
-      if (!validateString(attr, `parentCentricAttributeBlending[${index}]`, ctx)) {
-        return undefined;
-      }
-      return attr;
-    });
+    const validatedAttributes = component.parentCentricAttributeBlending.map(
+      (attr, index) => {
+        if (
+          !validateString(attr, `parentCentricAttributeBlending[${index}]`, ctx)
+        ) {
+          return undefined;
+        }
+        return attr;
+      },
+    );
 
     if (validatedAttributes.includes(undefined)) {
       return undefined;
@@ -129,30 +152,35 @@ export const convertOffspringComponent = (
   }
 
   if (component.propertyInheritance !== undefined) {
-    const validatedProperties = component.propertyInheritance.map((prop, index) => {
-      const validatedProp: Record<string, unknown> = {};
-      for (const [key, value] of Object.entries(prop)) {
-        if (
-          !validateNumber(
-            value.mutationChance,
-            `propertyInheritance[${index}].${key}.mutationChance`,
-            0,
-            1,
-            ctx,
-          )
-        ) {
-          return undefined;
+    const validatedProperties = component.propertyInheritance.map(
+      (prop, index) => {
+        const validatedProp: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(prop)) {
+          if (
+            !validateNumber(
+              value.mutationChance,
+              `propertyInheritance[${index}].${key}.mutationChance`,
+              0,
+              1,
+              ctx,
+            )
+          ) {
+            return undefined;
+          }
+          if (
+            !Array.isArray(value.mutationValues) ||
+            value.mutationValues.length === 0
+          ) {
+            return undefined;
+          }
+          validatedProp[key] = {
+            mutation_chance: value.mutationChance,
+            mutation_values: value.mutationValues,
+          };
         }
-        if (!Array.isArray(value.mutationValues) || value.mutationValues.length === 0) {
-          return undefined;
-        }
-        validatedProp[key] = {
-          mutation_chance: value.mutationChance,
-          mutation_values: value.mutationValues,
-        };
-      }
-      return validatedProp;
-    });
+        return validatedProp;
+      },
+    );
 
     if (validatedProperties.includes(undefined)) {
       return undefined;
@@ -186,7 +214,8 @@ export const convertOffspringComponent = (
     ) {
       return undefined;
     }
-    result.random_extra_variant_mutation_interval = component.randomExtraVariantMutationInterval;
+    result.random_extra_variant_mutation_interval =
+      component.randomExtraVariantMutationInterval;
   }
 
   if (component.randomVariantMutationInterval !== undefined) {
@@ -214,7 +243,8 @@ export const convertOffspringComponent = (
     ) {
       return undefined;
     }
-    result.random_variant_mutation_interval = component.randomVariantMutationInterval;
+    result.random_variant_mutation_interval =
+      component.randomVariantMutationInterval;
   }
 
   if (component.inheritTamed !== undefined) {
@@ -225,7 +255,13 @@ export const convertOffspringComponent = (
   }
 
   if (component.combineParentColors !== undefined) {
-    if (!validateBoolean(component.combineParentColors, 'combineParentColors', ctx)) {
+    if (
+      !validateBoolean(
+        component.combineParentColors,
+        'combineParentColors',
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.combine_parent_colors = component.combineParentColors;

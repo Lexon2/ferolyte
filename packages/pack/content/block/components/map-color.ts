@@ -1,11 +1,11 @@
 import { ColorValue } from '../../common/types/color-value';
 import { MapColorComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateNonEmptyString,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 const VALID_TINT_METHODS = ['noise', 'underwater', 'sinusoidal'] as const;
 
@@ -49,10 +49,7 @@ export const createMapColor = (
 
   if (typeof options === 'object' && options !== null) {
     if (!options.color) {
-      logContentError(
-        ctx,
-        'Map color object must have a color property',
-      );
+      logContentError(ctx, 'Map color object must have a color property');
       return undefined;
     }
 

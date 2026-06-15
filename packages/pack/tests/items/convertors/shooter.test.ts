@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createShooter } from '@artifex/pack/content/item/convertors/components/shooter';
+import { createShooter } from '@ferolyte/pack/content/item/convertors/components/shooter';
 import { expectUndefined } from '../helpers/assert-component';
 
 describe('createShooter', () => {
@@ -12,12 +12,14 @@ describe('createShooter', () => {
   });
 
   it('maps shooter fields', () => {
-    expect(createShooter({
-      ammunition: [{ item: 'minecraft:arrow', useOffhand: true }],
-      chargeOnDraw: true,
-      maxDrawDuration: 1,
-      scalePowerByDrawDuration: true,
-    })).toEqual({
+    expect(
+      createShooter({
+        ammunition: [{ item: 'minecraft:arrow', useOffhand: true }],
+        chargeOnDraw: true,
+        maxDrawDuration: 1,
+        scalePowerByDrawDuration: true,
+      }),
+    ).toEqual({
       'minecraft:shooter': {
         ammunition: [{ item: 'minecraft:arrow', use_offhand: true }],
         charge_on_draw: true,

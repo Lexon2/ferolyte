@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { NapBehavior } from '../../interfaces/behaviors/nap-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertNapBehavior = (
   behavior: Partial<NapBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.nap': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -68,7 +71,10 @@ export const convertNapBehavior = (
 
   // Validate canNapFilters
   if (behavior.canNapFilters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.canNapFilters, withFieldPath(ctx, 'canNapFilters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.canNapFilters,
+      withFieldPath(ctx, 'canNapFilters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -77,7 +83,10 @@ export const convertNapBehavior = (
 
   // Validate wakeMobExceptions
   if (behavior.wakeMobExceptions !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.wakeMobExceptions, withFieldPath(ctx, 'wakeMobExceptions'));
+    const convertedFilters = convertEntityFilters(
+      behavior.wakeMobExceptions,
+      withFieldPath(ctx, 'wakeMobExceptions'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -85,6 +94,6 @@ export const convertNapBehavior = (
   }
 
   return {
-    'minecraft:behavior.nap': result
+    'minecraft:behavior.nap': result,
   };
 };

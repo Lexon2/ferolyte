@@ -1,6 +1,6 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateVector3 } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateVector3 } from '@ferolyte/common/content/validation/content-validation';
 
 type Vector3 = [number, number, number];
 
@@ -58,12 +58,14 @@ const convertCollisionBoxEntry = (
 export const createCollisionBox = (
   options?: boolean | CollisionBoxOptions | CollisionBoxOptions[],
   ctx?: ContentDiagnosticContext,
-): {
-  'minecraft:collision_box':
-    | boolean
-    | CollisionBoxOptions
-    | CollisionBoxOptions[];
-} | undefined => {
+):
+  | {
+      'minecraft:collision_box':
+        | boolean
+        | CollisionBoxOptions
+        | CollisionBoxOptions[];
+    }
+  | undefined => {
   if (options === undefined) {
     return undefined;
   }

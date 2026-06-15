@@ -2,7 +2,7 @@ import { CompilerActionOptions } from '../../compiler/actions/options';
 
 export const profileArg = {
   type: 'positional' as const,
-  description: 'Config profile name from artifex.config.mts',
+  description: 'Config profile name from ferolyte.config.mts',
   required: false,
   default: 'default',
 };

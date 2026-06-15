@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createLiquidDetection } from '@artifex/pack/content/block/components/liquid-detection';
+import { createLiquidDetection } from '@ferolyte/pack/content/block/components/liquid-detection';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createLiquidDetection', () => {
@@ -14,22 +14,31 @@ describe('createLiquidDetection', () => {
   });
 
   it('maps detection rules', () => {
-    expectComponent(createLiquidDetection, {
-      detectionRules: [{
-        canContainLiquid: true,
-        liquidType: 'water',
-        onLiquidTouches: 'blocking',
-        stopsLiquidFlowingFromDirection: ['up'],
-        useLiquidClipping: true,
-      }],
-    }, 'minecraft:liquid_detection', {
-      detection_rules: [{
-        can_contain_liquid: true,
-        liquid_type: 'water',
-        on_liquid_touches: 'blocking',
-        stops_liquid_flowing_from_direction: ['up'],
-        use_liquid_clipping: true,
-      }],
-    });
+    expectComponent(
+      createLiquidDetection,
+      {
+        detectionRules: [
+          {
+            canContainLiquid: true,
+            liquidType: 'water',
+            onLiquidTouches: 'blocking',
+            stopsLiquidFlowingFromDirection: ['up'],
+            useLiquidClipping: true,
+          },
+        ],
+      },
+      'minecraft:liquid_detection',
+      {
+        detection_rules: [
+          {
+            can_contain_liquid: true,
+            liquid_type: 'water',
+            on_liquid_touches: 'blocking',
+            stops_liquid_flowing_from_direction: ['up'],
+            use_liquid_clipping: true,
+          },
+        ],
+      },
+    );
   });
 });

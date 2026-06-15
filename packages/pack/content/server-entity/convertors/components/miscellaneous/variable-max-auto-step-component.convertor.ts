@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { VariableMaxAutoStepComponent } from '../../../interfaces/components/miscellaneous/variable-max-auto-step-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertVariableMaxAutoStepComponent = (
   component: Partial<VariableMaxAutoStepComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:variable_max_auto_step': any } | undefined => {
   if (!component) {
     return undefined;
@@ -42,6 +42,6 @@ export const convertVariableMaxAutoStepComponent = (
   }
 
   return {
-    'minecraft:variable_max_auto_step': result
+    'minecraft:variable_max_auto_step': result,
   };
 };

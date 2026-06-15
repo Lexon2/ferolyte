@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { JumpStaticComponent } from '../../../interfaces/components/navigation-movement/jump-static-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertJumpStaticComponent = (
   component: Partial<JumpStaticComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:jump.static': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +19,9 @@ export const convertJumpStaticComponent = (
 
   // Validate jumpPower
   if (component.jumpPower !== undefined) {
-    if (!validateNumber(component.jumpPower, 'jumpPower', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.jumpPower, 'jumpPower', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.jump_power = component.jumpPower;

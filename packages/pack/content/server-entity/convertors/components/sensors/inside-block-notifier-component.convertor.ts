@@ -1,5 +1,11 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { InsideBlockNotifierComponent, BlockNotifierEntry } from '../../../interfaces/components/sensors/inside-block-notifier-component';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import {
+  InsideBlockNotifierComponent,
+  BlockNotifierEntry,
+} from '../../../interfaces/components/sensors/inside-block-notifier-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateString } from '../../common/validation';
 
@@ -8,17 +14,22 @@ import { validateString } from '../../common/validation';
  * @param entry The entry to convert
  * @returns The converted entry or undefined if validation fails
  */
-const convertBlockNotifierEntry = (entry: BlockNotifierEntry): Record<string, any> | undefined => {
+const convertBlockNotifierEntry = (
+  entry: BlockNotifierEntry,
+): Record<string, any> | undefined => {
   if (!validateString(entry.block, 'block')) {
     return undefined;
   }
 
   const result: Record<string, any> = {
-    block: entry.block
+    block: entry.block,
   };
 
   if (entry.enteredBlockEvent !== undefined) {
-    const convertedEnteredBlockEvent = convertTrigger(entry.enteredBlockEvent, withFieldPath(ctx, 'enteredBlockEvent'));
+    const convertedEnteredBlockEvent = convertTrigger(
+      entry.enteredBlockEvent,
+      withFieldPath(ctx, 'enteredBlockEvent'),
+    );
     if (!convertedEnteredBlockEvent) {
       return undefined;
     }
@@ -26,7 +37,10 @@ const convertBlockNotifierEntry = (entry: BlockNotifierEntry): Record<string, an
   }
 
   if (entry.exitedBlockEvent !== undefined) {
-    const convertedExitedBlockEvent = convertTrigger(entry.exitedBlockEvent, withFieldPath(ctx, 'exitedBlockEvent'));
+    const convertedExitedBlockEvent = convertTrigger(
+      entry.exitedBlockEvent,
+      withFieldPath(ctx, 'exitedBlockEvent'),
+    );
     if (!convertedExitedBlockEvent) {
       return undefined;
     }
@@ -43,14 +57,14 @@ const convertBlockNotifierEntry = (entry: BlockNotifierEntry): Record<string, an
  */
 export const convertInsideBlockNotifierComponent = (
   component: Partial<InsideBlockNotifierComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): Record<string, any> | undefined => {
   if (!component) {
     return undefined;
   }
 
   const result: Record<string, any> = {
-    'minecraft:inside_block_notifier': {}
+    'minecraft:inside_block_notifier': {},
   };
 
   if (component.blockList) {

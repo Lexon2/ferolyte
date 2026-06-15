@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TamemountComponent } from '../../../interfaces/components/ai/tamemount-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber, validateString } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertTamemountComponent = (
   component: Partial<TamemountComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:tamemount': any } | undefined => {
   if (!component) {
     return undefined;
@@ -20,7 +23,14 @@ export const convertTamemountComponent = (
 
   // Validate attemptTemperMod
   if (component.attemptTemperMod !== undefined) {
-    if (!validateNumber(component.attemptTemperMod, 'attemptTemperMod', 0, Number.MAX_SAFE_INTEGER)) {
+    if (
+      !validateNumber(
+        component.attemptTemperMod,
+        'attemptTemperMod',
+        0,
+        Number.MAX_SAFE_INTEGER,
+      )
+    ) {
       return undefined;
     }
     result.attempt_temper_mod = component.attemptTemperMod;
@@ -74,11 +84,18 @@ export const convertTamemountComponent = (
       }
 
       const feedItem: any = {
-        item: item.item
+        item: item.item,
       };
 
       if (item.temperMod !== undefined) {
-        if (!validateNumber(item.temperMod, `feedItems[${index}].temperMod`, 0, Number.MAX_SAFE_INTEGER)) {
+        if (
+          !validateNumber(
+            item.temperMod,
+            `feedItems[${index}].temperMod`,
+            0,
+            Number.MAX_SAFE_INTEGER,
+          )
+        ) {
           return undefined;
         }
         feedItem.temper_mod = item.temperMod;
@@ -96,7 +113,14 @@ export const convertTamemountComponent = (
 
   // Validate maxTemper
   if (component.maxTemper !== undefined) {
-    if (!validateNumber(component.maxTemper, 'maxTemper', 0, Number.MAX_SAFE_INTEGER)) {
+    if (
+      !validateNumber(
+        component.maxTemper,
+        'maxTemper',
+        0,
+        Number.MAX_SAFE_INTEGER,
+      )
+    ) {
       return undefined;
     }
     result.max_temper = component.maxTemper;
@@ -104,7 +128,14 @@ export const convertTamemountComponent = (
 
   // Validate minTemper
   if (component.minTemper !== undefined) {
-    if (!validateNumber(component.minTemper, 'minTemper', 0, Number.MAX_SAFE_INTEGER)) {
+    if (
+      !validateNumber(
+        component.minTemper,
+        'minTemper',
+        0,
+        Number.MAX_SAFE_INTEGER,
+      )
+    ) {
       return undefined;
     }
     result.min_temper = component.minTemper;
@@ -120,7 +151,10 @@ export const convertTamemountComponent = (
 
   // Validate tameEvent
   if (component.tameEvent !== undefined) {
-    const convertedTameEvent = convertTrigger(component.tameEvent, withFieldPath(ctx, 'tameEvent'));
+    const convertedTameEvent = convertTrigger(
+      component.tameEvent,
+      withFieldPath(ctx, 'tameEvent'),
+    );
     if (!convertedTameEvent) {
       return undefined;
     }
@@ -128,6 +162,6 @@ export const convertTamemountComponent = (
   }
 
   return {
-    'minecraft:tamemount': result
+    'minecraft:tamemount': result,
   };
 };

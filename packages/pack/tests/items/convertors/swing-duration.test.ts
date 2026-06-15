@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createSwingDuration } from '@artifex/pack/content/item/convertors/components/swing-duration';
+import { createSwingDuration } from '@ferolyte/pack/content/item/convertors/components/swing-duration';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createSwingDuration', () => {
@@ -12,6 +12,11 @@ describe('createSwingDuration', () => {
   });
 
   it('maps swing duration', () => {
-    expectComponent(createSwingDuration, { value: 6 }, 'minecraft:swing_duration', { value: 6 });
+    expectComponent(
+      createSwingDuration,
+      { value: 6 },
+      'minecraft:swing_duration',
+      { value: 6 },
+    );
   });
 });

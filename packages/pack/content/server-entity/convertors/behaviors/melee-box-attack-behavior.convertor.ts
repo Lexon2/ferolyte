@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MeleeBoxAttackBehavior } from '../../interfaces/behaviors/melee-box-attack-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import {
@@ -15,7 +18,7 @@ import {
  */
 export const convertMeleeBoxAttackBehavior = (
   behavior: Partial<MeleeBoxAttackBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.melee_box_attack': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -118,7 +121,10 @@ export const convertMeleeBoxAttackBehavior = (
 
   // Validate onAttack
   if (behavior.onAttack !== undefined) {
-    const convertedOnAttack = convertTrigger(behavior.onAttack, withFieldPath(ctx, 'onAttack'));
+    const convertedOnAttack = convertTrigger(
+      behavior.onAttack,
+      withFieldPath(ctx, 'onAttack'),
+    );
     if (!convertedOnAttack) {
       return undefined;
     }
@@ -127,7 +133,10 @@ export const convertMeleeBoxAttackBehavior = (
 
   // Validate onKill
   if (behavior.onKill !== undefined) {
-    const convertedOnKill = convertTrigger(behavior.onKill, withFieldPath(ctx, 'onKill'));
+    const convertedOnKill = convertTrigger(
+      behavior.onKill,
+      withFieldPath(ctx, 'onKill'),
+    );
     if (!convertedOnKill) {
       return undefined;
     }

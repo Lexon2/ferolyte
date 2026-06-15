@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FlockingComponent } from '../../../interfaces/components/ai/flocking-component';
 import { validateNumber } from '../../common/validation';
 import { validateBoolean } from '../../common/validation';
@@ -10,7 +10,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertFlockingComponent = (
   component: Partial<FlockingComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:flocking': any } | undefined => {
   if (!component) {
     return undefined;
@@ -20,7 +20,14 @@ export const convertFlockingComponent = (
 
   // Validate blockDistance
   if (component.blockDistance !== undefined) {
-    if (!validateNumber(component.blockDistance, 'blockDistance', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.blockDistance,
+        'blockDistance',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.block_distance = component.blockDistance;
@@ -28,7 +35,9 @@ export const convertFlockingComponent = (
 
   // Validate blockWeight
   if (component.blockWeight !== undefined) {
-    if (!validateNumber(component.blockWeight, 'blockWeight', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.blockWeight, 'blockWeight', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.block_weight = component.blockWeight;
@@ -36,7 +45,14 @@ export const convertFlockingComponent = (
 
   // Validate breachInfluence
   if (component.breachInfluence !== undefined) {
-    if (!validateNumber(component.breachInfluence, 'breachInfluence', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.breachInfluence,
+        'breachInfluence',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.breach_influence = component.breachInfluence;
@@ -44,7 +60,14 @@ export const convertFlockingComponent = (
 
   // Validate cohesionThreshold
   if (component.cohesionThreshold !== undefined) {
-    if (!validateNumber(component.cohesionThreshold, 'cohesionThreshold', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.cohesionThreshold,
+        'cohesionThreshold',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.cohesion_threshold = component.cohesionThreshold;
@@ -52,7 +75,14 @@ export const convertFlockingComponent = (
 
   // Validate cohesionWeight
   if (component.cohesionWeight !== undefined) {
-    if (!validateNumber(component.cohesionWeight, 'cohesionWeight', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.cohesionWeight,
+        'cohesionWeight',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.cohesion_weight = component.cohesionWeight;
@@ -60,7 +90,9 @@ export const convertFlockingComponent = (
 
   // Validate goalWeight
   if (component.goalWeight !== undefined) {
-    if (!validateNumber(component.goalWeight, 'goalWeight', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.goalWeight, 'goalWeight', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.goal_weight = component.goalWeight;
@@ -68,7 +100,14 @@ export const convertFlockingComponent = (
 
   // Validate highFlockLimit
   if (component.highFlockLimit !== undefined) {
-    if (!validateNumber(component.highFlockLimit, 'highFlockLimit', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.highFlockLimit,
+        'highFlockLimit',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.high_flock_limit = component.highFlockLimit;
@@ -84,7 +123,14 @@ export const convertFlockingComponent = (
 
   // Validate influenceRadius
   if (component.influenceRadius !== undefined) {
-    if (!validateNumber(component.influenceRadius, 'influenceRadius', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.influenceRadius,
+        'influenceRadius',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.influence_radius = component.influenceRadius;
@@ -92,7 +138,14 @@ export const convertFlockingComponent = (
 
   // Validate innnerCohesionThreshold
   if (component.innnerCohesionThreshold !== undefined) {
-    if (!validateNumber(component.innnerCohesionThreshold, 'innnerCohesionThreshold', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.innnerCohesionThreshold,
+        'innnerCohesionThreshold',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.innner_cohesion_threshold = component.innnerCohesionThreshold;
@@ -108,7 +161,14 @@ export const convertFlockingComponent = (
 
   // Validate lowFlockLimit
   if (component.lowFlockLimit !== undefined) {
-    if (!validateNumber(component.lowFlockLimit, 'lowFlockLimit', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.lowFlockLimit,
+        'lowFlockLimit',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.low_flock_limit = component.lowFlockLimit;
@@ -124,7 +184,9 @@ export const convertFlockingComponent = (
 
   // Validate maxHeight
   if (component.maxHeight !== undefined) {
-    if (!validateNumber(component.maxHeight, 'maxHeight', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.maxHeight, 'maxHeight', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.max_height = component.maxHeight;
@@ -132,7 +194,9 @@ export const convertFlockingComponent = (
 
   // Validate minHeight
   if (component.minHeight !== undefined) {
-    if (!validateNumber(component.minHeight, 'minHeight', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.minHeight, 'minHeight', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.min_height = component.minHeight;
@@ -140,7 +204,14 @@ export const convertFlockingComponent = (
 
   // Validate separationThreshold
   if (component.separationThreshold !== undefined) {
-    if (!validateNumber(component.separationThreshold, 'separationThreshold', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.separationThreshold,
+        'separationThreshold',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.separation_threshold = component.separationThreshold;
@@ -148,7 +219,14 @@ export const convertFlockingComponent = (
 
   // Validate separationWeight
   if (component.separationWeight !== undefined) {
-    if (!validateNumber(component.separationWeight, 'separationWeight', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.separationWeight,
+        'separationWeight',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.separation_weight = component.separationWeight;
@@ -163,6 +241,6 @@ export const convertFlockingComponent = (
   }
 
   return {
-    'minecraft:flocking': result
+    'minecraft:flocking': result,
   };
 };

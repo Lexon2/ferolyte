@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createBlockTags } from '@artifex/pack/content/block/components/tags';
+import { createBlockTags } from '@ferolyte/pack/content/block/components/tags';
 import { expectMultiKey, expectUndefined } from '../helpers/assert-component';
 
 describe('createBlockTags', () => {

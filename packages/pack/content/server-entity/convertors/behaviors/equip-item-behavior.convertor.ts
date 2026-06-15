@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EquipItemBehavior } from '../../interfaces/behaviors/equip-item-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertEquipItemBehavior = (
   behavior: Partial<EquipItemBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.equip_item': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertEquipItemBehavior = (
   }
 
   return {
-    'minecraft:behavior.equip_item': result
+    'minecraft:behavior.equip_item': result,
   };
 };

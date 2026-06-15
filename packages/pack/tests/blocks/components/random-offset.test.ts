@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createRandomOffset } from '@artifex/pack/content/block/components/random-offset';
+import { createRandomOffset } from '@ferolyte/pack/content/block/components/random-offset';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createRandomOffset', () => {
@@ -12,12 +12,17 @@ describe('createRandomOffset', () => {
   });
 
   it('maps random offset axes', () => {
-    expectComponent(createRandomOffset, {
-      x: { range: { min: -4, max: 4 }, steps: 9 },
-      y: { range: { min: 0, max: 0 } },
-    }, 'minecraft:random_offset', {
-      x: { range: { min: -4, max: 4 }, steps: 9 },
-      y: { range: { min: 0, max: 0 } },
-    });
+    expectComponent(
+      createRandomOffset,
+      {
+        x: { range: { min: -4, max: 4 }, steps: 9 },
+        y: { range: { min: 0, max: 0 } },
+      },
+      'minecraft:random_offset',
+      {
+        x: { range: { min: -4, max: 4 }, steps: 9 },
+        y: { range: { min: 0, max: 0 } },
+      },
+    );
   });
 });

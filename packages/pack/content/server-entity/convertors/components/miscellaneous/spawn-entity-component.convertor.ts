@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SpawnEntityComponent } from '../../../interfaces/components/miscellaneous/spawn-entity-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateBoolean, validateInteger } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateBoolean, validateInteger } from '../../common/validation';
  */
 export const convertSpawnEntityComponent = (
   component: Partial<SpawnEntityComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:spawn_entity': any } | undefined => {
   if (!component) {
     return undefined;
@@ -20,7 +23,9 @@ export const convertSpawnEntityComponent = (
 
   // Validate entities
   if (component.entities !== undefined) {
-    const entities = Array.isArray(component.entities) ? component.entities : [component.entities];
+    const entities = Array.isArray(component.entities)
+      ? component.entities
+      : [component.entities];
 
     result.entities = entities.map((entity, index) => {
       const entityResult: any = {};
@@ -37,7 +42,9 @@ export const convertSpawnEntityComponent = (
 
       // Validate maxWaitTime
       if (entity.maxWaitTime !== undefined) {
-        if (!validateInteger(entity.maxWaitTime, `entities[${index}].maxWaitTime`)) {
+        if (
+          !validateInteger(entity.maxWaitTime, `entities[${index}].maxWaitTime`)
+        ) {
           return undefined;
         }
         entityResult.max_wait_time = entity.maxWaitTime;
@@ -45,7 +52,9 @@ export const convertSpawnEntityComponent = (
 
       // Validate minWaitTime
       if (entity.minWaitTime !== undefined) {
-        if (!validateInteger(entity.minWaitTime, `entities[${index}].minWaitTime`)) {
+        if (
+          !validateInteger(entity.minWaitTime, `entities[${index}].minWaitTime`)
+        ) {
           return undefined;
         }
         entityResult.min_wait_time = entity.minWaitTime;
@@ -53,7 +62,9 @@ export const convertSpawnEntityComponent = (
 
       // Validate numToSpawn
       if (entity.numToSpawn !== undefined) {
-        if (!validateInteger(entity.numToSpawn, `entities[${index}].numToSpawn`)) {
+        if (
+          !validateInteger(entity.numToSpawn, `entities[${index}].numToSpawn`)
+        ) {
           return undefined;
         }
         entityResult.num_to_spawn = entity.numToSpawn;
@@ -61,7 +72,9 @@ export const convertSpawnEntityComponent = (
 
       // Validate shouldLeash
       if (entity.shouldLeash !== undefined) {
-        if (!validateBoolean(entity.shouldLeash, `entities[${index}].shouldLeash`)) {
+        if (
+          !validateBoolean(entity.shouldLeash, `entities[${index}].shouldLeash`)
+        ) {
           return undefined;
         }
         entityResult.should_leash = entity.shouldLeash;
@@ -69,7 +82,9 @@ export const convertSpawnEntityComponent = (
 
       // Validate singleUse
       if (entity.singleUse !== undefined) {
-        if (!validateBoolean(entity.singleUse, `entities[${index}].singleUse`)) {
+        if (
+          !validateBoolean(entity.singleUse, `entities[${index}].singleUse`)
+        ) {
           return undefined;
         }
         entityResult.single_use = entity.singleUse;
@@ -127,7 +142,10 @@ export const convertSpawnEntityComponent = (
 
       // Validate spawnItemEvent
       if (entity.spawnItemEvent !== undefined) {
-        const convertedSpawnItemEvent = convertTrigger(entity.spawnItemEvent, withFieldPath(ctx, 'spawnItemEvent'));
+        const convertedSpawnItemEvent = convertTrigger(
+          entity.spawnItemEvent,
+          withFieldPath(ctx, 'spawnItemEvent'),
+        );
         if (!convertedSpawnItemEvent) {
           return undefined;
         }
@@ -143,6 +161,6 @@ export const convertSpawnEntityComponent = (
   }
 
   return {
-    'minecraft:spawn_entity': result
+    'minecraft:spawn_entity': result,
   };
 };

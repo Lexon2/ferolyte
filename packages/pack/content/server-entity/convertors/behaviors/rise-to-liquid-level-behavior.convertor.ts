@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RiseToLiquidLevelBehavior } from '../../interfaces/behaviors/rise-to-liquid-level-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertRiseToLiquidLevelBehavior = (
   behavior: Partial<RiseToLiquidLevelBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.rise_to_liquid_level': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -50,6 +50,6 @@ export const convertRiseToLiquidLevelBehavior = (
   }
 
   return {
-    'minecraft:behavior.rise_to_liquid_level': result
+    'minecraft:behavior.rise_to_liquid_level': result,
   };
 };

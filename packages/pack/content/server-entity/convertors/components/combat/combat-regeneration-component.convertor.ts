@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { CombatRegenerationComponent } from '../../../interfaces/components/combat/combat-regeneration-component';
 import { validateBoolean } from '../../common/validation';
 
@@ -10,7 +10,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const validateRegenerationDuration = (
   value: any,
-  fieldName: string
+  fieldName: string,
 ): boolean => {
   if (typeof value === 'number') {
     if (value < 0) {
@@ -35,7 +35,7 @@ export const validateRegenerationDuration = (
  */
 export const convertCombatRegenerationComponent = (
   component: Partial<CombatRegenerationComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:combat_regeneration': any } | undefined => {
   if (!component) {
     return undefined;
@@ -61,13 +61,18 @@ export const convertCombatRegenerationComponent = (
 
   // Validate regenerationDuration
   if (component.regenerationDuration !== undefined) {
-    if (!validateRegenerationDuration(component.regenerationDuration, 'regenerationDuration')) {
+    if (
+      !validateRegenerationDuration(
+        component.regenerationDuration,
+        'regenerationDuration',
+      )
+    ) {
       return undefined;
     }
     result.regeneration_duration = component.regenerationDuration;
   }
 
   return {
-    'minecraft:combat_regeneration': result
+    'minecraft:combat_regeneration': result,
   };
 };

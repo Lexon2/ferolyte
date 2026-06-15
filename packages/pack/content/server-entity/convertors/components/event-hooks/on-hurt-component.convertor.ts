@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { OnHurtComponent } from '../../../interfaces/components/event-hooks/on-hurt-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateDamageSourceTypes } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateDamageSourceTypes } from '../../common/validation';
  */
 export const convertOnHurtComponent = (
   component: Partial<OnHurtComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:on_hurt': any } | undefined => {
   if (!component) {
     return undefined;

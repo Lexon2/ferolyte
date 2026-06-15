@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { LightLevelFilter } from '../../interfaces/filters/light-level-filter';
 
@@ -9,13 +9,16 @@ import { LightLevelFilter } from '../../interfaces/filters/light-level-filter';
  */
 export const convertLightLevelFilter = (
   filter: Partial<LightLevelFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): ReturnType<typeof convertNumberFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
   }
-  return convertNumberFilter({
-    ...filter,
-    test: 'light_level'
-  }, ctx);
+  return convertNumberFilter(
+    {
+      ...filter,
+      test: 'light_level',
+    },
+    ctx,
+  );
 };

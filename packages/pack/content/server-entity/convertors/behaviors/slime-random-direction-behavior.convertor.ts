@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SlimeRandomDirectionBehavior } from '../../interfaces/behaviors/slime-random-direction-behavior';
-import { validateDegrees, validateInteger, validateNumber } from '../common/validation';
+import {
+  validateDegrees,
+  validateInteger,
+  validateNumber,
+} from '../common/validation';
 
 /**
  * Converts a SlimeRandomDirectionBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateDegrees, validateInteger, validateNumber } from '../common/vali
  */
 export const convertSlimeRandomDirectionBehavior = (
   behavior: Partial<SlimeRandomDirectionBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.slime_random_direction': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -35,7 +39,9 @@ export const convertSlimeRandomDirectionBehavior = (
 
   // Validate minChangeDirectionTime
   if (behavior.minChangeDirectionTime !== undefined) {
-    if (!validateNumber(behavior.minChangeDirectionTime, 'minChangeDirectionTime')) {
+    if (
+      !validateNumber(behavior.minChangeDirectionTime, 'minChangeDirectionTime')
+    ) {
       return undefined;
     }
     result.min_change_direction_time = behavior.minChangeDirectionTime;
@@ -50,6 +56,6 @@ export const convertSlimeRandomDirectionBehavior = (
   }
 
   return {
-    'minecraft:behavior.slime_random_direction': result
+    'minecraft:behavior.slime_random_direction': result,
   };
 };

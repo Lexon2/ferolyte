@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RunAroundLikeCrazyBehavior } from '../../interfaces/behaviors/run-around-like-crazy-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertRunAroundLikeCrazyBehavior = (
   behavior: Partial<RunAroundLikeCrazyBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.run_around_like_crazy': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertRunAroundLikeCrazyBehavior = (
   }
 
   return {
-    'minecraft:behavior.run_around_like_crazy': result
+    'minecraft:behavior.run_around_like_crazy': result,
   };
 };

@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createMaxStackSize } from '@artifex/pack/content/item/convertors/components/max-stack-size';
+import { createMaxStackSize } from '@ferolyte/pack/content/item/convertors/components/max-stack-size';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createMaxStackSize', () => {

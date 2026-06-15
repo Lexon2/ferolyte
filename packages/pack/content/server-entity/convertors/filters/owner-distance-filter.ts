@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { OwnerDistanceFilter } from '../../interfaces/filters/owner-distance-filter';
 
@@ -9,13 +9,16 @@ import { OwnerDistanceFilter } from '../../interfaces/filters/owner-distance-fil
  */
 export const convertOwnerDistanceFilter = (
   filter: Partial<OwnerDistanceFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): ReturnType<typeof convertNumberFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
   }
-  return convertNumberFilter({
-    ...filter,
-    test: 'owner_distance'
-  }, ctx);
+  return convertNumberFilter(
+    {
+      ...filter,
+      test: 'owner_distance',
+    },
+    ctx,
+  );
 };

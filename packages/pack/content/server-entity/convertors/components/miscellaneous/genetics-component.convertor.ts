@@ -1,5 +1,12 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { GeneticsComponent, GeneticsGene, GeneticVariant } from '../../../interfaces/components/miscellaneous/genetics-component';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import {
+  GeneticsComponent,
+  GeneticsGene,
+  GeneticVariant,
+} from '../../../interfaces/components/miscellaneous/genetics-component';
 import { convertRange } from '../../common/convertors';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber, validateString } from '../../common/validation';
@@ -22,7 +29,10 @@ const convertGeneticVariant = (
 
   // Validate birthEvent
   if (variant.birthEvent !== undefined) {
-    const convertedBirthEvent = convertTrigger(variant.birthEvent, withFieldPath(ctx, 'birthEvent'));
+    const convertedBirthEvent = convertTrigger(
+      variant.birthEvent,
+      withFieldPath(ctx, 'birthEvent'),
+    );
     if (!convertedBirthEvent) {
       return undefined;
     }
@@ -31,7 +41,10 @@ const convertGeneticVariant = (
 
   // Validate bothAllele
   if (variant.bothAllele !== undefined) {
-    const convertedBothAllele = convertRange(variant.bothAllele, `${fieldName}.bothAllele`);
+    const convertedBothAllele = convertRange(
+      variant.bothAllele,
+      `${fieldName}.bothAllele`,
+    );
     if (!convertedBothAllele) {
       return undefined;
     }
@@ -40,7 +53,14 @@ const convertGeneticVariant = (
 
   // Validate eitherAllele
   if (variant.eitherAllele !== undefined) {
-    if (!validateNumber(variant.eitherAllele, `${fieldName}.eitherAllele`, 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        variant.eitherAllele,
+        `${fieldName}.eitherAllele`,
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.either_allele = variant.eitherAllele;
@@ -48,7 +68,14 @@ const convertGeneticVariant = (
 
   // Validate hiddenAllele
   if (variant.hiddenAllele !== undefined) {
-    if (!validateNumber(variant.hiddenAllele, `${fieldName}.hiddenAllele`, -1, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        variant.hiddenAllele,
+        `${fieldName}.hiddenAllele`,
+        -1,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.hidden_allele = variant.hiddenAllele;
@@ -56,7 +83,10 @@ const convertGeneticVariant = (
 
   // Validate mainAllele
   if (variant.mainAllele !== undefined) {
-    const convertedMainAllele = convertRange(variant.mainAllele, `${fieldName}.mainAllele`);
+    const convertedMainAllele = convertRange(
+      variant.mainAllele,
+      `${fieldName}.mainAllele`,
+    );
     if (!convertedMainAllele) {
       return undefined;
     }
@@ -65,7 +95,9 @@ const convertGeneticVariant = (
 
   // Validate mutationRate
   if (variant.mutationRate !== undefined) {
-    if (!validateNumber(variant.mutationRate, `${fieldName}.mutationRate`, -1, 1)) {
+    if (
+      !validateNumber(variant.mutationRate, `${fieldName}.mutationRate`, -1, 1)
+    ) {
       return undefined;
     }
     result.mutation_rate = variant.mutationRate;
@@ -80,10 +112,7 @@ const convertGeneticVariant = (
  * @param fieldName The name of the field for error messages
  * @returns Whether the gene is valid
  */
-const convertGene = (
-  gene: Partial<GeneticsGene>,
-  fieldName: string,
-): any => {
+const convertGene = (gene: Partial<GeneticsGene>, fieldName: string): any => {
   if (!gene) {
     return undefined;
   }
@@ -92,7 +121,10 @@ const convertGene = (
 
   // Validate alleleRange
   if (gene.alleleRange !== undefined) {
-    const convertedAlleleRange = convertRange(gene.alleleRange, `${fieldName}.alleleRange`);
+    const convertedAlleleRange = convertRange(
+      gene.alleleRange,
+      `${fieldName}.alleleRange`,
+    );
     if (!convertedAlleleRange) {
       return undefined;
     }
@@ -109,7 +141,10 @@ const convertGene = (
     result.genetic_variants = [];
 
     for (let i = 0; i < gene.geneticVariants.length; i++) {
-      const convertedVariant = convertGeneticVariant(gene.geneticVariants[i], `${fieldName}.geneticVariants[${i}]`);
+      const convertedVariant = convertGeneticVariant(
+        gene.geneticVariants[i],
+        `${fieldName}.geneticVariants[${i}]`,
+      );
       if (!convertedVariant) {
         return undefined;
       }
@@ -135,7 +170,7 @@ const convertGene = (
  */
 export const convertGeneticsComponent = (
   component: Partial<GeneticsComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:genetics': any } | undefined => {
   if (!component) {
     return undefined;

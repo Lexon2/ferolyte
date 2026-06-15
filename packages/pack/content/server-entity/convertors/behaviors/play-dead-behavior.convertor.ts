@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PlayDeadBehavior } from '../../interfaces/behaviors/play-dead-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import {
@@ -16,7 +19,7 @@ import {
  */
 export const convertPlayDeadBehavior = (
   behavior: Partial<PlayDeadBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.play_dead': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -50,7 +53,10 @@ export const convertPlayDeadBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }

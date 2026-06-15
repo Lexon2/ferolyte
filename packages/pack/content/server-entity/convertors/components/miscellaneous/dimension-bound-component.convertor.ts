@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DimensionBoundComponent } from '../../../interfaces/components/miscellaneous/dimension-bound-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertDimensionBoundComponent = (
   component: Partial<DimensionBoundComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:dimension_bound': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

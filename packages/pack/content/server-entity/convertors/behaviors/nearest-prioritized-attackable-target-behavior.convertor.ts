@@ -1,10 +1,14 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { NearestPrioritizedAttackableTargetBehavior } from '../../interfaces/behaviors/nearest-prioritized-attackable-target-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
-import { validateBoolean, validateInteger, validateNumber } from '../common/validation';
+import {
+  validateBoolean,
+  validateInteger,
+  validateNumber,
+} from '../common/validation';
 
 /**
  * Converts a NearestPrioritizedAttackableTargetBehavior to Minecraft format
@@ -13,8 +17,10 @@ import { validateBoolean, validateInteger, validateNumber } from '../common/vali
  */
 export const convertNearestPrioritizedAttackableTargetBehavior = (
   behavior: Partial<NearestPrioritizedAttackableTargetBehavior>,
-  ctx?: ContentDiagnosticContext
-): { 'minecraft:behavior.nearest_prioritized_attackable_target': any } | undefined => {
+  ctx?: ContentDiagnosticContext,
+):
+  | { 'minecraft:behavior.nearest_prioritized_attackable_target': any }
+  | undefined => {
   if (!behavior) {
     return undefined;
   }
@@ -75,7 +81,9 @@ export const convertNearestPrioritizedAttackableTargetBehavior = (
 
   // Validate mustSeeForgetDuration
   if (behavior.mustSeeForgetDuration !== undefined) {
-    if (!validateNumber(behavior.mustSeeForgetDuration, 'mustSeeForgetDuration')) {
+    if (
+      !validateNumber(behavior.mustSeeForgetDuration, 'mustSeeForgetDuration')
+    ) {
       return undefined;
     }
     result.must_see_forget_duration = behavior.mustSeeForgetDuration;
@@ -99,7 +107,9 @@ export const convertNearestPrioritizedAttackableTargetBehavior = (
 
   // Validate reevaluateDescription
   if (behavior.reevaluateDescription !== undefined) {
-    if (!validateBoolean(behavior.reevaluateDescription, 'reevaluateDescription')) {
+    if (
+      !validateBoolean(behavior.reevaluateDescription, 'reevaluateDescription')
+    ) {
       return undefined;
     }
     result.reevaluate_description = behavior.reevaluateDescription;
@@ -138,6 +148,6 @@ export const convertNearestPrioritizedAttackableTargetBehavior = (
   }
 
   return {
-    'minecraft:behavior.nearest_prioritized_attackable_target': result
+    'minecraft:behavior.nearest_prioritized_attackable_target': result,
   };
 };

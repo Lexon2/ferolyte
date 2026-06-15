@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { GroundOffsetComponent } from '../../../interfaces/components/miscellaneous/ground-offset-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertGroundOffsetComponent = (
   component: Partial<GroundOffsetComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:ground_offset': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +19,14 @@ export const convertGroundOffsetComponent = (
 
   // Validate value
   if (component.value !== undefined) {
-    if (!validateNumber(component.value, 'value', -Number.MAX_VALUE, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.value,
+        'value',
+        -Number.MAX_VALUE,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.value = component.value;

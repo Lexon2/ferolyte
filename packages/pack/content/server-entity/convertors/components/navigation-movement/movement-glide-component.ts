@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MovementGlideComponent } from '../../../interfaces/components/navigation-movement/movement-glide-component';
 import { validateMaxTurn } from '../../common/validation';
 import { validateNumberRange } from '../../common/validation';
@@ -10,7 +10,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertMovementGlideComponent = (
   component: Partial<MovementGlideComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:movement.glide': any } | undefined => {
   if (!component) {
     return undefined;
@@ -28,7 +28,14 @@ export const convertMovementGlideComponent = (
 
   // Validate startSpeed
   if (component.startSpeed !== undefined) {
-    if (!validateNumberRange(component.startSpeed, 0, Number.MAX_VALUE, 'startSpeed')) {
+    if (
+      !validateNumberRange(
+        component.startSpeed,
+        0,
+        Number.MAX_VALUE,
+        'startSpeed',
+      )
+    ) {
       return undefined;
     }
     result.start_speed = component.startSpeed;
@@ -36,13 +43,20 @@ export const convertMovementGlideComponent = (
 
   // Validate speedWhenTurning
   if (component.speedWhenTurning !== undefined) {
-    if (!validateNumberRange(component.speedWhenTurning, 0, Number.MAX_VALUE, 'speedWhenTurning')) {
+    if (
+      !validateNumberRange(
+        component.speedWhenTurning,
+        0,
+        Number.MAX_VALUE,
+        'speedWhenTurning',
+      )
+    ) {
       return undefined;
     }
     result.speed_when_turning = component.speedWhenTurning;
   }
 
   return {
-    'minecraft:movement.glide': result
+    'minecraft:movement.glide': result,
   };
 };

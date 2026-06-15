@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { IsHiddenWhenInvisibleComponent } from '../../../interfaces/components/states/is-hidden-when-invisible-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertIsHiddenWhenInvisibleComponent = (
   component: Partial<IsHiddenWhenInvisibleComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:is_hidden_when_invisible': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createCanDestroyInCreative } from '@artifex/pack/content/item/convertors/components/can-destroy-in-creative';
+import { createCanDestroyInCreative } from '@ferolyte/pack/content/item/convertors/components/can-destroy-in-creative';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createCanDestroyInCreative', () => {
@@ -12,7 +12,17 @@ describe('createCanDestroyInCreative', () => {
   });
 
   it('maps valid boolean to minecraft:can_destroy_in_creative', () => {
-    expectComponent(createCanDestroyInCreative, true, 'minecraft:can_destroy_in_creative', true);
-    expectComponent(createCanDestroyInCreative, false, 'minecraft:can_destroy_in_creative', false);
+    expectComponent(
+      createCanDestroyInCreative,
+      true,
+      'minecraft:can_destroy_in_creative',
+      true,
+    );
+    expectComponent(
+      createCanDestroyInCreative,
+      false,
+      'minecraft:can_destroy_in_creative',
+      false,
+    );
   });
 });

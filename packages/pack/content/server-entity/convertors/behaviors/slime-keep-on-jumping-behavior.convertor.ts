@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SlimeKeepOnJumpingBehavior } from '../../interfaces/behaviors/slime-keep-on-jumping-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertSlimeKeepOnJumpingBehavior = (
   behavior: Partial<SlimeKeepOnJumpingBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.slime_keep_on_jumping': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertSlimeKeepOnJumpingBehavior = (
   }
 
   return {
-    'minecraft:behavior.slime_keep_on_jumping': result
+    'minecraft:behavior.slime_keep_on_jumping': result,
   };
 };

@@ -1,6 +1,6 @@
 import { ItemSwingSoundsComponent } from '../../interfaces/components/swing-sounds';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateString } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateString } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates a swing_sounds component for Minecraft items

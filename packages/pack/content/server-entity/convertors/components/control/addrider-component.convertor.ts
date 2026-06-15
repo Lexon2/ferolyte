@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { AddRiderComponent } from '../../../interfaces/components/control/addrider-component';
 import { validateString } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateString } from '../../common/validation';
  */
 export const convertAddriderComponent = (
   component: Partial<AddRiderComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:addrider': any } | undefined => {
   if (!component) {
     return undefined;

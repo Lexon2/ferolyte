@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TradeResupplyComponent } from '../../../interfaces/components/trade/trade-resupply-component';
 
 /**
@@ -8,13 +8,13 @@ import { TradeResupplyComponent } from '../../../interfaces/components/trade/tra
  */
 export const convertTradeResupplyComponent = (
   component: Partial<TradeResupplyComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:trade_resupply': any } | undefined => {
   if (!component) {
     return undefined;
   }
 
   return {
-    'minecraft:trade_resupply': {}
+    'minecraft:trade_resupply': {},
   };
 };

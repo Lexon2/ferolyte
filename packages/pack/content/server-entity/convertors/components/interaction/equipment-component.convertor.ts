@@ -1,5 +1,8 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { EQUIPMENT_SLOTS, EquipmentSlot } from '../../../constants/equipment-slots';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import {
+  EQUIPMENT_SLOTS,
+  EquipmentSlot,
+} from '../../../constants/equipment-slots';
 import { EquipmentComponent } from '../../../interfaces/components/interaction/equipment-component';
 import { validateString } from '../../common/validation';
 
@@ -17,7 +20,11 @@ const validateSlotDropChance = (
   }
 
   for (const slot of slotDropChance) {
-    if (typeof slot.dropChance !== 'number' || slot.dropChance < 0 || slot.dropChance > 1) {
+    if (
+      typeof slot.dropChance !== 'number' ||
+      slot.dropChance < 0 ||
+      slot.dropChance > 1
+    ) {
       console.error(`${fieldName}.dropChance must be a number between 0 and 1`);
 
       return false;
@@ -40,7 +47,7 @@ const validateSlotDropChance = (
  */
 export const convertEquipmentComponent = (
   component: Partial<EquipmentComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:equipment': any } | undefined => {
   if (!component) {
     return undefined;

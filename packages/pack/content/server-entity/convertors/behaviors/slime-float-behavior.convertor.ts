@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SlimeFloatBehavior } from '../../interfaces/behaviors/slime-float-behavior';
 import { validateNumber, validatePercentage } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validatePercentage } from '../common/validation';
  */
 export const convertSlimeFloatBehavior = (
   behavior: Partial<SlimeFloatBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.slime_float': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -35,13 +35,15 @@ export const convertSlimeFloatBehavior = (
 
   // Validate jumpChancePercentage
   if (behavior.jumpChancePercentage !== undefined) {
-    if (!validatePercentage(behavior.jumpChancePercentage, 'jumpChancePercentage')) {
+    if (
+      !validatePercentage(behavior.jumpChancePercentage, 'jumpChancePercentage')
+    ) {
       return undefined;
     }
     result.jump_chance_percentage = behavior.jumpChancePercentage;
   }
 
   return {
-    'minecraft:behavior.slime_float': result
+    'minecraft:behavior.slime_float': result,
   };
 };

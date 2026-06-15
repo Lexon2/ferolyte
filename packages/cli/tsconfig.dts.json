@@ -9,9 +9,9 @@
     "rootDir": ".",
     "outDir": "./dist",
     "paths": {
-      "@artifex/cli/*": ["./*"],
-      "@artifex/common/*": ["../common/dist/*"],
-      "@artifex/pack/*": ["../pack/dist/*"]
+      "@ferolyte/cli/*": ["./*"],
+      "@ferolyte/common/*": ["../common/dist/*"],
+      "@ferolyte/pack/*": ["../pack/dist/*"]
     }
   }
 }

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { AdmireItemComponent } from '../../../interfaces/components/combat/admire-item-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertAdmireItemComponent = (
   component: Partial<AdmireItemComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:admire_item': any } | undefined => {
   if (!component) {
     return undefined;
@@ -34,14 +34,7 @@ export const convertAdmireItemComponent = (
 
   // Validate duration
   if (component.duration !== undefined) {
-    if (
-      !validateNumber(
-        component.duration,
-        'duration',
-        0,
-        Number.MAX_VALUE,
-      )
-    ) {
+    if (!validateNumber(component.duration, 'duration', 0, Number.MAX_VALUE)) {
       return undefined;
     }
     result.duration = component.duration;

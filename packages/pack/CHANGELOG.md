@@ -1,4 +1,4 @@
-# @artifex/pack
+# @ferolyte/pack
 
 ## 0.1.0
 
@@ -9,4 +9,4 @@
 ### Patch Changes
 
 - Updated dependencies
-  - @artifex/common@0.1.0
+  - @ferolyte/common@0.1.0

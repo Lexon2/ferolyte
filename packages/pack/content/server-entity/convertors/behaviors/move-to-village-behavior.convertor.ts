@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MoveToVillageBehavior } from '../../interfaces/behaviors/move-to-village-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertMoveToVillageBehavior = (
   behavior: Partial<MoveToVillageBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_to_village': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -58,6 +58,6 @@ export const convertMoveToVillageBehavior = (
   }
 
   return {
-    'minecraft:behavior.move_to_village': result
+    'minecraft:behavior.move_to_village': result,
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RestrictOpenDoorBehavior } from '../../interfaces/behaviors/restrict-open-door-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertRestrictOpenDoorBehavior = (
   behavior: Partial<RestrictOpenDoorBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.restrict_open_door': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertRestrictOpenDoorBehavior = (
   }
 
   return {
-    'minecraft:behavior.restrict_open_door': result
+    'minecraft:behavior.restrict_open_door': result,
   };
 };

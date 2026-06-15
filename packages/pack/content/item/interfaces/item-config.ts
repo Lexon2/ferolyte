@@ -1,7 +1,7 @@
-import { Identifier } from '@artifex/common/types';
+import { Identifier } from '@ferolyte/common/types';
 
 import { ItemMenuCategory } from './item-menu-category';
-import { DamageSourceType } from '@artifex/common/content/types/damage-source';
+import { DamageSourceType } from '@ferolyte/common/content/types/damage-source';
 import { ItemTags } from '../types/item-tags';
 import { ItemVersions } from '../types/item-versions';
 import { ItemRepairableComponent } from './components/repairable';
@@ -199,7 +199,7 @@ export interface ItemComponents<Legacy extends boolean = false> {
    * Icon
    * @description Defines the icon for the item.
    *
-   * By default creates link to the texture depending on item identifier and your `artifex.config.ts` settings.
+   * By default creates link to the texture depending on item identifier and your `ferolyte.config.ts` settings.
    * For example, if you set `alias: "arfex_example"` in your config and the item identifier is `arfex:stone`,
    * the icon link will be `textures/arfex/example/items/stone.png`.
    * It also automatically adds the texture to the `item_textures.json` file.
@@ -399,7 +399,7 @@ export interface ItemConfig<Version extends ItemVersions = ItemVersions> {
   /**
    * Item Version
    * @description The version of the item. This is used to determine the format of the item data.
-   * @default Takes the version from `artifex.config.ts` by default
+   * @default Takes the version from `ferolyte.config.ts` by default
    */
   version?: Version;
 
@@ -408,7 +408,7 @@ export interface ItemConfig<Version extends ItemVersions = ItemVersions> {
    * @description The identifier of the item. This is used to determine the item type.
    * It will also be used to determine the item file name.
    * @example `minecraft:stone` -> `stone.item.json
-   * @example `artifex:my_item` -> `my_item.item.json`
+   * @example `ferolyte:my_item` -> `my_item.item.json`
    */
   // @TODO: Replace with Identifier type
   identifier: string;

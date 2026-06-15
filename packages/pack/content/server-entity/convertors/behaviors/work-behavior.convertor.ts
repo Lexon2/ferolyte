@@ -1,7 +1,14 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { WorkBehavior } from '../../interfaces/behaviors/work-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
-import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
+import {
+  validateNumber,
+  validateBoolean,
+  validateInteger,
+} from '../common/validation';
 
 /**
  * Converts a WorkBehavior to Minecraft format
@@ -10,7 +17,7 @@ import { validateNumber, validateBoolean, validateInteger } from '../common/vali
  */
 export const convertWorkBehavior = (
   behavior: Partial<WorkBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.work': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -58,10 +65,12 @@ export const convertWorkBehavior = (
     result.goal_cooldown = behavior.goalCooldown;
   }
 
-
   // Validate onArrival
   if (behavior.onArrival !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onArrival, withFieldPath(ctx, 'onArrival'));
+    const convertedTrigger = convertTrigger(
+      behavior.onArrival,
+      withFieldPath(ctx, 'onArrival'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -93,6 +102,6 @@ export const convertWorkBehavior = (
   }
 
   return {
-    'minecraft:behavior.work': result
+    'minecraft:behavior.work': result,
   };
 };

@@ -1,7 +1,7 @@
 import { DestructibleByExplosionComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNonNegativeNumber } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNonNegativeNumber } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates a destructible_by_explosion component for Minecraft blocks

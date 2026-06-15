@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { OwnerHurtTargetBehavior } from '../../interfaces/behaviors/owner-hurt-target-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -13,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertOwnerHurtTargetBehavior = (
   behavior: Partial<OwnerHurtTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.owner_hurt_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,6 +42,6 @@ export const convertOwnerHurtTargetBehavior = (
   }
 
   return {
-    'minecraft:behavior.owner_hurt_target': result
+    'minecraft:behavior.owner_hurt_target': result,
   };
 };

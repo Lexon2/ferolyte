@@ -10,7 +10,7 @@ import {
   BuildContentJsonResult,
 } from '../content/content.factory';
 import { createEsbuildConfig } from './utils/build-esbuild-config';
-import { isArtifexContentFile } from './utils/is-content-file';
+import { isFerolyteContentFile } from './utils/is-content-file';
 import { getBuildCacheDistDir } from '../content/utils/build-cache-dist-dir';
 import { createContentPath } from '../content/utils/create-content-path';
 import {
@@ -107,7 +107,7 @@ export const rebuildFile = async (
   const results: BuildContentJsonResult[] = [];
 
   await Promise.all(
-    [...filesToRebuild].filter(isArtifexContentFile).map(async (file) => {
+    [...filesToRebuild].filter(isFerolyteContentFile).map(async (file) => {
       const result = await buildFile(file, options);
       if (result) {
         results.push(result);
@@ -157,10 +157,10 @@ export const unlinkContentFile = async (
   return removedOutputs;
 };
 
-const ArtifexContentBuilder = {
+const FerolyteContentBuilder = {
   buildFile,
   rebuildFile,
   unlinkContentFile,
 };
 
-export { ArtifexContentBuilder };
+export { FerolyteContentBuilder };

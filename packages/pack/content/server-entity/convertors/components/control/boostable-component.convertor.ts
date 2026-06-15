@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BoostableComponent } from '../../../interfaces/components/control/boostable-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -13,7 +13,9 @@ const validateBoostItem = (
   fieldName: string,
 ): boolean => {
   if (item.damage !== undefined) {
-    if (!validateNumber(item.damage, `${fieldName}.damage`, 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(item.damage, `${fieldName}.damage`, 0, Number.MAX_VALUE)
+    ) {
       return false;
     }
   }
@@ -40,7 +42,7 @@ const validateBoostItem = (
  */
 export const convertBoostableComponent = (
   component: Partial<BoostableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:boostable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -58,7 +60,14 @@ export const convertBoostableComponent = (
 
   // Validate speedMultiplier
   if (component.speedMultiplier !== undefined) {
-    if (!validateNumber(component.speedMultiplier, 'speedMultiplier', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.speedMultiplier,
+        'speedMultiplier',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.speed_multiplier = component.speedMultiplier;

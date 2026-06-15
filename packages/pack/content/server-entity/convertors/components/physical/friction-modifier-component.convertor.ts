@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FrictionModifierComponent } from '../../../interfaces/components/physical/friction-modifier-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertFrictionModifierComponent = (
   component: Partial<FrictionModifierComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:friction_modifier': { value: number } } | undefined => {
   if (!component) {
     return undefined;
@@ -18,8 +18,8 @@ export const convertFrictionModifierComponent = (
   if (component.value === undefined) {
     return {
       'minecraft:friction_modifier': {
-        value: 1.0 // Default value
-      }
+        value: 1.0, // Default value
+      },
     };
   }
 
@@ -29,7 +29,7 @@ export const convertFrictionModifierComponent = (
 
   return {
     'minecraft:friction_modifier': {
-      value: component.value
-    }
+      value: component.value,
+    },
   };
 };

@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MobEffectComponent } from '../../../interfaces/components/ai/mob-effect-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertMobEffectComponent = (
   component: Partial<MobEffectComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:mob_effect': any } | undefined => {
   if (!component) {
     return undefined;
@@ -20,7 +23,9 @@ export const convertMobEffectComponent = (
 
   // Validate effectRange
   if (component.effectRange !== undefined) {
-    if (!validateNumber(component.effectRange, 'effectRange', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.effectRange, 'effectRange', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.effect_range = component.effectRange;
@@ -28,7 +33,9 @@ export const convertMobEffectComponent = (
 
   // Validate effectTime
   if (component.effectTime !== undefined) {
-    if (!validateNumber(component.effectTime, 'effectTime', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.effectTime, 'effectTime', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.effect_time = component.effectTime;
@@ -36,7 +43,10 @@ export const convertMobEffectComponent = (
 
   // Validate entityFilter
   if (component.entityFilter !== undefined) {
-    const convertedEntityFilter = convertEntityFilters(component.entityFilter, withFieldPath(ctx, 'entityFilter'));
+    const convertedEntityFilter = convertEntityFilters(
+      component.entityFilter,
+      withFieldPath(ctx, 'entityFilter'),
+    );
     if (!convertedEntityFilter) {
       return undefined;
     }

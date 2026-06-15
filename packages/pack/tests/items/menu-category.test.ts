@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   convertMenuCategory,
   validateCategory,
-} from '@artifex/pack/content/item/convertors/components/menu-category/convert-category';
+} from '@ferolyte/pack/content/item/convertors/components/menu-category/convert-category';
 
 describe('validateCategory', () => {
   it('accepts valid categories', () => {
@@ -16,11 +16,13 @@ describe('validateCategory', () => {
 
 describe('convertMenuCategory', () => {
   it('maps category and optional fields', () => {
-    expect(convertMenuCategory({
-      category: 'equipment',
-      group: 'itemGroup.name.sword',
-      isHiddenInCommands: true,
-    })).toEqual({
+    expect(
+      convertMenuCategory({
+        category: 'equipment',
+        group: 'itemGroup.name.sword',
+        isHiddenInCommands: true,
+      }),
+    ).toEqual({
       category: 'equipment',
       group: 'itemGroup.name.sword',
       is_hidden_in_commands: true,
@@ -28,6 +30,8 @@ describe('convertMenuCategory', () => {
   });
 
   it('returns undefined for invalid category', () => {
-    expect(convertMenuCategory({ category: 'invalid' as never })).toBeUndefined();
+    expect(
+      convertMenuCategory({ category: 'invalid' as never }),
+    ).toBeUndefined();
   });
 });

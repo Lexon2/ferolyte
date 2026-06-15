@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationSwimComponent } from '../../../interfaces/components/navigation-movement/navigation-swim-component';
 
@@ -9,7 +9,7 @@ import { NavigationSwimComponent } from '../../../interfaces/components/navigati
  */
 export const convertNavigationSwimComponent = (
   component: Partial<NavigationSwimComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:navigation.swim': any } | undefined => {
   if (!component) {
     return undefined;
@@ -21,6 +21,6 @@ export const convertNavigationSwimComponent = (
   }
 
   return {
-    'minecraft:navigation.swim': result
+    'minecraft:navigation.swim': result,
   };
 };

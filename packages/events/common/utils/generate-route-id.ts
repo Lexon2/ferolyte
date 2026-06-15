@@ -1,4 +1,4 @@
-import { CartesianInput } from '@artifex/common/object/cartesian-merge';
+import { CartesianInput } from '@ferolyte/common/object/cartesian-merge';
 
 import { EVENT_ROUTE_GLOBAL_ID } from '../constants';
 import { EventRoutePrefix } from '../constants/event-route-prefix';

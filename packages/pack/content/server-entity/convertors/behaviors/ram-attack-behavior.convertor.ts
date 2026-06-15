@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RamAttackBehavior } from '../../interfaces/behaviors/ram-attack-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -11,7 +14,7 @@ import { validateNumber, validateSoundEvent } from '../common/validation';
  */
 export const convertRamAttackBehavior = (
   behavior: Partial<RamAttackBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.ram_attack': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -29,7 +32,9 @@ export const convertRamAttackBehavior = (
 
   // Validate babyKnockbackModifier
   if (behavior.babyKnockbackModifier !== undefined) {
-    if (!validateNumber(behavior.babyKnockbackModifier, 'babyKnockbackModifier')) {
+    if (
+      !validateNumber(behavior.babyKnockbackModifier, 'babyKnockbackModifier')
+    ) {
       return undefined;
     }
     result.baby_knockback_modifier = behavior.babyKnockbackModifier;
@@ -37,7 +42,10 @@ export const convertRamAttackBehavior = (
 
   // Validate cooldownRange
   if (behavior.cooldownRange !== undefined) {
-    const convertedCooldownRange = convertRange(behavior.cooldownRange, 'cooldownRange');
+    const convertedCooldownRange = convertRange(
+      behavior.cooldownRange,
+      'cooldownRange',
+    );
     if (!convertedCooldownRange) {
       return undefined;
     }
@@ -70,7 +78,10 @@ export const convertRamAttackBehavior = (
 
   // Validate onStart
   if (behavior.onStart !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onStart, withFieldPath(ctx, 'onStart'));
+    const convertedTrigger = convertTrigger(
+      behavior.onStart,
+      withFieldPath(ctx, 'onStart'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -119,7 +130,10 @@ export const convertRamAttackBehavior = (
 
   // Validate trigger
   if (behavior.trigger !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.trigger, withFieldPath(ctx, 'trigger'));
+    const convertedTrigger = convertTrigger(
+      behavior.trigger,
+      withFieldPath(ctx, 'trigger'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -127,6 +141,6 @@ export const convertRamAttackBehavior = (
   }
 
   return {
-    'minecraft:behavior.ram_attack': result
+    'minecraft:behavior.ram_attack': result,
   };
 };

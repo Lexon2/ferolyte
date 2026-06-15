@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SilverfishMergeWithStoneBehavior } from '../../interfaces/behaviors/silverfish-merge-with-stone-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertSilverfishMergeWithStoneBehavior = (
   behavior: Partial<SilverfishMergeWithStoneBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.silverfish_merge_with_stone': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertSilverfishMergeWithStoneBehavior = (
   }
 
   return {
-    'minecraft:behavior.silverfish_merge_with_stone': result
+    'minecraft:behavior.silverfish_merge_with_stone': result,
   };
 };

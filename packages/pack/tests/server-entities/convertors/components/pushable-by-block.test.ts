@@ -1,8 +1,11 @@
 import { describe, it } from 'vitest';
 
-import { convertPushableByBlockComponent } from '@artifex/pack/content/server-entity/convertors/components/physical/pushable-by-block-component.convertor';
+import { convertPushableByBlockComponent } from '@ferolyte/pack/content/server-entity/convertors/components/physical/pushable-by-block-component.convertor';
 
-import { expectComponent, expectUndefined } from '../../helpers/assert-component';
+import {
+  expectComponent,
+  expectUndefined,
+} from '../../helpers/assert-component';
 
 describe('convertPushableByBlockComponent', () => {
   it('returns undefined when input is missing', () => {

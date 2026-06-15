@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DragonHoldingPatternBehavior } from '../../interfaces/behaviors/dragon-holding-pattern-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertDragonHoldingPatternBehavior = (
   behavior: Partial<DragonHoldingPatternBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.dragonholdingpattern': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertDragonHoldingPatternBehavior = (
   }
 
   return {
-    'minecraft:behavior.dragonholdingpattern': result
+    'minecraft:behavior.dragonholdingpattern': result,
   };
 };

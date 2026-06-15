@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createFlammable } from '@artifex/pack/content/block/components/flammable';
+import { createFlammable } from '@ferolyte/pack/content/block/components/flammable';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createFlammable', () => {
@@ -16,12 +16,17 @@ describe('createFlammable', () => {
   });
 
   it('maps flammable modifiers', () => {
-    expectComponent(createFlammable, {
-      catchChanceModifier: 5,
-      destroyChanceModifier: 20,
-    }, 'minecraft:flammable', {
-      catch_chance_modifier: 5,
-      destroy_chance_modifier: 20,
-    });
+    expectComponent(
+      createFlammable,
+      {
+        catchChanceModifier: 5,
+        destroyChanceModifier: 20,
+      },
+      'minecraft:flammable',
+      {
+        catch_chance_modifier: 5,
+        destroy_chance_modifier: 20,
+      },
+    );
   });
 });

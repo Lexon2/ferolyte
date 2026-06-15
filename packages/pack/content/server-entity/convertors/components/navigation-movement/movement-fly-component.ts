@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MovementFlyComponent } from '../../../interfaces/components/navigation-movement/movement-fly-component';
 import { validateMaxTurn } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateMaxTurn } from '../../common/validation';
  */
 export const convertMovementFlyComponent = (
   component: Partial<MovementFlyComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:movement.fly': any } | undefined => {
   if (!component) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertMovementFlyComponent = (
   }
 
   return {
-    'minecraft:movement.fly': result
+    'minecraft:movement.fly': result,
   };
 };

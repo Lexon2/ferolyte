@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { StalkAndPounceOnTargetBehavior } from '../../interfaces/behaviors/stalk-and-pounce-on-target-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber, validateBoolean } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber, validateBoolean } from '../common/validation';
  */
 export const convertStalkAndPounceOnTargetBehavior = (
   behavior: Partial<StalkAndPounceOnTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.stalk_and_pounce_on_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -108,7 +111,10 @@ export const convertStalkAndPounceOnTargetBehavior = (
 
   // Validate stuckBlocks
   if (behavior.stuckBlocks !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.stuckBlocks, withFieldPath(ctx, 'stuckBlocks'));
+    const convertedFilters = convertEntityFilters(
+      behavior.stuckBlocks,
+      withFieldPath(ctx, 'stuckBlocks'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -116,6 +122,6 @@ export const convertStalkAndPounceOnTargetBehavior = (
   }
 
   return {
-    'minecraft:behavior.stalk_and_pounce_on_target': result
+    'minecraft:behavior.stalk_and_pounce_on_target': result,
   };
 };

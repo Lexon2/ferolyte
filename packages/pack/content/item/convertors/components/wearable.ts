@@ -1,10 +1,10 @@
 import { ItemWearableSlot } from '../../types/item-wearable-slot';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateBooleanValue,
   validateNonNegativeNumber,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 const VALID_SLOTS: ItemWearableSlot[] = [
   'none',

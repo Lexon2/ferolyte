@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { DAMAGE_TYPES } from '../../constants/damage-types';
 import { HasDamageFilter } from '../../interfaces/filters/has-damage-filter';
@@ -11,11 +11,14 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertHasDamageFilter = (
   filter: Partial<HasDamageFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertWithInputValues({
+  return convertWithInputValues(
+    {
       ...filter,
       test: 'has_damage',
     },
-    DAMAGE_TYPES, ctx);
+    DAMAGE_TYPES,
+    ctx,
+  );
 };

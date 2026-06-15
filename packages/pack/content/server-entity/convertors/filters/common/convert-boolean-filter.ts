@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './convert-filter-base';
 import { FilterOperator } from '../../../constants/filter-operators';
 import { FilterSubject } from '../../../constants/filter-subjects';
@@ -12,12 +12,12 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertBooleanFilter = (
   filter: {
-  test: string;
-  value?: boolean;
-  operator?: FilterOperator;
-  subject?: FilterSubject;
-},
-  ctx?: ContentDiagnosticContext
+    test: string;
+    value?: boolean;
+    operator?: FilterOperator;
+    subject?: FilterSubject;
+  },
+  ctx?: ContentDiagnosticContext,
 ):
   | {
       test: string;

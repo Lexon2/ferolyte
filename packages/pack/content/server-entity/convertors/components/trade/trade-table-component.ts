@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TradeTableComponent } from '../../../interfaces/components/trade/trade-table-component';
 import { validateBoolean } from '../../common/validation';
 import { validateTradeOrLootTablePath } from '../../common/validation';
@@ -10,7 +10,7 @@ import { validateTradeOrLootTablePath } from '../../common/validation';
  */
 export const convertTradeTableComponent = (
   component: Partial<TradeTableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:trade_table': any } | undefined => {
   if (!component) {
     return undefined;
@@ -20,7 +20,9 @@ export const convertTradeTableComponent = (
 
   // Validate convertTradesEconomy
   if (component.convertTradesEconomy !== undefined) {
-    if (!validateBoolean(component.convertTradesEconomy, 'convertTradesEconomy')) {
+    if (
+      !validateBoolean(component.convertTradesEconomy, 'convertTradesEconomy')
+    ) {
       return undefined;
     }
     result.convert_trades_economy = component.convertTradesEconomy;
@@ -61,6 +63,6 @@ export const convertTradeTableComponent = (
   }
 
   return {
-    'minecraft:trade_table': result
+    'minecraft:trade_table': result,
   };
 };

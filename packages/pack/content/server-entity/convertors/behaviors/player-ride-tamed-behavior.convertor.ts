@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PlayerRideTamedBehavior } from '../../interfaces/behaviors/player-ride-tamed-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertPlayerRideTamedBehavior = (
   behavior: Partial<PlayerRideTamedBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.player_ride_tamed': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertPlayerRideTamedBehavior = (
   }
 
   return {
-    'minecraft:behavior.player_ride_tamed': result
+    'minecraft:behavior.player_ride_tamed': result,
   };
 };

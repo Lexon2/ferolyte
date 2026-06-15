@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createMovable } from '@artifex/pack/content/block/components/movable';
+import { createMovable } from '@ferolyte/pack/content/block/components/movable';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createMovable', () => {
@@ -12,9 +12,14 @@ describe('createMovable', () => {
   });
 
   it('maps movable fields', () => {
-    expectComponent(createMovable, { movementType: 'push_pull', sticky: 'same' }, 'minecraft:movable', {
-      movement_type: 'push_pull',
-      sticky: 'same',
-    });
+    expectComponent(
+      createMovable,
+      { movementType: 'push_pull', sticky: 'same' },
+      'minecraft:movable',
+      {
+        movement_type: 'push_pull',
+        sticky: 'same',
+      },
+    );
   });
 });

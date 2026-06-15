@@ -1,8 +1,13 @@
 import { MovableComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateAllowedValue } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateAllowedValue } from '@ferolyte/common/content/validation/content-validation';
 
-const VALID_MOVEMENT_TYPES = ['push_pull', 'push', 'popped', 'immovable'] as const;
+const VALID_MOVEMENT_TYPES = [
+  'push_pull',
+  'push',
+  'popped',
+  'immovable',
+] as const;
 const VALID_STICKY = ['same', 'none'] as const;
 
 /**

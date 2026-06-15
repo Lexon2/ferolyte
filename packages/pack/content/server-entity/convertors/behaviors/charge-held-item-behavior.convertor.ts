@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ChargeHeldItemBehavior } from '../../interfaces/behaviors/charge-held-item-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertChargeHeldItemBehavior = (
   behavior: Partial<ChargeHeldItemBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.charge_held_item': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -27,7 +27,10 @@ export const convertChargeHeldItemBehavior = (
 
   // Validate items
   if (behavior.items !== undefined) {
-    if (!Array.isArray(behavior.items) || !behavior.items.every(item => typeof item === 'string')) {
+    if (
+      !Array.isArray(behavior.items) ||
+      !behavior.items.every((item) => typeof item === 'string')
+    ) {
       console.error('items must be an array of strings');
 
       return undefined;
@@ -36,6 +39,6 @@ export const convertChargeHeldItemBehavior = (
   }
 
   return {
-    'minecraft:behavior.charge_held_item': result
+    'minecraft:behavior.charge_held_item': result,
   };
 };

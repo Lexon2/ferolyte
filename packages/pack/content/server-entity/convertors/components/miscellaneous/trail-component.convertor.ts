@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TrailComponent } from '../../../interfaces/components/miscellaneous/trail-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 
@@ -9,7 +12,7 @@ import { convertEntityFilters } from '../../common/filters.convertor';
  */
 export const convertTrailComponent = (
   component: Partial<TrailComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:trail': any } | undefined => {
   if (!component) {
     return undefined;
@@ -29,7 +32,10 @@ export const convertTrailComponent = (
 
   // Validate spawnFilter
   if (component.spawnFilter !== undefined) {
-    const convertedFilters = convertEntityFilters(component.spawnFilter, withFieldPath(ctx, 'spawnFilter'));
+    const convertedFilters = convertEntityFilters(
+      component.spawnFilter,
+      withFieldPath(ctx, 'spawnFilter'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -38,13 +44,16 @@ export const convertTrailComponent = (
 
   // Validate spawnOffset
   if (component.spawnOffset !== undefined) {
-    if (!Array.isArray(component.spawnOffset) || component.spawnOffset.length !== 3) {
+    if (
+      !Array.isArray(component.spawnOffset) ||
+      component.spawnOffset.length !== 3
+    ) {
       console.error('spawnOffset must be an array of 3 numbers');
 
       return undefined;
     }
 
-    if (!component.spawnOffset.every(coord => typeof coord === 'number')) {
+    if (!component.spawnOffset.every((coord) => typeof coord === 'number')) {
       console.error('spawnOffset must be an array of numbers');
 
       return undefined;
@@ -54,6 +63,6 @@ export const convertTrailComponent = (
   }
 
   return {
-    'minecraft:trail': result
+    'minecraft:trail': result,
   };
 };

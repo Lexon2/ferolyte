@@ -30,14 +30,14 @@ const spawnLoader = async (
 
   try {
     const loader = dimension.spawnEntity(
-      'artifex:loader',
+      'ferolyte:loader',
       entityToSpawn.location,
     );
     if (!loader) return;
 
     await system.waitTicks(1);
 
-    loader.triggerEvent(`artifex:set_load_area_${radius}`);
+    loader.triggerEvent(`ferolyte:set_load_area_${radius}`);
     loader.teleport(location);
 
     return loader;
@@ -97,7 +97,7 @@ export interface LoadLocationOptions {
 /// Public API ///
 
 /**
- * Loads a location in a dimension using a loader entity 'artifex:loader'.
+ * Loads a location in a dimension using a loader entity 'ferolyte:loader'.
  *
  * WIP.
  * This is not yet ready for production use.

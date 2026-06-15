@@ -1,7 +1,14 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { AreaAttackComponent } from '../../../interfaces/components/combat/area-attack-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
-import { validateNumber, validateString, validateBoolean } from '../../common/validation';
+import {
+  validateNumber,
+  validateString,
+  validateBoolean,
+} from '../../common/validation';
 
 /**
  * Converts an AreaAttackComponent to Minecraft format
@@ -10,7 +17,7 @@ import { validateNumber, validateString, validateBoolean } from '../../common/va
  */
 export const convertAreaAttackComponent = (
   component: Partial<AreaAttackComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:area_attack': any } | undefined => {
   if (!component) {
     return undefined;
@@ -28,7 +35,14 @@ export const convertAreaAttackComponent = (
 
   // Validate damageCooldown
   if (component.damageCooldown !== undefined) {
-    if (!validateNumber(component.damageCooldown, 'damageCooldown', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.damageCooldown,
+        'damageCooldown',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.damage_cooldown = component.damageCooldown;
@@ -36,7 +50,14 @@ export const convertAreaAttackComponent = (
 
   // Validate damagePerTick
   if (component.damagePerTick !== undefined) {
-    if (!validateNumber(component.damagePerTick, 'damagePerTick', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.damagePerTick,
+        'damagePerTick',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.damage_per_tick = component.damagePerTick;
@@ -44,7 +65,9 @@ export const convertAreaAttackComponent = (
 
   // Validate damageRange
   if (component.damageRange !== undefined) {
-    if (!validateNumber(component.damageRange, 'damageRange', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.damageRange, 'damageRange', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.damage_range = component.damageRange;
@@ -52,7 +75,10 @@ export const convertAreaAttackComponent = (
 
   // Validate entityFilter
   if (component.entityFilter !== undefined) {
-    const convertedEntityFilter = convertEntityFilters(component.entityFilter, withFieldPath(ctx, 'entityFilter'));
+    const convertedEntityFilter = convertEntityFilters(
+      component.entityFilter,
+      withFieldPath(ctx, 'entityFilter'),
+    );
     if (!convertedEntityFilter) {
       return undefined;
     }

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MoveToWaterBehavior } from '../../interfaces/behaviors/move-to-water-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertMoveToWaterBehavior = (
   behavior: Partial<MoveToWaterBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_to_water': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -66,6 +66,6 @@ export const convertMoveToWaterBehavior = (
   }
 
   return {
-    'minecraft:behavior.move_to_water': result
+    'minecraft:behavior.move_to_water': result,
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MovementSoundDistanceOffsetComponent } from '../../../interfaces/components/miscellaneous/movement-sound-distance-offset-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertMovementSoundDistanceOffsetComponent = (
   component: Partial<MovementSoundDistanceOffsetComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:movement_sound_distance_offset': any } | undefined => {
   if (!component) {
     return undefined;
@@ -22,7 +22,7 @@ export const convertMovementSoundDistanceOffsetComponent = (
 
   return {
     'minecraft:movement_sound_distance_offset': {
-      value: component.value
-    }
+      value: component.value,
+    },
   };
 };

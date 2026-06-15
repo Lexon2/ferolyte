@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { IgnoreCannotBeAttackedComponent } from '../../../interfaces/components/combat/ignore-cannot-be-attacked-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 
@@ -9,7 +12,7 @@ import { convertEntityFilters } from '../../common/filters.convertor';
  */
 export const convertIgnoreCannotBeAttackedComponent = (
   component: Partial<IgnoreCannotBeAttackedComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:ignore_cannot_be_attacked': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +22,10 @@ export const convertIgnoreCannotBeAttackedComponent = (
 
   // Validate filters
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      component.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }

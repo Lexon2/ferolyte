@@ -4,6 +4,6 @@ export class Float {
     public digits: number = 1,
   ) {}
   toJSON() {
-    return `$artifex_float[${this.value.toFixed(this.digits)}]`;
+    return `$ferolyte_float[${this.value.toFixed(this.digits)}]`;
   }
 }

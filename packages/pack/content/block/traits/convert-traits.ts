@@ -1,6 +1,6 @@
 import { BlockTraits } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 
 export const convertBlockTraits = (
   traits: BlockTraits,
@@ -29,7 +29,10 @@ export const convertBlockTraits = (
       Array.isArray(states) &&
       states.every((state) => validPlacementDirectionStates.includes(state))
     ) {
-      if (yRotation !== undefined && !validPlacementDirectionYRotations.includes(yRotation)) {
+      if (
+        yRotation !== undefined &&
+        !validPlacementDirectionYRotations.includes(yRotation)
+      ) {
         logContentError(
           ctx !== undefined
             ? { ...ctx, fieldPath: 'placementDirection.yRotation' }

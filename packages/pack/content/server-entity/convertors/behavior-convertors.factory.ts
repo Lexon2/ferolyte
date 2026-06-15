@@ -181,7 +181,7 @@ import {
   convertWorkComposterBehavior,
 } from './behaviors';
 import { EntityBehaviors } from '../interfaces/entity-behaviors';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 
 export type EntityBehaviorConvertor = (
   value?: unknown,

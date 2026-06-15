@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PlayerExhaustionComponent } from '../../../interfaces/components/miscellaneous/player-exhaustion-component';
 import { validateInteger } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger } from '../../common/validation';
  */
 export const convertPlayerExhaustionComponent = (
   component: Partial<PlayerExhaustionComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:player.exhaustion': any } | undefined => {
   if (!component) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertPlayerExhaustionComponent = (
   }
 
   return {
-    'minecraft:player.exhaustion': result
+    'minecraft:player.exhaustion': result,
   };
 };

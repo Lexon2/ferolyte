@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ExperienceRewardComponent } from '../../../interfaces/components/miscellaneous/experience-reward-component';
 // TODO: Validate molang expression
 /**
@@ -20,10 +20,14 @@ const validateMolangExpression = (
   }
 
   if (Array.isArray(value)) {
-    return value.every((item) => typeof item === 'string' || typeof item === 'number');
+    return value.every(
+      (item) => typeof item === 'string' || typeof item === 'number',
+    );
   }
 
-  console.error(`${fieldName} must be a string, number, or array of strings/numbers`);
+  console.error(
+    `${fieldName} must be a string, number, or array of strings/numbers`,
+  );
 
   return false;
 };
@@ -35,7 +39,7 @@ const validateMolangExpression = (
  */
 export const convertExperienceRewardComponent = (
   component: Partial<ExperienceRewardComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:experience_reward': any } | undefined => {
   if (!component) {
     return undefined;

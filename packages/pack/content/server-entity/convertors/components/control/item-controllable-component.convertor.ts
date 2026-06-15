@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ItemControllableComponent } from '../../../interfaces/components/control/item-controllable-component';
 import { validateStringArray } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateStringArray } from '../../common/validation';
  */
 export const convertItemControllableComponent = (
   component: Partial<ItemControllableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:item_controllable': any } | undefined => {
   if (!component) {
     return undefined;

@@ -1,8 +1,15 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MoveAroundTargetBehavior } from '../../interfaces/behaviors/move-around-target-behavior';
 import { convertRange } from '../common/convertors';
 import { convertEntityFilters } from '../common/filters.convertor';
-import { validateDegrees, validateInteger, validateNumber } from '../common/validation';
+import {
+  validateDegrees,
+  validateInteger,
+  validateNumber,
+} from '../common/validation';
 
 /**
  * Converts a MoveAroundTargetBehavior to Minecraft format
@@ -11,7 +18,7 @@ import { validateDegrees, validateInteger, validateNumber } from '../common/vali
  */
 export const convertMoveAroundTargetBehavior = (
   behavior: Partial<MoveAroundTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_around_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -43,7 +50,10 @@ export const convertMoveAroundTargetBehavior = (
 
   // Validate destinationPositionRange
   if (behavior.destinationPositionRange !== undefined) {
-    const convertedDestinationPositionRange = convertRange(behavior.destinationPositionRange, 'destinationPositionRange');
+    const convertedDestinationPositionRange = convertRange(
+      behavior.destinationPositionRange,
+      'destinationPositionRange',
+    );
     if (!convertedDestinationPositionRange) {
       return undefined;
     }
@@ -98,7 +108,10 @@ export const convertMoveAroundTargetBehavior = (
   // Validate verticalSearchDistance
   if (behavior.verticalSearchDistance !== undefined) {
     if (
-      !validateInteger(behavior.verticalSearchDistance, 'verticalSearchDistance')
+      !validateInteger(
+        behavior.verticalSearchDistance,
+        'verticalSearchDistance',
+      )
     ) {
       return undefined;
     }
@@ -107,7 +120,10 @@ export const convertMoveAroundTargetBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }

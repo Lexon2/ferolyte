@@ -1,6 +1,9 @@
 import { ItemTags } from '../../types/item-tags';
-import { ContentDiagnosticContext, logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNonEmptyArray } from '@artifex/common/content/validation/content-validation';
+import {
+  ContentDiagnosticContext,
+  logContentError,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNonEmptyArray } from '@ferolyte/common/content/validation/content-validation';
 
 const VALID_TAGS = new Set<string>([
   'minecraft:arrow',
@@ -82,9 +85,7 @@ export const createTags = (
       !VALID_TAGS.has(value)
     ) {
       logContentError(
-        ctx !== undefined
-          ? { ...ctx, fieldPath: `[${index}]` }
-          : undefined,
+        ctx !== undefined ? { ...ctx, fieldPath: `[${index}]` } : undefined,
         'Tags must be non-empty strings',
       );
       return undefined;

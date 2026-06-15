@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { MoonIntensityFilter } from '../../interfaces/filters/moon-intensity-filter';
 
@@ -9,13 +9,16 @@ import { MoonIntensityFilter } from '../../interfaces/filters/moon-intensity-fil
  */
 export const convertMoonIntensityFilter = (
   filter: Partial<MoonIntensityFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): ReturnType<typeof convertNumberFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
   }
-  return convertNumberFilter({
-    ...filter,
-    test: 'moon_intensity'
-  }, ctx);
+  return convertNumberFilter(
+    {
+      ...filter,
+      test: 'moon_intensity',
+    },
+    ctx,
+  );
 };

@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { KnockbackRoarBehavior } from '../../interfaces/behaviors/knockback-roar-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -15,7 +18,7 @@ import {
  */
 export const convertKnockbackRoarBehavior = (
   behavior: Partial<KnockbackRoarBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.knockback_roar': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -49,7 +52,10 @@ export const convertKnockbackRoarBehavior = (
 
   // Validate damageFilters
   if (behavior.damageFilters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.damageFilters, withFieldPath(ctx, 'damageFilters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.damageFilters,
+      withFieldPath(ctx, 'damageFilters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -82,7 +88,10 @@ export const convertKnockbackRoarBehavior = (
 
   // Validate knockbackFilters
   if (behavior.knockbackFilters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.knockbackFilters, withFieldPath(ctx, 'knockbackFilters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.knockbackFilters,
+      withFieldPath(ctx, 'knockbackFilters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -141,7 +150,10 @@ export const convertKnockbackRoarBehavior = (
 
   // Validate onRoarEnd
   if (behavior.onRoarEnd !== undefined) {
-    const convertedOnRoarEnd = convertTrigger(behavior.onRoarEnd, withFieldPath(ctx, 'onRoarEnd'));
+    const convertedOnRoarEnd = convertTrigger(
+      behavior.onRoarEnd,
+      withFieldPath(ctx, 'onRoarEnd'),
+    );
     if (!convertedOnRoarEnd) {
       return undefined;
     }

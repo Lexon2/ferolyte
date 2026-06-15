@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TakeBlockBehavior } from '../../interfaces/behaviors/take-block-behavior';
 import { convertRange } from '../common/convertors';
 import { convertEntityFilters } from '../common/filters.convertor';
@@ -32,7 +35,13 @@ export const convertTakeBlockBehavior = (
   }
 
   if (behavior.affectedByGriefingRule !== undefined) {
-    if (!validateBoolean(behavior.affectedByGriefingRule, 'affectedByGriefingRule', ctx)) {
+    if (
+      !validateBoolean(
+        behavior.affectedByGriefingRule,
+        'affectedByGriefingRule',
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.affected_by_griefing_rule = behavior.affectedByGriefingRule;
@@ -46,7 +55,10 @@ export const convertTakeBlockBehavior = (
   }
 
   if (behavior.canTake !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.canTake, withFieldPath(ctx, 'canTake'));
+    const convertedFilters = convertEntityFilters(
+      behavior.canTake,
+      withFieldPath(ctx, 'canTake'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -61,7 +73,10 @@ export const convertTakeBlockBehavior = (
   }
 
   if (behavior.onTake !== undefined) {
-    const convertedOnTake = convertTrigger(behavior.onTake, withFieldPath(ctx, 'onTake'));
+    const convertedOnTake = convertTrigger(
+      behavior.onTake,
+      withFieldPath(ctx, 'onTake'),
+    );
     if (!convertedOnTake) {
       return undefined;
     }
@@ -69,7 +84,9 @@ export const convertTakeBlockBehavior = (
   }
 
   if (behavior.requiresLineOfSight !== undefined) {
-    if (!validateBoolean(behavior.requiresLineOfSight, 'requiresLineOfSight', ctx)) {
+    if (
+      !validateBoolean(behavior.requiresLineOfSight, 'requiresLineOfSight', ctx)
+    ) {
       return undefined;
     }
     result.requires_line_of_sight = behavior.requiresLineOfSight;

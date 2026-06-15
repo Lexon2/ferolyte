@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { GuardianAttackBehavior } from '../../interfaces/behaviors/guardian-attack-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertGuardianAttackBehavior = (
   behavior: Partial<GuardianAttackBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.guardian_attack': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -27,7 +27,9 @@ export const convertGuardianAttackBehavior = (
 
   // Validate elderExtraMagicDamage
   if (behavior.elderExtraMagicDamage !== undefined) {
-    if (!validateInteger(behavior.elderExtraMagicDamage, 'elderExtraMagicDamage')) {
+    if (
+      !validateInteger(behavior.elderExtraMagicDamage, 'elderExtraMagicDamage')
+    ) {
       return undefined;
     }
     result.elder_extra_magic_damage = behavior.elderExtraMagicDamage;
@@ -35,7 +37,12 @@ export const convertGuardianAttackBehavior = (
 
   // Validate hardModeExtraMagicDamage
   if (behavior.hardModeExtraMagicDamage !== undefined) {
-    if (!validateInteger(behavior.hardModeExtraMagicDamage, 'hardModeExtraMagicDamage')) {
+    if (
+      !validateInteger(
+        behavior.hardModeExtraMagicDamage,
+        'hardModeExtraMagicDamage',
+      )
+    ) {
       return undefined;
     }
     result.hard_mode_extra_magic_damage = behavior.hardModeExtraMagicDamage;
@@ -82,6 +89,6 @@ export const convertGuardianAttackBehavior = (
   }
 
   return {
-    'minecraft:behavior.guardian_attack': result
+    'minecraft:behavior.guardian_attack': result,
   };
 };

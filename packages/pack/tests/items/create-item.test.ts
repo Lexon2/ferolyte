@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createItem } from '@artifex/pack/content/item/create-item';
-import { ItemBuilder } from '@artifex/pack/content/item/item-builder';
+import { createItem } from '@ferolyte/pack/content/item/create-item';
+import { ItemBuilder } from '@ferolyte/pack/content/item/item-builder';
 import { minimalItemConfig } from './helpers/fixtures';
 
 describe('createItem', () => {
@@ -27,8 +27,13 @@ describe('createItem', () => {
   });
 
   it('merges ItemBuilder with ItemConfig', () => {
-    const base = new ItemBuilder(minimalItemConfig({ components: { glint: true } }));
-    const builder = createItem(base, minimalItemConfig({ components: { maxStackSize: 32 } }));
+    const base = new ItemBuilder(
+      minimalItemConfig({ components: { glint: true } }),
+    );
+    const builder = createItem(
+      base,
+      minimalItemConfig({ components: { maxStackSize: 32 } }),
+    );
 
     expect(builder.cloneConfig().components).toEqual({
       glint: true,

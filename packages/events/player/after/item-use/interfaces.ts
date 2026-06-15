@@ -1,7 +1,7 @@
 import { Player } from '@minecraft/server';
 
-import { Identifier, RequireAtLeastOne } from '@artifex/common/types';
-import { EventBlockTypeIdsRouteOption } from '@artifex/events/common/interfaces';
+import { Identifier, RequireAtLeastOne } from '@ferolyte/common/types';
+import { EventBlockTypeIdsRouteOption } from '@ferolyte/events/common/interfaces';
 
 // Public Types ///
 

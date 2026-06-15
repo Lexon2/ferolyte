@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { NpcComponent } from '../../../interfaces/components/ai/npc-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertNpcComponent = (
   component: Partial<NpcComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:npc': any } | undefined => {
   if (!component) {
     return undefined;
@@ -27,14 +27,25 @@ export const convertNpcComponent = (
 
       // Validate portrait translate
       if (component.npcData.portraitOffsets.translate !== undefined) {
-        if (!Array.isArray(component.npcData.portraitOffsets.translate) ||
-            component.npcData.portraitOffsets.translate.length !== 3) {
-          console.error('portraitOffsets.translate must be an array of 3 numbers');
+        if (
+          !Array.isArray(component.npcData.portraitOffsets.translate) ||
+          component.npcData.portraitOffsets.translate.length !== 3
+        ) {
+          console.error(
+            'portraitOffsets.translate must be an array of 3 numbers',
+          );
 
           return undefined;
         }
         for (const num of component.npcData.portraitOffsets.translate) {
-          if (!validateNumber(num, 'portraitOffsets.translate', -Number.MAX_VALUE, Number.MAX_VALUE)) {
+          if (
+            !validateNumber(
+              num,
+              'portraitOffsets.translate',
+              -Number.MAX_VALUE,
+              Number.MAX_VALUE,
+            )
+          ) {
             return undefined;
           }
         }
@@ -43,14 +54,18 @@ export const convertNpcComponent = (
 
       // Validate portrait scale
       if (component.npcData.portraitOffsets.scale !== undefined) {
-        if (!Array.isArray(component.npcData.portraitOffsets.scale) ||
-            component.npcData.portraitOffsets.scale.length !== 3) {
+        if (
+          !Array.isArray(component.npcData.portraitOffsets.scale) ||
+          component.npcData.portraitOffsets.scale.length !== 3
+        ) {
           console.error('portraitOffsets.scale must be an array of 3 numbers');
 
           return undefined;
         }
         for (const num of component.npcData.portraitOffsets.scale) {
-          if (!validateNumber(num, 'portraitOffsets.scale', 0, Number.MAX_VALUE)) {
+          if (
+            !validateNumber(num, 'portraitOffsets.scale', 0, Number.MAX_VALUE)
+          ) {
             return undefined;
           }
         }
@@ -66,14 +81,25 @@ export const convertNpcComponent = (
 
       // Validate picker translate
       if (component.npcData.pickerOffsets.translate !== undefined) {
-        if (!Array.isArray(component.npcData.pickerOffsets.translate) ||
-            component.npcData.pickerOffsets.translate.length !== 3) {
-          console.error('pickerOffsets.translate must be an array of 3 numbers');
+        if (
+          !Array.isArray(component.npcData.pickerOffsets.translate) ||
+          component.npcData.pickerOffsets.translate.length !== 3
+        ) {
+          console.error(
+            'pickerOffsets.translate must be an array of 3 numbers',
+          );
 
           return undefined;
         }
         for (const num of component.npcData.pickerOffsets.translate) {
-          if (!validateNumber(num, 'pickerOffsets.translate', -Number.MAX_VALUE, Number.MAX_VALUE)) {
+          if (
+            !validateNumber(
+              num,
+              'pickerOffsets.translate',
+              -Number.MAX_VALUE,
+              Number.MAX_VALUE,
+            )
+          ) {
             return undefined;
           }
         }
@@ -82,14 +108,18 @@ export const convertNpcComponent = (
 
       // Validate picker scale
       if (component.npcData.pickerOffsets.scale !== undefined) {
-        if (!Array.isArray(component.npcData.pickerOffsets.scale) ||
-            component.npcData.pickerOffsets.scale.length !== 3) {
+        if (
+          !Array.isArray(component.npcData.pickerOffsets.scale) ||
+          component.npcData.pickerOffsets.scale.length !== 3
+        ) {
           console.error('pickerOffsets.scale must be an array of 3 numbers');
 
           return undefined;
         }
         for (const num of component.npcData.pickerOffsets.scale) {
-          if (!validateNumber(num, 'pickerOffsets.scale', 0, Number.MAX_VALUE)) {
+          if (
+            !validateNumber(num, 'pickerOffsets.scale', 0, Number.MAX_VALUE)
+          ) {
             return undefined;
           }
         }
@@ -112,7 +142,14 @@ export const convertNpcComponent = (
 
         // Validate variant
         if (skin.variant !== undefined) {
-          if (!validateNumber(skin.variant, `skinList[${index}].variant`, 0, Number.MAX_SAFE_INTEGER)) {
+          if (
+            !validateNumber(
+              skin.variant,
+              `skinList[${index}].variant`,
+              0,
+              Number.MAX_SAFE_INTEGER,
+            )
+          ) {
             return undefined;
           }
           skinData.variant = skin.variant;
@@ -120,7 +157,14 @@ export const convertNpcComponent = (
 
         // Validate markVariant
         if (skin.markVariant !== undefined) {
-          if (!validateNumber(skin.markVariant, `skinList[${index}].markVariant`, 0, Number.MAX_SAFE_INTEGER)) {
+          if (
+            !validateNumber(
+              skin.markVariant,
+              `skinList[${index}].markVariant`,
+              0,
+              Number.MAX_SAFE_INTEGER,
+            )
+          ) {
             return undefined;
           }
           skinData.mark_variant = skin.markVariant;
@@ -140,6 +184,6 @@ export const convertNpcComponent = (
   }
 
   return {
-    'minecraft:npc': result
+    'minecraft:npc': result,
   };
 };

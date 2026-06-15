@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createFriction } from '@artifex/pack/content/block/components/friction';
+import { createFriction } from '@ferolyte/pack/content/block/components/friction';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createFriction', () => {

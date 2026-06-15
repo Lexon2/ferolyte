@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { UseKineticWeaponBehavior } from '../../interfaces/behaviors/use-kinetic-weapon-behavior';
 import {
   validateBoolean,
@@ -29,28 +29,60 @@ export const convertUseKineticWeaponBehavior = (
   }
 
   if (behavior.speedMultiplier !== undefined) {
-    if (!validateNumber(behavior.speedMultiplier, 'speedMultiplier', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.speedMultiplier,
+        'speedMultiplier',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.speed_multiplier = behavior.speedMultiplier;
   }
 
   if (behavior.approachDistance !== undefined) {
-    if (!validateNumber(behavior.approachDistance, 'approachDistance', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.approachDistance,
+        'approachDistance',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.approach_distance = behavior.approachDistance;
   }
 
   if (behavior.repositionDistance !== undefined) {
-    if (!validateNumber(behavior.repositionDistance, 'repositionDistance', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.repositionDistance,
+        'repositionDistance',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.reposition_distance = behavior.repositionDistance;
   }
 
   if (behavior.cooldownDistance !== undefined) {
-    if (!validateNumber(behavior.cooldownDistance, 'cooldownDistance', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.cooldownDistance,
+        'cooldownDistance',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.cooldown_distance = behavior.cooldownDistance;
@@ -87,7 +119,15 @@ export const convertUseKineticWeaponBehavior = (
   }
 
   if (behavior.weaponReachMultiplier !== undefined) {
-    if (!validateNumber(behavior.weaponReachMultiplier, 'weaponReachMultiplier', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.weaponReachMultiplier,
+        'weaponReachMultiplier',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.weapon_reach_multiplier = behavior.weaponReachMultiplier;
@@ -109,21 +149,39 @@ export const convertUseKineticWeaponBehavior = (
   }
 
   if (behavior.maxPathTime !== undefined) {
-    if (!validateNumber(behavior.maxPathTime, 'maxPathTime', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.maxPathTime,
+        'maxPathTime',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.max_path_time = behavior.maxPathTime;
   }
 
   if (behavior.meleeFov !== undefined) {
-    if (!validateNumber(behavior.meleeFov, 'meleeFov', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(behavior.meleeFov, 'meleeFov', undefined, undefined, ctx)
+    ) {
       return undefined;
     }
     result.melee_fov = behavior.meleeFov;
   }
 
   if (behavior.minPathTime !== undefined) {
-    if (!validateNumber(behavior.minPathTime, 'minPathTime', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.minPathTime,
+        'minPathTime',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.min_path_time = behavior.minPathTime;
@@ -145,28 +203,54 @@ export const convertUseKineticWeaponBehavior = (
   }
 
   if (behavior.pathFailTimeIncrease !== undefined) {
-    if (!validateNumber(behavior.pathFailTimeIncrease, 'pathFailTimeIncrease', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.pathFailTimeIncrease,
+        'pathFailTimeIncrease',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.path_fail_time_increase = behavior.pathFailTimeIncrease;
   }
 
   if (behavior.pathInnerBoundary !== undefined) {
-    if (!validateNumber(behavior.pathInnerBoundary, 'pathInnerBoundary', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.pathInnerBoundary,
+        'pathInnerBoundary',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.path_inner_boundary = behavior.pathInnerBoundary;
   }
 
   if (behavior.pathOuterBoundary !== undefined) {
-    if (!validateNumber(behavior.pathOuterBoundary, 'pathOuterBoundary', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.pathOuterBoundary,
+        'pathOuterBoundary',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.path_outer_boundary = behavior.pathOuterBoundary;
   }
 
   if (behavior.requireCompletePath !== undefined) {
-    if (!validateBoolean(behavior.requireCompletePath, 'requireCompletePath', ctx)) {
+    if (
+      !validateBoolean(behavior.requireCompletePath, 'requireCompletePath', ctx)
+    ) {
       return undefined;
     }
     result.require_complete_path = behavior.requireCompletePath;
@@ -180,28 +264,60 @@ export const convertUseKineticWeaponBehavior = (
   }
 
   if (behavior.cooldownTime !== undefined) {
-    if (!validateNumber(behavior.cooldownTime, 'cooldownTime', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.cooldownTime,
+        'cooldownTime',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.cooldown_time = behavior.cooldownTime;
   }
 
   if (behavior.xMaxRotation !== undefined) {
-    if (!validateNumber(behavior.xMaxRotation, 'xMaxRotation', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.xMaxRotation,
+        'xMaxRotation',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.x_max_rotation = behavior.xMaxRotation;
   }
 
   if (behavior.yMaxHeadRotation !== undefined) {
-    if (!validateNumber(behavior.yMaxHeadRotation, 'yMaxHeadRotation', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.yMaxHeadRotation,
+        'yMaxHeadRotation',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.y_max_head_rotation = behavior.yMaxHeadRotation;
   }
 
   if (behavior.randomStopInterval !== undefined) {
-    if (!validateInteger(behavior.randomStopInterval, 'randomStopInterval', 0, undefined, ctx)) {
+    if (
+      !validateInteger(
+        behavior.randomStopInterval,
+        'randomStopInterval',
+        0,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.random_stop_interval = behavior.randomStopInterval;
@@ -215,7 +331,13 @@ export const convertUseKineticWeaponBehavior = (
   }
 
   if (behavior.hijackMountNavigation !== undefined) {
-    if (!validateBoolean(behavior.hijackMountNavigation, 'hijackMountNavigation', ctx)) {
+    if (
+      !validateBoolean(
+        behavior.hijackMountNavigation,
+        'hijackMountNavigation',
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.hijack_mount_navigation = behavior.hijackMountNavigation;

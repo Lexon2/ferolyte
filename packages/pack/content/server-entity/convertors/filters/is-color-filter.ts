@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { COLORS } from '../../constants/colors';
 import { IsColorFilter } from '../../interfaces/filters/is-color-filter';
@@ -11,11 +11,14 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsColorFilter = (
   filter: Partial<IsColorFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertWithInputValues({
+  return convertWithInputValues(
+    {
       ...filter,
-      test: 'is_color'
+      test: 'is_color',
     },
-    COLORS, ctx);
+    COLORS,
+    ctx,
+  );
 };

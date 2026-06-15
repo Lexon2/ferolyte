@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { NameableComponent } from '../../../interfaces/components/miscellaneous/nameable-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateBoolean } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertNameableComponent = (
   component: Partial<NameableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:nameable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -20,7 +23,9 @@ export const convertNameableComponent = (
 
   // Validate allowNameTagRenaming
   if (component.allowNameTagRenaming !== undefined) {
-    if (!validateBoolean(component.allowNameTagRenaming, 'allowNameTagRenaming')) {
+    if (
+      !validateBoolean(component.allowNameTagRenaming, 'allowNameTagRenaming')
+    ) {
       return undefined;
     }
     result.allow_name_tag_renaming = component.allowNameTagRenaming;
@@ -36,7 +41,10 @@ export const convertNameableComponent = (
 
   // Validate defaultTrigger
   if (component.defaultTrigger !== undefined) {
-    const convertedDefaultTrigger = convertTrigger(component.defaultTrigger, withFieldPath(ctx, 'defaultTrigger'));
+    const convertedDefaultTrigger = convertTrigger(
+      component.defaultTrigger,
+      withFieldPath(ctx, 'defaultTrigger'),
+    );
     if (!convertedDefaultTrigger) {
       return undefined;
     }
@@ -46,28 +54,33 @@ export const convertNameableComponent = (
   // Validate nameActions
   if (component.nameActions !== undefined) {
     if (Array.isArray(component.nameActions)) {
-      result.name_actions = component.nameActions.map(action => {
-        const actionResult: any = {};
+      result.name_actions = component.nameActions
+        .map((action) => {
+          const actionResult: any = {};
 
-        if (action.nameFilter !== undefined) {
-          if (typeof action.nameFilter !== 'string') {
-            console.error('nameFilter must be a string');
+          if (action.nameFilter !== undefined) {
+            if (typeof action.nameFilter !== 'string') {
+              console.error('nameFilter must be a string');
 
-            return undefined;
+              return undefined;
+            }
+            actionResult.name_filter = action.nameFilter;
           }
-          actionResult.name_filter = action.nameFilter;
-        }
 
-        if (action.onNamed !== undefined) {
-          const convertedOnNamed = convertTrigger(action.onNamed, withFieldPath(ctx, 'onNamed'));
-          if (!convertedOnNamed) {
-            return undefined;
+          if (action.onNamed !== undefined) {
+            const convertedOnNamed = convertTrigger(
+              action.onNamed,
+              withFieldPath(ctx, 'onNamed'),
+            );
+            if (!convertedOnNamed) {
+              return undefined;
+            }
+            actionResult.on_named = convertedOnNamed;
           }
-          actionResult.on_named = convertedOnNamed;
-        }
 
-        return actionResult;
-      }).filter(Boolean);
+          return actionResult;
+        })
+        .filter(Boolean);
     } else {
       const actionResult: any = {};
 
@@ -93,6 +106,6 @@ export const convertNameableComponent = (
   }
 
   return {
-    'minecraft:nameable': result
+    'minecraft:nameable': result,
   };
 };

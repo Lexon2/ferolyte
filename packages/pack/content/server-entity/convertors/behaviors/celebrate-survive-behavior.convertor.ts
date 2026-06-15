@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { CelebrateSurviveBehavior } from '../../interfaces/behaviors/celebrate-survive-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -11,7 +11,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertCelebrateSurviveBehavior = (
   behavior: Partial<CelebrateSurviveBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.celebrate_survive': any } | undefined => {
   if (!behavior) {
     return undefined;

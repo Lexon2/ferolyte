@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RandomSwimBehavior } from '../../interfaces/behaviors/random-swim-behavior';
-import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
+import {
+  validateNumber,
+  validateBoolean,
+  validateInteger,
+} from '../common/validation';
 
 /**
  * Converts a RandomSwimBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateNumber, validateBoolean, validateInteger } from '../common/vali
  */
 export const convertRandomSwimBehavior = (
   behavior: Partial<RandomSwimBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.random_swim': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -66,6 +70,6 @@ export const convertRandomSwimBehavior = (
   }
 
   return {
-    'minecraft:behavior.random_swim': result
+    'minecraft:behavior.random_swim': result,
   };
 };

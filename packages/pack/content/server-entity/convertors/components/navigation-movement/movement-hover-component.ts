@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MovementHoverComponent } from '../../../interfaces/components/navigation-movement/movement-hover-component';
 import { validateMaxTurn } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateMaxTurn } from '../../common/validation';
  */
 export const convertMovementHoverComponent = (
   component: Partial<MovementHoverComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:movement.hover': any } | undefined => {
   if (!component) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertMovementHoverComponent = (
   }
 
   return {
-    'minecraft:movement.hover': result
+    'minecraft:movement.hover': result,
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FollowTargetCaptainBehavior } from '../../interfaces/behaviors/follow-target-captain-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertFollowTargetCaptainBehavior = (
   behavior: Partial<FollowTargetCaptainBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.follow_target_captain': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -50,6 +50,6 @@ export const convertFollowTargetCaptainBehavior = (
   }
 
   return {
-    'minecraft:behavior.follow_target_captain': result
+    'minecraft:behavior.follow_target_captain': result,
   };
 };

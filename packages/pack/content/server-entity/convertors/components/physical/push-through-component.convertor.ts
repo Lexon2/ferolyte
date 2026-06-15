@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PushThroughComponent } from '../../../interfaces/components/physical/push-through-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertPushThroughComponent = (
   component: Partial<PushThroughComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:push_through': { value: number } } | undefined => {
   if (!component) {
     return undefined;
@@ -18,8 +18,8 @@ export const convertPushThroughComponent = (
   if (component.value === undefined) {
     return {
       'minecraft:push_through': {
-        value: 0.0 // Default value
-      }
+        value: 0.0, // Default value
+      },
     };
   }
 
@@ -29,7 +29,7 @@ export const convertPushThroughComponent = (
 
   return {
     'minecraft:push_through': {
-      value: component.value
-    }
+      value: component.value,
+    },
   };
 };

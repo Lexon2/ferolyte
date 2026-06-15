@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { InactivityTimerFilter } from '../../interfaces/filters/inactivity-timer-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertInactivityTimerFilter = (
   filter: Partial<InactivityTimerFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertNumberFilter({
-    ...filter,
-    test: 'inactivity_timer'
-  }, ctx);
+  return convertNumberFilter(
+    {
+      ...filter,
+      test: 'inactivity_timer',
+    },
+    ctx,
+  );
 };

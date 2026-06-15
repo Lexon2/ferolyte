@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { StrengthComponent } from '../../../interfaces/components/miscellaneous/strength-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertStrengthComponent = (
   component: StrengthComponent,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:strength': any } | undefined => {
   if (!component) {
     return undefined;
@@ -33,4 +33,3 @@ export const convertStrengthComponent = (
 
   return result;
 };
-

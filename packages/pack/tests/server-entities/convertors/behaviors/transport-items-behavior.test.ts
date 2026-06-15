@@ -1,8 +1,11 @@
 import { describe, it } from 'vitest';
 
-import { convertTransportItemsBehavior } from '@artifex/pack/content/server-entity/convertors/behaviors/transport-items-behavior.convertor';
+import { convertTransportItemsBehavior } from '@ferolyte/pack/content/server-entity/convertors/behaviors/transport-items-behavior.convertor';
 
-import { expectComponent, expectUndefined } from '../../helpers/assert-component';
+import {
+  expectComponent,
+  expectUndefined,
+} from '../../helpers/assert-component';
 
 describe('convertTransportItemsBehavior', () => {
   it('returns undefined when input is missing', () => {

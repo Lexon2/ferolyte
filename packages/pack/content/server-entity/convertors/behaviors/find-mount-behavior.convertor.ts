@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FindMountBehavior } from '../../interfaces/behaviors/find-mount-behavior';
-import { validateBoolean, validateInteger, validateNumber } from '../common/validation';
+import {
+  validateBoolean,
+  validateInteger,
+  validateNumber,
+} from '../common/validation';
 
 /**
  * Converts a FindMountBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateBoolean, validateInteger, validateNumber } from '../common/vali
  */
 export const convertFindMountBehavior = (
   behavior: Partial<FindMountBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.find_mount': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -76,6 +80,6 @@ export const convertFindMountBehavior = (
   }
 
   return {
-    'minecraft:behavior.find_mount': result
+    'minecraft:behavior.find_mount': result,
   };
 };

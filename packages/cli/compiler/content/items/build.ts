@@ -1,4 +1,4 @@
-import { ItemBuilder } from '@artifex/pack/content/item/item-builder';
+import { ItemBuilder } from '@ferolyte/pack/content/item/item-builder';
 import { ContentBuildOptions } from '../../actions/options';
 import { BUILD_CONTEXT } from '../../build-context';
 import { serializeJson } from '../utils/serialize-json';

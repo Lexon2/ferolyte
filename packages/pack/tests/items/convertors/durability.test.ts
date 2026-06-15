@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createDurability } from '@artifex/pack/content/item/convertors/components/durability';
+import { createDurability } from '@ferolyte/pack/content/item/convertors/components/durability';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createDurability', () => {
@@ -12,12 +12,17 @@ describe('createDurability', () => {
   });
 
   it('maps durability with damage chance', () => {
-    expectComponent(createDurability, {
-      maxDurability: 100,
-      damageChance: { min: 10, max: 50 },
-    }, 'minecraft:durability', {
-      max_durability: 100,
-      damage_chance: { min: 10, max: 50 },
-    });
+    expectComponent(
+      createDurability,
+      {
+        maxDurability: 100,
+        damageChance: { min: 10, max: 50 },
+      },
+      'minecraft:durability',
+      {
+        max_durability: 100,
+        damage_chance: { min: 10, max: 50 },
+      },
+    );
   });
 });

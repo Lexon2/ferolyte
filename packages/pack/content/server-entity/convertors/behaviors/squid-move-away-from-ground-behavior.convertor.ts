@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SquidMoveAwayFromGroundBehavior } from '../../interfaces/behaviors/squid-move-away-from-ground-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertSquidMoveAwayFromGroundBehavior = (
   behavior: Partial<SquidMoveAwayFromGroundBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.squid_move_away_from_ground': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertSquidMoveAwayFromGroundBehavior = (
   }
 
   return {
-    'minecraft:behavior.squid_move_away_from_ground': result
+    'minecraft:behavior.squid_move_away_from_ground': result,
   };
 };

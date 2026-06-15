@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createRecord } from '@artifex/pack/content/item/convertors/components/record';
+import { createRecord } from '@ferolyte/pack/content/item/convertors/components/record';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createRecord', () => {
@@ -16,14 +16,19 @@ describe('createRecord', () => {
   });
 
   it('maps valid record', () => {
-    expectComponent(createRecord, {
-      soundEvent: 'cat',
-      comparatorSignal: 5,
-      duration: 180,
-    }, 'minecraft:record', {
-      sound_event: 'cat',
-      comparator_signal: 5,
-      duration: 180,
-    });
+    expectComponent(
+      createRecord,
+      {
+        soundEvent: 'cat',
+        comparatorSignal: 5,
+        duration: 180,
+      },
+      'minecraft:record',
+      {
+        sound_event: 'cat',
+        comparator_signal: 5,
+        duration: 180,
+      },
+    );
   });
 });

@@ -4,8 +4,8 @@ import { buildBlockJson } from './block/build';
 import { buildClientEntityJson } from './client-entity/build';
 import { buildItemJson } from './items/build';
 import { buildServerEntityJson } from './server-entity/build';
-import { CONTENT_METADATA } from '@artifex/common/content/metadata';
-import { ContentBuilder } from '@artifex/common/content/interfaces/content-builder';
+import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
+import { ContentBuilder } from '@ferolyte/common/content/interfaces/content-builder';
 import { ContentBuildOptions } from '../actions/options';
 
 const contentFactory = {

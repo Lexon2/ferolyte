@@ -3,7 +3,7 @@ import { system } from '@minecraft/server';
 import {
   ArrayQueue,
   createArrayQueue,
-} from '@artifex/common/data-structures/array-queue';
+} from '@ferolyte/common/data-structures/array-queue';
 
 import { JOB_PRIORITY, JobPriority } from './priorities';
 

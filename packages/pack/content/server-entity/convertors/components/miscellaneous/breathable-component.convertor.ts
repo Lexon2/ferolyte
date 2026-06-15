@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BreathableComponent } from '../../../interfaces/components/miscellaneous/breathable-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertBreathableComponent = (
   component: Partial<BreathableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:breathable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +19,9 @@ export const convertBreathableComponent = (
 
   // Validate totalSupply
   if (component.totalSupply !== undefined) {
-    if (!validateNumber(component.totalSupply, 'totalSupply', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.totalSupply, 'totalSupply', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.total_supply = component.totalSupply;
@@ -27,7 +29,14 @@ export const convertBreathableComponent = (
 
   // Validate suffocateTime
   if (component.suffocateTime !== undefined) {
-    if (!validateNumber(component.suffocateTime, 'suffocateTime', -Number.MAX_VALUE, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.suffocateTime,
+        'suffocateTime',
+        -Number.MAX_VALUE,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.suffocate_time = component.suffocateTime;
@@ -35,7 +44,9 @@ export const convertBreathableComponent = (
 
   // Validate inhaleTime
   if (component.inhaleTime !== undefined) {
-    if (!validateNumber(component.inhaleTime, 'inhaleTime', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.inhaleTime, 'inhaleTime', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.inhale_time = component.inhaleTime;

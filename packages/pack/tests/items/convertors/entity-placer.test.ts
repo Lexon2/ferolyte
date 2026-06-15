@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createEntityPlacer } from '@artifex/pack/content/item/convertors/components/entity-placer';
+import { createEntityPlacer } from '@ferolyte/pack/content/item/convertors/components/entity-placer';
 import { expectUndefined } from '../helpers/assert-component';
 
 describe('createEntityPlacer', () => {
@@ -12,11 +12,13 @@ describe('createEntityPlacer', () => {
   });
 
   it('maps entity placer fields', () => {
-    expect(createEntityPlacer({
-      entity: 'minecraft:cow',
-      dispenseOn: ['stone'],
-      useOn: ['grass'],
-    })).toEqual({
+    expect(
+      createEntityPlacer({
+        entity: 'minecraft:cow',
+        dispenseOn: ['stone'],
+        useOn: ['grass'],
+      }),
+    ).toEqual({
       'minecraft:entity_placer': {
         entity: 'minecraft:cow',
         dispense_on: ['stone'],

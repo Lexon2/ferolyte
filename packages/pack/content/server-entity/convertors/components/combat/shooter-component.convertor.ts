@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ShooterComponent } from '../../../interfaces/components/combat/shooter-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertShooterComponent = (
   component: Partial<ShooterComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:shooter': any } | undefined => {
   if (!component) {
     return undefined;
@@ -20,7 +23,9 @@ export const convertShooterComponent = (
 
   // Validate auxVal
   if (component.auxVal !== undefined) {
-    if (!validateNumber(component.auxVal, 'auxVal', -1, Number.MAX_SAFE_INTEGER)) {
+    if (
+      !validateNumber(component.auxVal, 'auxVal', -1, Number.MAX_SAFE_INTEGER)
+    ) {
       return undefined;
     }
     result.aux_val = component.auxVal;
@@ -71,7 +76,14 @@ export const convertShooterComponent = (
 
       // Validate auxVal
       if (projectile.auxVal !== undefined) {
-        if (!validateNumber(projectile.auxVal, `projectiles[${index}].auxVal`, -1, Number.MAX_SAFE_INTEGER)) {
+        if (
+          !validateNumber(
+            projectile.auxVal,
+            `projectiles[${index}].auxVal`,
+            -1,
+            Number.MAX_SAFE_INTEGER,
+          )
+        ) {
           return undefined;
         }
         projectileData.aux_val = projectile.auxVal;
@@ -120,6 +132,6 @@ export const convertShooterComponent = (
   }
 
   return {
-    'minecraft:shooter': result
+    'minecraft:shooter': result,
   };
 };

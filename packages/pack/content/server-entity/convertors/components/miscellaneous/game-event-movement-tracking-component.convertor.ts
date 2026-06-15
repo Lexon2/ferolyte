@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { GameEventMovementTrackingComponent } from '../../../interfaces/components/miscellaneous/game-event-movement-tracking-component';
 
 /**
@@ -8,7 +8,7 @@ import { GameEventMovementTrackingComponent } from '../../../interfaces/componen
  */
 export const convertGameEventMovementTrackingComponent = (
   component: Partial<GameEventMovementTrackingComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:game_event_movement_tracking': any } | undefined => {
   if (!component) {
     return undefined;

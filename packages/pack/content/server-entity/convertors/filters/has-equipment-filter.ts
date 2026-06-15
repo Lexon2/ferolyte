@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './common/convert-filter-base';
 import { FILTER_EQUIPMENT_SLOTS } from '../../constants/equipment-slots';
 import { HasEquipmentFilter } from '../../interfaces/filters/has-equipment-filter';
@@ -13,20 +13,25 @@ import { validateAllowedValues } from '../common/validation';
  */
 export const convertHasEquipmentFilter = (
   filter: Partial<HasEquipmentFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
   }
 
   // Validate value property
-  if (filter.value === undefined || !validateString(filter.value, 'value', ctx)) {
+  if (
+    filter.value === undefined ||
+    !validateString(filter.value, 'value', ctx)
+  ) {
     return undefined;
   }
 
   // Validate optional domain property
-  if (filter.domain !== undefined &&
-      !validateAllowedValues(filter.domain, FILTER_EQUIPMENT_SLOTS, 'domain', ctx)) {
+  if (
+    filter.domain !== undefined &&
+    !validateAllowedValues(filter.domain, FILTER_EQUIPMENT_SLOTS, 'domain', ctx)
+  ) {
     return undefined;
   }
 
@@ -38,7 +43,7 @@ export const convertHasEquipmentFilter = (
   const result: MinecraftJsonFilter = {
     ...baseResult,
     test: 'has_equipment',
-    value: filter.value
+    value: filter.value,
   };
 
   if (filter.domain !== undefined) {

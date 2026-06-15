@@ -2,7 +2,7 @@ import {
   ContentDiagnosticContext,
   logContentError,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EntityFilters } from '../../interfaces/filters';
 import { entityFilterConvertorsFactory } from '../filter-convertors.factory';
 
@@ -35,10 +35,7 @@ export const convertEntityFilters = (
   if (Array.isArray(filters)) {
     result.all_of = filters
       .map((filter, index) =>
-        convertEntityFilters(
-          filter,
-          withFieldPath(filterCtx, `[${index}]`),
-        ),
+        convertEntityFilters(filter, withFieldPath(filterCtx, `[${index}]`)),
       )
       .filter(Boolean);
   } else if ('test' in filters && filters.test) {
@@ -56,17 +53,11 @@ export const convertEntityFilters = (
     }
   } else if ('allOf' in filters && Array.isArray(filters.allOf)) {
     result.all_of = filters.allOf.map((filter, index) =>
-      convertEntityFilters(
-        filter,
-        withFieldPath(filterCtx, `allOf[${index}]`),
-      ),
+      convertEntityFilters(filter, withFieldPath(filterCtx, `allOf[${index}]`)),
     );
   } else if ('anyOf' in filters && Array.isArray(filters.anyOf)) {
     result.any_of = filters.anyOf.map((filter, index) =>
-      convertEntityFilters(
-        filter,
-        withFieldPath(filterCtx, `anyOf[${index}]`),
-      ),
+      convertEntityFilters(filter, withFieldPath(filterCtx, `anyOf[${index}]`)),
     );
   } else if ('noneOf' in filters && Array.isArray(filters.noneOf)) {
     result.none_of = filters.noneOf.map((filter, index) =>

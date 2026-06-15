@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DoorInteractBehavior } from '../../interfaces/behaviors/door-interact-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertDoorInteractBehavior = (
   behavior: Partial<DoorInteractBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.door_interact': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertDoorInteractBehavior = (
   }
 
   return {
-    'minecraft:behavior.door_interact': result
+    'minecraft:behavior.door_interact': result,
   };
 };

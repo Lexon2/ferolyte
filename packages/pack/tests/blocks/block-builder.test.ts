@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BlockBuilder } from '@artifex/pack/content/block/block-builder';
+import { BlockBuilder } from '@ferolyte/pack/content/block/block-builder';
 import { minimalBlockConfig } from './helpers/fixtures';
 
 describe('BlockBuilder', () => {

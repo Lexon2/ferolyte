@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { GiveableComponent } from '../../../interfaces/components/interaction/giveable-component';
 import { validateStringArray } from '../../common/validation';
 import { validateNumberRange } from '../../common/validation';
@@ -10,7 +10,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertGiveableComponent = (
   component: Partial<GiveableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:giveable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -30,7 +30,14 @@ export const convertGiveableComponent = (
 
     // Validate cooldown
     if (component.triggers.cooldown !== undefined) {
-      if (!validateNumberRange(component.triggers.cooldown, 0.0, Number.MAX_VALUE, 'cooldown')) {
+      if (
+        !validateNumberRange(
+          component.triggers.cooldown,
+          0.0,
+          Number.MAX_VALUE,
+          'cooldown',
+        )
+      ) {
         return undefined;
       }
       triggersResult.cooldown = component.triggers.cooldown;
@@ -46,7 +53,10 @@ export const convertGiveableComponent = (
 
     // Validate onGive
     if (component.triggers.onGive !== undefined) {
-      if (typeof component.triggers.onGive !== 'object' || component.triggers.onGive === null) {
+      if (
+        typeof component.triggers.onGive !== 'object' ||
+        component.triggers.onGive === null
+      ) {
         console.error('onGive must be an object');
 
         return undefined;
@@ -58,6 +68,6 @@ export const convertGiveableComponent = (
   }
 
   return {
-    'minecraft:giveable': result
+    'minecraft:giveable': result,
   };
 };

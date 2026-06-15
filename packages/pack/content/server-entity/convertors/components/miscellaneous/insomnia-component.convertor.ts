@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { InsomniaComponent } from '../../../interfaces/components/miscellaneous/insomnia-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertInsomniaComponent = (
   component: Partial<InsomniaComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:insomnia': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +19,14 @@ export const convertInsomniaComponent = (
 
   // Validate daysUntilInsomnia
   if (component.daysUntilInsomnia !== undefined) {
-    if (!validateNumber(component.daysUntilInsomnia, 'daysUntilInsomnia', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.daysUntilInsomnia,
+        'daysUntilInsomnia',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.days_until_insomnia = component.daysUntilInsomnia;

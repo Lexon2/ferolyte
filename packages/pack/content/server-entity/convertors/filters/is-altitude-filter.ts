@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { IsAltitudeFilter } from '../../interfaces/filters/is-altitude-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsAltitudeFilter = (
   filter: Partial<IsAltitudeFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertNumberFilter({
-    ...filter,
-    test: 'is_altitude'
-  }, ctx);
+  return convertNumberFilter(
+    {
+      ...filter,
+      test: 'is_altitude',
+    },
+    ctx,
+  );
 };

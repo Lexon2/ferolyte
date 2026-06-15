@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ReflectProjectilesComponent } from '../../../interfaces/components/combat/reflect-projectiles-component';
 
 /**
@@ -8,7 +8,7 @@ import { ReflectProjectilesComponent } from '../../../interfaces/components/comb
  */
 export const convertReflectProjectilesComponent = (
   component: Partial<ReflectProjectilesComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:reflect_projectiles': any } | undefined => {
   if (!component) {
     return undefined;
@@ -18,7 +18,10 @@ export const convertReflectProjectilesComponent = (
 
   // Validate azimuthAngle
   if (component.azimuthAngle !== undefined) {
-    if (typeof component.azimuthAngle !== 'string' && typeof component.azimuthAngle !== 'number') {
+    if (
+      typeof component.azimuthAngle !== 'string' &&
+      typeof component.azimuthAngle !== 'number'
+    ) {
       console.error('azimuthAngle must be a string or number');
 
       return undefined;
@@ -28,7 +31,10 @@ export const convertReflectProjectilesComponent = (
 
   // Validate elevationAngle
   if (component.elevationAngle !== undefined) {
-    if (typeof component.elevationAngle !== 'string' && typeof component.elevationAngle !== 'number') {
+    if (
+      typeof component.elevationAngle !== 'string' &&
+      typeof component.elevationAngle !== 'number'
+    ) {
       console.error('elevationAngle must be a string or number');
 
       return undefined;
@@ -44,7 +50,9 @@ export const convertReflectProjectilesComponent = (
       return undefined;
     }
 
-    if (!component.reflectedProjectiles.every(item => typeof item === 'string')) {
+    if (
+      !component.reflectedProjectiles.every((item) => typeof item === 'string')
+    ) {
       console.error('reflectedProjectiles must be an array of strings');
 
       return undefined;
@@ -55,7 +63,10 @@ export const convertReflectProjectilesComponent = (
 
   // Validate reflectionScale
   if (component.reflectionScale !== undefined) {
-    if (typeof component.reflectionScale !== 'string' && typeof component.reflectionScale !== 'number') {
+    if (
+      typeof component.reflectionScale !== 'string' &&
+      typeof component.reflectionScale !== 'number'
+    ) {
       console.error('reflectionScale must be a string or number');
 
       return undefined;
@@ -74,6 +85,6 @@ export const convertReflectProjectilesComponent = (
   }
 
   return {
-    'minecraft:reflect_projectiles': result
+    'minecraft:reflect_projectiles': result,
   };
 };

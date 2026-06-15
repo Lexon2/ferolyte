@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   InteractComponent,
   InteractComponentInteraction,
@@ -18,7 +21,7 @@ import {
  */
 export const convertInteractComponent = (
   component: Partial<InteractComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:interact': any } | undefined => {
   if (!component) {
     return undefined;
@@ -143,7 +146,10 @@ export const convertInteractComponent = (
 
         // Validate onInteract
         if (interaction.onInteract !== undefined) {
-          const convertedOnInteract = convertTrigger(interaction.onInteract, withFieldPath(ctx, 'onInteract'));
+          const convertedOnInteract = convertTrigger(
+            interaction.onInteract,
+            withFieldPath(ctx, 'onInteract'),
+          );
           if (!convertedOnInteract) {
             return undefined;
           }

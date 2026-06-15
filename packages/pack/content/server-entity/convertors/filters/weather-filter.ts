@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { WEATHER_TYPES } from '../../constants/weather-type';
 import { WeatherFilter } from '../../interfaces/filters/weather-filter';
@@ -10,14 +10,18 @@ import { WeatherFilter } from '../../interfaces/filters/weather-filter';
  */
 export const convertWeatherFilter = (
   filter: Partial<WeatherFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): ReturnType<typeof convertWithInputValues> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
   }
 
-  return convertWithInputValues({
-    ...filter,
-    test: 'weather'
-  }, WEATHER_TYPES, ctx);
+  return convertWithInputValues(
+    {
+      ...filter,
+      test: 'weather',
+    },
+    WEATHER_TYPES,
+    ctx,
+  );
 };

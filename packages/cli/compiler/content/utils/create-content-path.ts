@@ -1,4 +1,4 @@
-import { ContentMetadata } from '@artifex/common/content/metadata';
+import { ContentMetadata } from '@ferolyte/common/content/metadata';
 
 import { BUILD_CONTEXT } from '../../build-context';
 import { CreateContentOutputPathOptions } from './content-suffix-registry';

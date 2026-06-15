@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RandomStrollBehavior } from '../../interfaces/behaviors/random-stroll-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertRandomStrollBehavior = (
   behavior: Partial<RandomStrollBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.random_stroll': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -58,6 +58,6 @@ export const convertRandomStrollBehavior = (
   }
 
   return {
-    'minecraft:behavior.random_stroll': result
+    'minecraft:behavior.random_stroll': result,
   };
 };

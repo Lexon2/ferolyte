@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RaidGardenBehavior } from '../../interfaces/behaviors/raid-garden-behavior';
-import { validateInteger, validateNumber, validateStringArray } from '../common/validation';
+import {
+  validateInteger,
+  validateNumber,
+  validateStringArray,
+} from '../common/validation';
 
 /**
  * Converts a RaidGardenBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateInteger, validateNumber, validateStringArray } from '../common/
  */
 export const convertRaidGardenBehavior = (
   behavior: Partial<RaidGardenBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.raid_garden': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -98,6 +102,6 @@ export const convertRaidGardenBehavior = (
   }
 
   return {
-    'minecraft:behavior.raid_garden': result
+    'minecraft:behavior.raid_garden': result,
   };
 };

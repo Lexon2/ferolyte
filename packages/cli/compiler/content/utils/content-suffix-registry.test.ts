@@ -2,7 +2,7 @@ import { join } from 'path';
 
 import { describe, expect, it, beforeEach } from 'vitest';
 
-import { CONTENT_METADATA } from '@artifex/common/content/metadata';
+import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
 import { BUILD_CONTEXT } from '../../build-context';
 import { buildContentSuffixRegistry } from './content-suffix-registry';
 
@@ -20,21 +20,27 @@ describe('buildContentSuffixRegistry', () => {
   it('matches default legacy suffixes', () => {
     const registry = buildContentSuffixRegistry();
 
-    expect(registry.resolveContentFile('/packs/BP/blocks/stone.block.ts')).toEqual({
+    expect(
+      registry.resolveContentFile('/packs/BP/blocks/stone.block.ts'),
+    ).toEqual({
       contentType: 'block',
       metadata: CONTENT_METADATA.BLOCK,
       inputSuffix: 'block',
     });
-    expect(registry.resolveContentFile('/packs/BP/items/apple.item.ts')).toEqual({
+    expect(
+      registry.resolveContentFile('/packs/BP/items/apple.item.ts'),
+    ).toEqual({
       contentType: 'item',
       metadata: CONTENT_METADATA.ITEM,
       inputSuffix: 'item',
     });
-    expect(registry.resolveContentFile('/packs/BP/entities/cow.se.ts')).toEqual({
-      contentType: 'server-entity',
-      metadata: CONTENT_METADATA.SERVER_ENTITY,
-      inputSuffix: 'se',
-    });
+    expect(registry.resolveContentFile('/packs/BP/entities/cow.se.ts')).toEqual(
+      {
+        contentType: 'server-entity',
+        metadata: CONTENT_METADATA.SERVER_ENTITY,
+        inputSuffix: 'se',
+      },
+    );
     expect(registry.resolveContentFile('/packs/RP/entity/cow.ce.ts')).toEqual({
       contentType: 'client-entity',
       metadata: CONTENT_METADATA.CLIENT_ENTITY,
@@ -47,12 +53,12 @@ describe('buildContentSuffixRegistry', () => {
       block: ['b', 'bl'],
     });
 
-    expect(registry.resolveContentFile('/packs/BP/blocks/stone.b.ts')?.inputSuffix).toBe(
-      'b',
-    );
-    expect(registry.resolveContentFile('/packs/BP/blocks/stone.bl.ts')?.inputSuffix).toBe(
-      'bl',
-    );
+    expect(
+      registry.resolveContentFile('/packs/BP/blocks/stone.b.ts')?.inputSuffix,
+    ).toBe('b');
+    expect(
+      registry.resolveContentFile('/packs/BP/blocks/stone.bl.ts')?.inputSuffix,
+    ).toBe('bl');
   });
 
   it('prefers the longest matching suffix', () => {
@@ -61,11 +67,12 @@ describe('buildContentSuffixRegistry', () => {
     });
 
     expect(
-      registry.resolveContentFile('/packs/BP/entities/cow.e.bp.ts')?.inputSuffix,
+      registry.resolveContentFile('/packs/BP/entities/cow.e.bp.ts')
+        ?.inputSuffix,
     ).toBe('e.bp');
-    expect(registry.resolveContentFile('/packs/BP/entities/cow.bp.ts')?.inputSuffix).toBe(
-      'bp',
-    );
+    expect(
+      registry.resolveContentFile('/packs/BP/entities/cow.bp.ts')?.inputSuffix,
+    ).toBe('bp');
   });
 
   it('normalizes suffix values with .ts prefix', () => {
@@ -73,7 +80,9 @@ describe('buildContentSuffixRegistry', () => {
       block: ['b.ts'],
     });
 
-    expect(registry.isArtifexContentFile('/packs/BP/blocks/stone.b.ts')).toBe(true);
+    expect(registry.isFerolyteContentFile('/packs/BP/blocks/stone.b.ts')).toBe(
+      true,
+    );
   });
 
   it('throws when the same suffix is configured for multiple types', () => {

@@ -3,7 +3,7 @@ import { parse as parseJsonc } from 'jsonc-parser';
 
 import { BUILD_CONTEXT } from '../build-context';
 import { writeFileByPath } from '../content/utils/write-file-by-path';
-import { ArtifexFileKind } from './types';
+import { FerolyteFileKind } from './types';
 import { createBeforeFileWriteEvent, emitBeforeFileWrite } from './plugin-host';
 
 export interface WriteWithPluginsResult {
@@ -15,10 +15,7 @@ const minifyJsonData = (
   destinationPath: string,
   data: string | Buffer,
 ): string | Buffer => {
-  if (
-    !BUILD_CONTEXT.PACKS.MINIFY_JSON ||
-    !destinationPath.endsWith('.json')
-  ) {
+  if (!BUILD_CONTEXT.PACKS.MINIFY_JSON || !destinationPath.endsWith('.json')) {
     return data;
   }
 
@@ -40,7 +37,7 @@ export const writeWithPlugins = async (
   sourcePath: string,
   destinationPath: string,
   data: string | Buffer,
-  kind: ArtifexFileKind,
+  kind: FerolyteFileKind,
   encoding: BufferEncoding = 'utf-8',
 ): Promise<WriteWithPluginsResult> => {
   const event = createBeforeFileWriteEvent(

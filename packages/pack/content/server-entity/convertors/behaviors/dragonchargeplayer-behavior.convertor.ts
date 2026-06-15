@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DragonChargePlayerBehavior } from '../../interfaces/behaviors/dragonchargeplayer-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertDragonChargePlayerBehavior = (
   behavior: Partial<DragonChargePlayerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.dragonchargeplayer': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -35,10 +35,16 @@ export const convertDragonChargePlayerBehavior = (
 
   // Validate continueChargeThresholdTime
   if (behavior.continueChargeThresholdTime !== undefined) {
-    if (!validateNumber(behavior.continueChargeThresholdTime, 'continueChargeThresholdTime')) {
+    if (
+      !validateNumber(
+        behavior.continueChargeThresholdTime,
+        'continueChargeThresholdTime',
+      )
+    ) {
       return undefined;
     }
-    result.continue_charge_threshold_time = behavior.continueChargeThresholdTime;
+    result.continue_charge_threshold_time =
+      behavior.continueChargeThresholdTime;
   }
 
   // Validate flightSpeed
@@ -51,8 +57,11 @@ export const convertDragonChargePlayerBehavior = (
 
   // Validate targetZone
   if (behavior.targetZone !== undefined) {
-    if (!Array.isArray(behavior.targetZone) || behavior.targetZone.length !== 2 ||
-        !behavior.targetZone.every(n => validateNumber(n, 'targetZone'))) {
+    if (
+      !Array.isArray(behavior.targetZone) ||
+      behavior.targetZone.length !== 2 ||
+      !behavior.targetZone.every((n) => validateNumber(n, 'targetZone'))
+    ) {
       console.error('targetZone must be an array of exactly 2 numbers');
 
       return undefined;
@@ -69,6 +78,6 @@ export const convertDragonChargePlayerBehavior = (
   }
 
   return {
-    'minecraft:behavior.dragonchargeplayer': result
+    'minecraft:behavior.dragonchargeplayer': result,
   };
 };

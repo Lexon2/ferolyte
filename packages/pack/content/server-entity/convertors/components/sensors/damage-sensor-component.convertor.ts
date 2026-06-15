@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   DamageSensorComponent,
   DamageTrigger,
@@ -30,14 +30,30 @@ const convertDamageTrigger = (
   }
 
   if (trigger.damageModifier !== undefined) {
-    if (!validateNumber(trigger.damageModifier, 'damageModifier', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        trigger.damageModifier,
+        'damageModifier',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.damage_modifier = trigger.damageModifier;
   }
 
   if (trigger.damageMultiplier !== undefined) {
-    if (!validateNumber(trigger.damageMultiplier, 'damageMultiplier', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        trigger.damageMultiplier,
+        'damageMultiplier',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.damage_multiplier = trigger.damageMultiplier;
@@ -69,7 +85,9 @@ const convertDamageTrigger = (
   }
 
   if (trigger.onDamageSoundEvent !== undefined) {
-    if (!validateSoundEvent(trigger.onDamageSoundEvent, 'onDamageSoundEvent', ctx)) {
+    if (
+      !validateSoundEvent(trigger.onDamageSoundEvent, 'onDamageSoundEvent', ctx)
+    ) {
       return undefined;
     }
     result.on_damage_sound_event = trigger.onDamageSoundEvent;

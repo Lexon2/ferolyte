@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FollowCaravanBehavior } from '../../interfaces/behaviors/follow-caravan-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -13,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertFollowCaravanBehavior = (
   behavior: Partial<FollowCaravanBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.follow_caravan': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -58,6 +58,6 @@ export const convertFollowCaravanBehavior = (
   }
 
   return {
-    'minecraft:behavior.follow_caravan': result
+    'minecraft:behavior.follow_caravan': result,
   };
 };

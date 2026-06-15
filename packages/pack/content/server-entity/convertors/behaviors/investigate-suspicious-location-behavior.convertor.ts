@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { InvestigateSuspiciousLocationBehavior } from '../../interfaces/behaviors/investigate-suspicious-location-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,8 +9,10 @@ import { validateNumber } from '../common/validation';
  */
 export const convertInvestigateSuspiciousLocationBehavior = (
   behavior: Partial<InvestigateSuspiciousLocationBehavior>,
-  ctx?: ContentDiagnosticContext
-): { 'minecraft:behavior.investigate_suspicious_location': any } | undefined => {
+  ctx?: ContentDiagnosticContext,
+):
+  | { 'minecraft:behavior.investigate_suspicious_location': any }
+  | undefined => {
   if (!behavior) {
     return undefined;
   }
@@ -42,6 +44,6 @@ export const convertInvestigateSuspiciousLocationBehavior = (
   }
 
   return {
-    'minecraft:behavior.investigate_suspicious_location': result
+    'minecraft:behavior.investigate_suspicious_location': result,
   };
 };

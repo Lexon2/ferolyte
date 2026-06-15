@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { InputGroundControlledComponent } from '../../../interfaces/components/control/input-ground-controlled-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertInputGroundControlledComponent = (
   component: Partial<InputGroundControlledComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:input_ground_controlled': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

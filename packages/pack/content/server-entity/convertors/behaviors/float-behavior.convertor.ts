@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FloatBehavior } from '../../interfaces/behaviors/float-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateBoolean, validateNumber } from '../common/validation';
  */
 export const convertFloatBehavior = (
   behavior: Partial<FloatBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.float': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertFloatBehavior = (
   }
 
   return {
-    'minecraft:behavior.float': result
+    'minecraft:behavior.float': result,
   };
 };

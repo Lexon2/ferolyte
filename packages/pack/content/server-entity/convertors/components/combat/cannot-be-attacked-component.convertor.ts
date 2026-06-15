@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { CannotBeAttackedComponent } from '../../../interfaces/components/combat/cannot-be-attacked-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertCannotBeAttackedComponent = (
   component: Partial<CannotBeAttackedComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:cannot_be_attacked': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

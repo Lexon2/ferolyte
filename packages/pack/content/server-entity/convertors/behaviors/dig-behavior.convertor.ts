@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DigBehavior } from '../../interfaces/behaviors/dig-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateBoolean, validateNumber } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateBoolean, validateNumber } from '../common/validation';
  */
 export const convertDigBehavior = (
   behavior: Partial<DigBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.dig': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -64,7 +67,12 @@ export const convertDigBehavior = (
 
   // Validate suspicionIsDisturbance
   if (behavior.suspicionIsDisturbance !== undefined) {
-    if (!validateBoolean(behavior.suspicionIsDisturbance, 'suspicionIsDisturbance')) {
+    if (
+      !validateBoolean(
+        behavior.suspicionIsDisturbance,
+        'suspicionIsDisturbance',
+      )
+    ) {
       return undefined;
     }
     result.suspicion_is_disturbance = behavior.suspicionIsDisturbance;
@@ -72,7 +80,12 @@ export const convertDigBehavior = (
 
   // Validate vibrationIsDisturbance
   if (behavior.vibrationIsDisturbance !== undefined) {
-    if (!validateBoolean(behavior.vibrationIsDisturbance, 'vibrationIsDisturbance')) {
+    if (
+      !validateBoolean(
+        behavior.vibrationIsDisturbance,
+        'vibrationIsDisturbance',
+      )
+    ) {
       return undefined;
     }
     result.vibration_is_disturbance = behavior.vibrationIsDisturbance;
@@ -80,7 +93,10 @@ export const convertDigBehavior = (
 
   // Validate onStart
   if (behavior.onStart !== undefined) {
-    const onStart = convertTrigger(behavior.onStart, withFieldPath(ctx, 'onStart'));
+    const onStart = convertTrigger(
+      behavior.onStart,
+      withFieldPath(ctx, 'onStart'),
+    );
     if (!onStart) {
       return undefined;
     }
@@ -88,6 +104,6 @@ export const convertDigBehavior = (
   }
 
   return {
-    'minecraft:behavior.dig': result
+    'minecraft:behavior.dig': result,
   };
 };

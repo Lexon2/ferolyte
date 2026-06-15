@@ -3,7 +3,7 @@ import {
   createDefaultItemTexturePath,
   normalizeTexturePath,
   resolveItemIcon,
-} from '@artifex/pack/content/item/utils/resolve-item-icon';
+} from '@ferolyte/pack/content/item/utils/resolve-item-icon';
 
 describe('normalizeTexturePath', () => {
   it('removes .png suffix', () => {
@@ -21,7 +21,7 @@ describe('normalizeTexturePath', () => {
 
 describe('createDefaultItemTexturePath', () => {
   it('builds path from namespace and identifier name part', () => {
-    expect(createDefaultItemTexturePath('artifex:test', 'arfex_test')).toBe(
+    expect(createDefaultItemTexturePath('ferolyte:test', 'arfex_test')).toBe(
       'textures/arfex/test/items/test',
     );
   });
@@ -34,32 +34,32 @@ describe('resolveItemIcon', () => {
     expect(
       resolveItemIcon(
         'textures/arfex/test/items/test',
-        'artifex:test',
+        'ferolyte:test',
         packConfig,
       ),
     ).toEqual({
       textureEntries: [
         {
-          key: 'artifex:test',
+          key: 'ferolyte:test',
           textures: 'textures/arfex/test/items/test',
         },
       ],
-      iconTextures: { default: 'artifex:test' },
+      iconTextures: { default: 'ferolyte:test' },
     });
   });
 
   it('uses auto path when icon equals identifier', () => {
-    expect(resolveItemIcon('artifex:test', 'artifex:test', packConfig)).toEqual(
-      {
-        textureEntries: [
-          {
-            key: 'artifex:test',
-            textures: 'textures/arfex/test/items/test',
-          },
-        ],
-        iconTextures: { default: 'artifex:test' },
-      },
-    );
+    expect(
+      resolveItemIcon('ferolyte:test', 'ferolyte:test', packConfig),
+    ).toEqual({
+      textureEntries: [
+        {
+          key: 'ferolyte:test',
+          textures: 'textures/arfex/test/items/test',
+        },
+      ],
+      iconTextures: { default: 'ferolyte:test' },
+    });
   });
 
   it('registers multiple atlas entries for texture variants', () => {
@@ -71,23 +71,23 @@ describe('resolveItemIcon', () => {
             damaged: 'textures/arfex/test/items/test_damaged.png',
           },
         },
-        'artifex:test',
+        'ferolyte:test',
         packConfig,
       ),
     ).toEqual({
       textureEntries: [
         {
-          key: 'artifex:test',
+          key: 'ferolyte:test',
           textures: 'textures/arfex/test/items/test',
         },
         {
-          key: 'artifex:test_damaged',
+          key: 'ferolyte:test_damaged',
           textures: 'textures/arfex/test/items/test_damaged',
         },
       ],
       iconTextures: {
-        default: 'artifex:test',
-        damaged: 'artifex:test_damaged',
+        default: 'ferolyte:test',
+        damaged: 'ferolyte:test_damaged',
       },
     });
   });

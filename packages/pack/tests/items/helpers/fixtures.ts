@@ -1,4 +1,4 @@
-import { ItemConfig } from '@artifex/pack/content/item/interfaces/item-config';
+import { ItemConfig } from '@ferolyte/pack/content/item/interfaces/item-config';
 
 export const minimalItemConfig = (
   overrides: Partial<ItemConfig> = {},

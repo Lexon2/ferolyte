@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { DIFFICULTIES } from '../../constants/difficulties';
 import { IsDifficultyFilter } from '../../interfaces/filters/is-difficulty-filter';
@@ -11,11 +11,14 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsDifficultyFilter = (
   filter: Partial<IsDifficultyFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertWithInputValues({
+  return convertWithInputValues(
+    {
       ...filter,
-      test: 'is_difficulty'
+      test: 'is_difficulty',
     },
-    DIFFICULTIES, ctx);
+    DIFFICULTIES,
+    ctx,
+  );
 };

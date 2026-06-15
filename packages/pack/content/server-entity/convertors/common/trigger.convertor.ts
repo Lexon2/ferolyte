@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertEntityFilters } from './filters.convertor';
 import { ENTITY_EVENT_TARGETS } from '../../constants/event-target';
 import { EntityEventTrigger } from '../../interfaces/trigger';

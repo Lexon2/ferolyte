@@ -16,14 +16,17 @@ const tempRoots: string[] = [];
 const createTempRoot = async (): Promise<string> => {
   const root = join(
     tmpdir(),
-    `artifex-content-output-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    `ferolyte-content-output-${Date.now()}-${Math.random().toString(16).slice(2)}`,
   );
   await mkdir(root, { recursive: true });
   tempRoots.push(root);
   return root;
 };
 
-const createOutputFile = async (root: string, name: string): Promise<string> => {
+const createOutputFile = async (
+  root: string,
+  name: string,
+): Promise<string> => {
   const filePath = join(root, name);
   await writeFile(filePath, '{}', 'utf-8');
   return filePath;

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FindCoverBehavior } from '../../interfaces/behaviors/find-cover-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertFindCoverBehavior = (
   behavior: Partial<FindCoverBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.find_cover': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertFindCoverBehavior = (
   }
 
   return {
-    'minecraft:behavior.find_cover': result
+    'minecraft:behavior.find_cover': result,
   };
 };

@@ -16,8 +16,8 @@ export const createPackageJsonTemplate = ({
     private: true,
     type: 'module',
     scripts: {
-      build: 'artifex run',
-      dev: 'artifex watch development',
+      build: 'ferolyte run',
+      dev: 'ferolyte watch development',
     },
     dependencies: {
       '@minecraft/server': `^${minecraftVersions.server}`,
@@ -25,7 +25,7 @@ export const createPackageJsonTemplate = ({
       '@minecraft/vanilla-data': `^${minecraftVersions.vanillaData}`,
     },
     devDependencies: {
-      '@artifex/cli': `^${cliVersion}`,
+      '@ferolyte/cli': `^${cliVersion}`,
       typescript: '^5.3.3',
     },
   };

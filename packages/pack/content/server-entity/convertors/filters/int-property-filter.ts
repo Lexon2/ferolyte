@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './common/convert-filter-base';
 import { IntPropertyFilter } from '../../interfaces/filters/int-property-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -11,7 +11,7 @@ import { validateString, validateNumber } from '../common/validation';
  */
 export const convertIntPropertyFilter = (
   filter: Partial<IntPropertyFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
@@ -22,7 +22,10 @@ export const convertIntPropertyFilter = (
     return undefined;
   }
 
-  if (filter.value === undefined || !validateNumber(filter.value, 'value', ctx)) {
+  if (
+    filter.value === undefined ||
+    !validateNumber(filter.value, 'value', ctx)
+  ) {
     return undefined;
   }
 
@@ -35,7 +38,7 @@ export const convertIntPropertyFilter = (
     ...baseResult,
     test: 'int_property',
     domain: filter.domain,
-    value: filter.value
+    value: filter.value,
   };
 
   return result;

@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createDestructibleByExplosion } from '@artifex/pack/content/block/components/destructible-by-explosion';
+import { createDestructibleByExplosion } from '@ferolyte/pack/content/block/components/destructible-by-explosion';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createDestructibleByExplosion', () => {
@@ -8,7 +8,12 @@ describe('createDestructibleByExplosion', () => {
   });
 
   it('maps boolean value', () => {
-    expectComponent(createDestructibleByExplosion, false, 'minecraft:destructible_by_explosion', false);
+    expectComponent(
+      createDestructibleByExplosion,
+      false,
+      'minecraft:destructible_by_explosion',
+      false,
+    );
   });
 
   it('returns undefined for negative explosion resistance', () => {
@@ -16,8 +21,13 @@ describe('createDestructibleByExplosion', () => {
   });
 
   it('maps explosion resistance', () => {
-    expectComponent(createDestructibleByExplosion, { explosionResistance: 6 }, 'minecraft:destructible_by_explosion', {
-      explosion_resistance: 6,
-    });
+    expectComponent(
+      createDestructibleByExplosion,
+      { explosionResistance: 6 },
+      'minecraft:destructible_by_explosion',
+      {
+        explosion_resistance: 6,
+      },
+    );
   });
 });

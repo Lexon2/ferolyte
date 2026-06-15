@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateCustomComponentIds } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateCustomComponentIds } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates a custom_components component for Minecraft items

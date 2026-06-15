@@ -1,5 +1,5 @@
-import { ArtifexConfig } from './interfaces/config';
+import { FerolyteConfig } from './interfaces/config';
 
-export const defineArtifexConfig = (config: ArtifexConfig) => {
+export const defineFerolyteConfig = (config: FerolyteConfig) => {
   return config;
 };

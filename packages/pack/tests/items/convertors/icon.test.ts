@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createIcon } from '@artifex/pack/content/item/convertors/components/icon';
+import { createIcon } from '@ferolyte/pack/content/item/convertors/components/icon';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createIcon', () => {
@@ -12,16 +12,27 @@ describe('createIcon', () => {
   });
 
   it('maps string icon texture key', () => {
-    expectComponent(createIcon, 'artifex:test', 'minecraft:icon', {
-      textures: { default: 'artifex:test' },
+    expectComponent(createIcon, 'ferolyte:test', 'minecraft:icon', {
+      textures: { default: 'ferolyte:test' },
     });
   });
 
   it('maps textures object with atlas keys', () => {
-    expectComponent(createIcon, {
-      textures: { default: 'artifex:test', damaged: 'artifex:test_damaged' },
-    }, 'minecraft:icon', {
-      textures: { default: 'artifex:test', damaged: 'artifex:test_damaged' },
-    });
+    expectComponent(
+      createIcon,
+      {
+        textures: {
+          default: 'ferolyte:test',
+          damaged: 'ferolyte:test_damaged',
+        },
+      },
+      'minecraft:icon',
+      {
+        textures: {
+          default: 'ferolyte:test',
+          damaged: 'ferolyte:test_damaged',
+        },
+      },
+    );
   });
 });

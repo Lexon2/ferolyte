@@ -1,43 +1,43 @@
-# @artifex/cli
+# @ferolyte/cli
 
-Artifex CLI and pack compiler for Minecraft Bedrock addons.
+Ferolyte CLI and pack compiler for Minecraft Bedrock addons.
 
 Compile TypeScript content definitions to Minecraft JSON, bundle scripts, copy pack assets, and watch for changes with live reload in the game.
 
 ## Installation
 
 ```bash
-npm install -D @artifex/cli
+npm install -D @ferolyte/cli
 ```
 
-This installs `@artifex/common` and `@artifex/pack` as dependencies. The `artifex` binary is available via `npx artifex` or npm scripts.
+This installs `@ferolyte/common` and `@ferolyte/pack` as dependencies. The `ferolyte` binary is available via `npx ferolyte` or npm scripts.
 
 **Requirements:** Node.js >= 18
 
 ## CLI commands
 
-| Command                               | Description                                                          |
-| ------------------------------------- | -------------------------------------------------------------------- |
-| `artifex init <project-name> <alias>` | Scaffold a new Artifex project in `./<project-name>/`                |
-| `artifex run [profile]`               | Build packs and scripts once; optionally create a `.mcaddon` archive |
-| `artifex watch [profile]`             | Watch packs and scripts; rebuild incrementally on file changes       |
+| Command                                | Description                                                          |
+| -------------------------------------- | -------------------------------------------------------------------- |
+| `ferolyte init <project-name> <alias>` | Scaffold a new Ferolyte project in `./<project-name>/`               |
+| `ferolyte run [profile]`               | Build packs and scripts once; optionally create a `.mcaddon` archive |
+| `ferolyte watch [profile]`             | Watch packs and scripts; rebuild incrementally on file changes       |
 
 `run` and `watch` accept shared flags:
 
-| Flag               | Default   | Description                            |
-| ------------------ | --------- | -------------------------------------- |
-| `[profile]`        | `default` | Profile name from `artifex.config.mts` |
-| `--debug`          | `true`    | Show build progress and timing         |
-| `--no-debug`       | —         | Disable build progress output          |
-| `--diagnostics`    | `true`    | Enable content validation diagnostics  |
-| `--no-diagnostics` | —         | Disable validation diagnostics         |
+| Flag               | Default   | Description                             |
+| ------------------ | --------- | --------------------------------------- |
+| `[profile]`        | `default` | Profile name from `ferolyte.config.mts` |
+| `--debug`          | `true`    | Show build progress and timing          |
+| `--no-debug`       | —         | Disable build progress output           |
+| `--diagnostics`    | `true`    | Enable content validation diagnostics   |
+| `--no-diagnostics` | —         | Disable validation diagnostics          |
 
 `init` flags:
 
-| Flag           | Default | Description                              |
-| -------------- | ------- | ---------------------------------------- |
-| `--install`    | `true`  | Run `npm install` in the new project     |
-| `--no-install` | —       | Skip dependency installation after init  |
+| Flag           | Default | Description                             |
+| -------------- | ------- | --------------------------------------- |
+| `--install`    | `true`  | Run `npm install` in the new project    |
+| `--no-install` | —       | Skip dependency installation after init |
 
 ## Usage examples
 
@@ -45,38 +45,38 @@ This installs `@artifex/common` and `@artifex/pack` as dependencies. The `artife
 
 ```bash
 # Scaffold a new project (runs npm install by default)
-npx artifex init my-addon cool
+npx ferolyte init my-addon addon-alias
 cd my-addon
 npm run dev
 
 # Scaffold without installing dependencies
-npx artifex init my-addon cool --no-install
+npx ferolyte init my-addon addon-alias --no-install
 
 # Build with the default profile
-npx artifex run
+npx ferolyte run
 
 # Build a named profile
-npx artifex run development
+npx ferolyte run development
 
 # Watch for changes
-npx artifex watch development
+npx ferolyte watch development
 
 # Quiet build (no progress output)
-npx artifex run --no-debug
+npx ferolyte run --no-debug
 ```
 
 ### Configuration
 
-Create `artifex.config.mts` in your project root:
+Create `ferolyte.config.mts` in your project root:
 
 ```typescript
-import { defineArtifexConfig } from '@artifex/cli/compiler/config/define-config';
+import { defineFerolyteConfig } from '@ferolyte/cli/compiler/config/define-config';
 import {
-  defineArtifexPlugin,
-  ArtifexPluginApiVersion,
-} from '@artifex/cli/compiler/plugins/define-plugin';
+  defineFerolytePlugin,
+  FerolytePluginApiVersion,
+} from '@ferolyte/cli/compiler/plugins/define-plugin';
 
-export default defineArtifexConfig({
+export default defineFerolyteConfig({
   profiles: {
     default: {
       packs: {
@@ -98,9 +98,9 @@ export default defineArtifexConfig({
     },
   },
   plugins: [
-    defineArtifexPlugin({
+    defineFerolytePlugin({
       name: 'my-plugin',
-      apiVersion: ArtifexPluginApiVersion.V1_0_0,
+      apiVersion: FerolytePluginApiVersion.V1_0_0,
       afterLoad({ files }) {
         console.log(`Loaded ${files.content.length} content files`);
       },
@@ -111,7 +111,7 @@ export default defineArtifexConfig({
 
 ### Configuration
 
-Multi-profile setup via `artifex.config.mts` and `defineArtifexConfig()`:
+Multi-profile setup via `ferolyte.config.mts` and `defineFerolyteConfig()`:
 
 - **Pack settings** — alias, namespace, input/output directories, min game version, JSON minification, `.mcaddon` archive, content file suffixes
 - **Script settings** — entry file, minification
@@ -123,15 +123,15 @@ Multi-profile setup via `artifex.config.mts` and `defineArtifexConfig()`:
 ```json
 {
   "scripts": {
-    "build": "artifex run",
-    "dev": "artifex watch development"
+    "build": "ferolyte run",
+    "dev": "ferolyte watch development"
   }
 }
 ```
 
 ### Watch and reload workflow
 
-1. Run `artifex watch development`
+1. Run `ferolyte watch development`
 2. In Minecraft Bedrock, connect to the reload server: `/connect localhost:8080`
 3. Edit content files or scripts — packs rebuild and the client reloads automatically
 
@@ -139,7 +139,7 @@ Multi-profile setup via `artifex.config.mts` and `defineArtifexConfig()`:
 
 ```
 my-addon/
-├── artifex.config.mts
+├── ferolyte.config.mts
 ├── package.json
 ├── tsconfig.json
 ├── tsconfig.scripts.json
@@ -163,11 +163,11 @@ my-addon/
     └── COOL_RP/
 ```
 
-`artifex init` generates manifests, lang files, and script entry paths aligned with the esbuild output (`scripts/{namespace}/index.js`).
+`ferolyte init` generates manifests, lang files, and script entry paths aligned with the esbuild output (`scripts/{namespace}/index.js`).
 
 ### Content compilation
 
-Bundles and imports TypeScript content files, then serializes them to vanilla JSON via `@artifex/pack` builders.
+Bundles and imports TypeScript content files, then serializes them to vanilla JSON via `@ferolyte/pack` builders.
 
 Default input suffixes:
 
@@ -212,7 +212,7 @@ Content files must `export default` a `ContentBuilder` or an array of builders.
 
 ### Plugin system
 
-Define plugins with `defineArtifexPlugin()` and hook into the build lifecycle:
+Define plugins with `defineFerolytePlugin()` and hook into the build lifecycle:
 
 | Hook              | When                                                           |
 | ----------------- | -------------------------------------------------------------- |

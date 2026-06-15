@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BreakDoorBehavior } from '../../interfaces/behaviors/break-door-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertBreakDoorBehavior = (
   behavior: Partial<BreakDoorBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.break_door': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertBreakDoorBehavior = (
   }
 
   return {
-    'minecraft:behavior.break_door': result
+    'minecraft:behavior.break_door': result,
   };
 };

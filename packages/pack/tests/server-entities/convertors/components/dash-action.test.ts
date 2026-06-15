@@ -1,8 +1,11 @@
 import { describe, it } from 'vitest';
 
-import { convertDashActionComponent } from '@artifex/pack/content/server-entity/convertors/components/control/dash-action-component.convertor';
+import { convertDashActionComponent } from '@ferolyte/pack/content/server-entity/convertors/components/control/dash-action-component.convertor';
 
-import { expectComponent, expectUndefined } from '../../helpers/assert-component';
+import {
+  expectComponent,
+  expectUndefined,
+} from '../../helpers/assert-component';
 
 describe('convertDashActionComponent', () => {
   it('returns undefined when input is missing', () => {

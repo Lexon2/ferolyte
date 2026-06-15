@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RotationLockedToVehicleComponent } from '../../../interfaces/components/control/rotation-locked-to-vehicle-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -10,7 +10,9 @@ import { convertStateObject } from '../../common/state-object';
 export const convertRotationLockedToVehicleComponent = (
   component: Partial<RotationLockedToVehicleComponent>,
   ctx?: ContentDiagnosticContext,
-): { 'minecraft:rotation_locked_to_vehicle': Record<string, never> } | undefined => {
+):
+  | { 'minecraft:rotation_locked_to_vehicle': Record<string, never> }
+  | undefined => {
   const result = convertStateObject(component);
   if (!result) {
     return undefined;

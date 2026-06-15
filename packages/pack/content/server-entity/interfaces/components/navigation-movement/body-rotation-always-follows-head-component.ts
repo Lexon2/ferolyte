@@ -1,4 +1,4 @@
-import { StateObject } from '@artifex/pack/content/common/interfaces/state-object';
+import { StateObject } from '@ferolyte/pack/content/common/interfaces/state-object';
 
 /**
  * Causes the entity's body to always be automatically rotated to align with the entity's head.

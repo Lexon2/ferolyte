@@ -1,14 +1,14 @@
 import { ItemUseAfterEvent, world } from '@minecraft/server';
 
-import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
-import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
+import { BasicEventListener } from '@ferolyte/events/common/basic-event.listener';
+import { BasicEventRouter } from '@ferolyte/events/common/basic-event.router';
 import {
   EVENT_ROUTE_GLOBAL_ID,
   EventRoutePrefix,
-} from '@artifex/events/common/constants';
-import { EventRouteController } from '@artifex/events/common/interfaces';
-import { EventAction, EventActionData } from '@artifex/events/common/types';
-import { ArtifexEventUtils } from '@artifex/events/common/utils';
+} from '@ferolyte/events/common/constants';
+import { EventRouteController } from '@ferolyte/events/common/interfaces';
+import { EventAction, EventActionData } from '@ferolyte/events/common/types';
+import { FerolyteEventUtils } from '@ferolyte/events/common/utils';
 
 import {
   ItemUseAfterEventRouteOptions,
@@ -18,8 +18,7 @@ import {
 /// Private Types ///
 
 interface Context
-  extends Omit<ItemUseAfterEvent, 'source'>,
-    ItemUseEventWithPlayerContext {}
+  extends Omit<ItemUseAfterEvent, 'source'>, ItemUseEventWithPlayerContext {}
 
 type Action = EventAction<Context>;
 
@@ -63,7 +62,7 @@ export const itemUse = (
     },
   });
 
-  return ArtifexEventUtils.initializeEvent<
+  return FerolyteEventUtils.initializeEvent<
     Context,
     ItemUseAfterEventRouteOptions
   >(listener, router, action, routes);

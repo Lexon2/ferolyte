@@ -1,7 +1,15 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PlayBehavior } from '../../interfaces/behaviors/play-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
-import { validateInteger, validateNumber, validatePercentage, validateVector3 } from '../common/validation';
+import {
+  validateInteger,
+  validateNumber,
+  validatePercentage,
+  validateVector3,
+} from '../common/validation';
 
 /**
  * Converts a PlayBehavior to Minecraft format
@@ -10,7 +18,7 @@ import { validateInteger, validateNumber, validatePercentage, validateVector3 } 
  */
 export const convertPlayBehavior = (
   behavior: Partial<PlayBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.play': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -74,7 +82,9 @@ export const convertPlayBehavior = (
 
   // Validate maxPlayDurationSeconds
   if (behavior.maxPlayDurationSeconds !== undefined) {
-    if (!validateNumber(behavior.maxPlayDurationSeconds, 'maxPlayDurationSeconds')) {
+    if (
+      !validateNumber(behavior.maxPlayDurationSeconds, 'maxPlayDurationSeconds')
+    ) {
       return undefined;
     }
     result.max_play_duration_seconds = behavior.maxPlayDurationSeconds;
@@ -82,7 +92,13 @@ export const convertPlayBehavior = (
 
   // Validate randomPosSearchHeight
   if (behavior.randomPosSearchHeight !== undefined) {
-    if (!validateInteger(behavior.randomPosSearchHeight, 'randomPosSearchHeight', 1)) {
+    if (
+      !validateInteger(
+        behavior.randomPosSearchHeight,
+        'randomPosSearchHeight',
+        1,
+      )
+    ) {
       return undefined;
     }
     result.random_pos_search_height = behavior.randomPosSearchHeight;
@@ -90,13 +106,15 @@ export const convertPlayBehavior = (
 
   // Validate randomPosSearchRange
   if (behavior.randomPosSearchRange !== undefined) {
-    if (!validateInteger(behavior.randomPosSearchRange, 'randomPosSearchRange', 1)) {
+    if (
+      !validateInteger(behavior.randomPosSearchRange, 'randomPosSearchRange', 1)
+    ) {
       return undefined;
     }
     result.random_pos_search_range = behavior.randomPosSearchRange;
   }
 
   return {
-    'minecraft:behavior.play': result
+    'minecraft:behavior.play': result,
   };
 };

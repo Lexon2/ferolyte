@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { StompTurtleEggBehavior } from '../../interfaces/behaviors/stomp-turtle-egg-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertStompTurtleEggBehavior = (
   behavior: Partial<StompTurtleEggBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.stomp_turtle_egg': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -66,6 +66,6 @@ export const convertStompTurtleEggBehavior = (
   }
 
   return {
-    'minecraft:behavior.stomp_turtle_egg': result
+    'minecraft:behavior.stomp_turtle_egg': result,
   };
 };

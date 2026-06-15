@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ScaleComponent } from '../../../interfaces/components/physical/scale-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertScaleComponent = (
   component: Partial<ScaleComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:scale': any } | undefined => {
   if (!component) {
     return undefined;
@@ -18,8 +18,8 @@ export const convertScaleComponent = (
   if (component.value === undefined) {
     return {
       'minecraft:scale': {
-        value: 0.0 // Default value
-      }
+        value: 0.0, // Default value
+      },
     };
   }
 
@@ -29,7 +29,7 @@ export const convertScaleComponent = (
 
   return {
     'minecraft:scale': {
-      value: component.value
-    }
+      value: component.value,
+    },
   };
 };

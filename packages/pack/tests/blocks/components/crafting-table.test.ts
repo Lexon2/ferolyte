@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createCraftingTable } from '@artifex/pack/content/block/components/crafting-table';
+import { createCraftingTable } from '@ferolyte/pack/content/block/components/crafting-table';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createCraftingTable', () => {
@@ -12,12 +12,17 @@ describe('createCraftingTable', () => {
   });
 
   it('maps crafting table fields', () => {
-    expectComponent(createCraftingTable, {
-      craftingTags: ['crafting_table'],
-      tableName: 'Custom Table',
-    }, 'minecraft:crafting_table', {
-      crafting_tags: ['crafting_table'],
-      table_name: 'Custom Table',
-    });
+    expectComponent(
+      createCraftingTable,
+      {
+        craftingTags: ['crafting_table'],
+        tableName: 'Custom Table',
+      },
+      'minecraft:crafting_table',
+      {
+        crafting_tags: ['crafting_table'],
+        table_name: 'Custom Table',
+      },
+    );
   });
 });

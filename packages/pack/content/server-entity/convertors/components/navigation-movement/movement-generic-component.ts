@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MovementGenericComponent } from '../../../interfaces/components/navigation-movement/movement-generic-component';
 import { validateMaxTurn } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateMaxTurn } from '../../common/validation';
  */
 export const convertMovementGenericComponent = (
   component: Partial<MovementGenericComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:movement.generic': any } | undefined => {
   if (!component) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertMovementGenericComponent = (
   }
 
   return {
-    'minecraft:movement.generic': result
+    'minecraft:movement.generic': result,
   };
 };

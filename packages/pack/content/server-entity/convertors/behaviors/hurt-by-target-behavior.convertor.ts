@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { HurtByTargetBehavior } from '../../interfaces/behaviors/hurt-by-target-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateBoolean, validateNumber } from '../common/validation';
@@ -13,7 +13,7 @@ import { validateBoolean, validateNumber } from '../common/validation';
  */
 export const convertHurtByTargetBehavior = (
   behavior: Partial<HurtByTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.hurt_by_target': any } | undefined => {
   if (!behavior) {
     return undefined;

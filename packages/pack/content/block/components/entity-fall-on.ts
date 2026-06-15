@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNonNegativeNumber } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNonNegativeNumber } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates an entity_fall_on component for Minecraft blocks
@@ -7,7 +7,9 @@ import { validateNonNegativeNumber } from '@artifex/common/content/validation/co
 export const createEntityFallOn = (
   options?: { minFallDistance?: number },
   ctx?: ContentDiagnosticContext,
-): { 'minecraft:entity_fall_on': { min_fall_distance?: number } } | undefined => {
+):
+  | { 'minecraft:entity_fall_on': { min_fall_distance?: number } }
+  | undefined => {
   if (!options) {
     return undefined;
   }

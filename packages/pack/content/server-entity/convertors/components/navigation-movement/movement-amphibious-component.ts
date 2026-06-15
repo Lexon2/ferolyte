@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MovementAmphibiousComponent } from '../../../interfaces/components/navigation-movement/movement-amphibious-component';
 import { validateMaxTurn } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateMaxTurn } from '../../common/validation';
  */
 export const convertMovementAmphibiousComponent = (
   component: Partial<MovementAmphibiousComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:movement.amphibious': any } | undefined => {
   if (!component) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertMovementAmphibiousComponent = (
   }
 
   return {
-    'minecraft:movement.amphibious': result
+    'minecraft:movement.amphibious': result,
   };
 };

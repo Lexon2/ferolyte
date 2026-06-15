@@ -1,16 +1,31 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ENTITY_EVENT_TARGETS } from '../../constants/event-target';
-import { SummonEntityBehavior, SummonChoice, SummonSequence } from '../../interfaces/behaviors/summon-entity-behavior';
+import {
+  SummonEntityBehavior,
+  SummonChoice,
+  SummonSequence,
+} from '../../interfaces/behaviors/summon-entity-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
-import { validateNumber, validateBoolean, validateSoundEvent, validateHexColor, validateInteger, validateString } from '../common/validation';
-
+import {
+  validateNumber,
+  validateBoolean,
+  validateSoundEvent,
+  validateHexColor,
+  validateInteger,
+  validateString,
+} from '../common/validation';
 
 /**
  * Converts a SummonSequence to Minecraft format
  * @param sequence The sequence to convert
  * @returns The sequence in Minecraft format or undefined if validation fails
  */
-const convertSummonSequence = (sequence: Partial<SummonSequence>): any | undefined => {
+const convertSummonSequence = (
+  sequence: Partial<SummonSequence>,
+): any | undefined => {
   if (!sequence) {
     return undefined;
   }
@@ -67,7 +82,10 @@ const convertSummonSequence = (sequence: Partial<SummonSequence>): any | undefin
 
   // Validate shape
   if (sequence.shape !== undefined) {
-    if (!validateString(sequence.shape, 'shape') || !['line', 'circle'].includes(sequence.shape)) {
+    if (
+      !validateString(sequence.shape, 'shape') ||
+      !['line', 'circle'].includes(sequence.shape)
+    ) {
       return undefined;
     }
     result.shape = sequence.shape;
@@ -165,7 +183,10 @@ const convertSummonChoice = (
 
   // Validate filters
   if (choice.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(choice.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      choice.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -190,7 +211,10 @@ const convertSummonChoice = (
 
   // Validate particleColor
   if (choice.particleColor !== undefined) {
-    if (!validateHexColor(choice.particleColor, 'particleColor') || !validateInteger(choice.particleColor, 'particleCount')) {
+    if (
+      !validateHexColor(choice.particleColor, 'particleColor') ||
+      !validateInteger(choice.particleColor, 'particleCount')
+    ) {
       return undefined;
     }
     result.particle_color = choice.particleColor;
@@ -198,7 +222,9 @@ const convertSummonChoice = (
 
   // Validate sequence
   if (choice.sequence !== undefined) {
-    const convertedSequence = choice.sequence.map(convertSummonSequence).filter(Boolean);
+    const convertedSequence = choice.sequence
+      .map(convertSummonSequence)
+      .filter(Boolean);
     if (convertedSequence.length !== choice.sequence.length) {
       return undefined;
     }
@@ -231,7 +257,7 @@ const convertSummonChoice = (
  */
 export const convertSummonEntityBehavior = (
   behavior: Partial<SummonEntityBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.summon_entity': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -251,7 +277,10 @@ export const convertSummonEntityBehavior = (
   if (behavior.summonChoices !== undefined) {
     const convertedChoices = behavior.summonChoices
       .map((choice, index) =>
-        convertSummonChoice(choice, withFieldPath(ctx, `summonChoices[${index}]`)),
+        convertSummonChoice(
+          choice,
+          withFieldPath(ctx, `summonChoices[${index}]`),
+        ),
       )
       .filter(Boolean);
     if (convertedChoices.length !== behavior.summonChoices.length) {
@@ -261,6 +290,6 @@ export const convertSummonEntityBehavior = (
   }
 
   return {
-    'minecraft:behavior.summon_entity': result
+    'minecraft:behavior.summon_entity': result,
   };
 };
