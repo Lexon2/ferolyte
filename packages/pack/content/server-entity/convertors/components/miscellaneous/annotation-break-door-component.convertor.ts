@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { AnnotationBreakDoorComponent } from '../../../interfaces/components/miscellaneous/annotation-break-door-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertAnnotationBreakDoorComponent = (
   component: Partial<AnnotationBreakDoorComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:annotation.break_door': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +19,9 @@ export const convertAnnotationBreakDoorComponent = (
 
   // Validate breakTime
   if (component.breakTime !== undefined) {
-    if (!validateNumber(component.breakTime, 'breakTime', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.breakTime, 'breakTime', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.break_time = component.breakTime;

@@ -5,4 +5,4 @@ export interface MainScriptTemplateInput {
 export const createMainScriptTemplate = ({
   displayName,
 }: MainScriptTemplateInput): string =>
-  `console.warn(\`[${displayName}] Artifex project started\`);\n`;
+  `console.warn(\`[${displayName}] Ferolyte project started\`);\n`;

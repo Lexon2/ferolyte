@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { VerticalMovementActionComponent } from '../../../interfaces/components/control/vertical-movement-action-component';
 import { validateNumber } from '../../common/validation';
 
@@ -10,7 +10,9 @@ import { validateNumber } from '../../common/validation';
 export const convertVerticalMovementActionComponent = (
   component: Partial<VerticalMovementActionComponent>,
   ctx?: ContentDiagnosticContext,
-): { 'minecraft:vertical_movement_action': Record<string, unknown> } | undefined => {
+):
+  | { 'minecraft:vertical_movement_action': Record<string, unknown> }
+  | undefined => {
   if (!component) {
     return undefined;
   }
@@ -18,7 +20,15 @@ export const convertVerticalMovementActionComponent = (
   const result: Record<string, unknown> = {};
 
   if (component.verticalVelocity !== undefined) {
-    if (!validateNumber(component.verticalVelocity, 'verticalVelocity', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        component.verticalVelocity,
+        'verticalVelocity',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.vertical_velocity = component.verticalVelocity;

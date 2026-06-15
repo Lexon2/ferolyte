@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createBlockPlacer } from '@artifex/pack/content/item/convertors/components/block-placer';
+import { createBlockPlacer } from '@ferolyte/pack/content/item/convertors/components/block-placer';
 import { expectUndefined } from '../helpers/assert-component';
 
 describe('createBlockPlacer', () => {
@@ -12,12 +12,14 @@ describe('createBlockPlacer', () => {
   });
 
   it('maps required and optional fields', () => {
-    expect(createBlockPlacer({
-      block: 'test:stone',
-      useOn: ['dirt'],
-      replaceBlockItem: true,
-      alignedPlacement: false,
-    })).toEqual({
+    expect(
+      createBlockPlacer({
+        block: 'test:stone',
+        useOn: ['dirt'],
+        replaceBlockItem: true,
+        alignedPlacement: false,
+      }),
+    ).toEqual({
       'minecraft:block_placer': {
         block: 'test:stone',
         use_on: [{ tags: 'dirt' }],

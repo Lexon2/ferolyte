@@ -33,7 +33,7 @@ export const createBehaviorPackManifestTemplate = ({
       {
         type: 'script',
         uuid: uuids.behaviorPackScriptModule,
-        description: 'Artifex script resources',
+        description: 'Ferolyte script resources',
         language: 'javascript',
         version: [1, 0, 0],
         entry: createManifestScriptEntry(namespace),

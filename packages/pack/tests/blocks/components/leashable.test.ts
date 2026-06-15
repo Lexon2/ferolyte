@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createLeashable } from '@artifex/pack/content/block/components/leashable';
+import { createLeashable } from '@ferolyte/pack/content/block/components/leashable';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createLeashable', () => {
@@ -12,8 +12,13 @@ describe('createLeashable', () => {
   });
 
   it('maps offset', () => {
-    expectComponent(createLeashable, { offset: [0, 0.5, 0] }, 'minecraft:leashable', {
-      offset: [0, 0.5, 0],
-    });
+    expectComponent(
+      createLeashable,
+      { offset: [0, 0.5, 0] },
+      'minecraft:leashable',
+      {
+        offset: [0, 0.5, 0],
+      },
+    );
   });
 });

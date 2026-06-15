@@ -1,13 +1,13 @@
-import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
-import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
-import { EventAction, EventActionData } from '@artifex/events/common/types';
+import { BasicEventListener } from '@ferolyte/events/common/basic-event.listener';
+import { BasicEventRouter } from '@ferolyte/events/common/basic-event.router';
+import { EventAction, EventActionData } from '@ferolyte/events/common/types';
 import {
   CartesianInput,
   CartesianProduct,
   cartesianMerge,
-} from '@artifex/common/object/cartesian-merge';
+} from '@ferolyte/common/object/cartesian-merge';
 
-import { ArtifexEventUtils } from '.';
+import { FerolyteEventUtils } from '.';
 import { EVENT_ROUTE_GLOBAL_ID } from '../constants';
 import { EventActionPointer, EventRouteController } from '../interfaces';
 
@@ -38,7 +38,7 @@ export const initializeEvent = <
 
     for (let i = 0; i < routes.length; i++) {
       // @TODO: Maybe there's a better way to handle types here
-      const routeId = ArtifexEventUtils.generateRouteId(
+      const routeId = FerolyteEventUtils.generateRouteId(
         routes[i] as CartesianInput,
       );
       pointers.push(router.add(routeId, action));

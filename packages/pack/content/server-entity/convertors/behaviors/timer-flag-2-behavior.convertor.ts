@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 
 import { convertTimerFlag1Behavior } from './timer-flag-1-behavior.convertor';
 import { TimerFlag2Behavior } from '../../interfaces/behaviors/timer-flag-2-behavior';
@@ -10,7 +10,7 @@ import { TimerFlag2Behavior } from '../../interfaces/behaviors/timer-flag-2-beha
  */
 export const convertTimerFlag2Behavior = (
   behavior: Partial<TimerFlag2Behavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.timer_flag_2': any } | undefined => {
   const converted = convertTimerFlag1Behavior(behavior);
   if (!converted) {
@@ -18,6 +18,7 @@ export const convertTimerFlag2Behavior = (
   }
 
   return {
-    'minecraft:behavior.timer_flag_2': converted['minecraft:behavior.timer_flag_1']
+    'minecraft:behavior.timer_flag_2':
+      converted['minecraft:behavior.timer_flag_1'],
   };
 };

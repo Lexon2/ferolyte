@@ -1,6 +1,6 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertStringNumberFilter } from './common/convert-string-number';
-import { IsSkinIdFilter } from "../../interfaces/filters/is-skin-id-filter";
+import { IsSkinIdFilter } from '../../interfaces/filters/is-skin-id-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
 
 /**
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsSkinIdFilter = (
   filter: Partial<IsSkinIdFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertStringNumberFilter({
-    ...filter,
-    test: 'is_skin_id'
-  }, ctx);
+  return convertStringNumberFilter(
+    {
+      ...filter,
+      test: 'is_skin_id',
+    },
+    ctx,
+  );
 };

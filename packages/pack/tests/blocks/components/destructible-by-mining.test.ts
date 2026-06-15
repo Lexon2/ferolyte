@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createDestructibleByMining } from '@artifex/pack/content/block/components/destructible-by-mining';
+import { createDestructibleByMining } from '@ferolyte/pack/content/block/components/destructible-by-mining';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createDestructibleByMining', () => {
@@ -8,7 +8,12 @@ describe('createDestructibleByMining', () => {
   });
 
   it('maps boolean value', () => {
-    expectComponent(createDestructibleByMining, true, 'minecraft:destructible_by_mining', true);
+    expectComponent(
+      createDestructibleByMining,
+      true,
+      'minecraft:destructible_by_mining',
+      true,
+    );
   });
 
   it('returns undefined for negative secondsToDestroy', () => {
@@ -16,12 +21,21 @@ describe('createDestructibleByMining', () => {
   });
 
   it('maps mining fields', () => {
-    expectComponent(createDestructibleByMining, {
-      secondsToDestroy: 2,
-      itemSpecificSpeeds: [{ item: 'minecraft:iron_pickaxe', destroySpeed: 5 }],
-    }, 'minecraft:destructible_by_mining', {
-      seconds_to_destroy: 2,
-      item_specific_speeds: [{ item: 'minecraft:iron_pickaxe', destroy_speed: 5 }],
-    });
+    expectComponent(
+      createDestructibleByMining,
+      {
+        secondsToDestroy: 2,
+        itemSpecificSpeeds: [
+          { item: 'minecraft:iron_pickaxe', destroySpeed: 5 },
+        ],
+      },
+      'minecraft:destructible_by_mining',
+      {
+        seconds_to_destroy: 2,
+        item_specific_speeds: [
+          { item: 'minecraft:iron_pickaxe', destroy_speed: 5 },
+        ],
+      },
+    );
   });
 });

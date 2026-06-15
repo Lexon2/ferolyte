@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ControlledByPlayerBehavior } from '../../interfaces/behaviors/controlled-by-player-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertControlledByPlayerBehavior = (
   behavior: Partial<ControlledByPlayerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.controlled_by_player': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -35,7 +35,12 @@ export const convertControlledByPlayerBehavior = (
 
   // Validate fractionalRotationLimit
   if (behavior.fractionalRotationLimit !== undefined) {
-    if (!validateNumber(behavior.fractionalRotationLimit, 'fractionalRotationLimit')) {
+    if (
+      !validateNumber(
+        behavior.fractionalRotationLimit,
+        'fractionalRotationLimit',
+      )
+    ) {
       return undefined;
     }
     result.fractional_rotation_limit = behavior.fractionalRotationLimit;
@@ -43,13 +48,15 @@ export const convertControlledByPlayerBehavior = (
 
   // Validate mountSpeedMultiplier
   if (behavior.mountSpeedMultiplier !== undefined) {
-    if (!validateNumber(behavior.mountSpeedMultiplier, 'mountSpeedMultiplier')) {
+    if (
+      !validateNumber(behavior.mountSpeedMultiplier, 'mountSpeedMultiplier')
+    ) {
       return undefined;
     }
     result.mount_speed_multiplier = behavior.mountSpeedMultiplier;
   }
 
   return {
-    'minecraft:behavior.controlled_by_player': result
+    'minecraft:behavior.controlled_by_player': result,
   };
 };

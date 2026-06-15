@@ -1,10 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateBooleanValue,
   validateNonNegativeNumber,
   validateNumber,
   validateString,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 interface UseModifiersOptions {
   useDuration: number;

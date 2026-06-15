@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TakeFlowerBehavior } from '../../interfaces/behaviors/take-flower-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber, validateVector3 } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber, validateVector3 } from '../common/validation';
  */
 export const convertTakeFlowerBehavior = (
   behavior: Partial<TakeFlowerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.take_flower': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -36,7 +39,10 @@ export const convertTakeFlowerBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -92,6 +98,6 @@ export const convertTakeFlowerBehavior = (
   }
 
   return {
-    'minecraft:behavior.take_flower': result
+    'minecraft:behavior.take_flower': result,
   };
 };

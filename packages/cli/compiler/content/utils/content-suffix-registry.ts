@@ -3,10 +3,10 @@ import { basename, join } from 'path';
 import {
   CONTENT_METADATA,
   ContentMetadata,
-} from '@artifex/common/content/metadata';
+} from '@ferolyte/common/content/metadata';
 import {
-  ArtifexContentSuffixConfig,
-  ArtifexContentTypeKey,
+  FerolyteContentSuffixConfig,
+  FerolyteContentTypeKey,
 } from '../../config/interfaces/config';
 import { BUILD_CONTEXT } from '../../build-context';
 import { formatFileName } from './format-file-name';
@@ -14,7 +14,7 @@ import { formatFileName } from './format-file-name';
 const SUFFIX_PATTERN = /^[a-z0-9._-]+$/;
 
 export const DEFAULT_CONTENT_SUFFIXES: Record<
-  ArtifexContentTypeKey,
+  FerolyteContentTypeKey,
   string[]
 > = {
   block: ['block'],
@@ -24,7 +24,7 @@ export const DEFAULT_CONTENT_SUFFIXES: Record<
 };
 
 const CONTENT_TYPE_TO_METADATA: Record<
-  ArtifexContentTypeKey,
+  FerolyteContentTypeKey,
   ContentMetadata
 > = {
   block: CONTENT_METADATA.BLOCK,
@@ -34,7 +34,7 @@ const CONTENT_TYPE_TO_METADATA: Record<
 };
 
 const CONTENT_TYPE_OUTPUT_DIRS: Record<
-  ArtifexContentTypeKey,
+  FerolyteContentTypeKey,
   { pack: 'BP' | 'RP'; subdir: string }
 > = {
   block: { pack: 'BP', subdir: 'blocks' },
@@ -44,25 +44,25 @@ const CONTENT_TYPE_OUTPUT_DIRS: Record<
 };
 
 interface ContentSuffixRule {
-  contentType: ArtifexContentTypeKey;
+  contentType: FerolyteContentTypeKey;
   suffix: string;
   metadata: ContentMetadata;
 }
 
 export interface ResolvedContentFile {
-  contentType: ArtifexContentTypeKey;
+  contentType: FerolyteContentTypeKey;
   metadata: ContentMetadata;
   inputSuffix: string;
 }
 
 export interface CreateContentOutputPathOptions {
   identifier?: string;
-  contentType?: ArtifexContentTypeKey;
+  contentType?: FerolyteContentTypeKey;
 }
 
 export interface ContentSuffixRegistry {
   resolveContentFile(filePath: string): ResolvedContentFile | undefined;
-  isArtifexContentFile(filePath: string): boolean;
+  isFerolyteContentFile(filePath: string): boolean;
   createContentOutputPath(
     filePath: string,
     options?: CreateContentOutputPathOptions,
@@ -83,7 +83,10 @@ const normalizeSuffix = (suffix: string): string => {
   return normalized;
 };
 
-const validateSuffix = (suffix: string, contentType: ArtifexContentTypeKey) => {
+const validateSuffix = (
+  suffix: string,
+  contentType: FerolyteContentTypeKey,
+) => {
   if (suffix.length === 0) {
     throw new Error(
       `Invalid content suffix for "${contentType}": suffix must not be empty`,
@@ -98,8 +101,8 @@ const validateSuffix = (suffix: string, contentType: ArtifexContentTypeKey) => {
 };
 
 const mergeSuffixConfig = (
-  config?: ArtifexContentSuffixConfig,
-): Record<ArtifexContentTypeKey, string[]> => {
+  config?: FerolyteContentSuffixConfig,
+): Record<FerolyteContentTypeKey, string[]> => {
   const merged = { ...DEFAULT_CONTENT_SUFFIXES };
 
   if (!config) {
@@ -108,7 +111,7 @@ const mergeSuffixConfig = (
 
   for (const contentType of Object.keys(
     DEFAULT_CONTENT_SUFFIXES,
-  ) as ArtifexContentTypeKey[]) {
+  ) as FerolyteContentTypeKey[]) {
     const configured = config[contentType];
     if (configured === undefined) {
       continue;
@@ -122,14 +125,14 @@ const mergeSuffixConfig = (
 };
 
 const buildRules = (
-  suffixesByType: Record<ArtifexContentTypeKey, string[]>,
+  suffixesByType: Record<FerolyteContentTypeKey, string[]>,
 ): ContentSuffixRule[] => {
   const rules: ContentSuffixRule[] = [];
-  const seen = new Map<string, ArtifexContentTypeKey>();
+  const seen = new Map<string, FerolyteContentTypeKey>();
 
   for (const contentType of Object.keys(
     suffixesByType,
-  ) as ArtifexContentTypeKey[]) {
+  ) as FerolyteContentTypeKey[]) {
     for (const rawSuffix of suffixesByType[contentType]) {
       const suffix = normalizeSuffix(rawSuffix);
       validateSuffix(suffix, contentType);
@@ -183,7 +186,7 @@ const createOutputFileName = (
 };
 
 export const buildContentSuffixRegistry = (
-  config?: ArtifexContentSuffixConfig,
+  config?: FerolyteContentSuffixConfig,
 ): ContentSuffixRegistry => {
   const suffixesByType = mergeSuffixConfig(config);
   const rules = buildRules(suffixesByType);
@@ -233,8 +236,11 @@ export const buildContentSuffixRegistry = (
       return undefined;
     }
 
-    const { OUTPUT_NAMESPACE_PATH, OUTPUT_BEHAVIOR_PACK_PATH, OUTPUT_RESOURCE_PACK_PATH } =
-      BUILD_CONTEXT.PACKS;
+    const {
+      OUTPUT_NAMESPACE_PATH,
+      OUTPUT_BEHAVIOR_PACK_PATH,
+      OUTPUT_RESOURCE_PACK_PATH,
+    } = BUILD_CONTEXT.PACKS;
     const outputDir = CONTENT_TYPE_OUTPUT_DIRS[resolved.contentType];
     const packPath =
       outputDir.pack === 'BP'
@@ -246,7 +252,7 @@ export const buildContentSuffixRegistry = (
 
   return {
     resolveContentFile,
-    isArtifexContentFile(filePath: string) {
+    isFerolyteContentFile(filePath: string) {
       return resolveContentFile(filePath) !== undefined;
     },
     createContentOutputPath,

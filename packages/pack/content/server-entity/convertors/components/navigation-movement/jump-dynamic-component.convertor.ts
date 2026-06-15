@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { JumpDynamicComponent } from '../../../interfaces/components/navigation-movement/jump-dynamic-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertJumpDynamicComponent = (
   component: Partial<JumpDynamicComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:jump.dynamic': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

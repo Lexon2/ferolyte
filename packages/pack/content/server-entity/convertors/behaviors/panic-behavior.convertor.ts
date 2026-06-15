@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PanicBehavior } from '../../interfaces/behaviors/panic-behavior';
 import { convertRange } from '../common/convertors';
 import {
@@ -15,7 +15,7 @@ import { validateDamageSourceType } from '../common/validation';
  */
 export const convertPanicBehavior = (
   behavior: Partial<PanicBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.panic': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -78,7 +78,10 @@ export const convertPanicBehavior = (
 
   // Validate soundInterval
   if (behavior.soundInterval !== undefined) {
-    const convertedSoundInterval = convertRange(behavior.soundInterval, 'soundInterval');
+    const convertedSoundInterval = convertRange(
+      behavior.soundInterval,
+      'soundInterval',
+    );
     if (!convertedSoundInterval) {
       return undefined;
     }

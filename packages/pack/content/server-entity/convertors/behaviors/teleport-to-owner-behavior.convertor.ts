@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TeleportToOwnerBehavior } from '../../interfaces/behaviors/teleport-to-owner-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertTeleportToOwnerBehavior = (
   behavior: Partial<TeleportToOwnerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.teleport_to_owner': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -36,7 +39,10 @@ export const convertTeleportToOwnerBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -44,6 +50,6 @@ export const convertTeleportToOwnerBehavior = (
   }
 
   return {
-    'minecraft:behavior.teleport_to_owner': result
+    'minecraft:behavior.teleport_to_owner': result,
   };
 };

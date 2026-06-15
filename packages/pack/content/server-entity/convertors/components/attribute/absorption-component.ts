@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { AbsorptionComponent } from '../../../interfaces/components/attribute/absorption-component';
 import { convertAttributeComponent } from '../../common/attribute';
 
@@ -9,7 +9,7 @@ import { convertAttributeComponent } from '../../common/attribute';
  */
 export const convertAbsorptionComponent = (
   component: Partial<AbsorptionComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): Record<string, any> | undefined => {
   return convertAttributeComponent(component, 'absorption');
 };

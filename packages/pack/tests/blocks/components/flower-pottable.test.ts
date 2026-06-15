@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createFlowerPottable } from '@artifex/pack/content/block/components/flower-pottable';
+import { createFlowerPottable } from '@ferolyte/pack/content/block/components/flower-pottable';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createFlowerPottable', () => {
@@ -12,6 +12,11 @@ describe('createFlowerPottable', () => {
   });
 
   it('maps true to empty component', () => {
-    expectComponent(createFlowerPottable, true, 'minecraft:flower_pottable', {});
+    expectComponent(
+      createFlowerPottable,
+      true,
+      'minecraft:flower_pottable',
+      {},
+    );
   });
 });

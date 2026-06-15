@@ -1,8 +1,11 @@
 import { describe, it } from 'vitest';
 
-import { convertUseKineticWeaponBehavior } from '@artifex/pack/content/server-entity/convertors/behaviors/use-kinetic-weapon-behavior.convertor';
+import { convertUseKineticWeaponBehavior } from '@ferolyte/pack/content/server-entity/convertors/behaviors/use-kinetic-weapon-behavior.convertor';
 
-import { expectComponent, expectUndefined } from '../../helpers/assert-component';
+import {
+  expectComponent,
+  expectUndefined,
+} from '../../helpers/assert-component';
 
 describe('convertUseKineticWeaponBehavior', () => {
   it('returns undefined when input is missing', () => {

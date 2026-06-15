@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { LayEggBehavior } from '../../interfaces/behaviors/lay-egg-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import {
@@ -33,7 +36,7 @@ const validateTargetMaterialsAboveBlock = (value: any): boolean => {
  */
 export const convertLayEggBehavior = (
   behavior: Partial<LayEggBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.lay_egg': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -101,7 +104,10 @@ export const convertLayEggBehavior = (
 
   // Validate onLay
   if (behavior.onLay !== undefined) {
-    const convertedOnLay = convertTrigger(behavior.onLay, withFieldPath(ctx, 'onLay'));
+    const convertedOnLay = convertTrigger(
+      behavior.onLay,
+      withFieldPath(ctx, 'onLay'),
+    );
     if (!convertedOnLay) {
       return undefined;
     }

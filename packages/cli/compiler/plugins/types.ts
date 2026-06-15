@@ -1,8 +1,8 @@
-import { ArtifexPluginApiVersion } from './api-version';
+import { FerolytePluginApiVersion } from './api-version';
 
-export type ArtifexFileKind = 'content' | 'copy';
+export type FerolyteFileKind = 'content' | 'copy';
 
-export interface ArtifexPluginPaths {
+export interface FerolytePluginPaths {
   readonly inputBase: string;
   readonly inputBehaviorPack: string;
   readonly inputResourcePack: string;
@@ -16,7 +16,7 @@ export interface ArtifexPluginPaths {
 
 export interface AfterLoadEvent {
   readonly profile: string;
-  readonly paths: ArtifexPluginPaths;
+  readonly paths: FerolytePluginPaths;
   readonly files: {
     readonly content: readonly string[];
     readonly copy: readonly string[];
@@ -25,19 +25,19 @@ export interface AfterLoadEvent {
 
 export interface BuildEvent {
   readonly profile: string;
-  readonly paths: ArtifexPluginPaths;
+  readonly paths: FerolytePluginPaths;
 }
 
 export interface WatchReadyEvent {
   readonly profile: string;
-  readonly paths: ArtifexPluginPaths;
+  readonly paths: FerolytePluginPaths;
 }
 
 export interface FileEvent {
   readonly profile: string;
   readonly sourcePath: string;
   readonly outputPath?: string | readonly string[];
-  readonly kind: ArtifexFileKind;
+  readonly kind: FerolyteFileKind;
 }
 
 export interface BeforeFileWriteEvent {
@@ -45,7 +45,7 @@ export interface BeforeFileWriteEvent {
   readonly sourcePath: string;
   readonly destinationPath: string;
   readonly data: string | Buffer;
-  readonly kind: ArtifexFileKind;
+  readonly kind: FerolyteFileKind;
 }
 
 export interface BeforeFileWriteResult {
@@ -54,9 +54,9 @@ export interface BeforeFileWriteResult {
   skip?: boolean;
 }
 
-export interface ArtifexPlugin {
+export interface FerolytePlugin {
   name: string;
-  apiVersion: ArtifexPluginApiVersion;
+  apiVersion: FerolytePluginApiVersion;
   afterLoad?(event: AfterLoadEvent): void | Promise<void>;
   beforeBuild?(event: BuildEvent): void | Promise<void>;
   afterBuild?(event: BuildEvent): void | Promise<void>;
@@ -69,8 +69,8 @@ export interface ArtifexPlugin {
   afterWatchReady?(event: WatchReadyEvent): void | Promise<void>;
 }
 
-export type ArtifexPluginHookName = keyof Pick<
-  ArtifexPlugin,
+export type FerolytePluginHookName = keyof Pick<
+  FerolytePlugin,
   | 'afterLoad'
   | 'beforeBuild'
   | 'afterBuild'

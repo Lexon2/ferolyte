@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { IsPregnantComponent } from '../../../interfaces/components/states/is-pregnant-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertIsPregnantComponent = (
   component: Partial<IsPregnantComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:is_pregnant': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

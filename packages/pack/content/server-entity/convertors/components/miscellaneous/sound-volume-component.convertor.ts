@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SoundVolumeComponent } from '../../../interfaces/components/miscellaneous/sound-volume-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertSoundVolumeComponent = (
   component: Partial<SoundVolumeComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:sound_volume': { value: number } } | undefined => {
   if (!component) {
     return undefined;
@@ -18,8 +18,8 @@ export const convertSoundVolumeComponent = (
   if (component.value === undefined) {
     return {
       'minecraft:sound_volume': {
-        value: 1.0 // Default value
-      }
+        value: 1.0, // Default value
+      },
     };
   }
 
@@ -29,7 +29,7 @@ export const convertSoundVolumeComponent = (
 
   return {
     'minecraft:sound_volume': {
-      value: component.value
-    }
+      value: component.value,
+    },
   };
 };

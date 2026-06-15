@@ -1,6 +1,11 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PickupItemsBehavior } from '../../interfaces/behaviors/pickup-items-behavior';
-import { validateNumber, validateBoolean, validateStringArray, validateInteger } from '../common/validation';
+import {
+  validateNumber,
+  validateBoolean,
+  validateStringArray,
+  validateInteger,
+} from '../common/validation';
 
 /**
  * Converts a PickupItemsBehavior to Minecraft format
@@ -9,7 +14,7 @@ import { validateNumber, validateBoolean, validateStringArray, validateInteger }
  */
 export const convertPickupItemsBehavior = (
   behavior: Partial<PickupItemsBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.pickup_items': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -35,15 +40,26 @@ export const convertPickupItemsBehavior = (
 
   // Validate canPickupToHandOrEquipment
   if (behavior.canPickupToHandOrEquipment !== undefined) {
-    if (!validateBoolean(behavior.canPickupToHandOrEquipment, 'canPickupToHandOrEquipment')) {
+    if (
+      !validateBoolean(
+        behavior.canPickupToHandOrEquipment,
+        'canPickupToHandOrEquipment',
+      )
+    ) {
       return undefined;
     }
-    result.can_pickup_to_hand_or_equipment = behavior.canPickupToHandOrEquipment;
+    result.can_pickup_to_hand_or_equipment =
+      behavior.canPickupToHandOrEquipment;
   }
 
   // Validate cooldownAfterBeingAttacked
   if (behavior.cooldownAfterBeingAttacked !== undefined) {
-    if (!validateNumber(behavior.cooldownAfterBeingAttacked, 'cooldownAfterBeingAttacked')) {
+    if (
+      !validateNumber(
+        behavior.cooldownAfterBeingAttacked,
+        'cooldownAfterBeingAttacked',
+      )
+    ) {
       return undefined;
     }
     result.cooldown_after_being_attacked = behavior.cooldownAfterBeingAttacked;
@@ -91,7 +107,12 @@ export const convertPickupItemsBehavior = (
 
   // Validate pickupSameItemsAsInHand
   if (behavior.pickupSameItemsAsInHand !== undefined) {
-    if (!validateBoolean(behavior.pickupSameItemsAsInHand, 'pickupSameItemsAsInHand')) {
+    if (
+      !validateBoolean(
+        behavior.pickupSameItemsAsInHand,
+        'pickupSameItemsAsInHand',
+      )
+    ) {
       return undefined;
     }
     result.pickup_same_items_as_in_hand = behavior.pickupSameItemsAsInHand;
@@ -106,6 +127,6 @@ export const convertPickupItemsBehavior = (
   }
 
   return {
-    'minecraft:behavior.pickup_items': result
+    'minecraft:behavior.pickup_items': result,
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { IsIgnitedComponent } from '../../../interfaces/components/states/is-ignited-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertIsIgnitedComponent = (
   component: Partial<IsIgnitedComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:is_ignited': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

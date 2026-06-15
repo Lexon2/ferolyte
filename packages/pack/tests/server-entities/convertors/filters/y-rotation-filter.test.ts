@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 
-import { convertYRotationFilter } from '@artifex/pack/content/server-entity/convertors/filters/y-rotation-filter';
+import { convertYRotationFilter } from '@ferolyte/pack/content/server-entity/convertors/filters/y-rotation-filter';
 
 import { expectFilter, expectUndefined } from '../../helpers/assert-component';
 
@@ -14,13 +14,17 @@ describe('convertYRotationFilter', () => {
   });
 
   it('maps y_rotation filter', () => {
-    expectFilter(convertYRotationFilter, {
-      value: 90,
-      operator: 'equals',
-    }, {
-      test: 'y_rotation',
-      value: 90,
-      operator: 'equals',
-    });
+    expectFilter(
+      convertYRotationFilter,
+      {
+        value: 90,
+        operator: 'equals',
+      },
+      {
+        test: 'y_rotation',
+        value: 90,
+        operator: 'equals',
+      },
+    );
   });
 });

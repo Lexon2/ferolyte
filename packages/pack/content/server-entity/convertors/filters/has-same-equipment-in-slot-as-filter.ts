@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { FILTER_EQUIPMENT_SLOTS } from '../../constants/equipment-slots';
 import { HasSameEquipmentInSlotAsFilter } from '../../interfaces/filters/has-same-equipment-in-slot-as-filter';
@@ -12,7 +12,7 @@ import { validateAllowedValues } from '../common/validation';
  */
 export const convertHasSameEquipmentInSlotAsFilter = (
   filter: Partial<HasSameEquipmentInSlotAsFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
@@ -25,10 +25,13 @@ export const convertHasSameEquipmentInSlotAsFilter = (
     return undefined;
   }
 
-  const result = convertBooleanFilter({
-    ...filter,
-    test: 'has_same_equipment_in_slot_as',
-  }, ctx);
+  const result = convertBooleanFilter(
+    {
+      ...filter,
+      test: 'has_same_equipment_in_slot_as',
+    },
+    ctx,
+  );
 
   if (!result) {
     return undefined;

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EFFECT_TYPES } from '../../../constants/effect-types';
 import { AttackComponent } from '../../../interfaces/components/combat/attack-component';
 import { validateNumber, validateString } from '../../common/validation';
@@ -29,7 +29,9 @@ const validateDamage = (
       return false;
     }
     if (value[0] > value[1]) {
-      console.error(`${fieldName} minimum value must be less than or equal to maximum value`);
+      console.error(
+        `${fieldName} minimum value must be less than or equal to maximum value`,
+      );
 
       return false;
     }
@@ -47,10 +49,7 @@ const validateDamage = (
  * @param fieldName The name of the field for error messages
  * @returns Whether the value is valid
  */
-const validateEffectName = (
-  value: string,
-  fieldName: string,
-): boolean => {
+const validateEffectName = (value: string, fieldName: string): boolean => {
   if (!validateString(value, fieldName)) {
     return false;
   }
@@ -69,7 +68,7 @@ const validateEffectName = (
  */
 export const convertAttackComponent = (
   component: Partial<AttackComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:attack': any } | undefined => {
   if (!component) {
     return undefined;
@@ -101,7 +100,14 @@ export const convertAttackComponent = (
     if (component.effectDuration === 'infinite') {
       result.effect_duration = 'infinite';
     } else {
-      if (!validateNumber(component.effectDuration, 'effectDuration', 0, Number.MAX_VALUE)) {
+      if (
+        !validateNumber(
+          component.effectDuration,
+          'effectDuration',
+          0,
+          Number.MAX_VALUE,
+        )
+      ) {
         return undefined;
       }
       result.effect_duration = component.effectDuration;

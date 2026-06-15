@@ -3,7 +3,7 @@ import { join, relative } from 'path';
 
 import { ZipWriter } from './zip-writer';
 
-const SKIP_DIRECTORIES = new Set(['node_modules', '.git', '.artifex', 'dist']);
+const SKIP_DIRECTORIES = new Set(['node_modules', '.git', '.ferolyte', 'dist']);
 
 async function* walkDirectoryFiles(
   dir: string,

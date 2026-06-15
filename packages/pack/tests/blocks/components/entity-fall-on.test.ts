@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createEntityFallOn } from '@artifex/pack/content/block/components/entity-fall-on';
+import { createEntityFallOn } from '@ferolyte/pack/content/block/components/entity-fall-on';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createEntityFallOn', () => {
@@ -12,8 +12,13 @@ describe('createEntityFallOn', () => {
   });
 
   it('maps min fall distance', () => {
-    expectComponent(createEntityFallOn, { minFallDistance: 3 }, 'minecraft:entity_fall_on', {
-      min_fall_distance: 3,
-    });
+    expectComponent(
+      createEntityFallOn,
+      { minFallDistance: 3 },
+      'minecraft:entity_fall_on',
+      {
+        min_fall_distance: 3,
+      },
+    );
   });
 });

@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { LookedAtComponent } from '../../../interfaces/components/miscellaneous/looked-at-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { convertTrigger } from '../../common/trigger.convertor';
@@ -10,16 +13,16 @@ import { validateNumber } from '../../common/validation';
  * @param fieldName The name of the field for error messages
  * @returns Whether the location is valid
  */
-const validateLookAtLocation = (
-  location: any,
-  fieldName: string,
-): boolean => {
+const validateLookAtLocation = (location: any, fieldName: string): boolean => {
   if (!location) {
     return false;
   }
 
   // Validate location
-  if (!location.location || !['head', 'body', 'feet'].includes(location.location)) {
+  if (
+    !location.location ||
+    !['head', 'body', 'feet'].includes(location.location)
+  ) {
     console.error(`${fieldName}.location must be one of: head, body, feet`);
 
     return false;
@@ -27,7 +30,14 @@ const validateLookAtLocation = (
 
   // Validate verticalOffset if present
   if (location.verticalOffset !== undefined) {
-    if (!validateNumber(location.verticalOffset, `${fieldName}.verticalOffset`, -Number.MAX_VALUE, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        location.verticalOffset,
+        `${fieldName}.verticalOffset`,
+        -Number.MAX_VALUE,
+        Number.MAX_VALUE,
+      )
+    ) {
       return false;
     }
   }
@@ -42,7 +52,7 @@ const validateLookAtLocation = (
  */
 export const convertLookedAtComponent = (
   component: Partial<LookedAtComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:looked_at': any } | undefined => {
   if (!component) {
     return undefined;
@@ -60,7 +70,10 @@ export const convertLookedAtComponent = (
 
   // Validate filters
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      component.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -79,37 +92,49 @@ export const convertLookedAtComponent = (
 
   // Validate lineOfSightObstructionType
   if (component.lineOfSightObstructionType !== undefined) {
-    if (!['outline', 'collision', 'collision_for_camera'].includes(component.lineOfSightObstructionType)) {
-      console.error('lineOfSightObstructionType must be one of: outline, collision, collision_for_camera');
+    if (
+      !['outline', 'collision', 'collision_for_camera'].includes(
+        component.lineOfSightObstructionType,
+      )
+    ) {
+      console.error(
+        'lineOfSightObstructionType must be one of: outline, collision, collision_for_camera',
+      );
 
       return undefined;
     }
-    result.line_of_sight_obstruction_type = component.lineOfSightObstructionType;
+    result.line_of_sight_obstruction_type =
+      component.lineOfSightObstructionType;
   }
 
   // Validate lookAtLocations
   if (component.lookAtLocations !== undefined) {
-    if (!Array.isArray(component.lookAtLocations) || component.lookAtLocations.length === 0) {
+    if (
+      !Array.isArray(component.lookAtLocations) ||
+      component.lookAtLocations.length === 0
+    ) {
       console.error('lookAtLocations must be a non-empty array');
 
       return undefined;
     }
 
-    const validatedLocations = component.lookAtLocations.map((location, index) => {
-      if (!validateLookAtLocation(location, `lookAtLocations[${index}]`)) {
-        return undefined;
-      }
+    const validatedLocations = component.lookAtLocations.map(
+      (location, index) => {
+        if (!validateLookAtLocation(location, `lookAtLocations[${index}]`)) {
+          return undefined;
+        }
 
-      const validatedLocation: any = {
-        location: location.location,
-      };
+        const validatedLocation: any = {
+          location: location.location,
+        };
 
-      if (location.verticalOffset !== undefined) {
-        validatedLocation.vertical_offset = location.verticalOffset;
-      }
+        if (location.verticalOffset !== undefined) {
+          validatedLocation.vertical_offset = location.verticalOffset;
+        }
 
-      return validatedLocation;
-    });
+        return validatedLocation;
+      },
+    );
 
     if (validatedLocations.includes(undefined)) {
       return undefined;
@@ -120,14 +145,29 @@ export const convertLookedAtComponent = (
 
   // Validate lookedAtCooldown
   if (component.lookedAtCooldown !== undefined) {
-    if (!Array.isArray(component.lookedAtCooldown) || component.lookedAtCooldown.length !== 2) {
+    if (
+      !Array.isArray(component.lookedAtCooldown) ||
+      component.lookedAtCooldown.length !== 2
+    ) {
       console.error('lookedAtCooldown must be an array of two numbers');
 
       return undefined;
     }
 
-    if (!validateNumber(component.lookedAtCooldown[0], 'lookedAtCooldown[0]', 0, Number.MAX_VALUE) ||
-        !validateNumber(component.lookedAtCooldown[1], 'lookedAtCooldown[1]', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.lookedAtCooldown[0],
+        'lookedAtCooldown[0]',
+        0,
+        Number.MAX_VALUE,
+      ) ||
+      !validateNumber(
+        component.lookedAtCooldown[1],
+        'lookedAtCooldown[1]',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
 
@@ -136,7 +176,10 @@ export const convertLookedAtComponent = (
 
   // Validate lookedAtEvent
   if (component.lookedAtEvent !== undefined) {
-    const convertedLookedAtEvent = convertTrigger(component.lookedAtEvent, withFieldPath(ctx, 'lookedAtEvent'));
+    const convertedLookedAtEvent = convertTrigger(
+      component.lookedAtEvent,
+      withFieldPath(ctx, 'lookedAtEvent'),
+    );
     if (!convertedLookedAtEvent) {
       return undefined;
     }
@@ -145,7 +188,10 @@ export const convertLookedAtComponent = (
 
   // Validate notLookedAtEvent
   if (component.notLookedAtEvent !== undefined) {
-    const convertedNotLookedAtEvent = convertTrigger(component.notLookedAtEvent, withFieldPath(ctx, 'notLookedAtEvent'));
+    const convertedNotLookedAtEvent = convertTrigger(
+      component.notLookedAtEvent,
+      withFieldPath(ctx, 'notLookedAtEvent'),
+    );
     if (!convertedNotLookedAtEvent) {
       return undefined;
     }
@@ -164,7 +210,14 @@ export const convertLookedAtComponent = (
 
   // Validate searchRadius
   if (component.searchRadius !== undefined) {
-    if (!validateNumber(component.searchRadius, 'searchRadius', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.searchRadius,
+        'searchRadius',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.search_radius = component.searchRadius;
@@ -172,7 +225,14 @@ export const convertLookedAtComponent = (
 
   // Validate minLookedAtDuration
   if (component.minLookedAtDuration !== undefined) {
-    if (!validateNumber(component.minLookedAtDuration, 'minLookedAtDuration', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.minLookedAtDuration,
+        'minLookedAtDuration',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.min_looked_at_duration = component.minLookedAtDuration;
@@ -180,8 +240,14 @@ export const convertLookedAtComponent = (
 
   // Validate setTarget
   if (component.setTarget !== undefined) {
-    if (!['never', 'once_and_stop_scanning', 'once_and_keep_scanning'].includes(component.setTarget)) {
-      console.error('setTarget must be one of: never, once_and_stop_scanning, once_and_keep_scanning');
+    if (
+      !['never', 'once_and_stop_scanning', 'once_and_keep_scanning'].includes(
+        component.setTarget,
+      )
+    ) {
+      console.error(
+        'setTarget must be one of: never, once_and_stop_scanning, once_and_keep_scanning',
+      );
 
       return undefined;
     }

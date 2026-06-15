@@ -1,10 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FollowRangeComponent } from '../../../interfaces/components/combat/follow-range-component';
 import { validateNumber } from '../../common/validation';
 
 export const convertFollowRangeComponent = (
   component: FollowRangeComponent,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): any => {
   if (component.value === undefined) {
     return undefined;

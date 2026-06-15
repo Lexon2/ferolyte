@@ -1,8 +1,11 @@
 import { describe, it } from 'vitest';
 
-import { convertFollowTargetLeaderBehavior } from '@artifex/pack/content/server-entity/convertors/behaviors/follow-target-leader-behavior.convertor';
+import { convertFollowTargetLeaderBehavior } from '@ferolyte/pack/content/server-entity/convertors/behaviors/follow-target-leader-behavior.convertor';
 
-import { expectComponent, expectUndefined } from '../../helpers/assert-component';
+import {
+  expectComponent,
+  expectUndefined,
+} from '../../helpers/assert-component';
 
 describe('convertFollowTargetLeaderBehavior', () => {
   it('returns undefined when input is missing', () => {

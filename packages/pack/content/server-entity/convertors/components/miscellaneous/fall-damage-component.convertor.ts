@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FallDamageComponent } from '../../../interfaces/components/miscellaneous/fall-damage-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertFallDamageComponent = (
   component: Partial<FallDamageComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:fall_damage': any } | undefined => {
   if (!component) {
     return undefined;

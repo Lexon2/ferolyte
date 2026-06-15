@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationFloatComponent } from '../../../interfaces/components/navigation-movement/navigation-float-component';
 
@@ -9,7 +9,7 @@ import { NavigationFloatComponent } from '../../../interfaces/components/navigat
  */
 export const convertNavigationFloatComponent = (
   component: Partial<NavigationFloatComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:navigation.float': any } | undefined => {
   if (!component) {
     return undefined;
@@ -21,6 +21,6 @@ export const convertNavigationFloatComponent = (
   }
 
   return {
-    'minecraft:navigation.float': result
+    'minecraft:navigation.float': result,
   };
 };

@@ -9,8 +9,8 @@ import {
 import {
   ContentDiagnosticContext,
   logContentError,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNumber } from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNumber } from '@ferolyte/common/content/validation/content-validation';
 
 interface BlockPermutation {
   condition: string;

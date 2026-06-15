@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TimerFlag1Behavior } from '../../interfaces/behaviors/timer-flag-1-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -11,7 +14,7 @@ import { validateNumber, validateStringArray } from '../common/validation';
  */
 export const convertTimerFlag1Behavior = (
   behavior: Partial<TimerFlag1Behavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.timer_flag_1': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -29,7 +32,10 @@ export const convertTimerFlag1Behavior = (
 
   // Validate cooldownRange
   if (behavior.cooldownRange !== undefined) {
-    const convertedCooldownRange = convertRange(behavior.cooldownRange, 'cooldownRange');
+    const convertedCooldownRange = convertRange(
+      behavior.cooldownRange,
+      'cooldownRange',
+    );
     if (!convertedCooldownRange) {
       return undefined;
     }
@@ -38,7 +44,10 @@ export const convertTimerFlag1Behavior = (
 
   // Validate durationRange
   if (behavior.durationRange !== undefined) {
-    const convertedDurationRange = convertRange(behavior.durationRange, 'durationRange');
+    const convertedDurationRange = convertRange(
+      behavior.durationRange,
+      'durationRange',
+    );
     if (!convertedDurationRange) {
       return undefined;
     }
@@ -47,7 +56,10 @@ export const convertTimerFlag1Behavior = (
 
   // Validate controlFlags
   if (behavior.controlFlags !== undefined) {
-    if (!validateStringArray(behavior.controlFlags, 'controlFlags') || !behavior.controlFlags.every(flag => flag === 'move' || flag === 'look')) {
+    if (
+      !validateStringArray(behavior.controlFlags, 'controlFlags') ||
+      !behavior.controlFlags.every((flag) => flag === 'move' || flag === 'look')
+    ) {
       return undefined;
     }
     result.control_flags = behavior.controlFlags;
@@ -55,7 +67,10 @@ export const convertTimerFlag1Behavior = (
 
   // Validate onEnd
   if (behavior.onEnd !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onEnd, withFieldPath(ctx, 'onEnd'));
+    const convertedTrigger = convertTrigger(
+      behavior.onEnd,
+      withFieldPath(ctx, 'onEnd'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -64,7 +79,10 @@ export const convertTimerFlag1Behavior = (
 
   // Validate onStart
   if (behavior.onStart !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onStart, withFieldPath(ctx, 'onStart'));
+    const convertedTrigger = convertTrigger(
+      behavior.onStart,
+      withFieldPath(ctx, 'onStart'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -72,6 +90,6 @@ export const convertTimerFlag1Behavior = (
   }
 
   return {
-    'minecraft:behavior.timer_flag_1': result
+    'minecraft:behavior.timer_flag_1': result,
   };
 };

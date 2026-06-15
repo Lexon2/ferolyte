@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TameableComponent } from '../../../interfaces/components/ai/tameable-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertTameableComponent = (
   component: Partial<TameableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:tameable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -28,7 +31,10 @@ export const convertTameableComponent = (
 
   // Validate tameEvent
   if (component.tameEvent !== undefined) {
-    const convertedTameEvent = convertTrigger(component.tameEvent, withFieldPath(ctx, 'tameEvent'));
+    const convertedTameEvent = convertTrigger(
+      component.tameEvent,
+      withFieldPath(ctx, 'tameEvent'),
+    );
     if (!convertedTameEvent) {
       return undefined;
     }
@@ -54,7 +60,14 @@ export const convertTameableComponent = (
 
   // Validate attemptTemperMod
   if (component.attemptTemperMod !== undefined) {
-    if (!validateNumber(component.attemptTemperMod, 'attemptTemperMod', 0, Number.MAX_SAFE_INTEGER)) {
+    if (
+      !validateNumber(
+        component.attemptTemperMod,
+        'attemptTemperMod',
+        0,
+        Number.MAX_SAFE_INTEGER,
+      )
+    ) {
       return undefined;
     }
     result.attempt_temper_mod = component.attemptTemperMod;
@@ -62,7 +75,14 @@ export const convertTameableComponent = (
 
   // Validate minTemper
   if (component.minTemper !== undefined) {
-    if (!validateNumber(component.minTemper, 'minTemper', 0, Number.MAX_SAFE_INTEGER)) {
+    if (
+      !validateNumber(
+        component.minTemper,
+        'minTemper',
+        0,
+        Number.MAX_SAFE_INTEGER,
+      )
+    ) {
       return undefined;
     }
     result.min_temper = component.minTemper;
@@ -70,13 +90,20 @@ export const convertTameableComponent = (
 
   // Validate maxTemper
   if (component.maxTemper !== undefined) {
-    if (!validateNumber(component.maxTemper, 'maxTemper', 0, Number.MAX_SAFE_INTEGER)) {
+    if (
+      !validateNumber(
+        component.maxTemper,
+        'maxTemper',
+        0,
+        Number.MAX_SAFE_INTEGER,
+      )
+    ) {
       return undefined;
     }
     result.max_temper = component.maxTemper;
   }
 
   return {
-    'minecraft:tameable': result
+    'minecraft:tameable': result,
   };
 };

@@ -1,16 +1,19 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './convert-filter-base';
 import { FilterOperator } from '../../../constants/filter-operators';
 import { FilterSubject } from '../../../constants/filter-subjects';
 import { MinecraftJsonFilter } from '../../../interfaces/filters/minecraft-json-filter';
 
-
-export const convertWithInputValues = <T extends readonly any[]>(filter: {
-  test: string;
-  operator?: FilterOperator;
-  subject?: FilterSubject;
-  value?: T[number];
-}, inputValues: T, ctx?: ContentDiagnosticContext): MinecraftJsonFilter | undefined => {
+export const convertWithInputValues = <T extends readonly any[]>(
+  filter: {
+    test: string;
+    operator?: FilterOperator;
+    subject?: FilterSubject;
+    value?: T[number];
+  },
+  inputValues: T,
+  ctx?: ContentDiagnosticContext,
+): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
   }

@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createGeometry } from '@artifex/pack/content/block/components/geometry';
+import { createGeometry } from '@ferolyte/pack/content/block/components/geometry';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createGeometry', () => {
@@ -12,18 +12,28 @@ describe('createGeometry', () => {
   });
 
   it('maps string identifier', () => {
-    expectComponent(createGeometry, 'geometry.test.block', 'minecraft:geometry', 'geometry.test.block');
+    expectComponent(
+      createGeometry,
+      'geometry.test.block',
+      'minecraft:geometry',
+      'geometry.test.block',
+    );
   });
 
   it('maps geometry object', () => {
-    expectComponent(createGeometry, {
-      identifier: 'geometry.test.block',
-      boneVisibility: { root: true },
-      uvLock: true,
-    }, 'minecraft:geometry', {
-      identifier: 'geometry.test.block',
-      bone_visibility: { root: true },
-      uv_lock: true,
-    });
+    expectComponent(
+      createGeometry,
+      {
+        identifier: 'geometry.test.block',
+        boneVisibility: { root: true },
+        uvLock: true,
+      },
+      'minecraft:geometry',
+      {
+        identifier: 'geometry.test.block',
+        bone_visibility: { root: true },
+        uv_lock: true,
+      },
+    );
   });
 });

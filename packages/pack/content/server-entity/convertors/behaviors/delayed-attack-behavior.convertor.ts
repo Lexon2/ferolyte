@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DelayedAttackBehavior } from '../../interfaces/behaviors/delayed-attack-behavior';
-import { validateBoolean, validateNumber, validateString } from '../common/validation';
+import {
+  validateBoolean,
+  validateNumber,
+  validateString,
+} from '../common/validation';
 
 /**
  * Converts a DelayedAttackBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateBoolean, validateNumber, validateString } from '../common/valid
  */
 export const convertDelayedAttackBehavior = (
   behavior: Partial<DelayedAttackBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.delayed_attack': any } | undefined => {
   if (!behavior) {
     return undefined;

@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TargetWhenPushedBehavior } from '../../interfaces/behaviors/target-when-pushed-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -13,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertTargetWhenPushedBehavior = (
   behavior: Partial<TargetWhenPushedBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.target_when_pushed': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -50,6 +50,6 @@ export const convertTargetWhenPushedBehavior = (
   }
 
   return {
-    'minecraft:behavior.target_when_pushed': result
+    'minecraft:behavior.target_when_pushed': result,
   };
 };

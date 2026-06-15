@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createLightDampening } from '@artifex/pack/content/block/components/light-dampening';
+import { createLightDampening } from '@ferolyte/pack/content/block/components/light-dampening';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createLightDampening', () => {

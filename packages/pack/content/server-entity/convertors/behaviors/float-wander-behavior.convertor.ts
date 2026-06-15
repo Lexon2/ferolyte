@@ -1,7 +1,11 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FloatWanderBehavior } from '../../interfaces/behaviors/float-wander-behavior';
 import { convertRange } from '../common/convertors';
-import { validateBoolean, validateInteger, validateNumber } from '../common/validation';
+import {
+  validateBoolean,
+  validateInteger,
+  validateNumber,
+} from '../common/validation';
 
 /**
  * Converts a FloatWanderBehavior to Minecraft format
@@ -10,7 +14,7 @@ import { validateBoolean, validateInteger, validateNumber } from '../common/vali
  */
 export const convertFloatWanderBehavior = (
   behavior: Partial<FloatWanderBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.float_wander': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -28,7 +32,12 @@ export const convertFloatWanderBehavior = (
 
   // Validate additionalCollisionBuffer
   if (behavior.additionalCollisionBuffer !== undefined) {
-    if (!validateBoolean(behavior.additionalCollisionBuffer, 'additionalCollisionBuffer')) {
+    if (
+      !validateBoolean(
+        behavior.additionalCollisionBuffer,
+        'additionalCollisionBuffer',
+      )
+    ) {
       return undefined;
     }
     result.additional_collision_buffer = behavior.additionalCollisionBuffer;
@@ -36,10 +45,16 @@ export const convertFloatWanderBehavior = (
 
   // Validate allowNavigatingThroughLiquids
   if (behavior.allowNavigatingThroughLiquids !== undefined) {
-    if (!validateBoolean(behavior.allowNavigatingThroughLiquids, 'allowNavigatingThroughLiquids')) {
+    if (
+      !validateBoolean(
+        behavior.allowNavigatingThroughLiquids,
+        'allowNavigatingThroughLiquids',
+      )
+    ) {
       return undefined;
     }
-    result.allow_navigating_through_liquids = behavior.allowNavigatingThroughLiquids;
+    result.allow_navigating_through_liquids =
+      behavior.allowNavigatingThroughLiquids;
   }
 
   // Validate xzDist
@@ -76,7 +91,12 @@ export const convertFloatWanderBehavior = (
 
   // Validate floatWanderHasMoveControl
   if (behavior.floatWanderHasMoveControl !== undefined) {
-    if (!validateBoolean(behavior.floatWanderHasMoveControl, 'floatWanderHasMoveControl')) {
+    if (
+      !validateBoolean(
+        behavior.floatWanderHasMoveControl,
+        'floatWanderHasMoveControl',
+      )
+    ) {
       return undefined;
     }
     result.float_wander_has_move_control = behavior.floatWanderHasMoveControl;
@@ -84,7 +104,9 @@ export const convertFloatWanderBehavior = (
 
   // Validate navigateAroundSurface
   if (behavior.navigateAroundSurface !== undefined) {
-    if (!validateBoolean(behavior.navigateAroundSurface, 'navigateAroundSurface')) {
+    if (
+      !validateBoolean(behavior.navigateAroundSurface, 'navigateAroundSurface')
+    ) {
       return undefined;
     }
     result.navigate_around_surface = behavior.navigateAroundSurface;
@@ -116,7 +138,12 @@ export const convertFloatWanderBehavior = (
 
   // Validate useHomePositionRestriction
   if (behavior.useHomePositionRestriction !== undefined) {
-    if (!validateBoolean(behavior.useHomePositionRestriction, 'useHomePositionRestriction')) {
+    if (
+      !validateBoolean(
+        behavior.useHomePositionRestriction,
+        'useHomePositionRestriction',
+      )
+    ) {
       return undefined;
     }
     result.use_home_position_restriction = behavior.useHomePositionRestriction;
@@ -124,7 +151,10 @@ export const convertFloatWanderBehavior = (
 
   // Validate floatDuration
   if (behavior.floatDuration !== undefined) {
-    const convertedDuration = convertRange(behavior.floatDuration, 'floatDuration');
+    const convertedDuration = convertRange(
+      behavior.floatDuration,
+      'floatDuration',
+    );
     if (!convertedDuration) {
       return undefined;
     }

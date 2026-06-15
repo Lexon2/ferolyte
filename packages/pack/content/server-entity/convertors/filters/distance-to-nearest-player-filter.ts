@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { DistanceToNearestPlayerFilter } from '../../interfaces/filters/distance-to-nearest-player-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertDistanceToNearestPlayerFilter = (
   filter: Partial<DistanceToNearestPlayerFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertNumberFilter({
-    ...filter,
-    test: 'distance_to_nearest_player',
-  }, ctx);
+  return convertNumberFilter(
+    {
+      ...filter,
+      test: 'distance_to_nearest_player',
+    },
+    ctx,
+  );
 };

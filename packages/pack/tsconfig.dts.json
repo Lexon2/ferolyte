@@ -9,8 +9,8 @@
     "rootDir": ".",
     "outDir": "./dist",
     "paths": {
-      "@artifex/pack/*": ["./*"],
-      "@artifex/common/*": ["../common/dist/*"]
+      "@ferolyte/pack/*": ["./*"],
+      "@ferolyte/common/*": ["../common/dist/*"]
     }
   }
 }

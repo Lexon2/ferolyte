@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EndermanLeaveBlockBehavior } from '../../interfaces/behaviors/enderman-leave-block-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertEndermanLeaveBlockBehavior = (
   behavior: Partial<EndermanLeaveBlockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.enderman_leave_block': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertEndermanLeaveBlockBehavior = (
   }
 
   return {
-    'minecraft:behavior.enderman_leave_block': result
+    'minecraft:behavior.enderman_leave_block': result,
   };
 };

@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createCustomComponents } from '@artifex/pack/content/item/convertors/components/custom-components';
+import { createCustomComponents } from '@ferolyte/pack/content/item/convertors/components/custom-components';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createCustomComponents', () => {
@@ -16,6 +16,11 @@ describe('createCustomComponents', () => {
   });
 
   it('maps custom components', () => {
-    expectComponent(createCustomComponents, ['test:custom'], 'minecraft:custom_components', ['test:custom']);
+    expectComponent(
+      createCustomComponents,
+      ['test:custom'],
+      'minecraft:custom_components',
+      ['test:custom'],
+    );
   });
 });

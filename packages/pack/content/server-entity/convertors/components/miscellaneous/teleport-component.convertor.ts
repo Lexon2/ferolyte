@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TeleportComponent } from '../../../interfaces/components/miscellaneous/teleport-component';
 import { validateBoolean, validateNumber } from '../../common/validation';
 
@@ -9,9 +9,8 @@ import { validateBoolean, validateNumber } from '../../common/validation';
  */
 export const convertTeleportComponent = (
   component: TeleportComponent,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:teleport': any } | undefined => {
-
   if (!component) {
     return undefined;
   }
@@ -33,21 +32,30 @@ export const convertTeleportComponent = (
   }
 
   if (component.maxRandomTeleportTime !== undefined) {
-    if (!validateNumber(component.maxRandomTeleportTime, 'maxRandomTeleportTime')) {
+    if (
+      !validateNumber(component.maxRandomTeleportTime, 'maxRandomTeleportTime')
+    ) {
       return undefined;
     }
     result.max_random_teleport_time = component.maxRandomTeleportTime;
   }
 
   if (component.minRandomTeleportTime !== undefined) {
-    if (!validateNumber(component.minRandomTeleportTime, 'minRandomTeleportTime')) {
-        return undefined;
+    if (
+      !validateNumber(component.minRandomTeleportTime, 'minRandomTeleportTime')
+    ) {
+      return undefined;
     }
     result.min_random_teleport_time = component.minRandomTeleportTime;
   }
 
   if (component.randomTeleportCube !== undefined) {
-    if (component.randomTeleportCube.length !== 3 || !component.randomTeleportCube.every(value => validateNumber(value, 'randomTeleportCube'))) {
+    if (
+      component.randomTeleportCube.length !== 3 ||
+      !component.randomTeleportCube.every((value) =>
+        validateNumber(value, 'randomTeleportCube'),
+      )
+    ) {
       return undefined;
     }
     result.random_teleport_cube = component.randomTeleportCube;
@@ -68,7 +76,9 @@ export const convertTeleportComponent = (
   }
 
   if (component.targetTeleportChance !== undefined) {
-    if (!validateNumber(component.targetTeleportChance, 'targetTeleportChance')) {
+    if (
+      !validateNumber(component.targetTeleportChance, 'targetTeleportChance')
+    ) {
       return undefined;
     }
     result.target_teleport_chance = component.targetTeleportChance;
@@ -78,4 +88,3 @@ export const convertTeleportComponent = (
     'minecraft:teleport': result,
   };
 };
-

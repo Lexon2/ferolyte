@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { AdmireItemBehavior } from '../../interfaces/behaviors/admire-item-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -11,7 +14,7 @@ import { validateNumber, validateSoundEvent } from '../common/validation';
  */
 export const convertAdmireItemBehavior = (
   behavior: Partial<AdmireItemBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.admire_item': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -37,7 +40,10 @@ export const convertAdmireItemBehavior = (
 
   // Validate soundInterval
   if (behavior.soundInterval !== undefined) {
-    const convertedInterval = convertRange(behavior.soundInterval, 'soundInterval');
+    const convertedInterval = convertRange(
+      behavior.soundInterval,
+      'soundInterval',
+    );
     if (!convertedInterval) {
       return undefined;
     }
@@ -46,7 +52,10 @@ export const convertAdmireItemBehavior = (
 
   // Validate onAdmireItemStart
   if (behavior.onAdmireItemStart !== undefined) {
-    const onAdmireItemStart = convertTrigger(behavior.onAdmireItemStart, withFieldPath(ctx, 'onAdmireItemStart'));
+    const onAdmireItemStart = convertTrigger(
+      behavior.onAdmireItemStart,
+      withFieldPath(ctx, 'onAdmireItemStart'),
+    );
     if (!onAdmireItemStart) {
       return undefined;
     }
@@ -55,7 +64,10 @@ export const convertAdmireItemBehavior = (
 
   // Validate onAdmireItemStop
   if (behavior.onAdmireItemStop !== undefined) {
-    const onAdmireItemStop = convertTrigger(behavior.onAdmireItemStop, withFieldPath(ctx, 'onAdmireItemStop'));
+    const onAdmireItemStop = convertTrigger(
+      behavior.onAdmireItemStop,
+      withFieldPath(ctx, 'onAdmireItemStop'),
+    );
     if (!onAdmireItemStop) {
       return undefined;
     }
@@ -63,6 +75,6 @@ export const convertAdmireItemBehavior = (
   }
 
   return {
-    'minecraft:behavior.admire_item': result
+    'minecraft:behavior.admire_item': result,
   };
 };

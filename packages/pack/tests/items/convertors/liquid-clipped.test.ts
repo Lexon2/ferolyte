@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createLiquidClipped } from '@artifex/pack/content/item/convertors/components/liquid-clipped';
+import { createLiquidClipped } from '@ferolyte/pack/content/item/convertors/components/liquid-clipped';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createLiquidClipped', () => {
@@ -12,7 +12,17 @@ describe('createLiquidClipped', () => {
   });
 
   it('maps valid boolean to minecraft:liquid_clipped', () => {
-    expectComponent(createLiquidClipped, true, 'minecraft:liquid_clipped', true);
-    expectComponent(createLiquidClipped, false, 'minecraft:liquid_clipped', false);
+    expectComponent(
+      createLiquidClipped,
+      true,
+      'minecraft:liquid_clipped',
+      true,
+    );
+    expectComponent(
+      createLiquidClipped,
+      false,
+      'minecraft:liquid_clipped',
+      false,
+    );
   });
 });

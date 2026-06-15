@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SkinIdComponent } from '../../../interfaces/components/transformation-and-variants/skin-id-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertSkinIdComponent = (
   component: Partial<SkinIdComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:skin_id': { value: number } } | undefined => {
   if (!component) {
     return undefined;
@@ -18,18 +18,20 @@ export const convertSkinIdComponent = (
   if (component.value === undefined) {
     return {
       'minecraft:skin_id': {
-        value: 0 // Default value
-      }
+        value: 0, // Default value
+      },
     };
   }
 
-  if (!validateNumberRange(component.value, 0, Number.MAX_SAFE_INTEGER, 'value')) {
+  if (
+    !validateNumberRange(component.value, 0, Number.MAX_SAFE_INTEGER, 'value')
+  ) {
     return undefined;
   }
 
   return {
     'minecraft:skin_id': {
-      value: component.value
-    }
+      value: component.value,
+    },
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PhysicsComponent } from '../../../interfaces/components/physical/physics-component';
 import { validateBoolean } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertPhysicsComponent = (
   component: Partial<PhysicsComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:physics': any } | undefined => {
   if (!component) {
     return undefined;
@@ -32,13 +32,18 @@ export const convertPhysicsComponent = (
   }
 
   if (component.pushTowardsClosestSpace !== undefined) {
-    if (!validateBoolean(component.pushTowardsClosestSpace, 'pushTowardsClosestSpace')) {
+    if (
+      !validateBoolean(
+        component.pushTowardsClosestSpace,
+        'pushTowardsClosestSpace',
+      )
+    ) {
       return undefined;
     }
     result.push_towards_closest_space = component.pushTowardsClosestSpace;
   }
 
   return {
-    'minecraft:physics': result
+    'minecraft:physics': result,
   };
 };

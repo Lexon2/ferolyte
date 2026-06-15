@@ -1,6 +1,12 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { JumpToBlockBehavior } from '../../interfaces/behaviors/jump-to-block-behavior';
-import { validateInteger, validateNumber, validatePercentage, validateStringArray, validateVector2 } from '../common/validation';
+import {
+  validateInteger,
+  validateNumber,
+  validatePercentage,
+  validateStringArray,
+  validateVector2,
+} from '../common/validation';
 
 /**
  * Converts a JumpToBlockBehavior to Minecraft format
@@ -9,7 +15,7 @@ import { validateInteger, validateNumber, validatePercentage, validateStringArra
  */
 export const convertJumpToBlockBehavior = (
   behavior: Partial<JumpToBlockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.jump_to_block': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -75,7 +81,12 @@ export const convertJumpToBlockBehavior = (
 
   // Validate preferredBlocksChance
   if (behavior.preferredBlocksChance !== undefined) {
-    if (!validatePercentage(behavior.preferredBlocksChance, 'preferredBlocksChance')) {
+    if (
+      !validatePercentage(
+        behavior.preferredBlocksChance,
+        'preferredBlocksChance',
+      )
+    ) {
       return undefined;
     }
     result.preferred_blocks_chance = behavior.preferredBlocksChance;

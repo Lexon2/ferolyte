@@ -134,7 +134,7 @@ export const watch = async (options: CompilerActionOptions) => {
         stabilityThreshold: 500,
       },
       atomic: true,
-      ignored: ['**/node_modules/**', '**/.git/**', '**/.artifex/**'],
+      ignored: ['**/node_modules/**', '**/.git/**', '**/.ferolyte/**'],
       ignoreInitial: true,
       persistent: true,
     },

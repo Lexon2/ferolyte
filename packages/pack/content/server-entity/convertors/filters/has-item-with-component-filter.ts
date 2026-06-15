@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertStringNumberFilter } from './common/convert-string-number';
 import { HasItemWithComponentFilter } from '../../interfaces/filters/has-item-with-component-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertHasItemWithComponentFilter = (
   filter: Partial<HasItemWithComponentFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertStringNumberFilter({
-    ...filter,
-    test: 'has_item_with_component',
-  }, ctx);
+  return convertStringNumberFilter(
+    {
+      ...filter,
+      test: 'has_item_with_component',
+    },
+    ctx,
+  );
 };

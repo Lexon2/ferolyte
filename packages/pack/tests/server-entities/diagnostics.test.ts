@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { ServerEntityBuilder } from '@artifex/pack/content/server-entity/server-entity-builder';
+import { ServerEntityBuilder } from '@ferolyte/pack/content/server-entity/server-entity-builder';
 
 import { minimalServerEntityConfig } from './helpers/fixtures';
 
@@ -29,7 +29,9 @@ describe('ServerEntityBuilder diagnostics', () => {
       })
       .build();
 
-    const output = errorSpy.mock.calls.map((call) => String(call[0])).join('\n');
+    const output = errorSpy.mock.calls
+      .map((call) => String(call[0]))
+      .join('\n');
 
     expect(output).toContain('Server entity validation error');
     expect(output).toContain('test.se.ts');
@@ -75,7 +77,9 @@ describe('ServerEntityBuilder diagnostics', () => {
       })
       .build();
 
-    const output = errorSpy.mock.calls.map((call) => String(call[0])).join('\n');
+    const output = errorSpy.mock.calls
+      .map((call) => String(call[0]))
+      .join('\n');
 
     expect(output).toContain('Server entity validation error');
     expect(output).toContain('test.se.ts');

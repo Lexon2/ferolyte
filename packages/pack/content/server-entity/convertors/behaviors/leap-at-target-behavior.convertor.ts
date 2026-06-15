@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { LeapAtTargetBehavior } from '../../interfaces/behaviors/leap-at-target-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateBoolean, validateNumber } from '../common/validation';
  */
 export const convertLeapAtTargetBehavior = (
   behavior: Partial<LeapAtTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.leap_at_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -58,6 +58,6 @@ export const convertLeapAtTargetBehavior = (
   }
 
   return {
-    'minecraft:behavior.leap_at_target': result
+    'minecraft:behavior.leap_at_target': result,
   };
 };

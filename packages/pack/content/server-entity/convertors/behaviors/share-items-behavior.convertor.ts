@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ShareItemsBehavior } from '../../interfaces/behaviors/share-items-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -13,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertShareItemsBehavior = (
   behavior: Partial<ShareItemsBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.share_items': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -66,6 +66,6 @@ export const convertShareItemsBehavior = (
   }
 
   return {
-    'minecraft:behavior.share_items': result
+    'minecraft:behavior.share_items': result,
   };
 };

@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createProjectile } from '@artifex/pack/content/item/convertors/components/projectile';
+import { createProjectile } from '@ferolyte/pack/content/item/convertors/components/projectile';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createProjectile', () => {
@@ -12,12 +12,17 @@ describe('createProjectile', () => {
   });
 
   it('maps projectile fields', () => {
-    expectComponent(createProjectile, {
-      projectileEntity: 'minecraft:arrow',
-      minimumCriticalPower: 1.25,
-    }, 'minecraft:projectile', {
-      projectile_entity: 'minecraft:arrow',
-      minimum_critical_power: 1.25,
-    });
+    expectComponent(
+      createProjectile,
+      {
+        projectileEntity: 'minecraft:arrow',
+        minimumCriticalPower: 1.25,
+      },
+      'minecraft:projectile',
+      {
+        projectile_entity: 'minecraft:arrow',
+        minimum_critical_power: 1.25,
+      },
+    );
   });
 });

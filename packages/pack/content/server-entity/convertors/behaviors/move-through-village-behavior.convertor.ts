@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MoveThroughVillageBehavior } from '../../interfaces/behaviors/move-through-village-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateBoolean, validateNumber } from '../common/validation';
  */
 export const convertMoveThroughVillageBehavior = (
   behavior: Partial<MoveThroughVillageBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_through_village': any } | undefined => {
   if (!behavior) {
     return undefined;

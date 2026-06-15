@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { AgeableComponent } from '../../../interfaces/components/miscellaneous/ageable-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { convertTrigger } from '../../common/trigger.convertor';
@@ -18,7 +21,9 @@ const validateFeedItem = (
     return false;
   }
   if (value.growth !== undefined) {
-    if (!validateNumber(value.growth, `${fieldName}.growth`, 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(value.growth, `${fieldName}.growth`, 0, Number.MAX_VALUE)
+    ) {
       return false;
     }
   }
@@ -32,7 +37,7 @@ const validateFeedItem = (
  */
 export const convertAgeableComponent = (
   component: Partial<AgeableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:ageable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -87,7 +92,9 @@ export const convertAgeableComponent = (
             return undefined;
           }
         } else {
-          console.error('feedItems array items must be strings or objects with item and optional growth');
+          console.error(
+            'feedItems array items must be strings or objects with item and optional growth',
+          );
 
           return undefined;
         }
@@ -102,7 +109,10 @@ export const convertAgeableComponent = (
 
   // Validate growUp
   if (component.growUp !== undefined) {
-    const convertedGrowUp = convertTrigger(component.growUp, withFieldPath(ctx, 'growUp'));
+    const convertedGrowUp = convertTrigger(
+      component.growUp,
+      withFieldPath(ctx, 'growUp'),
+    );
     if (!convertedGrowUp) {
       return undefined;
     }
@@ -119,7 +129,10 @@ export const convertAgeableComponent = (
 
   // Validate interactFilters
   if (component.interactFilters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.interactFilters, withFieldPath(ctx, 'interactFilters'));
+    const convertedFilters = convertEntityFilters(
+      component.interactFilters,
+      withFieldPath(ctx, 'interactFilters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }

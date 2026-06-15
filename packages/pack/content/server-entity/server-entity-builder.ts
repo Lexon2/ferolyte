@@ -9,9 +9,9 @@ import { ServerEntityConfig } from './interfaces/server-entity-config';
 import {
   ContentDiagnosticContext,
   logContentError,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
-import { ContentBuilder } from '@artifex/common/content/interfaces/content-builder';
-import { CONTENT_METADATA } from '@artifex/common/content/metadata';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { ContentBuilder } from '@ferolyte/common/content/interfaces/content-builder';
+import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
 
 export class ServerEntityBuilder implements ContentBuilder {
   readonly metadata = CONTENT_METADATA.SERVER_ENTITY;

@@ -1,11 +1,11 @@
 import { ExplosionAfterEvent, world } from '@minecraft/server';
 
-import { EventRouteController } from '@artifex/events/common';
-import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
-import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
-import { EVENT_ROUTE_GLOBAL_ID } from '@artifex/events/common/constants';
-import { EventAction, EventActionData } from '@artifex/events/common/types';
-import { ArtifexEventUtils } from '@artifex/events/common/utils';
+import { EventRouteController } from '@ferolyte/events/common';
+import { BasicEventListener } from '@ferolyte/events/common/basic-event.listener';
+import { BasicEventRouter } from '@ferolyte/events/common/basic-event.router';
+import { EVENT_ROUTE_GLOBAL_ID } from '@ferolyte/events/common/constants';
+import { EventAction, EventActionData } from '@ferolyte/events/common/types';
+import { FerolyteEventUtils } from '@ferolyte/events/common/utils';
 
 /// Private Types ///
 
@@ -34,5 +34,5 @@ export const explosion = (action: Action): EventRouteController => {
     },
   });
 
-  return ArtifexEventUtils.initializeEvent(listener, router, action);
+  return FerolyteEventUtils.initializeEvent(listener, router, action);
 };

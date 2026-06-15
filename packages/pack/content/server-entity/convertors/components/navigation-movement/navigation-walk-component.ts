@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationWalkComponent } from '../../../interfaces/components/navigation-movement/navigation-walk-component';
 import { validateBoolean } from '../../common/validation';
@@ -10,7 +10,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertNavigationWalkComponent = (
   component: Partial<NavigationWalkComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:navigation.walk': any } | undefined => {
   if (!component) {
     return undefined;
@@ -30,6 +30,6 @@ export const convertNavigationWalkComponent = (
   }
 
   return {
-    'minecraft:navigation.walk': result
+    'minecraft:navigation.walk': result,
   };
 };

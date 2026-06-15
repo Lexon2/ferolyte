@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createStackedByData } from '@artifex/pack/content/item/convertors/components/stacked-by-data';
+import { createStackedByData } from '@ferolyte/pack/content/item/convertors/components/stacked-by-data';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createStackedByData', () => {
@@ -12,7 +12,17 @@ describe('createStackedByData', () => {
   });
 
   it('maps valid boolean to minecraft:stacked_by_data', () => {
-    expectComponent(createStackedByData, true, 'minecraft:stacked_by_data', true);
-    expectComponent(createStackedByData, false, 'minecraft:stacked_by_data', false);
+    expectComponent(
+      createStackedByData,
+      true,
+      'minecraft:stacked_by_data',
+      true,
+    );
+    expectComponent(
+      createStackedByData,
+      false,
+      'minecraft:stacked_by_data',
+      false,
+    );
   });
 });

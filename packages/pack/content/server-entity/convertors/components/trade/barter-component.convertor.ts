@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BarterComponent } from '../../../interfaces/components/trade/barter-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertBarterComponent = (
   component: Partial<BarterComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:barter': any } | undefined => {
   if (!component) {
     return undefined;
@@ -30,7 +30,14 @@ export const convertBarterComponent = (
 
   // Validate cooldownAfterBeingAttacked
   if (component.cooldownAfterBeingAttacked !== undefined) {
-    if (!validateNumber(component.cooldownAfterBeingAttacked, 'cooldownAfterBeingAttacked', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.cooldownAfterBeingAttacked,
+        'cooldownAfterBeingAttacked',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.cooldown_after_being_attacked = component.cooldownAfterBeingAttacked;

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RailMovementComponent } from '../../../interfaces/components/navigation-movement/rail-movement-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertRailMovementComponent = (
   component: Partial<RailMovementComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:rail_movement': any } | undefined => {
   if (!component) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertRailMovementComponent = (
   }
 
   return {
-    'minecraft:rail_movement': result
+    'minecraft:rail_movement': result,
   };
 };

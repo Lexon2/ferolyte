@@ -18,7 +18,7 @@ const tempRoots: string[] = [];
 const createTempRoot = async (): Promise<string> => {
   const root = join(
     tmpdir(),
-    `artifex-item-texture-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    `ferolyte-item-texture-${Date.now()}-${Math.random().toString(16).slice(2)}`,
   );
   await mkdir(root, { recursive: true });
   tempRoots.push(root);
@@ -41,7 +41,9 @@ describe('item-texture-atlas', () => {
 
   afterEach(async () => {
     await Promise.all(
-      tempRoots.splice(0).map((root) => rm(root, { recursive: true, force: true })),
+      tempRoots
+        .splice(0)
+        .map((root) => rm(root, { recursive: true, force: true })),
     );
   });
 
@@ -94,7 +96,7 @@ describe('item-texture-atlas', () => {
         resource_pack_name: 'arfex_test',
         texture_name: 'atlas.items',
         texture_data: {
-          'artifex:test': { textures: 'textures/old/path' },
+          'ferolyte:test': { textures: 'textures/old/path' },
           'manual:entry': { textures: 'textures/manual' },
         },
       }),
@@ -102,20 +104,20 @@ describe('item-texture-atlas', () => {
     );
 
     setSourceItemTextures(join(root, 'items', 'test.item.ts'), [
-      { key: 'artifex:test', textures: 'textures/arfex/test/items/test' },
+      { key: 'ferolyte:test', textures: 'textures/arfex/test/items/test' },
     ]);
 
     const outputPath = await flushItemTextures();
-    expect(outputPath).toBe(join(root, 'out', 'RP', 'textures', 'item_texture.json'));
+    expect(outputPath).toBe(
+      join(root, 'out', 'RP', 'textures', 'item_texture.json'),
+    );
 
-    const written = JSON.parse(
-      await readFile(outputPath!, 'utf-8'),
-    ) as {
+    const written = JSON.parse(await readFile(outputPath!, 'utf-8')) as {
       texture_data: Record<string, { textures: string }>;
     };
 
     expect(written.texture_data).toEqual({
-      'artifex:test': { textures: 'textures/arfex/test/items/test' },
+      'ferolyte:test': { textures: 'textures/arfex/test/items/test' },
       'manual:entry': { textures: 'textures/manual' },
     });
   });
@@ -129,24 +131,27 @@ describe('item-texture-atlas', () => {
     const sourcePath = join(root, 'items', 'apples.item.ts');
 
     setSourceItemTextures(sourcePath, [
-      { key: 'artifex:apple_a', textures: 'textures/a' },
-      { key: 'artifex:apple_b', textures: 'textures/b' },
+      { key: 'ferolyte:apple_a', textures: 'textures/a' },
+      { key: 'ferolyte:apple_b', textures: 'textures/b' },
     ]);
     await flushItemTextures();
 
     setSourceItemTextures(sourcePath, [
-      { key: 'artifex:apple_a', textures: 'textures/a' },
+      { key: 'ferolyte:apple_a', textures: 'textures/a' },
     ]);
     await flushItemTextures();
 
     const written = JSON.parse(
-      await readFile(join(root, 'out', 'RP', 'textures', 'item_texture.json'), 'utf-8'),
+      await readFile(
+        join(root, 'out', 'RP', 'textures', 'item_texture.json'),
+        'utf-8',
+      ),
     ) as {
       texture_data: Record<string, { textures: string }>;
     };
 
     expect(written.texture_data).toEqual({
-      'artifex:apple_a': { textures: 'textures/a' },
+      'ferolyte:apple_a': { textures: 'textures/a' },
     });
   });
 
@@ -156,23 +161,26 @@ describe('item-texture-atlas', () => {
     await mkdir(join(root, 'out', 'RP', 'textures'), { recursive: true });
 
     setSourceItemTextures(join(root, 'items', 'existing.item.ts'), [
-      { key: 'artifex:existing', textures: 'textures/existing' },
+      { key: 'ferolyte:existing', textures: 'textures/existing' },
     ]);
     setSourceItemTextures(join(root, 'items', 'test.item.ts'), [
-      { key: 'artifex:test', textures: 'textures/arfex/test/items/test' },
+      { key: 'ferolyte:test', textures: 'textures/arfex/test/items/test' },
     ]);
 
     await flushItemTextures();
 
     const written = JSON.parse(
-      await readFile(join(root, 'out', 'RP', 'textures', 'item_texture.json'), 'utf-8'),
+      await readFile(
+        join(root, 'out', 'RP', 'textures', 'item_texture.json'),
+        'utf-8',
+      ),
     ) as {
       texture_data: Record<string, { textures: string }>;
     };
 
     expect(written.texture_data).toEqual({
-      'artifex:existing': { textures: 'textures/existing' },
-      'artifex:test': { textures: 'textures/arfex/test/items/test' },
+      'ferolyte:existing': { textures: 'textures/existing' },
+      'ferolyte:test': { textures: 'textures/arfex/test/items/test' },
     });
   });
 
@@ -184,7 +192,7 @@ describe('item-texture-atlas', () => {
     const sourcePath = join(root, 'items', 'test.item.ts');
 
     setSourceItemTextures(sourcePath, [
-      { key: 'artifex:test', textures: 'textures/test' },
+      { key: 'ferolyte:test', textures: 'textures/test' },
     ]);
     await flushItemTextures();
 
@@ -192,7 +200,10 @@ describe('item-texture-atlas', () => {
     await flushItemTextures({ force: true });
 
     const written = JSON.parse(
-      await readFile(join(root, 'out', 'RP', 'textures', 'item_texture.json'), 'utf-8'),
+      await readFile(
+        join(root, 'out', 'RP', 'textures', 'item_texture.json'),
+        'utf-8',
+      ),
     ) as {
       texture_data: Record<string, { textures: string }>;
     };

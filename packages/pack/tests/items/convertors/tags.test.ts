@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createTags } from '@artifex/pack/content/item/convertors/components/tags';
+import { createTags } from '@ferolyte/pack/content/item/convertors/components/tags';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createTags', () => {

@@ -1,6 +1,6 @@
 import { defineCommand } from 'citty';
 
-import { ArtifexPack } from '../../artifex-pack';
+import { FerolytePack } from '../../ferolyte-pack';
 import { watchScripts } from '../../compiler/scripts/watch-esbuild';
 import {
   compilerCommandArgs,
@@ -15,7 +15,7 @@ export const watchCommand = defineCommand({
   args: compilerCommandArgs,
   async run({ args }) {
     const options = toCompilerOptions(args);
-    await ArtifexPack.watch(options);
+    await FerolytePack.watch(options);
     await watchScripts(options.profile);
   },
 });

@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createDisplayName } from '@artifex/pack/content/item/convertors/components/display-name';
+import { createDisplayName } from '@ferolyte/pack/content/item/convertors/components/display-name';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createDisplayName', () => {
@@ -12,6 +12,8 @@ describe('createDisplayName', () => {
   });
 
   it('maps valid display name', () => {
-    expectComponent(createDisplayName, 'Stone', 'minecraft:display_name', { value: 'Stone' });
+    expectComponent(createDisplayName, 'Stone', 'minecraft:display_name', {
+      value: 'Stone',
+    });
   });
 });

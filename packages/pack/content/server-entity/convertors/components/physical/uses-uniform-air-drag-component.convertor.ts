@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { UsesUniformAirDragComponent } from '../../../interfaces/components/physical/uses-uniform-air-drag-component';
 import { convertStateObject } from '../../common/state-object';
 

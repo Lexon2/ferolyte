@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertStringNumberFilter } from './common/convert-string-number';
 import { HasTagFilter } from '../../interfaces/filters/has-tag-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertHasTagFilter = (
   filter: Partial<HasTagFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertStringNumberFilter({
-    ...filter,
-    test: 'has_tag'
-  }, ctx);
+  return convertStringNumberFilter(
+    {
+      ...filter,
+      test: 'has_tag',
+    },
+    ctx,
+  );
 };

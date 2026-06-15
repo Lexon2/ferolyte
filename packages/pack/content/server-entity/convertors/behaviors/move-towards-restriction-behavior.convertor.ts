@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { CONTROL_FLAG } from '../../constants/control-flags';
 import { MoveTowardsRestrictionBehavior } from '../../interfaces/behaviors/move-towards-restriction-behavior';
 import { validateNumber, validateStringArray } from '../common/validation';
@@ -10,7 +10,7 @@ import { validateNumber, validateStringArray } from '../common/validation';
  */
 export const convertMoveTowardsRestrictionBehavior = (
   behavior: Partial<MoveTowardsRestrictionBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_towards_restriction': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -50,6 +50,6 @@ export const convertMoveTowardsRestrictionBehavior = (
   }
 
   return {
-    'minecraft:behavior.move_towards_restriction': result
+    'minecraft:behavior.move_towards_restriction': result,
   };
 };

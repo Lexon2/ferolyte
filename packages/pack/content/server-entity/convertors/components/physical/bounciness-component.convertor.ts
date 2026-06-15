@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BouncinessComponent } from '../../../interfaces/components/physical/bounciness-component';
 import { validateInteger } from '../../common/validation';
 

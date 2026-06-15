@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EconomyTradeTableComponent } from '../../../interfaces/components/trade/economy-trade-table-component';
 import { validateBoolean } from '../../common/validation';
 import { validateNumber } from '../../common/validation';
@@ -12,7 +12,7 @@ import { validateTradeOrLootTablePath } from '../../common/validation';
  */
 export const validateTradeDiscount = (
   value: any,
-  fieldName: string
+  fieldName: string,
 ): boolean => {
   if (!Array.isArray(value) || value.length !== 2) {
     console.error(`${fieldName} must be an array with two numbers`);
@@ -28,7 +28,9 @@ export const validateTradeDiscount = (
   }
 
   if (low > high) {
-    console.error(`${fieldName} low value must be less than or equal to high value`);
+    console.error(
+      `${fieldName} low value must be less than or equal to high value`,
+    );
 
     return false;
   }
@@ -43,7 +45,7 @@ export const validateTradeDiscount = (
  */
 export const convertEconomyTradeTableComponent = (
   component: Partial<EconomyTradeTableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:economy_trade_table': any } | undefined => {
   if (!component) {
     return undefined;
@@ -53,7 +55,9 @@ export const convertEconomyTradeTableComponent = (
 
   // Validate convertTradesEconomy
   if (component.convertTradesEconomy !== undefined) {
-    if (!validateBoolean(component.convertTradesEconomy, 'convertTradesEconomy')) {
+    if (
+      !validateBoolean(component.convertTradesEconomy, 'convertTradesEconomy')
+    ) {
       return undefined;
     }
     result.convert_trades_economy = component.convertTradesEconomy;
@@ -79,7 +83,14 @@ export const convertEconomyTradeTableComponent = (
 
   // Validate heroDemandDiscount
   if (component.heroDemandDiscount !== undefined) {
-    if (!validateNumber(component.heroDemandDiscount, 'heroDemandDiscount', -Infinity, 0)) {
+    if (
+      !validateNumber(
+        component.heroDemandDiscount,
+        'heroDemandDiscount',
+        -Infinity,
+        0,
+      )
+    ) {
       return undefined;
     }
     result.hero_demand_discount = component.heroDemandDiscount;
@@ -87,7 +98,9 @@ export const convertEconomyTradeTableComponent = (
 
   // Validate maxCuredDiscount
   if (component.maxCuredDiscount !== undefined) {
-    if (!validateTradeDiscount(component.maxCuredDiscount, 'maxCuredDiscount')) {
+    if (
+      !validateTradeDiscount(component.maxCuredDiscount, 'maxCuredDiscount')
+    ) {
       return undefined;
     }
     result.max_cured_discount = component.maxCuredDiscount;
@@ -95,7 +108,14 @@ export const convertEconomyTradeTableComponent = (
 
   // Validate maxNearbyCuredDiscount
   if (component.maxNearbyCuredDiscount !== undefined) {
-    if (!validateNumber(component.maxNearbyCuredDiscount, 'maxNearbyCuredDiscount', -Infinity, 0)) {
+    if (
+      !validateNumber(
+        component.maxNearbyCuredDiscount,
+        'maxNearbyCuredDiscount',
+        -Infinity,
+        0,
+      )
+    ) {
       return undefined;
     }
     result.max_nearby_cured_discount = component.maxNearbyCuredDiscount;
@@ -103,7 +123,14 @@ export const convertEconomyTradeTableComponent = (
 
   // Validate nearbyCuredDiscount
   if (component.nearbyCuredDiscount !== undefined) {
-    if (!validateNumber(component.nearbyCuredDiscount, 'nearbyCuredDiscount', -Infinity, 0)) {
+    if (
+      !validateNumber(
+        component.nearbyCuredDiscount,
+        'nearbyCuredDiscount',
+        -Infinity,
+        0,
+      )
+    ) {
       return undefined;
     }
     result.nearby_cured_discount = component.nearbyCuredDiscount;
@@ -143,13 +170,15 @@ export const convertEconomyTradeTableComponent = (
 
   // Validate useLegacyPriceFormula
   if (component.useLegacyPriceFormula !== undefined) {
-    if (!validateBoolean(component.useLegacyPriceFormula, 'useLegacyPriceFormula')) {
+    if (
+      !validateBoolean(component.useLegacyPriceFormula, 'useLegacyPriceFormula')
+    ) {
       return undefined;
     }
     result.use_legacy_price_formula = component.useLegacyPriceFormula;
   }
 
   return {
-    'minecraft:economy_trade_table': result
+    'minecraft:economy_trade_table': result,
   };
 };

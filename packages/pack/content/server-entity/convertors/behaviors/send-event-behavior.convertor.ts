@@ -1,7 +1,20 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { SendEventBehavior, EventChoice, EventStep } from '../../interfaces/behaviors/send-event-behavior';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import {
+  SendEventBehavior,
+  EventChoice,
+  EventStep,
+} from '../../interfaces/behaviors/send-event-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
-import { validateNumber, validateBoolean, validateHexColor, validateSoundEvent, validateString } from '../common/validation';
+import {
+  validateNumber,
+  validateBoolean,
+  validateHexColor,
+  validateSoundEvent,
+  validateString,
+} from '../common/validation';
 
 /**
  * Converts an EventStep to Minecraft format
@@ -75,7 +88,10 @@ const convertEventChoice = (
   }
 
   if (choice.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(choice.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      choice.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -108,7 +124,7 @@ const convertEventChoice = (
       return undefined;
     }
     const convertedSequence = choice.sequence.map(convertEventStep);
-    if (convertedSequence.some(step => step === undefined)) {
+    if (convertedSequence.some((step) => step === undefined)) {
       return undefined;
     }
     convertedChoice.sequence = convertedSequence;
@@ -124,7 +140,7 @@ const convertEventChoice = (
  */
 export const convertSendEventBehavior = (
   behavior: Partial<SendEventBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.send_event': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -164,7 +180,7 @@ export const convertSendEventBehavior = (
     const convertedChoices = behavior.eventChoices.map((choice, index) =>
       convertEventChoice(choice, withFieldPath(ctx, `eventChoices[${index}]`)),
     );
-    if (convertedChoices.some(choice => choice === undefined)) {
+    if (convertedChoices.some((choice) => choice === undefined)) {
       return undefined;
     }
     result.event_choices = convertedChoices;
@@ -176,13 +192,13 @@ export const convertSendEventBehavior = (
       return undefined;
     }
     const convertedSequence = behavior.sequence.map(convertEventStep);
-    if (convertedSequence.some(step => step === undefined)) {
+    if (convertedSequence.some((step) => step === undefined)) {
       return undefined;
     }
     result.sequence = convertedSequence;
   }
 
   return {
-    'minecraft:behavior.send_event': result
+    'minecraft:behavior.send_event': result,
   };
 };

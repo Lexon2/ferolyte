@@ -1,18 +1,18 @@
-# @artifex/pack
+# @ferolyte/pack
 
-Artifex content SDK for Minecraft Bedrock addons.
+Ferolyte content SDK for Minecraft Bedrock addons.
 
-Define blocks, items, and server/client entities in TypeScript. Builders convert camelCase Artifex configs into snake_case vanilla Minecraft JSON with validation and diagnostics powered by `@artifex/common`.
+Define blocks, items, and server/client entities in TypeScript. Builders convert camelCase Ferolyte configs into snake_case vanilla Minecraft JSON with validation and diagnostics powered by `@ferolyte/common`.
 
 More content coming soon..
 
 ## Installation
 
 ```bash
-npm install @artifex/pack
+npm install @ferolyte/pack
 ```
 
-`@artifex/common` is installed automatically as a dependency.
+`@ferolyte/common` is installed automatically as a dependency.
 
 **Requirements:** Node.js >= 18
 
@@ -20,30 +20,27 @@ npm install @artifex/pack
 
 All vanilla Minecraft Bedrock components for **blocks**, **items**, and **server/client entities** are ported. In TypeScript configs they use **camelCase** (e.g. `saturationModifier`, `displayName`); builders convert them to snake_case vanilla JSON at build time.
 
-| Content type    | Import path                             |
-| --------------- | --------------------------------------- |
-| Blocks          | `@artifex/pack/content/block/*`         |
-| Items           | `@artifex/pack/content/item/*`          |
-| Server entities | `@artifex/pack/content/server-entity/*` |
-| Client entities | `@artifex/pack/content/client-entity/*` |
+| Content type    | Import path                              |
+| --------------- | ---------------------------------------- |
+| Blocks          | `@ferolyte/pack/content/block/*`         |
+| Items           | `@ferolyte/pack/content/item/*`          |
+| Server entities | `@ferolyte/pack/content/server-entity/*` |
+| Client entities | `@ferolyte/pack/content/client-entity/*` |
 
 ### Molang
 
-Fluent builder and type constants for Bedrock Molang at `@artifex/pack/content/molang`.
+Fluent builder and type constants for Bedrock Molang at `@ferolyte/pack/content/molang`.
 
-Type-only imports: `@artifex/pack/content/molang/types`.
+Type-only imports: `@ferolyte/pack/content/molang/types`.
 
 Reference: [bedrock.dev Molang docs](https://bedrock.dev/docs/stable/Molang).
 
 ```typescript
-import { Molang } from '@artifex/pack/content/molang';
+import { Molang } from '@ferolyte/pack/content/molang';
 
-const expression = new Molang()
-  .allAnimationsFinished
-  .and
+const expression = new Molang().allAnimationsFinished.and
   .math('abs', 1)
-  .or
-  .math.randomInteger(10, 100)
+  .or.math.randomInteger(10, 100)
   .build();
 // query.all_animations_finished && math.abs(1) || math.random_integer(10, 100)
 ```
@@ -54,12 +51,12 @@ Named operators (`.and`, `.or`, `.eq`, …) and `.op('&&')` are both supported. 
 
 ### Content files for the CLI
 
-When used with `@artifex/cli`, content files must `export default` a builder (or array of builders). The CLI bundles each file, imports the default export, and writes the resulting JSON to the output pack.
+When used with `@ferolyte/cli`, content files must `export default` a builder (or array of builders). The CLI bundles each file, imports the default export, and writes the resulting JSON to the output pack.
 
 **Block** — `packs/BP/blocks/custom.block.ts`:
 
 ```typescript
-import { createBlock } from '@artifex/pack/content/block/create-block';
+import { createBlock } from '@ferolyte/pack/content/block/create-block';
 
 export default createBlock({
   identifier: 'myaddon:custom_block',
@@ -70,7 +67,7 @@ export default createBlock({
 **Item** — `packs/BP/items/apple.item.ts`:
 
 ```typescript
-import { createItem } from '@artifex/pack/content/item/create-item';
+import { createItem } from '@ferolyte/pack/content/item/create-item';
 
 export default createItem({
   identifier: 'myaddon:golden_apple',
@@ -84,7 +81,7 @@ export default createItem({
 **Multiple Items** — `packs/BP/items/apples.item.ts`:
 
 ```typescript
-import { createItem } from '@artifex/pack/content/item/create-item';
+import { createItem } from '@ferolyte/pack/content/item/create-item';
 
 export default [
   'myaddon:golden_apple',
@@ -105,7 +102,7 @@ export default [
 **Server entity** — `packs/BP/entities/cow.se.ts`:
 
 ```typescript
-import { createServerEntity } from '@artifex/pack/content/server-entity/create-server-entity';
+import { createServerEntity } from '@ferolyte/pack/content/server-entity/create-server-entity';
 
 export default createServerEntity({
   identifier: 'myaddon:cow',
@@ -136,7 +133,7 @@ export default createServerEntity({
 **Client entity** — `packs/RP/entity/cow.ce.ts`:
 
 ```typescript
-import { createClientEntity } from '@artifex/pack/content/client-entity/create-client-entity';
+import { createClientEntity } from '@ferolyte/pack/content/client-entity/create-client-entity';
 
 export default createClientEntity({
   identifier: 'myaddon:cow',

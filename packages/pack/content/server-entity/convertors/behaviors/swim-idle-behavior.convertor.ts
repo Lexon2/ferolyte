@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SwimIdleBehavior } from '../../interfaces/behaviors/swim-idle-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertSwimIdleBehavior = (
   behavior: Partial<SwimIdleBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.swim_idle': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,6 +42,6 @@ export const convertSwimIdleBehavior = (
   }
 
   return {
-    'minecraft:behavior.swim_idle': result
+    'minecraft:behavior.swim_idle': result,
   };
 };

@@ -1,6 +1,6 @@
 import { ServerEntityConfig } from './interfaces/server-entity-config';
 import { ServerEntityBuilder } from './server-entity-builder';
-import { deepMerge } from '@artifex/common/object/deep-merge';
+import { deepMerge } from '@ferolyte/common/object/deep-merge';
 
 export const createServerEntity = (
   ...sources: (ServerEntityConfig | ServerEntityBuilder)[]

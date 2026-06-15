@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { OnLadderFilter } from '../../interfaces/filters/on-ladder-filter';
 
@@ -9,10 +9,13 @@ import { OnLadderFilter } from '../../interfaces/filters/on-ladder-filter';
  */
 export const convertOnLadderFilter = (
   filter: Partial<OnLadderFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): ReturnType<typeof convertBooleanFilter> | undefined => {
-  return convertBooleanFilter({
-    ...filter,
-    test: 'on_ladder',
-  }, ctx);
+  return convertBooleanFilter(
+    {
+      ...filter,
+      test: 'on_ladder',
+    },
+    ctx,
+  );
 };

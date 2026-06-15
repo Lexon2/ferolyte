@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MarkVariantComponent } from '../../../interfaces/components/transformation-and-variants/mark-variant-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -9,22 +9,24 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertMarkVariantComponent = (
   component: Partial<MarkVariantComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): Record<string, any> | undefined => {
   if (!component) {
     return undefined;
   }
 
-  const result: any = {}
+  const result: any = {};
 
   if (component.value !== undefined) {
-    if (!validateNumberRange(component.value, 0, Number.MAX_SAFE_INTEGER, 'value')) {
+    if (
+      !validateNumberRange(component.value, 0, Number.MAX_SAFE_INTEGER, 'value')
+    ) {
       return undefined;
     }
     result.value = component.value;
   }
 
   return {
-    'minecraft:mark_variant': result
+    'minecraft:mark_variant': result,
   };
 };

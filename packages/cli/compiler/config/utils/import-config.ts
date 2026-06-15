@@ -1,12 +1,12 @@
 import { pathToFileURL } from 'node:url';
 
 import { isEsmFile } from './is-esm-file';
-import { ArtifexConfig } from '../interfaces/config';
+import { FerolyteConfig } from '../interfaces/config';
 
-export const importArtifexConfig = async (
+export const importFerolyteConfig = async (
   path: string,
   // cwd: string = process.cwd(),
-): Promise<ArtifexConfig | undefined> => {
+): Promise<FerolyteConfig | undefined> => {
   if (isEsmFile(path)) {
     const url = pathToFileURL(path).href;
     const { default: config } = await import(url);

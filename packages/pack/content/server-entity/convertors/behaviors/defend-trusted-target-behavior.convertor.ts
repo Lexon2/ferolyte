@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DefendTrustedTargetBehavior } from '../../interfaces/behaviors/defend-trusted-target-behavior';
 import { convertSingleEntityDefinition } from '../common/entity-definition.convertor';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -11,7 +14,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertDefendTrustedTargetBehavior = (
   behavior: Partial<DefendTrustedTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.defend_trusted_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -67,7 +70,10 @@ export const convertDefendTrustedTargetBehavior = (
 
   // Validate onDefendStart
   if (behavior.onDefendStart !== undefined) {
-    const convertedOnDefendStart = convertTrigger(behavior.onDefendStart, withFieldPath(ctx, 'onDefendStart'));
+    const convertedOnDefendStart = convertTrigger(
+      behavior.onDefendStart,
+      withFieldPath(ctx, 'onDefendStart'),
+    );
     if (!convertedOnDefendStart) {
       return undefined;
     }

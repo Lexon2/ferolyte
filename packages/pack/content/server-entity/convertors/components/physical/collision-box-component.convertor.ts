@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { CollisionBoxComponent } from '../../../interfaces/components/physical/collision-box-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -9,15 +9,17 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertCollisionBoxComponent = (
   component: Partial<CollisionBoxComponent>,
-  ctx?: ContentDiagnosticContext
-): { 'minecraft:collision_box': { width: number; height: number } } | undefined => {
+  ctx?: ContentDiagnosticContext,
+):
+  | { 'minecraft:collision_box': { width: number; height: number } }
+  | undefined => {
   if (!component) {
     return undefined;
   }
 
   const result: { width: number; height: number } = {
     width: 1.0, // Default value
-    height: 1.0 // Default value
+    height: 1.0, // Default value
   };
 
   if (component.width !== undefined) {
@@ -35,6 +37,6 @@ export const convertCollisionBoxComponent = (
   }
 
   return {
-    'minecraft:collision_box': result
+    'minecraft:collision_box': result,
   };
 };

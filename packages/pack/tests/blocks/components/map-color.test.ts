@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createMapColor } from '@artifex/pack/content/block/components/map-color';
+import { createMapColor } from '@ferolyte/pack/content/block/components/map-color';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createMapColor', () => {
@@ -12,13 +12,23 @@ describe('createMapColor', () => {
   });
 
   it('maps hex color', () => {
-    expectComponent(createMapColor, '#ff0000', 'minecraft:map_color', '#ff0000');
+    expectComponent(
+      createMapColor,
+      '#ff0000',
+      'minecraft:map_color',
+      '#ff0000',
+    );
   });
 
   it('maps color object with tint method', () => {
-    expectComponent(createMapColor, { color: '#00ff00', tintMethod: 'noise' }, 'minecraft:map_color', {
-      color: '#00ff00',
-      tint_method: 'noise',
-    });
+    expectComponent(
+      createMapColor,
+      { color: '#00ff00', tintMethod: 'noise' },
+      'minecraft:map_color',
+      {
+        color: '#00ff00',
+        tint_method: 'noise',
+      },
+    );
   });
 });

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DragonLandingBehavior } from '../../interfaces/behaviors/dragon-landing-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertDragonLandingBehavior = (
   behavior: Partial<DragonLandingBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.dragonlanding': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertDragonLandingBehavior = (
   }
 
   return {
-    'minecraft:behavior.dragonlanding': result
+    'minecraft:behavior.dragonlanding': result,
   };
 };

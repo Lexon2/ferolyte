@@ -22,7 +22,9 @@ const SHARED_COMPILER_OPTIONS = {
   emitDecoratorMetadata: true,
 };
 
-export const createTsconfigTemplate = ({ pathAlias }: TsconfigTemplateInput): string => {
+export const createTsconfigTemplate = ({
+  pathAlias,
+}: TsconfigTemplateInput): string => {
   const config = {
     compilerOptions: {
       ...SHARED_COMPILER_OPTIONS,
@@ -30,7 +32,7 @@ export const createTsconfigTemplate = ({ pathAlias }: TsconfigTemplateInput): st
         [`${pathAlias}/*`]: ['packs/*'],
       },
     },
-    include: ['packs/**/*', 'artifex.config.mts'],
+    include: ['packs/**/*', 'ferolyte.config.mts'],
     exclude: ['node_modules'],
     compileOnSave: false,
   };

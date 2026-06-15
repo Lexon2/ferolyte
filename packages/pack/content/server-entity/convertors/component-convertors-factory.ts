@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { entityAiComponentConvertorsFactory } from './components/ai/entity-ai-component-convertors.factory';
 import { entityAttributeComponentConvertorsFactory } from './components/attribute/entity-attribute-component-convertors.factory';
 import { entityCombatComponentConvertorsFactory } from './components/combat/entity-combat-component-convertors.factory';

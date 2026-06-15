@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationHoverComponent } from '../../../interfaces/components/navigation-movement/navigation-hover-component';
 
@@ -9,7 +9,7 @@ import { NavigationHoverComponent } from '../../../interfaces/components/navigat
  */
 export const convertNavigationHoverComponent = (
   component: Partial<NavigationHoverComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:navigation.hover': any } | undefined => {
   if (!component) {
     return undefined;
@@ -21,6 +21,6 @@ export const convertNavigationHoverComponent = (
   }
 
   return {
-    'minecraft:navigation.hover': result
+    'minecraft:navigation.hover': result,
   };
 };

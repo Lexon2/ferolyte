@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createReplaceable } from '@artifex/pack/content/block/components/replaceable';
+import { createReplaceable } from '@ferolyte/pack/content/block/components/replaceable';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createReplaceable', () => {

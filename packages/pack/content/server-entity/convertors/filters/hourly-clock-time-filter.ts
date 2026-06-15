@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { HourlyClockTimeFilter } from '../../interfaces/filters/hourly-clock-time-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -11,19 +11,25 @@ import { validateNumber } from '../common/validation';
  */
 export const convertHourlyClockTimeFilter = (
   filter: Partial<HourlyClockTimeFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
   }
 
   // Validate that value is within valid range (0-24000)
-  if (filter.value !== undefined && !validateNumber(filter.value, 'value', 0, 24000, ctx)) {
+  if (
+    filter.value !== undefined &&
+    !validateNumber(filter.value, 'value', 0, 24000, ctx)
+  ) {
     return undefined;
   }
 
-  return convertNumberFilter({
-    ...filter,
-    test: 'hourly_clock_time',
-  }, ctx);
+  return convertNumberFilter(
+    {
+      ...filter,
+      test: 'hourly_clock_time',
+    },
+    ctx,
+  );
 };

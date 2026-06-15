@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { LookAtPlayerBehavior } from '../../interfaces/behaviors/look-at-player-behavior';
 import { convertRange } from '../common/convertors';
 import { validateInteger, validateNumber } from '../common/validation';
@@ -10,7 +10,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertLookAtPlayerBehavior = (
   behavior: Partial<LookAtPlayerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.look_at_player': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -36,7 +36,9 @@ export const convertLookAtPlayerBehavior = (
 
   // Validate angleOfViewHorizontal
   if (behavior.angleOfViewHorizontal !== undefined) {
-    if (!validateInteger(behavior.angleOfViewHorizontal, 'angleOfViewHorizontal')) {
+    if (
+      !validateInteger(behavior.angleOfViewHorizontal, 'angleOfViewHorizontal')
+    ) {
       return undefined;
     }
     result.angle_of_view_horizontal = behavior.angleOfViewHorizontal;
@@ -76,6 +78,6 @@ export const convertLookAtPlayerBehavior = (
   }
 
   return {
-    'minecraft:behavior.look_at_player': result
+    'minecraft:behavior.look_at_player': result,
   };
 };

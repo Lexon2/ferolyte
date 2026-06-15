@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { WalkAnimationSpeedComponent } from '../../../interfaces/components/navigation-movement/walk-animation-speed-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertWalkAnimationSpeedComponent = (
   component: Partial<WalkAnimationSpeedComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:walk_animation_speed': { value: number } } | undefined => {
   if (!component) {
     return undefined;
@@ -18,8 +18,8 @@ export const convertWalkAnimationSpeedComponent = (
   if (component.value === undefined) {
     return {
       'minecraft:walk_animation_speed': {
-        value: 1 // Default value
-      }
+        value: 1, // Default value
+      },
     };
   }
 
@@ -29,7 +29,7 @@ export const convertWalkAnimationSpeedComponent = (
 
   return {
     'minecraft:walk_animation_speed': {
-      value: component.value
-    }
+      value: component.value,
+    },
   };
 };

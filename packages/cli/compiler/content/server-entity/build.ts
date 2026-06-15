@@ -1,16 +1,16 @@
 import { join } from 'path';
 
-import { Float } from '@artifex/common/content/tools/float';
-import { ServerEntityBuilder } from '@artifex/pack/content/server-entity/server-entity-builder';
+import { Float } from '@ferolyte/common/content/tools/float';
+import { ServerEntityBuilder } from '@ferolyte/pack/content/server-entity/server-entity-builder';
 import { ContentBuildOptions } from '../../actions/options';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
 import { createContentPath } from '../utils/create-content-path';
 
 // TODO: Remove this once we have a better way to handle floats
-const replaceArtifexFloatsInJsonString = (json: string): string => {
+const replaceFerolyteFloatsInJsonString = (json: string): string => {
   return json.replace(
-    /"\$artifex_float\[(\-?\d+(?:\.\d+)?)\]"/g,
+    /"\$ferolyte_float\[(\-?\d+(?:\.\d+)?)\]"/g,
     (_, num) => num,
   );
 };
@@ -72,7 +72,7 @@ export const buildServerEntityJson = async (
     return;
   }
 
-  const replacedJsonString = replaceArtifexFloatsInJsonString(jsonString);
+  const replacedJsonString = replaceFerolyteFloatsInJsonString(jsonString);
 
   const writeResult = await writeWithPlugins(
     filePath,

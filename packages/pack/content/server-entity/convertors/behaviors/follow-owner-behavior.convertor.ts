@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FollowOwnerBehavior } from '../../interfaces/behaviors/follow-owner-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateBoolean, validateNumber } from '../common/validation';
  */
 export const convertFollowOwnerBehavior = (
   behavior: Partial<FollowOwnerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.follow_owner': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -51,7 +51,9 @@ export const convertFollowOwnerBehavior = (
 
   // Validate postTeleportDistance
   if (behavior.postTeleportDistance !== undefined) {
-    if (!validateNumber(behavior.postTeleportDistance, 'postTeleportDistance')) {
+    if (
+      !validateNumber(behavior.postTeleportDistance, 'postTeleportDistance')
+    ) {
       return undefined;
     }
     result.post_teleport_distance = behavior.postTeleportDistance;
@@ -82,6 +84,6 @@ export const convertFollowOwnerBehavior = (
   }
 
   return {
-    'minecraft:behavior.follow_owner': result
+    'minecraft:behavior.follow_owner': result,
   };
 };

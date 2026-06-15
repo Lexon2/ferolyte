@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { IsSprintingFilter } from '../../interfaces/filters/is-sprinting-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsSprintingFilter = (
   filter: Partial<IsSprintingFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertBooleanFilter({
-    ...filter,
-    test: 'is_sprinting',
-  }, ctx);
+  return convertBooleanFilter(
+    {
+      ...filter,
+      test: 'is_sprinting',
+    },
+    ctx,
+  );
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { HorseJumpStrengthComponent } from '../../../interfaces/components/control/horse-jump-strength-component';
 import { validateNumber } from '../../common/validation';
 
@@ -16,11 +16,27 @@ const validateRange = (
     return true;
   }
 
-  if (value.rangeMin !== undefined && !validateNumber(value.rangeMin, `${fieldName}.rangeMin`, 0, Number.MAX_VALUE)) {
+  if (
+    value.rangeMin !== undefined &&
+    !validateNumber(
+      value.rangeMin,
+      `${fieldName}.rangeMin`,
+      0,
+      Number.MAX_VALUE,
+    )
+  ) {
     return false;
   }
 
-  if (value.rangeMax !== undefined && !validateNumber(value.rangeMax, `${fieldName}.rangeMax`, 0, Number.MAX_VALUE)) {
+  if (
+    value.rangeMax !== undefined &&
+    !validateNumber(
+      value.rangeMax,
+      `${fieldName}.rangeMax`,
+      0,
+      Number.MAX_VALUE,
+    )
+  ) {
     return false;
   }
 
@@ -34,7 +50,7 @@ const validateRange = (
  */
 export const convertHorseJumpStrengthComponent = (
   component: Partial<HorseJumpStrengthComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:horse.jump_strength': any } | undefined => {
   if (!component) {
     return undefined;

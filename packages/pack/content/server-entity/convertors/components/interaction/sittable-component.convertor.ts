@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SittableComponent } from '../../../interfaces/components/interaction/sittable-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -9,7 +12,7 @@ import { convertTrigger } from '../../common/trigger.convertor';
  */
 export const convertSittableComponent = (
   component: Partial<SittableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:sittable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +22,10 @@ export const convertSittableComponent = (
 
   // Validate sitEvent
   if (component.sitEvent !== undefined) {
-    const convertedSitEvent = convertTrigger(component.sitEvent, withFieldPath(ctx, 'sitEvent'));
+    const convertedSitEvent = convertTrigger(
+      component.sitEvent,
+      withFieldPath(ctx, 'sitEvent'),
+    );
     if (!convertedSitEvent) {
       return undefined;
     }
@@ -28,7 +34,10 @@ export const convertSittableComponent = (
 
   // Validate standEvent
   if (component.standEvent !== undefined) {
-    const convertedStandEvent = convertTrigger(component.standEvent, withFieldPath(ctx, 'standEvent'));
+    const convertedStandEvent = convertTrigger(
+      component.standEvent,
+      withFieldPath(ctx, 'standEvent'),
+    );
     if (!convertedStandEvent) {
       return undefined;
     }
@@ -36,6 +45,6 @@ export const convertSittableComponent = (
   }
 
   return {
-    'minecraft:sittable': result
+    'minecraft:sittable': result,
   };
 };

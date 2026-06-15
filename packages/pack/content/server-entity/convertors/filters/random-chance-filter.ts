@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { RandomChanceFilter } from '../../interfaces/filters/random-chance-filter';
 
@@ -9,13 +9,16 @@ import { RandomChanceFilter } from '../../interfaces/filters/random-chance-filte
  */
 export const convertRandomChanceFilter = (
   filter: Partial<RandomChanceFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): ReturnType<typeof convertNumberFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
   }
-  return convertNumberFilter({
-    ...filter,
-    test: 'random_chance'
-  }, ctx);
+  return convertNumberFilter(
+    {
+      ...filter,
+      test: 'random_chance',
+    },
+    ctx,
+  );
 };

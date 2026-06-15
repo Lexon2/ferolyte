@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RemoveInPeacefulComponent } from '../../../interfaces/components/miscellaneous/remove-in-peaceful-component';
 import { convertStateObject } from '../../common/state-object';
 

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { IsWaterloggedFilter } from '../../interfaces/filters/is-waterlogged-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsWaterloggedFilter = (
   filter: Partial<IsWaterloggedFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertBooleanFilter({
-    ...filter,
-    test: 'is_waterlogged'
-  }, ctx);
+  return convertBooleanFilter(
+    {
+      ...filter,
+      test: 'is_waterlogged',
+    },
+    ctx,
+  );
 };

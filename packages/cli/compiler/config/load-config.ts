@@ -3,16 +3,16 @@ import { join } from 'path';
 import { BUILD_CONTEXT } from '../build-context';
 import { initPlugins } from '../plugins/plugin-host';
 import { applyConfig } from './apply-config';
-import { importArtifexConfig } from './utils/import-config';
+import { importFerolyteConfig } from './utils/import-config';
 
 export async function loadConfig(profileName: string) {
   if (BUILD_CONTEXT.IS_LOADED) {
     return;
   }
-  const configPath = join(process.cwd(), 'artifex.config.mts');
-  const root = await importArtifexConfig(configPath);
+  const configPath = join(process.cwd(), 'ferolyte.config.mts');
+  const root = await importFerolyteConfig(configPath);
   if (!root) {
-    throw new Error('Artifex config not found');
+    throw new Error('Ferolyte config not found');
   }
 
   const config = root.profiles?.[profileName];

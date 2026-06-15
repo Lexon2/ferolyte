@@ -11,7 +11,7 @@ export interface ServerEntityConfig {
   /**
    * Entity Version
    * @description The version of the entity. This is used to determine the format of the entity data.
-   * @default Takes the version from `artifex.config.ts` by default
+   * @default Takes the version from `ferolyte.config.ts` by default
    */
   version?: string;
 

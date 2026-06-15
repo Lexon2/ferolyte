@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { ServerEntityBuilder } from '@artifex/pack/content/server-entity/server-entity-builder';
+import { ServerEntityBuilder } from '@ferolyte/pack/content/server-entity/server-entity-builder';
 
 import { minimalServerEntityConfig } from './helpers/fixtures';
 
@@ -28,15 +28,21 @@ describe('ServerEntityBuilder component conversion', () => {
     });
 
     expect(errorSpy).toHaveBeenCalled();
-    expect(errorSpy.mock.calls.some((call) =>
-      String(call[0]).includes('Server entity validation error'),
-    )).toBe(true);
-    expect(errorSpy.mock.calls.some((call) =>
-      String(call[0]).includes('test.entity.ts'),
-    )).toBe(true);
-    expect(errorSpy.mock.calls.some((call) =>
-      String(call[0]).includes('components.dashAction'),
-    )).toBe(true);
+    expect(
+      errorSpy.mock.calls.some((call) =>
+        String(call[0]).includes('Server entity validation error'),
+      ),
+    ).toBe(true);
+    expect(
+      errorSpy.mock.calls.some((call) =>
+        String(call[0]).includes('test.entity.ts'),
+      ),
+    ).toBe(true);
+    expect(
+      errorSpy.mock.calls.some((call) =>
+        String(call[0]).includes('components.dashAction'),
+      ),
+    ).toBe(true);
 
     errorSpy.mockRestore();
   });

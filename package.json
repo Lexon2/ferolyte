@@ -1,18 +1,18 @@
 {
-  "name": "artifex",
+  "name": "ferolyte",
   "private": true,
   "license": "MIT",
   "version": "0.1.0",
-  "description": "Craft your Minecraft BE addons easialy with Artifex framework.",
+  "description": "Craft your Minecraft BE addons easialy with Ferolyte framework.",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lexon2/artifex.git"
+    "url": "git+https://github.com/Lexon2/ferolyte.git"
   },
   "bugs": {
-    "url": "https://github.com/Lexon2/artifex/issues"
+    "url": "https://github.com/Lexon2/ferolyte/issues"
   },
-  "homepage": "https://github.com/Lexon2/artifex#readme",
+  "homepage": "https://github.com/Lexon2/ferolyte#readme",
   "workspaces": [
     "packages/common",
     "packages/pack",
@@ -25,8 +25,8 @@
   },
   "scripts": {
     "postinstall": "npm run build:packages",
-    "build:packages": "npm run build -w @artifex/common && npm run build -w @artifex/pack && npm run build -w @artifex/cli",
-    "pack:check": "npm run build:packages && npm pack -w @artifex/common --dry-run && npm pack -w @artifex/pack --dry-run && npm pack -w @artifex/cli --dry-run",
+    "build:packages": "npm run build -w @ferolyte/common && npm run build -w @ferolyte/pack && npm run build -w @ferolyte/cli",
+    "pack:check": "npm run build:packages && npm pack -w @ferolyte/common --dry-run && npm pack -w @ferolyte/pack --dry-run && npm pack -w @ferolyte/cli --dry-run",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "npm run build:packages && changeset publish",
@@ -41,9 +41,9 @@
     "@minecraft/vanilla-data": "^1.26.20"
   },
   "devDependencies": {
-    "@artifex/cli": "workspace:*",
-    "@artifex/common": "workspace:*",
-    "@artifex/pack": "workspace:*",
+    "@ferolyte/cli": "workspace:*",
+    "@ferolyte/common": "workspace:*",
+    "@ferolyte/pack": "workspace:*",
     "@changesets/cli": "^2.29.8",
     "@eslint/js": "^9.39.4",
     "@stylistic/eslint-plugin-ts": "^4.2.0",

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertWithInputValues } from './common/convert-with-input-values';
 import { ABILITY_TYPES } from '../../constants/ability-types';
 import { HasAbilityFilter } from '../../interfaces/filters/has-ability-filter';
@@ -11,11 +11,14 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertHasAbilityFilter = (
   filter: Partial<HasAbilityFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertWithInputValues({
+  return convertWithInputValues(
+    {
       ...filter,
       test: 'has_ability',
     },
-    ABILITY_TYPES, ctx);
+    ABILITY_TYPES,
+    ctx,
+  );
 };

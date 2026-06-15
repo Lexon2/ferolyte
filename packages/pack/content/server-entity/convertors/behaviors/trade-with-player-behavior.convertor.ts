@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TradeWithPlayerBehavior } from '../../interfaces/behaviors/trade-with-player-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertTradeWithPlayerBehavior = (
   behavior: Partial<TradeWithPlayerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.trade_with_player': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -28,7 +31,10 @@ export const convertTradeWithPlayerBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -36,6 +42,6 @@ export const convertTradeWithPlayerBehavior = (
   }
 
   return {
-    'minecraft:behavior.trade_with_player': result
+    'minecraft:behavior.trade_with_player': result,
   };
 };

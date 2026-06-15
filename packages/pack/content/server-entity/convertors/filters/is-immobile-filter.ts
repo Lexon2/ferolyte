@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { IsImmobileFilter } from '../../interfaces/filters/is-immobile-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsImmobileFilter = (
   filter: Partial<IsImmobileFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertBooleanFilter({
-    ...filter,
-    test: 'is_immobile'
-  }, ctx);
+  return convertBooleanFilter(
+    {
+      ...filter,
+      test: 'is_immobile',
+    },
+    ctx,
+  );
 };

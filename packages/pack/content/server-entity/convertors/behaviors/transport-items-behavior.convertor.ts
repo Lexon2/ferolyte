@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TransportItemsBehavior } from '../../interfaces/behaviors/transport-items-behavior';
 import { convertRange } from '../common/convertors';
 import {
@@ -39,7 +39,13 @@ export const convertTransportItemsBehavior = (
   }
 
   if (behavior.sourceContainerTypes !== undefined) {
-    if (!validateStringArray(behavior.sourceContainerTypes, 'sourceContainerTypes', ctx)) {
+    if (
+      !validateStringArray(
+        behavior.sourceContainerTypes,
+        'sourceContainerTypes',
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.source_container_types = behavior.sourceContainerTypes;
@@ -66,7 +72,15 @@ export const convertTransportItemsBehavior = (
   }
 
   if (behavior.interactionTime !== undefined) {
-    if (!validateNumber(behavior.interactionTime, 'interactionTime', 0, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.interactionTime,
+        'interactionTime',
+        0,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.interaction_time = behavior.interactionTime;
@@ -82,7 +96,8 @@ export const convertTransportItemsBehavior = (
     ) {
       return undefined;
     }
-    result.allow_simultaneous_interaction = behavior.allowSimultaneousInteraction;
+    result.allow_simultaneous_interaction =
+      behavior.allowSimultaneousInteraction;
   }
 
   if (behavior.searchStrategy !== undefined) {
@@ -111,21 +126,39 @@ export const convertTransportItemsBehavior = (
   }
 
   if (behavior.maxVisitedContainers !== undefined) {
-    if (!validateInteger(behavior.maxVisitedContainers, 'maxVisitedContainers', 0, undefined, ctx)) {
+    if (
+      !validateInteger(
+        behavior.maxVisitedContainers,
+        'maxVisitedContainers',
+        0,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.max_visited_containers = behavior.maxVisitedContainers;
   }
 
   if (behavior.initialCooldown !== undefined) {
-    if (!validateInteger(behavior.initialCooldown, 'initialCooldown', 0, undefined, ctx)) {
+    if (
+      !validateInteger(
+        behavior.initialCooldown,
+        'initialCooldown',
+        0,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.initial_cooldown = behavior.initialCooldown;
   }
 
   if (behavior.idleCooldown !== undefined) {
-    if (!validateInteger(behavior.idleCooldown, 'idleCooldown', 0, undefined, ctx)) {
+    if (
+      !validateInteger(behavior.idleCooldown, 'idleCooldown', 0, undefined, ctx)
+    ) {
       return undefined;
     }
     result.idle_cooldown = behavior.idleCooldown;
@@ -153,7 +186,9 @@ export const convertTransportItemsBehavior = (
   }
 
   if (behavior.disallowedItems !== undefined) {
-    if (!validateStringArray(behavior.disallowedItems, 'disallowedItems', ctx)) {
+    if (
+      !validateStringArray(behavior.disallowedItems, 'disallowedItems', ctx)
+    ) {
       return undefined;
     }
     result.disallowed_items = behavior.disallowedItems;

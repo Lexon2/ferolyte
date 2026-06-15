@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MovementJumpComponent } from '../../../interfaces/components/navigation-movement/movement-jump-component';
 import { validateMaxTurn } from '../../common/validation';
 import { validateNumberRange } from '../../common/validation';
@@ -10,7 +10,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertMovementJumpComponent = (
   component: Partial<MovementJumpComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:movement.jump': any } | undefined => {
   if (!component) {
     return undefined;
@@ -28,15 +28,20 @@ export const convertMovementJumpComponent = (
 
   // Validate jumpDelay
   if (component.jumpDelay !== undefined) {
-    if (!Array.isArray(component.jumpDelay) || component.jumpDelay.length !== 2) {
+    if (
+      !Array.isArray(component.jumpDelay) ||
+      component.jumpDelay.length !== 2
+    ) {
       console.error('jumpDelay must be an array with two numbers');
 
       return undefined;
     }
 
     const [min, max] = component.jumpDelay;
-    if (!validateNumberRange(min, 0, Number.MAX_VALUE, 'jumpDelay[0]') ||
-        !validateNumberRange(max, 0, Number.MAX_VALUE, 'jumpDelay[1]')) {
+    if (
+      !validateNumberRange(min, 0, Number.MAX_VALUE, 'jumpDelay[0]') ||
+      !validateNumberRange(max, 0, Number.MAX_VALUE, 'jumpDelay[1]')
+    ) {
       return undefined;
     }
 
@@ -44,6 +49,6 @@ export const convertMovementJumpComponent = (
   }
 
   return {
-    'minecraft:movement.jump': result
+    'minecraft:movement.jump': result,
   };
 };

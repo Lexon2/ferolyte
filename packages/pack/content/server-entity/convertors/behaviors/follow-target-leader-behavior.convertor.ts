@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FollowTargetLeaderBehavior } from '../../interfaces/behaviors/follow-target-leader-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import {
@@ -30,28 +33,49 @@ export const convertFollowTargetLeaderBehavior = (
   }
 
   if (behavior.speedMultiplier !== undefined) {
-    if (!validateNumber(behavior.speedMultiplier, 'speedMultiplier', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.speedMultiplier,
+        'speedMultiplier',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.speed_multiplier = behavior.speedMultiplier;
   }
 
   if (behavior.alwaysLookForLeader !== undefined) {
-    if (!validateBoolean(behavior.alwaysLookForLeader, 'alwaysLookForLeader', ctx)) {
+    if (
+      !validateBoolean(behavior.alwaysLookForLeader, 'alwaysLookForLeader', ctx)
+    ) {
       return undefined;
     }
     result.always_look_for_leader = behavior.alwaysLookForLeader;
   }
 
   if (behavior.followDistance !== undefined) {
-    if (!validateNumber(behavior.followDistance, 'followDistance', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.followDistance,
+        'followDistance',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.follow_distance = behavior.followDistance;
   }
 
   if (behavior.leaderFilters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.leaderFilters, withFieldPath(ctx, 'leaderFilters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.leaderFilters,
+      withFieldPath(ctx, 'leaderFilters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -59,14 +83,30 @@ export const convertFollowTargetLeaderBehavior = (
   }
 
   if (behavior.searchCooldown !== undefined) {
-    if (!validateInteger(behavior.searchCooldown, 'searchCooldown', 0, undefined, ctx)) {
+    if (
+      !validateInteger(
+        behavior.searchCooldown,
+        'searchCooldown',
+        0,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.search_cooldown = behavior.searchCooldown;
   }
 
   if (behavior.withinRadius !== undefined) {
-    if (!validateNumber(behavior.withinRadius, 'withinRadius', undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        behavior.withinRadius,
+        'withinRadius',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.within_radius = behavior.withinRadius;

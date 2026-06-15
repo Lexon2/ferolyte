@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FertilizeFarmBlockBehavior } from '../../interfaces/behaviors/fertilize-farm-block-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertFertilizeFarmBlockBehavior = (
   behavior: Partial<FertilizeFarmBlockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.fertilize_farm_block': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -51,7 +51,12 @@ export const convertFertilizeFarmBlockBehavior = (
 
   // Validate searchCooldownMaxSeconds
   if (behavior.searchCooldownMaxSeconds !== undefined) {
-    if (!validateNumber(behavior.searchCooldownMaxSeconds, 'searchCooldownMaxSeconds')) {
+    if (
+      !validateNumber(
+        behavior.searchCooldownMaxSeconds,
+        'searchCooldownMaxSeconds',
+      )
+    ) {
       return undefined;
     }
     result.search_cooldown_max_seconds = behavior.searchCooldownMaxSeconds;
@@ -82,6 +87,6 @@ export const convertFertilizeFarmBlockBehavior = (
   }
 
   return {
-    'minecraft:behavior.fertilize_farm_block': result
+    'minecraft:behavior.fertilize_farm_block': result,
   };
 };

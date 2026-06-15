@@ -1,6 +1,6 @@
-import { ArtifexPlugin } from '../../plugins/types';
+import { FerolytePlugin } from '../../plugins/types';
 
-export type ArtifexPackOutput =
+export type FerolytePackOutput =
   | 'minecraft'
   | 'minecraft-dev'
   | 'minecraft-preview'
@@ -8,17 +8,17 @@ export type ArtifexPackOutput =
   | 'build'
   | (string & {});
 
-export type ArtifexContentTypeKey =
+export type FerolyteContentTypeKey =
   | 'block'
   | 'item'
   | 'server-entity'
   | 'client-entity';
 
-export type ArtifexContentSuffixConfig = Partial<
-  Record<ArtifexContentTypeKey, string | string[]>
+export type FerolyteContentSuffixConfig = Partial<
+  Record<FerolyteContentTypeKey, string | string[]>
 >;
 
-export interface ArtifexPackConfig {
+export interface FerolytePackConfig {
   /**
    * The alias for the pack.
    *
@@ -50,7 +50,7 @@ export interface ArtifexPackConfig {
    * - `build`: The output directory for the pack will be in the `build` folder in the current working directory.
    * - `custom`: The output directory for the pack will be in the directory specified in the `output` field.
    */
-  output?: ArtifexPackOutput;
+  output?: FerolytePackOutput;
 
   /**
    * The input directory for the pack.
@@ -87,10 +87,10 @@ export interface ArtifexPackConfig {
    * }
    * ```
    */
-  contentSuffixes?: ArtifexContentSuffixConfig;
+  contentSuffixes?: FerolyteContentSuffixConfig;
 }
 
-export interface ArtifexScriptsConfig {
+export interface FerolyteScriptsConfig {
   /**
    * The entry file for the scripts.
    *
@@ -106,9 +106,9 @@ export interface ArtifexScriptsConfig {
   minify?: boolean;
 }
 
-export interface ArtifexProfileConfig {
-  packs: ArtifexPackConfig;
-  scripts?: ArtifexScriptsConfig;
+export interface FerolyteProfileConfig {
+  packs: FerolytePackConfig;
+  scripts?: FerolyteScriptsConfig;
   /**
    * The path to the tsconfig file for the pack.
    *
@@ -117,7 +117,7 @@ export interface ArtifexProfileConfig {
   tsconfig?: string;
 }
 
-export interface ArtifexConfig {
-  profiles: Record<string, ArtifexProfileConfig>;
-  plugins?: ArtifexPlugin[];
+export interface FerolyteConfig {
+  profiles: Record<string, FerolyteProfileConfig>;
+  plugins?: FerolytePlugin[];
 }

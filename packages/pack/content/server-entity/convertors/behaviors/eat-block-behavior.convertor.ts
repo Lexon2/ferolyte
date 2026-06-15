@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EatBlockBehavior } from '../../interfaces/behaviors/eat-block-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateNumber, validateString } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber, validateString } from '../common/validation';
  */
 export const convertEatBlockBehavior = (
   behavior: Partial<EatBlockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.eat_block': any } | undefined => {
   if (!behavior) {
     return undefined;

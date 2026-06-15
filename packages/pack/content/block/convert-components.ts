@@ -1,7 +1,7 @@
 import { blockComponentCreatorsFactory } from './components';
 import { BlockComponentCreator } from './components/index';
 import { BlockComponents } from './interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 
 export interface MinecraftBlockComponents {
   [key: string]: any;
@@ -18,10 +18,9 @@ export const convertBlockComponents = (
   }
 
   for (const componentId in components) {
-    const factory =
-      blockComponentCreatorsFactory[
-        componentId as keyof typeof blockComponentCreatorsFactory
-      ] as BlockComponentCreator | undefined;
+    const factory = blockComponentCreatorsFactory[
+      componentId as keyof typeof blockComponentCreatorsFactory
+    ] as BlockComponentCreator | undefined;
 
     let componentData: any = {};
     if (factory !== undefined) {

@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createSupport } from '@artifex/pack/content/block/components/support';
+import { createSupport } from '@ferolyte/pack/content/block/components/support';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createSupport', () => {
@@ -12,6 +12,8 @@ describe('createSupport', () => {
   });
 
   it('maps support shape', () => {
-    expectComponent(createSupport, { shape: 'fence' }, 'minecraft:support', { shape: 'fence' });
+    expectComponent(createSupport, { shape: 'fence' }, 'minecraft:support', {
+      shape: 'fence',
+    });
   });
 });

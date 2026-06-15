@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { LookAtTargetBehavior } from '../../interfaces/behaviors/look-at-target-behavior';
 import { convertRange } from '../common/convertors';
 import { validateInteger, validateNumber } from '../common/validation';
@@ -10,7 +10,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertLookAtTargetBehavior = (
   behavior: Partial<LookAtTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.look_at_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -36,7 +36,9 @@ export const convertLookAtTargetBehavior = (
 
   // Validate angleOfViewHorizontal
   if (behavior.angleOfViewHorizontal !== undefined) {
-    if (!validateInteger(behavior.angleOfViewHorizontal, 'angleOfViewHorizontal')) {
+    if (
+      !validateInteger(behavior.angleOfViewHorizontal, 'angleOfViewHorizontal')
+    ) {
       return undefined;
     }
     result.angle_of_view_horizontal = behavior.angleOfViewHorizontal;
@@ -68,6 +70,6 @@ export const convertLookAtTargetBehavior = (
   }
 
   return {
-    'minecraft:behavior.look_at_target': result
+    'minecraft:behavior.look_at_target': result,
   };
 };

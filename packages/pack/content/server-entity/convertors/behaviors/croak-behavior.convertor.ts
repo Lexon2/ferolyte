@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { CroakBehavior } from '../../interfaces/behaviors/croak-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber, validateComplexRange } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber, validateComplexRange } from '../common/validation';
  */
 export const convertCroakBehavior = (
   behavior: Partial<CroakBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.croak': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -39,14 +42,17 @@ export const convertCroakBehavior = (
     } else if (typeof behavior.duration === 'object') {
       result.duration = {
         range_min: behavior.duration.rangeMin,
-        range_max: behavior.duration.rangeMax
+        range_max: behavior.duration.rangeMax,
       };
     }
   }
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -66,12 +72,12 @@ export const convertCroakBehavior = (
     } else if (typeof behavior.interval === 'object') {
       result.interval = {
         range_min: behavior.interval.rangeMin,
-        range_max: behavior.interval.rangeMax
+        range_max: behavior.interval.rangeMax,
       };
     }
   }
 
   return {
-    'minecraft:behavior.croak': result
+    'minecraft:behavior.croak': result,
   };
 };

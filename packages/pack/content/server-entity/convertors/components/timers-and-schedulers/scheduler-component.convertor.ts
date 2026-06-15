@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SchedulerComponent } from '../../../interfaces/components/timers-and-schedulers/scheduler-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertSchedulerComponent = (
   component: Partial<SchedulerComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:scheduler': any } | undefined => {
   if (!component) {
     return undefined;
@@ -50,7 +53,10 @@ export const convertSchedulerComponent = (
       }
 
       // Validate event
-      const convertedEvent = convertTrigger(event.event, withFieldPath(ctx, 'event'));
+      const convertedEvent = convertTrigger(
+        event.event,
+        withFieldPath(ctx, 'event'),
+      );
       if (!convertedEvent) {
         return undefined;
       }
@@ -64,6 +70,6 @@ export const convertSchedulerComponent = (
   }
 
   return {
-    'minecraft:scheduler': result
+    'minecraft:scheduler': result,
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { CelebrateHuntComponent } from '../../../interfaces/components/ai/celebrate-hunt-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -22,17 +22,33 @@ const validateSoundInterval = (
 
       return false;
     }
-    if (!validateNumber(interval[0], `${fieldName}[0]`, 0, Number.MAX_VALUE) ||
-        !validateNumber(interval[1], `${fieldName}[1]`, 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(interval[0], `${fieldName}[0]`, 0, Number.MAX_VALUE) ||
+      !validateNumber(interval[1], `${fieldName}[1]`, 0, Number.MAX_VALUE)
+    ) {
       return false;
     }
   } else if (typeof interval === 'object') {
-    if (!validateNumber(interval.rangeMin, `${fieldName}.rangeMin`, 0, Number.MAX_VALUE) ||
-        !validateNumber(interval.rangeMax, `${fieldName}.rangeMax`, 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        interval.rangeMin,
+        `${fieldName}.rangeMin`,
+        0,
+        Number.MAX_VALUE,
+      ) ||
+      !validateNumber(
+        interval.rangeMax,
+        `${fieldName}.rangeMax`,
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return false;
     }
   } else {
-    console.error(`${fieldName} must be a number, array of two numbers, or an object with rangeMin and rangeMax`);
+    console.error(
+      `${fieldName} must be a number, array of two numbers, or an object with rangeMin and rangeMax`,
+    );
 
     return false;
   }
@@ -46,7 +62,7 @@ const validateSoundInterval = (
  */
 export const convertCelebrateHuntComponent = (
   component: Partial<CelebrateHuntComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:celebrate_hunt': any } | undefined => {
   if (!component) {
     return undefined;

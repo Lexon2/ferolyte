@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SonicBoomBehavior } from '../../interfaces/behaviors/sonic-boom-behavior';
 import { validateNumber, validateSoundEvent } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateSoundEvent } from '../common/validation';
  */
 export const convertSonicBoomBehavior = (
   behavior: Partial<SonicBoomBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.sonic_boom': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -51,7 +51,9 @@ export const convertSonicBoomBehavior = (
 
   // Validate attackRangeHorizontal
   if (behavior.attackRangeHorizontal !== undefined) {
-    if (!validateNumber(behavior.attackRangeHorizontal, 'attackRangeHorizontal')) {
+    if (
+      !validateNumber(behavior.attackRangeHorizontal, 'attackRangeHorizontal')
+    ) {
       return undefined;
     }
     result.attack_range_horizontal = behavior.attackRangeHorizontal;
@@ -91,7 +93,12 @@ export const convertSonicBoomBehavior = (
 
   // Validate durationUntilAttackSound
   if (behavior.durationUntilAttackSound !== undefined) {
-    if (!validateNumber(behavior.durationUntilAttackSound, 'durationUntilAttackSound')) {
+    if (
+      !validateNumber(
+        behavior.durationUntilAttackSound,
+        'durationUntilAttackSound',
+      )
+    ) {
       return undefined;
     }
     result.duration_until_attack_sound = behavior.durationUntilAttackSound;
@@ -107,7 +114,12 @@ export const convertSonicBoomBehavior = (
 
   // Validate knockbackHorizontalStrength
   if (behavior.knockbackHorizontalStrength !== undefined) {
-    if (!validateNumber(behavior.knockbackHorizontalStrength, 'knockbackHorizontalStrength')) {
+    if (
+      !validateNumber(
+        behavior.knockbackHorizontalStrength,
+        'knockbackHorizontalStrength',
+      )
+    ) {
       return undefined;
     }
     result.knockback_horizontal_strength = behavior.knockbackHorizontalStrength;
@@ -115,13 +127,18 @@ export const convertSonicBoomBehavior = (
 
   // Validate knockbackVerticalStrength
   if (behavior.knockbackVerticalStrength !== undefined) {
-    if (!validateNumber(behavior.knockbackVerticalStrength, 'knockbackVerticalStrength')) {
+    if (
+      !validateNumber(
+        behavior.knockbackVerticalStrength,
+        'knockbackVerticalStrength',
+      )
+    ) {
       return undefined;
     }
     result.knockback_vertical_strength = behavior.knockbackVerticalStrength;
   }
 
   return {
-    'minecraft:behavior.sonic_boom': result
+    'minecraft:behavior.sonic_boom': result,
   };
 };

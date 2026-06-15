@@ -1,19 +1,19 @@
 {
-  "name": "@artifex/pack",
+  "name": "@ferolyte/pack",
   "version": "0.1.0",
-  "description": "Artifex content SDK for Minecraft BE addons",
+  "description": "Ferolyte content SDK for Minecraft BE addons",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lexon2/artifex.git",
+    "url": "git+https://github.com/Lexon2/ferolyte.git",
     "directory": "packages/pack"
   },
   "bugs": {
-    "url": "https://github.com/Lexon2/artifex/issues"
+    "url": "https://github.com/Lexon2/ferolyte/issues"
   },
-  "homepage": "https://github.com/Lexon2/artifex#readme",
+  "homepage": "https://github.com/Lexon2/ferolyte#readme",
   "publishConfig": {
     "access": "public"
   },
@@ -32,7 +32,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@artifex/common": "^0.1.0"
+    "@ferolyte/common": "^0.1.0"
   },
   "devDependencies": {
     "esbuild": "^0.28.1",

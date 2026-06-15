@@ -1,8 +1,11 @@
 import { describe, it } from 'vitest';
 
-import { convertPushableByEntityComponent } from '@artifex/pack/content/server-entity/convertors/components/physical/pushable-by-entity-component.convertor';
+import { convertPushableByEntityComponent } from '@ferolyte/pack/content/server-entity/convertors/components/physical/pushable-by-entity-component.convertor';
 
-import { expectComponent, expectUndefined } from '../../helpers/assert-component';
+import {
+  expectComponent,
+  expectUndefined,
+} from '../../helpers/assert-component';
 
 describe('convertPushableByEntityComponent', () => {
   it('returns undefined when input is missing', () => {

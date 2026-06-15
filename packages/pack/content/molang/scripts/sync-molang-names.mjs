@@ -17,7 +17,7 @@ const defaultDocPath = join(
   '..',
   '.cursor',
   'projects',
-  'e-inmine-tools-artifex-main',
+  'e-inmine-tools-ferolyte-main',
   'agent-tools',
   'ef8908f3-82d9-43ec-b4be-795ccd4869d0.txt',
 );
@@ -38,13 +38,10 @@ const queryNames = [
 const snakeToPascal = (snake) =>
   snake.replace(/(^|_)([a-z0-9])/g, (_, __, char) => char.toUpperCase());
 
-const formatUnion = (names) =>
-  names.map((name) => `  | '${name}'`).join('\n');
+const formatUnion = (names) => names.map((name) => `  | '${name}'`).join('\n');
 
 const formatQueryEnum = (names) =>
-  names
-    .map((name) => `  ${snakeToPascal(name)} = '${name}',`)
-    .join('\n');
+  names.map((name) => `  ${snakeToPascal(name)} = '${name}',`).join('\n');
 
 writeFileSync(
   join(typesDir, 'math-names.ts'),

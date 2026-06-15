@@ -1,6 +1,6 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validatePositiveNumber } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validatePositiveNumber } from '@ferolyte/common/content/validation/content-validation';
 
 interface DamageChance {
   min: number;
@@ -50,9 +50,7 @@ export const createDurability = (
       min > max
     ) {
       logContentError(
-        ctx !== undefined
-          ? { ...ctx, fieldPath: 'damageChance' }
-          : undefined,
+        ctx !== undefined ? { ...ctx, fieldPath: 'damageChance' } : undefined,
         'Damage chance must have valid min/max values between 0 and 100',
       );
       return undefined;

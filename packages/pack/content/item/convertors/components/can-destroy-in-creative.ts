@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateBooleanValue } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates a can_destroy_in_creative component for Minecraft items
@@ -15,7 +15,11 @@ export const createCanDestroyInCreative = (
   }
 
   if (
-    !validateBooleanValue(value, ctx, 'Can destroy in creative must be a boolean')
+    !validateBooleanValue(
+      value,
+      ctx,
+      'Can destroy in creative must be a boolean',
+    )
   ) {
     return undefined;
   }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createDigger } from '@artifex/pack/content/item/convertors/components/digger';
+import { createDigger } from '@ferolyte/pack/content/item/convertors/components/digger';
 import { expectUndefined } from '../helpers/assert-component';
 
 describe('createDigger', () => {
@@ -12,10 +12,12 @@ describe('createDigger', () => {
   });
 
   it('maps destroy speeds and useEfficiency', () => {
-    expect(createDigger({
-      useEfficiency: true,
-      destroySpeeds: [{ block: 'test:stone', speed: 5 }],
-    })).toEqual({
+    expect(
+      createDigger({
+        useEfficiency: true,
+        destroySpeeds: [{ block: 'test:stone', speed: 5 }],
+      }),
+    ).toEqual({
       'minecraft:digger': {
         use_efficiency: true,
         destroy_speeds: [{ block: 'test:stone', speed: 5 }],

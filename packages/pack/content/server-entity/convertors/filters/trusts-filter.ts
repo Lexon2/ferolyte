@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { TrustsFilter } from '../../interfaces/filters/trusts-filter';
 
@@ -9,13 +9,16 @@ import { TrustsFilter } from '../../interfaces/filters/trusts-filter';
  */
 export const convertTrustsFilter = (
   filter: Partial<TrustsFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): ReturnType<typeof convertBooleanFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
   }
-  return convertBooleanFilter({
-    ...filter,
-    test: 'trusts'
-  }, ctx);
+  return convertBooleanFilter(
+    {
+      ...filter,
+      test: 'trusts',
+    },
+    ctx,
+  );
 };

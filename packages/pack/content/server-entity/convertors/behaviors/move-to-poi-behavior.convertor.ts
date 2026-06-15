@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { POI_TYPE } from '../../constants/poi-type';
 import { MoveToPoiBehavior } from '../../interfaces/behaviors/move-to-poi-behavior';
 import { validateNumber } from '../common/validation';
@@ -10,7 +10,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertMoveToPoiBehavior = (
   behavior: Partial<MoveToPoiBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_to_poi': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -45,6 +45,6 @@ export const convertMoveToPoiBehavior = (
   }
 
   return {
-    'minecraft:behavior.move_to_poi': result
+    'minecraft:behavior.move_to_poi': result,
   };
 };

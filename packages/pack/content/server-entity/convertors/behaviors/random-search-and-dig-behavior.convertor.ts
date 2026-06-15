@@ -1,8 +1,15 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RandomSearchAndDigBehavior } from '../../interfaces/behaviors/random-search-and-dig-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
-import { validateNumber, validateString, validateStringArray } from '../common/validation';
+import {
+  validateNumber,
+  validateString,
+  validateStringArray,
+} from '../common/validation';
 
 /**
  * Converts a RandomSearchAndDigBehavior to Minecraft format
@@ -11,7 +18,7 @@ import { validateNumber, validateString, validateStringArray } from '../common/v
  */
 export const convertRandomSearchAndDigBehavior = (
   behavior: Partial<RandomSearchAndDigBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.random_search_and_dig': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -37,7 +44,11 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate cooldownRange
   if (behavior.cooldownRange !== undefined) {
-    const convertedCooldownRange = convertRange(behavior.cooldownRange, 'cooldownRange', 0);
+    const convertedCooldownRange = convertRange(
+      behavior.cooldownRange,
+      'cooldownRange',
+      0,
+    );
     if (!convertedCooldownRange) {
       return undefined;
     }
@@ -46,7 +57,10 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate diggingDurationRange
   if (behavior.diggingDurationRange !== undefined) {
-    const convertedDiggingDurationRange = convertRange(behavior.diggingDurationRange, 'diggingDurationRange');
+    const convertedDiggingDurationRange = convertRange(
+      behavior.diggingDurationRange,
+      'diggingDurationRange',
+    );
     if (!convertedDiggingDurationRange) {
       return undefined;
     }
@@ -55,7 +69,12 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate findValidPositionRetries
   if (behavior.findValidPositionRetries !== undefined) {
-    if (!validateNumber(behavior.findValidPositionRetries, 'findValidPositionRetries')) {
+    if (
+      !validateNumber(
+        behavior.findValidPositionRetries,
+        'findValidPositionRetries',
+      )
+    ) {
       return undefined;
     }
     result.find_valid_position_retries = behavior.findValidPositionRetries;
@@ -79,7 +98,10 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onDiggingStart
   if (behavior.onDiggingStart !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onDiggingStart, withFieldPath(ctx, 'onDiggingStart'));
+    const convertedTrigger = convertTrigger(
+      behavior.onDiggingStart,
+      withFieldPath(ctx, 'onDiggingStart'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -88,7 +110,10 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onFailDuringDigging
   if (behavior.onFailDuringDigging !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onFailDuringDigging, withFieldPath(ctx, 'onFailDuringDigging'));
+    const convertedTrigger = convertTrigger(
+      behavior.onFailDuringDigging,
+      withFieldPath(ctx, 'onFailDuringDigging'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -97,7 +122,10 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onFailDuringSearching
   if (behavior.onFailDuringSearching !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onFailDuringSearching, withFieldPath(ctx, 'onFailDuringSearching'));
+    const convertedTrigger = convertTrigger(
+      behavior.onFailDuringSearching,
+      withFieldPath(ctx, 'onFailDuringSearching'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -106,7 +134,10 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onItemFound
   if (behavior.onItemFound !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onItemFound, withFieldPath(ctx, 'onItemFound'));
+    const convertedTrigger = convertTrigger(
+      behavior.onItemFound,
+      withFieldPath(ctx, 'onItemFound'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -115,7 +146,10 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onSearchingStart
   if (behavior.onSearchingStart !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onSearchingStart, withFieldPath(ctx, 'onSearchingStart'));
+    const convertedTrigger = convertTrigger(
+      behavior.onSearchingStart,
+      withFieldPath(ctx, 'onSearchingStart'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -124,7 +158,10 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate onSuccess
   if (behavior.onSuccess !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onSuccess, withFieldPath(ctx, 'onSuccess'));
+    const convertedTrigger = convertTrigger(
+      behavior.onSuccess,
+      withFieldPath(ctx, 'onSuccess'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -149,7 +186,9 @@ export const convertRandomSearchAndDigBehavior = (
 
   // Validate spawnItemAfterSeconds
   if (behavior.spawnItemAfterSeconds !== undefined) {
-    if (!validateNumber(behavior.spawnItemAfterSeconds, 'spawnItemAfterSeconds')) {
+    if (
+      !validateNumber(behavior.spawnItemAfterSeconds, 'spawnItemAfterSeconds')
+    ) {
       return undefined;
     }
     result.spawn_item_after_seconds = behavior.spawnItemAfterSeconds;
@@ -168,18 +207,25 @@ export const convertRandomSearchAndDigBehavior = (
     if (!validateStringArray(behavior.targetBlocks, 'targetBlocks')) {
       return undefined;
     }
-    result.target_blocks = behavior.targetBlocks.map((block) => block.toLowerCase());
+    result.target_blocks = behavior.targetBlocks.map((block) =>
+      block.toLowerCase(),
+    );
   }
 
   // Validate targetDigPositionOffset
   if (behavior.targetDigPositionOffset !== undefined) {
-    if (!validateNumber(behavior.targetDigPositionOffset, 'targetDigPositionOffset')) {
+    if (
+      !validateNumber(
+        behavior.targetDigPositionOffset,
+        'targetDigPositionOffset',
+      )
+    ) {
       return undefined;
     }
     result.target_dig_position_offset = behavior.targetDigPositionOffset;
   }
 
   return {
-    'minecraft:behavior.random_search_and_dig': result
+    'minecraft:behavior.random_search_and_dig': result,
   };
 };

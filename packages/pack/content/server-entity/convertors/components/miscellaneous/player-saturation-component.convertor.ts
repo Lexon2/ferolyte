@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PlayerSaturationComponent } from '../../../interfaces/components/miscellaneous/player-saturation-component';
 import { validateInteger } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger } from '../../common/validation';
  */
 export const convertPlayerSaturationComponent = (
   component: Partial<PlayerSaturationComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:player.saturation': any } | undefined => {
   if (!component) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertPlayerSaturationComponent = (
   }
 
   return {
-    'minecraft:player.saturation': result
+    'minecraft:player.saturation': result,
   };
 };

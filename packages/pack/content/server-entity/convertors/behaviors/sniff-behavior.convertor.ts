@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SniffBehavior } from '../../interfaces/behaviors/sniff-behavior';
 import { convertRange } from '../common/convertors';
 import { validateNumber } from '../common/validation';
@@ -10,7 +10,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertSniffBehavior = (
   behavior: Partial<SniffBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.sniff': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -28,7 +28,10 @@ export const convertSniffBehavior = (
 
   // Validate cooldownRange
   if (behavior.cooldownRange !== undefined) {
-    const convertedCooldownRange = convertRange(behavior.cooldownRange, 'cooldownRange');
+    const convertedCooldownRange = convertRange(
+      behavior.cooldownRange,
+      'cooldownRange',
+    );
     if (!convertedCooldownRange) {
       return undefined;
     }
@@ -53,7 +56,12 @@ export const convertSniffBehavior = (
 
   // Validate suspicionRadiusHorizontal
   if (behavior.suspicionRadiusHorizontal !== undefined) {
-    if (!validateNumber(behavior.suspicionRadiusHorizontal, 'suspicionRadiusHorizontal')) {
+    if (
+      !validateNumber(
+        behavior.suspicionRadiusHorizontal,
+        'suspicionRadiusHorizontal',
+      )
+    ) {
       return undefined;
     }
     result.suspicion_radius_horizontal = behavior.suspicionRadiusHorizontal;
@@ -61,13 +69,18 @@ export const convertSniffBehavior = (
 
   // Validate suspicionRadiusVertical
   if (behavior.suspicionRadiusVertical !== undefined) {
-    if (!validateNumber(behavior.suspicionRadiusVertical, 'suspicionRadiusVertical')) {
+    if (
+      !validateNumber(
+        behavior.suspicionRadiusVertical,
+        'suspicionRadiusVertical',
+      )
+    ) {
       return undefined;
     }
     result.suspicion_radius_vertical = behavior.suspicionRadiusVertical;
   }
 
   return {
-    'minecraft:behavior.sniff': result
+    'minecraft:behavior.sniff': result,
   };
 };

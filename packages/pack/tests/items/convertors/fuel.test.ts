@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createFuel } from '@artifex/pack/content/item/convertors/components/fuel';
+import { createFuel } from '@ferolyte/pack/content/item/convertors/components/fuel';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createFuel', () => {
@@ -12,6 +12,8 @@ describe('createFuel', () => {
   });
 
   it('maps fuel duration', () => {
-    expectComponent(createFuel, { duration: 100 }, 'minecraft:fuel', { duration: 100 });
+    expectComponent(createFuel, { duration: 100 }, 'minecraft:fuel', {
+      duration: 100,
+    });
   });
 });

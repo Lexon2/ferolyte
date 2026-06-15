@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ExhaustionValuesComponent } from '../../../interfaces/components/miscellaneous/exhaustion-values-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertExhaustionValuesComponent = (
   component: Partial<ExhaustionValuesComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:exhaustion_values': any } | undefined => {
   if (!component) {
     return undefined;
@@ -67,7 +67,9 @@ export const convertExhaustionValuesComponent = (
 
   // Validate sprintJump
   if (component.sprintJump !== undefined) {
-    if (!validateNumber(component.sprintJump, 'sprintJump', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.sprintJump, 'sprintJump', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.sprint_jump = component.sprintJump;

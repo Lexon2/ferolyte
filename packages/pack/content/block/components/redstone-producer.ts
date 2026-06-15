@@ -1,10 +1,10 @@
 import { RedstoneProducerComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateBooleanValue,
   validateIntegerRange,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 type Face =
   | 'up'

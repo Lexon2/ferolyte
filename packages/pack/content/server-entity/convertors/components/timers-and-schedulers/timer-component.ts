@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TimerComponent } from '../../../interfaces/components/timers-and-schedulers/timer-component';
 import { validateBoolean } from '../../common/validation';
 import { validateTime } from '../../common/validation';
@@ -11,7 +11,7 @@ import { validateWeight } from '../../common/validation';
  */
 export const convertTimerComponent = (
   component: Partial<TimerComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:timer': any } | undefined => {
   if (!component) {
     return undefined;
@@ -45,7 +45,10 @@ export const convertTimerComponent = (
 
   // Validate timeDownEvent
   if (component.timeDownEvent !== undefined) {
-    if (typeof component.timeDownEvent !== 'object' || component.timeDownEvent === null) {
+    if (
+      typeof component.timeDownEvent !== 'object' ||
+      component.timeDownEvent === null
+    ) {
       console.error('timeDownEvent must be an object');
 
       return undefined;
@@ -61,7 +64,7 @@ export const convertTimerComponent = (
       return undefined;
     }
 
-    result.random_time_choices = component.randomTimeChoices.map(choice => {
+    result.random_time_choices = component.randomTimeChoices.map((choice) => {
       if (typeof choice !== 'object' || choice === null) {
         console.error('Each random time choice must be an object');
 
@@ -87,12 +90,14 @@ export const convertTimerComponent = (
       return convertedChoice;
     });
 
-    if (result.random_time_choices.some((choice: any) => choice === undefined)) {
+    if (
+      result.random_time_choices.some((choice: any) => choice === undefined)
+    ) {
       return undefined;
     }
   }
 
   return {
-    'minecraft:timer': result
+    'minecraft:timer': result,
   };
 };

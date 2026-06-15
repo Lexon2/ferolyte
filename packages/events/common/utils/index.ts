@@ -1,1 +1,1 @@
-export * as ArtifexEventUtils from './external';
+export * as FerolyteEventUtils from './external';

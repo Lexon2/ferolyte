@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MoveToLandBehavior } from '../../interfaces/behaviors/move-to-land-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertMoveToLandBehavior = (
   behavior: Partial<MoveToLandBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_to_land': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -66,6 +66,6 @@ export const convertMoveToLandBehavior = (
   }
 
   return {
-    'minecraft:behavior.move_to_land': result
+    'minecraft:behavior.move_to_land': result,
   };
 };

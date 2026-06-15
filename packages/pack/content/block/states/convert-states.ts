@@ -1,11 +1,11 @@
 import { BlockStates } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateNonEmptyArray,
   validateNonEmptyString,
   validateNumber,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates properly formatted block states for Minecraft blocks
@@ -106,7 +106,13 @@ export const createEnumState = (
   values: string[],
   ctx?: ContentDiagnosticContext,
 ): string[] | undefined => {
-  if (!validateNonEmptyArray(values, ctx, 'Enum state must have at least one possible value')) {
+  if (
+    !validateNonEmptyArray(
+      values,
+      ctx,
+      'Enum state must have at least one possible value',
+    )
+  ) {
     return undefined;
   }
 

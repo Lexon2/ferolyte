@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DragonTakeoffBehavior } from '../../interfaces/behaviors/dragon-takeoff-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertDragonTakeoffBehavior = (
   behavior: Partial<DragonTakeoffBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.dragontakeoff': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertDragonTakeoffBehavior = (
   }
 
   return {
-    'minecraft:behavior.dragontakeoff': result
+    'minecraft:behavior.dragontakeoff': result,
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { CircleAroundAnchorBehavior } from '../../interfaces/behaviors/circle-around-anchor-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertCircleAroundAnchorBehavior = (
   behavior: Partial<CircleAroundAnchorBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.circle_around_anchor': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -35,8 +35,11 @@ export const convertCircleAroundAnchorBehavior = (
 
   // Validate radiusRange
   if (behavior.radiusRange !== undefined) {
-    if (!Array.isArray(behavior.radiusRange) || behavior.radiusRange.length !== 2 ||
-        !behavior.radiusRange.every(n => validateNumber(n, 'radiusRange'))) {
+    if (
+      !Array.isArray(behavior.radiusRange) ||
+      behavior.radiusRange.length !== 2 ||
+      !behavior.radiusRange.every((n) => validateNumber(n, 'radiusRange'))
+    ) {
       console.error('radiusRange must be an array of exactly 2 numbers');
 
       return undefined;
@@ -54,9 +57,16 @@ export const convertCircleAroundAnchorBehavior = (
 
   // Validate heightAboveTargetRange
   if (behavior.heightAboveTargetRange !== undefined) {
-    if (!Array.isArray(behavior.heightAboveTargetRange) || behavior.heightAboveTargetRange.length !== 2 ||
-        !behavior.heightAboveTargetRange.every(n => validateNumber(n, 'heightAboveTargetRange'))) {
-      console.error('heightAboveTargetRange must be an array of exactly 2 numbers');
+    if (
+      !Array.isArray(behavior.heightAboveTargetRange) ||
+      behavior.heightAboveTargetRange.length !== 2 ||
+      !behavior.heightAboveTargetRange.every((n) =>
+        validateNumber(n, 'heightAboveTargetRange'),
+      )
+    ) {
+      console.error(
+        'heightAboveTargetRange must be an array of exactly 2 numbers',
+      );
 
       return undefined;
     }
@@ -65,8 +75,13 @@ export const convertCircleAroundAnchorBehavior = (
 
   // Validate heightOffsetRange
   if (behavior.heightOffsetRange !== undefined) {
-    if (!Array.isArray(behavior.heightOffsetRange) || behavior.heightOffsetRange.length !== 2 ||
-        !behavior.heightOffsetRange.every(n => validateNumber(n, 'heightOffsetRange'))) {
+    if (
+      !Array.isArray(behavior.heightOffsetRange) ||
+      behavior.heightOffsetRange.length !== 2 ||
+      !behavior.heightOffsetRange.every((n) =>
+        validateNumber(n, 'heightOffsetRange'),
+      )
+    ) {
       console.error('heightOffsetRange must be an array of exactly 2 numbers');
 
       return undefined;
@@ -100,7 +115,9 @@ export const convertCircleAroundAnchorBehavior = (
 
   // Validate radiusAdjustmentChance
   if (behavior.radiusAdjustmentChance !== undefined) {
-    if (!validateNumber(behavior.radiusAdjustmentChance, 'radiusAdjustmentChance')) {
+    if (
+      !validateNumber(behavior.radiusAdjustmentChance, 'radiusAdjustmentChance')
+    ) {
       return undefined;
     }
     result.radius_adjustment_chance = behavior.radiusAdjustmentChance;
@@ -108,7 +125,9 @@ export const convertCircleAroundAnchorBehavior = (
 
   // Validate heightAdjustmentChance
   if (behavior.heightAdjustmentChance !== undefined) {
-    if (!validateNumber(behavior.heightAdjustmentChance, 'heightAdjustmentChance')) {
+    if (
+      !validateNumber(behavior.heightAdjustmentChance, 'heightAdjustmentChance')
+    ) {
       return undefined;
     }
     result.height_adjustment_chance = behavior.heightAdjustmentChance;
@@ -123,6 +142,6 @@ export const convertCircleAroundAnchorBehavior = (
   }
 
   return {
-    'minecraft:behavior.circle_around_anchor': result
+    'minecraft:behavior.circle_around_anchor': result,
   };
 };

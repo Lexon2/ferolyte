@@ -1,4 +1,4 @@
-import { OneOfRecord } from '@artifex/common/types/core/one-of-record';
+import { OneOfRecord } from '@ferolyte/common/types/core/one-of-record';
 import { MolangMath, MolangQuery } from '../../molang/types';
 
 type AnimationKeys<T> =

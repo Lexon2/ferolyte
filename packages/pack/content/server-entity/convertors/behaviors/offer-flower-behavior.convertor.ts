@@ -1,7 +1,15 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { OfferFlowerBehavior } from '../../interfaces/behaviors/offer-flower-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
-import { validateDegrees, validateNumber, validatePercentage, validateVector3 } from '../common/validation';
+import {
+  validateDegrees,
+  validateNumber,
+  validatePercentage,
+  validateVector3,
+} from '../common/validation';
 
 /**
  * Converts an OfferFlowerBehavior to Minecraft format
@@ -10,7 +18,7 @@ import { validateDegrees, validateNumber, validatePercentage, validateVector3 } 
  */
 export const convertOfferFlowerBehavior = (
   behavior: Partial<OfferFlowerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.offer_flower': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -36,7 +44,10 @@ export const convertOfferFlowerBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -53,7 +64,9 @@ export const convertOfferFlowerBehavior = (
 
   // Validate maxOfferFlowerDuration
   if (behavior.maxOfferFlowerDuration !== undefined) {
-    if (!validateNumber(behavior.maxOfferFlowerDuration, 'maxOfferFlowerDuration')) {
+    if (
+      !validateNumber(behavior.maxOfferFlowerDuration, 'maxOfferFlowerDuration')
+    ) {
       return undefined;
     }
     result.max_offer_flower_duration = behavior.maxOfferFlowerDuration;
@@ -76,6 +89,6 @@ export const convertOfferFlowerBehavior = (
   }
 
   return {
-    'minecraft:behavior.offer_flower': result
+    'minecraft:behavior.offer_flower': result,
   };
 };

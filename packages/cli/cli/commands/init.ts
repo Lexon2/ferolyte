@@ -12,7 +12,7 @@ const { version } = createRequire(import.meta.url)('../../../package.json') as {
 export const initCommand = defineCommand({
   meta: {
     name: 'init',
-    description: 'Scaffold a new Artifex project',
+    description: 'Scaffold a new Ferolyte project',
   },
   args: {
     projectName: {

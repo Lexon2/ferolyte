@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SwimWanderBehavior } from '../../interfaces/behaviors/swim-wander-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertSwimWanderBehavior = (
   behavior: Partial<SwimWanderBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.swim_wander': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -58,6 +58,6 @@ export const convertSwimWanderBehavior = (
   }
 
   return {
-    'minecraft:behavior.swim_wander': result
+    'minecraft:behavior.swim_wander': result,
   };
 };

@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createDamageAbsorption } from '@artifex/pack/content/item/convertors/components/damage-absorption';
+import { createDamageAbsorption } from '@ferolyte/pack/content/item/convertors/components/damage-absorption';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createDamageAbsorption', () => {
@@ -16,8 +16,13 @@ describe('createDamageAbsorption', () => {
   });
 
   it('maps valid causes', () => {
-    expectComponent(createDamageAbsorption, { causes: ['fire', 'lava'] }, 'minecraft:damage_absorption', {
-      absorbable_causes: ['fire', 'lava'],
-    });
+    expectComponent(
+      createDamageAbsorption,
+      { causes: ['fire', 'lava'] },
+      'minecraft:damage_absorption',
+      {
+        absorbable_causes: ['fire', 'lava'],
+      },
+    );
   });
 });

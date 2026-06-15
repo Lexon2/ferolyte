@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RollBehavior } from '../../interfaces/behaviors/roll-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertRollBehavior = (
   behavior: Partial<RollBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.roll': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertRollBehavior = (
   }
 
   return {
-    'minecraft:behavior.roll': result
+    'minecraft:behavior.roll': result,
   };
 };

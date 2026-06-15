@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { ServerEntityBuilder } from '@artifex/pack/content/server-entity/server-entity-builder';
+import { ServerEntityBuilder } from '@ferolyte/pack/content/server-entity/server-entity-builder';
 
 import { minimalServerEntityConfig } from './helpers/fixtures';
 

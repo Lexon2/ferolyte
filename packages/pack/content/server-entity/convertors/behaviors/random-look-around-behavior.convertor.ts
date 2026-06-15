@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RandomLookAroundBehavior } from '../../interfaces/behaviors/random-look-around-behavior';
 import { convertRange } from '../common/convertors';
 import { validateDegrees, validateNumber } from '../common/validation';
@@ -10,7 +10,7 @@ import { validateDegrees, validateNumber } from '../common/validation';
  */
 export const convertRandomLookAroundBehavior = (
   behavior: Partial<RandomLookAroundBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.random_look_around': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -28,7 +28,9 @@ export const convertRandomLookAroundBehavior = (
 
   // Validate angleOfViewHorizontal
   if (behavior.angleOfViewHorizontal !== undefined) {
-    if (!validateDegrees(behavior.angleOfViewHorizontal, 'angleOfViewHorizontal')) {
+    if (
+      !validateDegrees(behavior.angleOfViewHorizontal, 'angleOfViewHorizontal')
+    ) {
       return undefined;
     }
     result.angle_of_view_horizontal = behavior.angleOfViewHorizontal;
@@ -68,6 +70,6 @@ export const convertRandomLookAroundBehavior = (
   }
 
   return {
-    'minecraft:behavior.random_look_around': result
+    'minecraft:behavior.random_look_around': result,
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SilverfishWakeUpFriendsBehavior } from '../../interfaces/behaviors/silverfish-wake-up-friends-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertSilverfishWakeUpFriendsBehavior = (
   behavior: Partial<SilverfishWakeUpFriendsBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.silverfish_wake_up_friends': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertSilverfishWakeUpFriendsBehavior = (
   }
 
   return {
-    'minecraft:behavior.silverfish_wake_up_friends': result
+    'minecraft:behavior.silverfish_wake_up_friends': result,
   };
 };

@@ -1,8 +1,11 @@
 import { describe, it } from 'vitest';
 
-import { convertPlaceBlockBehavior } from '@artifex/pack/content/server-entity/convertors/behaviors/place-block-behavior.convertor';
+import { convertPlaceBlockBehavior } from '@ferolyte/pack/content/server-entity/convertors/behaviors/place-block-behavior.convertor';
 
-import { expectComponent, expectUndefined } from '../../helpers/assert-component';
+import {
+  expectComponent,
+  expectUndefined,
+} from '../../helpers/assert-component';
 
 describe('convertPlaceBlockBehavior', () => {
   it('returns undefined when input is missing', () => {

@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createSwingSounds } from '@artifex/pack/content/item/convertors/components/swing-sounds';
+import { createSwingSounds } from '@ferolyte/pack/content/item/convertors/components/swing-sounds';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createSwingSounds', () => {
@@ -12,14 +12,19 @@ describe('createSwingSounds', () => {
   });
 
   it('maps swing sounds', () => {
-    expectComponent(createSwingSounds, {
-      attackCriticalHit: 'crit',
-      attackHit: 'hit',
-      attackMiss: 'miss',
-    }, 'minecraft:swing_sounds', {
-      attack_critical_hit: 'crit',
-      attack_hit: 'hit',
-      attack_miss: 'miss',
-    });
+    expectComponent(
+      createSwingSounds,
+      {
+        attackCriticalHit: 'crit',
+        attackHit: 'hit',
+        attackMiss: 'miss',
+      },
+      'minecraft:swing_sounds',
+      {
+        attack_critical_hit: 'crit',
+        attack_hit: 'hit',
+        attack_miss: 'miss',
+      },
+    );
   });
 });

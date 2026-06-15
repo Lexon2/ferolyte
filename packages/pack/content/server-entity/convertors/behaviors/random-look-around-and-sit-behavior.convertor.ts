@@ -1,6 +1,11 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RandomLookAroundAndSitBehavior } from '../../interfaces/behaviors/random-look-around-and-sit-behavior';
-import { validateNumber, validateBoolean, validateDegrees, validateInteger } from '../common/validation';
+import {
+  validateNumber,
+  validateBoolean,
+  validateDegrees,
+  validateInteger,
+} from '../common/validation';
 
 /**
  * Converts a RandomLookAroundAndSitBehavior to Minecraft format
@@ -9,7 +14,7 @@ import { validateNumber, validateBoolean, validateDegrees, validateInteger } fro
  */
 export const convertRandomLookAroundAndSitBehavior = (
   behavior: Partial<RandomLookAroundAndSitBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.random_look_around_and_sit': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -35,7 +40,12 @@ export const convertRandomLookAroundAndSitBehavior = (
 
   // Validate continueSittingOnReload
   if (behavior.continueSittingOnReload !== undefined) {
-    if (!validateBoolean(behavior.continueSittingOnReload, 'continueSittingOnReload')) {
+    if (
+      !validateBoolean(
+        behavior.continueSittingOnReload,
+        'continueSittingOnReload',
+      )
+    ) {
       return undefined;
     }
     result.continue_sitting_on_reload = behavior.continueSittingOnReload;
@@ -43,7 +53,12 @@ export const convertRandomLookAroundAndSitBehavior = (
 
   // Validate maxAngleOfViewHorizontal
   if (behavior.maxAngleOfViewHorizontal !== undefined) {
-    if (!validateDegrees(behavior.maxAngleOfViewHorizontal, 'maxAngleOfViewHorizontal')) {
+    if (
+      !validateDegrees(
+        behavior.maxAngleOfViewHorizontal,
+        'maxAngleOfViewHorizontal',
+      )
+    ) {
       return undefined;
     }
     result.max_angle_of_view_horizontal = behavior.maxAngleOfViewHorizontal;
@@ -67,7 +82,13 @@ export const convertRandomLookAroundAndSitBehavior = (
 
   // Validate minAngleOfViewHorizontal
   if (behavior.minAngleOfViewHorizontal !== undefined) {
-    if (!validateDegrees(behavior.minAngleOfViewHorizontal, 'minAngleOfViewHorizontal', true)) {
+    if (
+      !validateDegrees(
+        behavior.minAngleOfViewHorizontal,
+        'minAngleOfViewHorizontal',
+        true,
+      )
+    ) {
       return undefined;
     }
     result.min_angle_of_view_horizontal = behavior.minAngleOfViewHorizontal;
@@ -99,13 +120,18 @@ export const convertRandomLookAroundAndSitBehavior = (
 
   // Validate randomLookAroundCooldown
   if (behavior.randomLookAroundCooldown !== undefined) {
-    if (!validateInteger(behavior.randomLookAroundCooldown, 'randomLookAroundCooldown')) {
+    if (
+      !validateInteger(
+        behavior.randomLookAroundCooldown,
+        'randomLookAroundCooldown',
+      )
+    ) {
       return undefined;
     }
     result.random_look_around_cooldown = behavior.randomLookAroundCooldown;
   }
 
   return {
-    'minecraft:behavior.random_look_around_and_sit': result
+    'minecraft:behavior.random_look_around_and_sit': result,
   };
 };

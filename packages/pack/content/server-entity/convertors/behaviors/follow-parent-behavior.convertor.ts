@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FollowParentBehavior } from '../../interfaces/behaviors/follow-parent-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertFollowParentBehavior = (
   behavior: Partial<FollowParentBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.follow_parent': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertFollowParentBehavior = (
   }
 
   return {
-    'minecraft:behavior.follow_parent': result
+    'minecraft:behavior.follow_parent': result,
   };
 };

@@ -1,9 +1,9 @@
 import { RedstoneConsumerComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateBooleanValue,
   validateIntegerRange,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates a redstone_consumer component for Minecraft blocks

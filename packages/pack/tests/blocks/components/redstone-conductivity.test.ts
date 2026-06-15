@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createRedstoneConductivity } from '@artifex/pack/content/block/components/redstone-conductivity';
+import { createRedstoneConductivity } from '@ferolyte/pack/content/block/components/redstone-conductivity';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createRedstoneConductivity', () => {
@@ -12,12 +12,17 @@ describe('createRedstoneConductivity', () => {
   });
 
   it('maps redstone conductivity fields', () => {
-    expectComponent(createRedstoneConductivity, {
-      allowsWireToStepDown: true,
-      redstoneConductor: true,
-    }, 'minecraft:redstone_conductivity', {
-      allows_wire_to_step_down: true,
-      redstone_conductor: true,
-    });
+    expectComponent(
+      createRedstoneConductivity,
+      {
+        allowsWireToStepDown: true,
+        redstoneConductor: true,
+      },
+      'minecraft:redstone_conductivity',
+      {
+        allows_wire_to_step_down: true,
+        redstone_conductor: true,
+      },
+    );
   });
 });

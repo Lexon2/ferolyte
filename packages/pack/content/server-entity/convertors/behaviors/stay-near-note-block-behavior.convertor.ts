@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { StayNearNoteBlockBehavior } from '../../interfaces/behaviors/stay-near-note-block-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertStayNearNoteBlockBehavior = (
   behavior: Partial<StayNearNoteBlockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.stay_near_noteblock': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -58,6 +58,6 @@ export const convertStayNearNoteBlockBehavior = (
   }
 
   return {
-    'minecraft:behavior.stay_near_noteblock': result
+    'minecraft:behavior.stay_near_noteblock': result,
   };
 };

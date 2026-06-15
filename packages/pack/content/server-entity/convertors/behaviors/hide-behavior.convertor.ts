@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { HideBehavior } from '../../interfaces/behaviors/hide-behavior';
 import { validateNumber, validateString } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateString } from '../common/validation';
  */
 export const convertHideBehavior = (
   behavior: Partial<HideBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.hide': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -58,6 +58,6 @@ export const convertHideBehavior = (
   }
 
   return {
-    'minecraft:behavior.hide': result
+    'minecraft:behavior.hide': result,
   };
 };

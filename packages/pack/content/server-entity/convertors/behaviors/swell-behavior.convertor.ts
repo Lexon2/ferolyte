@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SwellBehavior } from '../../interfaces/behaviors/swell-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertSwellBehavior = (
   behavior: Partial<SwellBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.swell': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,6 +42,6 @@ export const convertSwellBehavior = (
   }
 
   return {
-    'minecraft:behavior.swell': result
+    'minecraft:behavior.swell': result,
   };
 };

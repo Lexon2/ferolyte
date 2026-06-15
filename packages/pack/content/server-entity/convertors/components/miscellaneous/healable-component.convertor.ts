@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   HealableComponent,
   HealableEffect,
@@ -87,7 +90,10 @@ const convertHealableItem = (
 
   // Validate filters
   if (item.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(item.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      item.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -154,7 +160,7 @@ const convertHealableItem = (
  */
 export const convertHealableComponent = (
   component: Partial<HealableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:healable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -164,7 +170,10 @@ export const convertHealableComponent = (
 
   // Validate filters
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      component.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }

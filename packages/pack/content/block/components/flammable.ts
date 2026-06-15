@@ -1,7 +1,7 @@
 import { FlammableComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNumber } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNumber } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates a flammable component for Minecraft blocks

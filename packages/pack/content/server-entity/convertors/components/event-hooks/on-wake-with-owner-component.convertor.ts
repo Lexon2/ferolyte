@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { OnWakeWithOwnerComponent } from '../../../interfaces/components/event-hooks/on-wake-with-owner-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -9,7 +12,7 @@ import { convertTrigger } from '../../common/trigger.convertor';
  */
 export const convertOnWakeWithOwnerComponent = (
   component: Partial<OnWakeWithOwnerComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): Record<string, any> | undefined => {
   if (!component) {
     return undefined;

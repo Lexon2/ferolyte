@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BurnsInDaylightComponent } from '../../../interfaces/components/miscellaneous/burns-in-daylight-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertBurnsInDaylightComponent = (
   component: Partial<BurnsInDaylightComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:burns_in_daylight': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

@@ -4,12 +4,12 @@ import { join } from 'path';
 
 import { BUILD_CONTEXT } from '../build-context';
 import { namespaceToPath } from '../utils/namespace-path';
-import { ArtifexProfileConfig, ArtifexPackOutput } from './interfaces/config';
+import { FerolyteProfileConfig, FerolytePackOutput } from './interfaces/config';
 import { getMinecraftDirectory } from './utils/get-minecraft-directory';
-import { MinecraftPackType } from '@artifex/common/content/types/minecraft-pack-types';
+import { MinecraftPackType } from '@ferolyte/common/content/types/minecraft-pack-types';
 import { buildContentSuffixRegistry } from '../content/utils/content-suffix-registry';
 
-const applyTsConfig = async (config: ArtifexProfileConfig) => {
+const applyTsConfig = async (config: FerolyteProfileConfig) => {
   BUILD_CONTEXT.TS.CONFIG_PATH =
     config.tsconfig ?? join(process.cwd(), 'tsconfig.json');
 
@@ -23,7 +23,7 @@ const applyTsConfig = async (config: ArtifexProfileConfig) => {
   }
 };
 
-export const applyConfig = async (config: ArtifexProfileConfig) => {
+export const applyConfig = async (config: FerolyteProfileConfig) => {
   const { packs, scripts } = config;
   const { alias, output, minGameVersion, input, namespace } = packs;
 
@@ -38,7 +38,7 @@ export const applyConfig = async (config: ArtifexProfileConfig) => {
     type === 'BP' ? 'behavior_packs' : 'resource_packs';
 
   const outputPathFactory: Record<
-    ArtifexPackOutput,
+    FerolytePackOutput,
     (alias: string, type: MinecraftPackType) => string
   > = {
     /**
@@ -128,7 +128,7 @@ export const applyConfig = async (config: ArtifexProfileConfig) => {
 
   BUILD_CONTEXT.PACKS.CACHE_PATH = join(
     currentWorkingDirectory,
-    '.artifex/cache',
+    '.ferolyte/cache',
   );
 
   BUILD_CONTEXT.PACKS.CONTENT_SUFFIX_REGISTRY = buildContentSuffixRegistry(

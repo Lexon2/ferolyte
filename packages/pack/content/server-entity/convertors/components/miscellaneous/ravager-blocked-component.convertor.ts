@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RavagerBlockedComponent } from '../../../interfaces/components/miscellaneous/ravager-blocked-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 import { validateNumber } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertRavagerBlockedComponent = (
   component: Partial<RavagerBlockedComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:ravager_blocked': any } | undefined => {
   if (!component) {
     return undefined;
@@ -35,20 +38,26 @@ export const convertRavagerBlockedComponent = (
     }
 
     result.reaction_choices = component.reactionChoices.map((choice, index) => {
-      if (typeof choice.weight !== 'number' || !Number.isInteger(choice.weight)) {
+      if (
+        typeof choice.weight !== 'number' ||
+        !Number.isInteger(choice.weight)
+      ) {
         console.error(`reactionChoices[${index}].weight must be an integer`);
 
         return undefined;
       }
 
-      const convertedValue = convertTrigger(choice.value, withFieldPath(ctx, 'value'));
+      const convertedValue = convertTrigger(
+        choice.value,
+        withFieldPath(ctx, 'value'),
+      );
       if (!convertedValue) {
         return undefined;
       }
 
       return {
         weight: choice.weight,
-        value: convertedValue
+        value: convertedValue,
       };
     });
 
@@ -58,6 +67,6 @@ export const convertRavagerBlockedComponent = (
   }
 
   return {
-    'minecraft:ravager_blocked': result
+    'minecraft:ravager_blocked': result,
   };
 };

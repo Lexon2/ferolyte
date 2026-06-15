@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { AmbientSoundIntervalComponent } from '../../../interfaces/components/miscellaneous/ambient-sound-interval-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -32,7 +32,7 @@ const validateEventName = (
  */
 export const convertAmbientSoundIntervalComponent = (
   component: Partial<AmbientSoundIntervalComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:ambient_sound_interval': any } | undefined => {
   if (!component) {
     return undefined;

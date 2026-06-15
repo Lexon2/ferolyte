@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EndermanTakeBlockBehavior } from '../../interfaces/behaviors/enderman-take-block-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertEndermanTakeBlockBehavior = (
   behavior: Partial<EndermanTakeBlockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.enderman_take_block': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertEndermanTakeBlockBehavior = (
   }
 
   return {
-    'minecraft:behavior.enderman_take_block': result
+    'minecraft:behavior.enderman_take_block': result,
   };
 };

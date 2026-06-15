@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MoveToLavaBehavior } from '../../interfaces/behaviors/move-to-lava-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertMoveToLavaBehavior = (
   behavior: Partial<MoveToLavaBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_to_lava': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -66,6 +66,6 @@ export const convertMoveToLavaBehavior = (
   }
 
   return {
-    'minecraft:behavior.move_to_lava': result
+    'minecraft:behavior.move_to_lava': result,
   };
 };

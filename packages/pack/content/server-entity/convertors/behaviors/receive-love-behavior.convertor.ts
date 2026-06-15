@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ReceiveLoveBehavior } from '../../interfaces/behaviors/receive-love-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertReceiveLoveBehavior = (
   behavior: Partial<ReceiveLoveBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.receive_love': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertReceiveLoveBehavior = (
   }
 
   return {
-    'minecraft:behavior.receive_love': result
+    'minecraft:behavior.receive_love': result,
   };
 };

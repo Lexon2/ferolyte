@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBaseNavigation } from './base-navigation';
 import { NavigationClimbComponent } from '../../../interfaces/components/navigation-movement/navigation-climb-component';
 
@@ -9,7 +9,7 @@ import { NavigationClimbComponent } from '../../../interfaces/components/navigat
  */
 export const convertNavigationClimbComponent = (
   component: Partial<NavigationClimbComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:navigation.climb': any } | undefined => {
   if (!component) {
     return undefined;
@@ -21,6 +21,6 @@ export const convertNavigationClimbComponent = (
   }
 
   return {
-    'minecraft:navigation.climb': result
+    'minecraft:navigation.climb': result,
   };
 };

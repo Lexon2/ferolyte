@@ -1,6 +1,6 @@
 import { Dimension, world } from '@minecraft/server';
 
-import { worldLoad } from '@artifex/events/world/after';
+import { worldLoad } from '@ferolyte/events/world/after';
 
 let overworld: Dimension | undefined;
 let nether: Dimension | undefined;

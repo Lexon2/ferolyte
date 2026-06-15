@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { AngerLevelComponent } from '../../../interfaces/components/ai/anger-level-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import {
@@ -15,7 +18,7 @@ import {
  */
 export const convertAngerLevelComponent = (
   component: Partial<AngerLevelComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:anger_level': any } | undefined => {
   if (!component) {
     return undefined;

@@ -1,6 +1,6 @@
 import { ItemRarity } from '../../types/item-rarity';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateAllowedValue } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateAllowedValue } from '@ferolyte/common/content/validation/content-validation';
 
 const VALID_RARITIES: ItemRarity[] = ['common', 'uncommon', 'rare', 'epic'];
 

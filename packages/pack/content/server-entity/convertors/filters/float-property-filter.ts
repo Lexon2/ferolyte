@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './common/convert-filter-base';
 import { FloatPropertyFilter } from '../../interfaces/filters/float-property-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -11,7 +11,7 @@ import { validateNumber, validateString } from '../common/validation';
  */
 export const convertFloatPropertyFilter = (
   filter: Partial<FloatPropertyFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
@@ -22,7 +22,10 @@ export const convertFloatPropertyFilter = (
     return undefined;
   }
 
-  if (filter.value === undefined || !validateNumber(filter.value, 'value', ctx)) {
+  if (
+    filter.value === undefined ||
+    !validateNumber(filter.value, 'value', ctx)
+  ) {
     return undefined;
   }
 
@@ -35,7 +38,7 @@ export const convertFloatPropertyFilter = (
     ...baseResult,
     test: 'float_property',
     domain: filter.domain,
-    value: filter.value
+    value: filter.value,
   };
 
   return result;

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MoveIndoorsBehavior } from '../../interfaces/behaviors/move-indoors-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertMoveIndoorsBehavior = (
   behavior: Partial<MoveIndoorsBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_indoors': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,6 +42,6 @@ export const convertMoveIndoorsBehavior = (
   }
 
   return {
-    'minecraft:behavior.move_indoors': result
+    'minecraft:behavior.move_indoors': result,
   };
 };

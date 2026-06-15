@@ -1,6 +1,6 @@
 import { ItemKineticWeaponComponent } from '../../interfaces/components/kinetic-weapon';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNumber } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNumber } from '@ferolyte/common/content/validation/content-validation';
 import {
   convertKineticWeaponConditions,
   convertWeaponReach,
@@ -31,7 +31,9 @@ export const createKineticWeapon = (
     result.creative_reach = creativeReach;
   }
 
-  const damageConditions = convertKineticWeaponConditions(options.damageConditions);
+  const damageConditions = convertKineticWeaponConditions(
+    options.damageConditions,
+  );
   if (damageConditions !== undefined) {
     result.damage_conditions = damageConditions;
   }
