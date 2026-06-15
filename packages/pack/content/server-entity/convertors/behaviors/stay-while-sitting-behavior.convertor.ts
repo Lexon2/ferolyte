@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { StayWhileSittingBehavior } from '../../interfaces/behaviors/stay-while-sitting-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertStayWhileSittingBehavior = (
   behavior: Partial<StayWhileSittingBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.stay_while_sitting': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertStayWhileSittingBehavior = (
   }
 
   return {
-    'minecraft:behavior.stay_while_sitting': result
+    'minecraft:behavior.stay_while_sitting': result,
   };
 };

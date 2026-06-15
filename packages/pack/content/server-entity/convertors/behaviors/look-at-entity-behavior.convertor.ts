@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { LookAtEntityBehavior } from '../../interfaces/behaviors/look-at-entity-behavior';
 import { convertRange } from '../common/convertors';
 import { convertEntityFilters } from '../common/filters.convertor';
@@ -11,7 +14,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertLookAtEntityBehavior = (
   behavior: Partial<LookAtEntityBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.look_at_entity': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -62,7 +65,9 @@ export const convertLookAtEntityBehavior = (
 
   // Validate angleOfViewHorizontal
   if (behavior.angleOfViewHorizontal !== undefined) {
-    if (!validateInteger(behavior.angleOfViewHorizontal, 'angleOfViewHorizontal')) {
+    if (
+      !validateInteger(behavior.angleOfViewHorizontal, 'angleOfViewHorizontal')
+    ) {
       return undefined;
     }
     result.angle_of_view_horizontal = behavior.angleOfViewHorizontal;
@@ -70,7 +75,10 @@ export const convertLookAtEntityBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -78,6 +86,6 @@ export const convertLookAtEntityBehavior = (
   }
 
   return {
-    'minecraft:behavior.look_at_entity': result
+    'minecraft:behavior.look_at_entity': result,
   };
 };

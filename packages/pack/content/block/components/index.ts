@@ -34,7 +34,7 @@ import { createSupport } from './support';
 import { createTick } from './tick';
 import { createTransformation } from './transformation';
 import { createDisplayName } from './display-name';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 
 export type BlockComponentCreator = (
   value?: unknown,

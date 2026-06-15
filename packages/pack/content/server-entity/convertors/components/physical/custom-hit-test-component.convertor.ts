@@ -1,5 +1,8 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { CustomHitTestComponent, Hitbox } from '../../../interfaces/components/physical/custom-hit-test-component';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import {
+  CustomHitTestComponent,
+  Hitbox,
+} from '../../../interfaces/components/physical/custom-hit-test-component';
 import { validateNumber } from '../../common/validation';
 
 /**
@@ -8,15 +11,16 @@ import { validateNumber } from '../../common/validation';
  * @param fieldName The name of the field for error messages
  * @returns Whether the hitbox is valid
  */
-const validateHitbox = (
-  hitbox: Hitbox,
-  fieldName: string,
-): boolean => {
-  if (!validateNumber(hitbox.width, `${fieldName}.width`, 0, Number.MAX_VALUE)) {
+const validateHitbox = (hitbox: Hitbox, fieldName: string): boolean => {
+  if (
+    !validateNumber(hitbox.width, `${fieldName}.width`, 0, Number.MAX_VALUE)
+  ) {
     return false;
   }
 
-  if (!validateNumber(hitbox.height, `${fieldName}.height`, 0, Number.MAX_VALUE)) {
+  if (
+    !validateNumber(hitbox.height, `${fieldName}.height`, 0, Number.MAX_VALUE)
+  ) {
     return false;
   }
 
@@ -27,7 +31,14 @@ const validateHitbox = (
   }
 
   for (let i = 0; i < 3; i++) {
-    if (!validateNumber(hitbox.pivot[i], `${fieldName}.pivot[${i}]`, -Number.MAX_VALUE, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        hitbox.pivot[i],
+        `${fieldName}.pivot[${i}]`,
+        -Number.MAX_VALUE,
+        Number.MAX_VALUE,
+      )
+    ) {
       return false;
     }
   }
@@ -42,7 +53,7 @@ const validateHitbox = (
  */
 export const convertCustomHitTestComponent = (
   component: Partial<CustomHitTestComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:custom_hit_test': any } | undefined => {
   if (!component) {
     return undefined;

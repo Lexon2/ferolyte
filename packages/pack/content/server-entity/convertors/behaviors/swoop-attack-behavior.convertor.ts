@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SwoopAttackBehavior } from '../../interfaces/behaviors/swoop-attack-behavior';
 import { convertRange } from '../common/convertors';
 import { validateNumber } from '../common/validation';
@@ -10,7 +10,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertSwoopAttackBehavior = (
   behavior: Partial<SwoopAttackBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.swoop_attack': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -52,6 +52,6 @@ export const convertSwoopAttackBehavior = (
   }
 
   return {
-    'minecraft:behavior.swoop_attack': result
+    'minecraft:behavior.swoop_attack': result,
   };
 };

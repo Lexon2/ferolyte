@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 
 interface DyeableOptions {
   defaultColor?: string | [number, number, number];
@@ -29,9 +29,7 @@ export const createDyeable = (
         !hexColorRegex.test(options.defaultColor)
       ) {
         logContentError(
-          ctx !== undefined
-            ? { ...ctx, fieldPath: 'defaultColor' }
-            : undefined,
+          ctx !== undefined ? { ...ctx, fieldPath: 'defaultColor' } : undefined,
           'Default color string must be a valid HEX color code',
         );
         return undefined;
@@ -47,9 +45,7 @@ export const createDyeable = (
         )
       ) {
         logContentError(
-          ctx !== undefined
-            ? { ...ctx, fieldPath: 'defaultColor' }
-            : undefined,
+          ctx !== undefined ? { ...ctx, fieldPath: 'defaultColor' } : undefined,
           'Default color RGB values must be numbers between 0 and 255',
         );
         return undefined;

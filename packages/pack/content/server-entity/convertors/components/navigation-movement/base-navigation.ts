@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BaseNavigation } from '../../../interfaces/components/navigation-movement/base-navigation';
 import { validateBoolean } from '../../common/validation';
 import { validateStringArray } from '../../common/validation';
@@ -10,7 +10,7 @@ import { validateStringArray } from '../../common/validation';
  */
 export const convertBaseNavigation = (
   navigation: Partial<BaseNavigation>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): any | undefined => {
   if (!navigation) {
     return undefined;

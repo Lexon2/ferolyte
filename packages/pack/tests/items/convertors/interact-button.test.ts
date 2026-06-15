@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createInteractButton } from '@artifex/pack/content/item/convertors/components/interact-button';
+import { createInteractButton } from '@ferolyte/pack/content/item/convertors/components/interact-button';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createInteractButton', () => {
@@ -12,10 +12,20 @@ describe('createInteractButton', () => {
   });
 
   it('maps boolean value', () => {
-    expectComponent(createInteractButton, true, 'minecraft:interact_button', true);
+    expectComponent(
+      createInteractButton,
+      true,
+      'minecraft:interact_button',
+      true,
+    );
   });
 
   it('maps string value', () => {
-    expectComponent(createInteractButton, 'Use', 'minecraft:interact_button', 'Use');
+    expectComponent(
+      createInteractButton,
+      'Use',
+      'minecraft:interact_button',
+      'Use',
+    );
   });
 });

@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   HurtOnConditionComponent,
   HurtOnConditionDamageCondition,
@@ -27,7 +30,10 @@ const validateDamageCondition = (
 
   // Validate filters
   if (condition.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(condition.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      condition.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -67,7 +73,7 @@ const validateDamageCondition = (
  */
 export const convertHurtOnConditionComponent = (
   component: Partial<HurtOnConditionComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:hurt_on_condition': any } | undefined => {
   if (!component) {
     return undefined;

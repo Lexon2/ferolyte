@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RandomHoverBehavior } from '../../interfaces/behaviors/random-hover-behavior';
 import { convertRange } from '../common/convertors';
 import { validateInteger, validateNumber } from '../common/validation';
@@ -10,7 +10,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertRandomHoverBehavior = (
   behavior: Partial<RandomHoverBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.random_hover': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -36,7 +36,10 @@ export const convertRandomHoverBehavior = (
 
   // Validate hoverHeight
   if (behavior.hoverHeight !== undefined) {
-    const convertedHoverHeight = convertRange(behavior.hoverHeight, 'hoverHeight');
+    const convertedHoverHeight = convertRange(
+      behavior.hoverHeight,
+      'hoverHeight',
+    );
     if (!convertedHoverHeight) {
       return undefined;
     }
@@ -76,6 +79,6 @@ export const convertRandomHoverBehavior = (
   }
 
   return {
-    'minecraft:behavior.random_hover': result
+    'minecraft:behavior.random_hover': result,
   };
 };

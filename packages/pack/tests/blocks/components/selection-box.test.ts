@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createSelectionBox } from '@artifex/pack/content/block/components/selection-box';
+import { createSelectionBox } from '@ferolyte/pack/content/block/components/selection-box';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createSelectionBox', () => {
@@ -16,12 +16,17 @@ describe('createSelectionBox', () => {
   });
 
   it('maps object with origin and size', () => {
-    expectComponent(createSelectionBox, {
-      origin: [-8, 0, -8],
-      size: [16, 16, 16],
-    }, 'minecraft:selection_box', {
-      origin: [-8, 0, -8],
-      size: [16, 16, 16],
-    });
+    expectComponent(
+      createSelectionBox,
+      {
+        origin: [-8, 0, -8],
+        size: [16, 16, 16],
+      },
+      'minecraft:selection_box',
+      {
+        origin: [-8, 0, -8],
+        size: [16, 16, 16],
+      },
+    );
   });
 });

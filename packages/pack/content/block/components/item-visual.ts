@@ -1,7 +1,7 @@
 import { ItemVisualComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNonEmptyString } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNonEmptyString } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates an item_visual component for Minecraft blocks
@@ -84,7 +84,9 @@ export const createItemVisual = (
     options.materialInstances === null
   ) {
     logContentError(
-      ctx !== undefined ? { ...ctx, fieldPath: 'materialInstances' } : undefined,
+      ctx !== undefined
+        ? { ...ctx, fieldPath: 'materialInstances' }
+        : undefined,
       'Material instances must be an object',
     );
     return undefined;

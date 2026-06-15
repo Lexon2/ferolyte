@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PreferredPathComponent } from '../../../interfaces/components/miscellaneous/preferred-path-component';
 import { validateNumber, validateInteger } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateInteger } from '../../common/validation';
  */
 export const convertPreferredPathComponent = (
   component: Partial<PreferredPathComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:preferred_path': any } | undefined => {
   if (!component) {
     return undefined;
@@ -49,33 +49,39 @@ export const convertPreferredPathComponent = (
       return undefined;
     }
 
-    result.preferred_path_blocks = component.preferredPathBlocks.map((block, index) => {
-      const blockResult: any = {};
+    result.preferred_path_blocks = component.preferredPathBlocks
+      .map((block, index) => {
+        const blockResult: any = {};
 
-      // Validate cost
-      if (!validateNumber(block.cost, `preferredPathBlocks[${index}].cost`)) {
-        return undefined;
-      }
-      blockResult.cost = block.cost;
+        // Validate cost
+        if (!validateNumber(block.cost, `preferredPathBlocks[${index}].cost`)) {
+          return undefined;
+        }
+        blockResult.cost = block.cost;
 
-      // Validate blocks
-      if (!Array.isArray(block.blocks)) {
-        console.error(`preferredPathBlocks[${index}].blocks must be an array`);
-
-        return undefined;
-      }
-
-      for (const blockName of block.blocks) {
-        if (typeof blockName !== 'string') {
-          console.error(`preferredPathBlocks[${index}].blocks must contain only strings`);
+        // Validate blocks
+        if (!Array.isArray(block.blocks)) {
+          console.error(
+            `preferredPathBlocks[${index}].blocks must be an array`,
+          );
 
           return undefined;
         }
-      }
-      blockResult.blocks = block.blocks;
 
-      return blockResult;
-    }).filter(Boolean);
+        for (const blockName of block.blocks) {
+          if (typeof blockName !== 'string') {
+            console.error(
+              `preferredPathBlocks[${index}].blocks must contain only strings`,
+            );
+
+            return undefined;
+          }
+        }
+        blockResult.blocks = block.blocks;
+
+        return blockResult;
+      })
+      .filter(Boolean);
 
     if (result.preferred_path_blocks.includes(undefined)) {
       return undefined;
@@ -83,6 +89,6 @@ export const convertPreferredPathComponent = (
   }
 
   return {
-    'minecraft:preferred_path': result
+    'minecraft:preferred_path': result,
   };
 };

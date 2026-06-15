@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { HomeComponent } from '../../../interfaces/components/miscellaneous/home-component';
 import { validateNumber, validateStringArray } from '../../common/validation';
 import { validateHomeRestrictionType } from '../../validation/home-restriction-type';
@@ -10,7 +10,7 @@ import { validateHomeRestrictionType } from '../../validation/home-restriction-t
  */
 export const convertHomeComponent = (
   component: Partial<HomeComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:home': any } | undefined => {
   if (!component) {
     return undefined;

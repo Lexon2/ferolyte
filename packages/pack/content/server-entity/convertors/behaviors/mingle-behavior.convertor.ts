@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MingleBehavior } from '../../interfaces/behaviors/mingle-behavior';
-import { validateNumber, validateString, validateStringArray } from '../common/validation';
+import {
+  validateNumber,
+  validateString,
+  validateStringArray,
+} from '../common/validation';
 
 /**
  * Converts a MingleBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateNumber, validateString, validateStringArray } from '../common/v
  */
 export const convertMingleBehavior = (
   behavior: Partial<MingleBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.mingle': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -59,15 +63,20 @@ export const convertMingleBehavior = (
 
   // Validate minglePartnerType
   if (behavior.minglePartnerType !== undefined) {
-    if (Array.isArray(behavior.minglePartnerType) && !validateStringArray(behavior.minglePartnerType, 'minglePartnerType')) {
+    if (
+      Array.isArray(behavior.minglePartnerType) &&
+      !validateStringArray(behavior.minglePartnerType, 'minglePartnerType')
+    ) {
       return undefined;
-    } else if (!validateString(behavior.minglePartnerType, 'minglePartnerType')) {
+    } else if (
+      !validateString(behavior.minglePartnerType, 'minglePartnerType')
+    ) {
       return undefined;
     }
     result.mingle_partner_type = behavior.minglePartnerType;
   }
 
   return {
-    'minecraft:behavior.mingle': result
+    'minecraft:behavior.mingle': result,
   };
 };

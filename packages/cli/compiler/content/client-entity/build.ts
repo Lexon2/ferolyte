@@ -1,4 +1,4 @@
-import { ClientEntityBuilder } from '@artifex/pack/content/client-entity/client-entity-builder';
+import { ClientEntityBuilder } from '@ferolyte/pack/content/client-entity/client-entity-builder';
 import { ContentBuildOptions } from '../../actions/options';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { VibrationDamperComponent } from '../../../interfaces/components/miscellaneous/vibration-damper-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertVibrationDamperComponent = (
   component: Partial<VibrationDamperComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:vibration_damper': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

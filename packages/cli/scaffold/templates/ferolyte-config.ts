@@ -1,14 +1,14 @@
-export interface ArtifexConfigTemplateInput {
+export interface FerolyteConfigTemplateInput {
   alias: string;
   namespace: string;
 }
 
-export const createArtifexConfigTemplate = ({
+export const createFerolyteConfigTemplate = ({
   alias,
   namespace,
-}: ArtifexConfigTemplateInput): string => `import { defineArtifexConfig } from '@artifex/cli/compiler/config/define-config';
+}: FerolyteConfigTemplateInput): string => `import { defineFerolyteConfig } from '@ferolyte/cli/compiler/config/define-config';
 
-export default defineArtifexConfig({
+export default defineFerolyteConfig({
   profiles: {
     default: {
       packs: {

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { GrowsCropComponent } from '../../../interfaces/components/miscellaneous/grows-crop-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertGrowsCropComponent = (
   component: Partial<GrowsCropComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:grows_crop': any } | undefined => {
   if (!component) {
     return undefined;

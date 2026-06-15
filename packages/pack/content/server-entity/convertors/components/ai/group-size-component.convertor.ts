@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { GroupSizeComponent } from '../../../interfaces/components/ai/group-size-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertGroupSizeComponent = (
   component: Partial<GroupSizeComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:group_size': any } | undefined => {
   if (!component) {
     return undefined;
@@ -20,7 +23,10 @@ export const convertGroupSizeComponent = (
 
   // Validate filters
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      component.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -36,6 +42,6 @@ export const convertGroupSizeComponent = (
   }
 
   return {
-    'minecraft:group_size': result
+    'minecraft:group_size': result,
   };
 };

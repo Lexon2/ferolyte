@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createFood } from '@artifex/pack/content/item/convertors/components/food';
+import { createFood } from '@ferolyte/pack/content/item/convertors/components/food';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createFood', () => {
@@ -12,16 +12,21 @@ describe('createFood', () => {
   });
 
   it('maps food properties', () => {
-    expectComponent(createFood, {
-      nutrition: 4,
-      saturationModifier: 0.3,
-      canAlwaysEat: true,
-      usingConvertsTo: 'test:bowl',
-    }, 'minecraft:food', {
-      nutrition: 4,
-      saturation_modifier: 0.3,
-      can_always_eat: true,
-      using_converts_to: 'test:bowl',
-    });
+    expectComponent(
+      createFood,
+      {
+        nutrition: 4,
+        saturationModifier: 0.3,
+        canAlwaysEat: true,
+        usingConvertsTo: 'test:bowl',
+      },
+      'minecraft:food',
+      {
+        nutrition: 4,
+        saturation_modifier: 0.3,
+        can_always_eat: true,
+        using_converts_to: 'test:bowl',
+      },
+    );
   });
 });

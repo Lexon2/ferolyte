@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { OnTargetAcquiredComponent } from '../../../interfaces/components/event-hooks/on-target-acquired-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -9,7 +12,7 @@ import { convertTrigger } from '../../common/trigger.convertor';
  */
 export const convertOnTargetAcquiredComponent = (
   component: Partial<OnTargetAcquiredComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:on_target_acquired': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +22,6 @@ export const convertOnTargetAcquiredComponent = (
   if (!result) {
     return undefined;
   }
-
 
   return {
     'minecraft:on_target_acquired': result,

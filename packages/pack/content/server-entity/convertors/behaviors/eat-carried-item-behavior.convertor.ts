@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EatCarriedItemBehavior } from '../../interfaces/behaviors/eat-carried-item-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertEatCarriedItemBehavior = (
   behavior: Partial<EatCarriedItemBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.eat_carried_item': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertEatCarriedItemBehavior = (
   }
 
   return {
-    'minecraft:behavior.eat_carried_item': result
+    'minecraft:behavior.eat_carried_item': result,
   };
 };

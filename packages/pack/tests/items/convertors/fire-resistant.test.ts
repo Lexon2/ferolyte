@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createFireResistant } from '@artifex/pack/content/item/convertors/components/fire-resistant';
+import { createFireResistant } from '@ferolyte/pack/content/item/convertors/components/fire-resistant';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createFireResistant', () => {
@@ -12,7 +12,17 @@ describe('createFireResistant', () => {
   });
 
   it('maps valid boolean to minecraft:fire_resistant', () => {
-    expectComponent(createFireResistant, true, 'minecraft:fire_resistant', true);
-    expectComponent(createFireResistant, false, 'minecraft:fire_resistant', false);
+    expectComponent(
+      createFireResistant,
+      true,
+      'minecraft:fire_resistant',
+      true,
+    );
+    expectComponent(
+      createFireResistant,
+      false,
+      'minecraft:fire_resistant',
+      false,
+    );
   });
 });

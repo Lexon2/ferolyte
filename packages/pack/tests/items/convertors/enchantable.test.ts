@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createEnchantable } from '@artifex/pack/content/item/convertors/components/enchantable';
+import { createEnchantable } from '@ferolyte/pack/content/item/convertors/components/enchantable';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createEnchantable', () => {
@@ -12,9 +12,14 @@ describe('createEnchantable', () => {
   });
 
   it('maps valid enchantable', () => {
-    expectComponent(createEnchantable, { slot: 'sword', value: 10 }, 'minecraft:enchantable', {
-      slot: 'sword',
-      value: 10,
-    });
+    expectComponent(
+      createEnchantable,
+      { slot: 'sword', value: 10 },
+      'minecraft:enchantable',
+      {
+        slot: 'sword',
+        value: 10,
+      },
+    );
   });
 });

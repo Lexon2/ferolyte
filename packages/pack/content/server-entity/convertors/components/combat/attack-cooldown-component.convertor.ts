@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { AttackCooldownComponent } from '../../../interfaces/components/combat/attack-cooldown-component';
 import { convertRange } from '../../common/convertors';
 import { convertTrigger } from '../../common/trigger.convertor';
@@ -10,7 +13,7 @@ import { convertTrigger } from '../../common/trigger.convertor';
  */
 export const convertAttackCooldownComponent = (
   component: Partial<AttackCooldownComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:attack_cooldown': any } | undefined => {
   if (!component) {
     return undefined;
@@ -20,16 +23,23 @@ export const convertAttackCooldownComponent = (
 
   // Validate attackCooldownCompleteEvent
   if (component.attackCooldownCompleteEvent !== undefined) {
-    const convertedAttackCooldownCompleteEvent = convertTrigger(component.attackCooldownCompleteEvent, withFieldPath(ctx, 'attackCooldownCompleteEvent'));
+    const convertedAttackCooldownCompleteEvent = convertTrigger(
+      component.attackCooldownCompleteEvent,
+      withFieldPath(ctx, 'attackCooldownCompleteEvent'),
+    );
     if (!convertedAttackCooldownCompleteEvent) {
       return undefined;
     }
-    result.attack_cooldown_complete_event = convertedAttackCooldownCompleteEvent;
+    result.attack_cooldown_complete_event =
+      convertedAttackCooldownCompleteEvent;
   }
 
   // Validate attackCooldownTime
   if (component.attackCooldownTime !== undefined) {
-    const convertedAttackCooldownTime = convertRange(component.attackCooldownTime, 'attackCooldownTime');
+    const convertedAttackCooldownTime = convertRange(
+      component.attackCooldownTime,
+      'attackCooldownTime',
+    );
     if (!convertedAttackCooldownTime) {
       return undefined;
     }

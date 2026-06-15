@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   OnEquipmentChangedComponent,
   OnEquipmentChangedSlot,
@@ -14,14 +17,25 @@ const convertSlot = (
   const result: Record<string, unknown> = {};
 
   if (slot.slot !== undefined) {
-    if (!validateInteger(slot.slot, `${fieldName}.slot`, undefined, undefined, ctx)) {
+    if (
+      !validateInteger(
+        slot.slot,
+        `${fieldName}.slot`,
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.slot = slot.slot;
   }
 
   if (slot.onEquip !== undefined) {
-    const converted = convertTrigger(slot.onEquip, withFieldPath(ctx, 'onEquip'));
+    const converted = convertTrigger(
+      slot.onEquip,
+      withFieldPath(ctx, 'onEquip'),
+    );
     if (!converted) {
       return undefined;
     }
@@ -29,7 +43,10 @@ const convertSlot = (
   }
 
   if (slot.onUnequip !== undefined) {
-    const converted = convertTrigger(slot.onUnequip, withFieldPath(ctx, 'onUnequip'));
+    const converted = convertTrigger(
+      slot.onUnequip,
+      withFieldPath(ctx, 'onUnequip'),
+    );
     if (!converted) {
       return undefined;
     }
@@ -47,7 +64,9 @@ const convertSlot = (
 export const convertOnEquipmentChangedComponent = (
   component: Partial<OnEquipmentChangedComponent>,
   ctx?: ContentDiagnosticContext,
-): { 'minecraft:on_equipment_changed': Record<string, unknown> } | undefined => {
+):
+  | { 'minecraft:on_equipment_changed': Record<string, unknown> }
+  | undefined => {
   if (!component) {
     return undefined;
   }

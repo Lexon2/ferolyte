@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BalloonableComponent } from '../../../interfaces/components/miscellaneous/balloonable-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertBalloonableComponent = (
   component: Partial<BalloonableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:balloonable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +19,14 @@ export const convertBalloonableComponent = (
 
   // Validate softDistance
   if (component.softDistance !== undefined) {
-    if (!validateNumber(component.softDistance, 'softDistance', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.softDistance,
+        'softDistance',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.soft_distance = component.softDistance;
@@ -27,7 +34,9 @@ export const convertBalloonableComponent = (
 
   // Validate maxDistance
   if (component.maxDistance !== undefined) {
-    if (!validateNumber(component.maxDistance, 'maxDistance', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(component.maxDistance, 'maxDistance', 0, Number.MAX_VALUE)
+    ) {
       return undefined;
     }
     result.max_distance = component.maxDistance;

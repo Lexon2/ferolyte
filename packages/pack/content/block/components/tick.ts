@@ -1,7 +1,7 @@
 import { TickComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateBooleanValue } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates a tick component for Minecraft blocks

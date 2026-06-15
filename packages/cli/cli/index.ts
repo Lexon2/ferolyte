@@ -14,8 +14,8 @@ const { version } = createRequire(import.meta.url)('../../package.json') as {
 
 const main = defineCommand({
   meta: {
-    name: 'artifex',
-    description: 'Artifex pack compiler for Minecraft BE addons',
+    name: 'ferolyte',
+    description: 'Ferolyte pack compiler for Minecraft BE addons',
     version,
   },
   subCommands: {

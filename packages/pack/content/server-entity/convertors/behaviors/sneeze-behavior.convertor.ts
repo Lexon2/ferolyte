@@ -1,10 +1,15 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SneezeBehavior } from '../../interfaces/behaviors/sneeze-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
-import { validateNumber, validatePercentage, validateSoundEvent, validateTradeOrLootTablePath } from '../common/validation';
+import {
+  validateNumber,
+  validatePercentage,
+  validateSoundEvent,
+  validateTradeOrLootTablePath,
+} from '../common/validation';
 
 /**
  * Converts a SneezeBehavior to Minecraft format
@@ -13,7 +18,7 @@ import { validateNumber, validatePercentage, validateSoundEvent, validateTradeOr
  */
 export const convertSneezeBehavior = (
   behavior: Partial<SneezeBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.sneeze': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -51,10 +56,10 @@ export const convertSneezeBehavior = (
       behavior.entityTypes,
       withFieldPath(ctx, 'entityTypes'),
     );
-      if (!convertedEntityTypes) {
-        return undefined;
-      }
-      result.entity_types = convertedEntityTypes;
+    if (!convertedEntityTypes) {
+      return undefined;
+    }
+    result.entity_types = convertedEntityTypes;
   }
 
   // Validate lootTable
@@ -106,6 +111,6 @@ export const convertSneezeBehavior = (
   }
 
   return {
-    'minecraft:behavior.sneeze': result
+    'minecraft:behavior.sneeze': result,
   };
 };

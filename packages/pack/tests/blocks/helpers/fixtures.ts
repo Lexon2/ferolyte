@@ -1,4 +1,4 @@
-import { BlockConfig } from '@artifex/pack/content/block/interfaces/block-config';
+import { BlockConfig } from '@ferolyte/pack/content/block/interfaces/block-config';
 
 export const minimalBlockConfig = (
   overrides: Partial<BlockConfig> = {},

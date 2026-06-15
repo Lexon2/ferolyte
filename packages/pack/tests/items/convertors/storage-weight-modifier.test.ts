@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createStorageWeightModifier } from '@artifex/pack/content/item/convertors/components/storage-weight-modifier';
+import { createStorageWeightModifier } from '@ferolyte/pack/content/item/convertors/components/storage-weight-modifier';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createStorageWeightModifier', () => {
@@ -12,8 +12,13 @@ describe('createStorageWeightModifier', () => {
   });
 
   it('maps weight in storage item', () => {
-    expectComponent(createStorageWeightModifier, { weightInStorageItem: 4 }, 'minecraft:storage_weight_modifier', {
-      weight_in_storage_item: 4,
-    });
+    expectComponent(
+      createStorageWeightModifier,
+      { weightInStorageItem: 4 },
+      'minecraft:storage_weight_modifier',
+      {
+        weight_in_storage_item: 4,
+      },
+    );
   });
 });

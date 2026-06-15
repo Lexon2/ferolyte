@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TickWorldComponent } from '../../../interfaces/components/miscellaneous/tick-world-component';
 import { validateBoolean, validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateBoolean, validateNumber } from '../../common/validation';
  */
 export const convertTickWorldComponent = (
   component: TickWorldComponent,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:tick_world': any } | undefined => {
   if (!component) {
     return undefined;

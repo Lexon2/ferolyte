@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MoveTowardsHomeRestrictionBehavior } from '../../interfaces/behaviors/move-towards-home-restriction-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertMoveTowardsHomeRestrictionBehavior = (
   behavior: Partial<MoveTowardsHomeRestrictionBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_towards_home_restriction': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertMoveTowardsHomeRestrictionBehavior = (
   }
 
   return {
-    'minecraft:behavior.move_towards_home_restriction': result
+    'minecraft:behavior.move_towards_home_restriction': result,
   };
 };

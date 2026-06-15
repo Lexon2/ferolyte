@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RandomSittingBehavior } from '../../interfaces/behaviors/random-sitting-behavior';
 import { validateNumber, validatePercentage } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validatePercentage } from '../common/validation';
  */
 export const convertRandomSittingBehavior = (
   behavior: Partial<RandomSittingBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.random_sitting': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -74,6 +74,6 @@ export const convertRandomSittingBehavior = (
   }
 
   return {
-    'minecraft:behavior.random_sitting': result
+    'minecraft:behavior.random_sitting': result,
   };
 };

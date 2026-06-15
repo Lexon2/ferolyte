@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SpawnOnDeathComponent } from '../../../interfaces/components/miscellaneous/spawn-on-death-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import {
@@ -67,7 +70,10 @@ export const convertSpawnOnDeathComponent = (
   }
 
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      component.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -75,21 +81,32 @@ export const convertSpawnOnDeathComponent = (
   }
 
   if (component.inheritParentName !== undefined) {
-    if (!validateBoolean(component.inheritParentName, 'inheritParentName', ctx)) {
+    if (
+      !validateBoolean(component.inheritParentName, 'inheritParentName', ctx)
+    ) {
       return undefined;
     }
     result.inherit_parent_name = component.inheritParentName;
   }
 
   if (component.spawnAmount !== undefined) {
-    if (!validateInteger(component.spawnAmount, 'spawnAmount', 1, undefined, ctx)) {
+    if (
+      !validateInteger(component.spawnAmount, 'spawnAmount', 1, undefined, ctx)
+    ) {
       return undefined;
     }
     result.spawn_amount = component.spawnAmount;
   }
 
   if (component.spawnMethod !== undefined) {
-    if (!validateAllowedValues(component.spawnMethod, SPAWN_METHODS, 'spawnMethod', ctx)) {
+    if (
+      !validateAllowedValues(
+        component.spawnMethod,
+        SPAWN_METHODS,
+        'spawnMethod',
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.spawn_method = component.spawnMethod;

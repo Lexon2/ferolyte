@@ -2,7 +2,7 @@ import { access } from 'fs/promises';
 import { join } from 'path';
 
 import { writeFileByPath } from '../compiler/content/utils/write-file-by-path';
-import { createArtifexConfigTemplate } from './templates/artifex-config';
+import { createFerolyteConfigTemplate } from './templates/ferolyte-config';
 import { createBehaviorPackManifestTemplate } from './templates/behavior-pack-manifest';
 import { createGitignoreTemplate } from './templates/gitignore';
 import { createMainScriptTemplate } from './templates/main-script';
@@ -43,7 +43,9 @@ export interface CreateProjectResult {
   namespace: string;
 }
 
-const assertDirectoryDoesNotExist = async (projectDir: string): Promise<void> => {
+const assertDirectoryDoesNotExist = async (
+  projectDir: string,
+): Promise<void> => {
   try {
     await access(projectDir);
     throw new Error(`Directory "${projectDir}" already exists.`);
@@ -59,7 +61,7 @@ export const createProject = async ({
   alias,
   cwd = process.cwd(),
   cliVersion,
-  minGameVersion = '1.21.80',
+  minGameVersion = '1.26.20',
 }: CreateProjectInput): Promise<CreateProjectResult> => {
   const slug = validateProjectName(projectName);
   validateAlias(alias);
@@ -76,7 +78,7 @@ export const createProject = async ({
   const minEngineVersion = parseMinEngineVersion(minGameVersion);
 
   const files: Array<[string, string]> = [
-    ['artifex.config.mts', createArtifexConfigTemplate({ alias, namespace })],
+    ['ferolyte.config.mts', createFerolyteConfigTemplate({ alias, namespace })],
     [
       'package.json',
       createPackageJsonTemplate({ slug, cliVersion, minecraftVersions }),
@@ -99,18 +101,9 @@ export const createProject = async ({
     ],
     ['packs/BP/texts/languages.json', createLanguagesJsonTemplate()],
     ['packs/RP/texts/languages.json', createLanguagesJsonTemplate()],
-    [
-      'packs/BP/texts/en_US.lang',
-      createLangTemplate({ displayName }),
-    ],
-    [
-      'packs/RP/texts/en_US.lang',
-      createLangTemplate({ displayName }),
-    ],
-    [
-      'packs/scripts/main.ts',
-      createMainScriptTemplate({ displayName }),
-    ],
+    ['packs/BP/texts/en_US.lang', createLangTemplate({ displayName })],
+    ['packs/RP/texts/en_US.lang', createLangTemplate({ displayName })],
+    ['packs/scripts/main.ts', createMainScriptTemplate({ displayName })],
   ];
 
   for (const [relativePath, content] of files) {

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { HeartbeatComponent } from '../../../interfaces/components/miscellaneous/heartbeat-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateString } from '../../common/validation';
  */
 export const convertHeartbeatComponent = (
   component: Partial<HeartbeatComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:heartbeat': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +19,14 @@ export const convertHeartbeatComponent = (
 
   // Validate interval
   if (component.interval !== undefined) {
-    if (!validateNumber(component.interval, 'interval', -Number.MAX_VALUE, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.interval,
+        'interval',
+        -Number.MAX_VALUE,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.interval = component.interval;

@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   ApplyKnockbackRulesComponent,
   ApplyKnockbackRulesPreset,
@@ -14,14 +17,30 @@ const convertPreset = (
   const result: Record<string, unknown> = {};
 
   if (preset.horizontalPower !== undefined) {
-    if (!validateNumber(preset.horizontalPower, `${fieldName}.horizontalPower`, undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        preset.horizontalPower,
+        `${fieldName}.horizontalPower`,
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.horizontal_power = preset.horizontalPower;
   }
 
   if (preset.verticalPower !== undefined) {
-    if (!validateNumber(preset.verticalPower, `${fieldName}.verticalPower`, undefined, undefined, ctx)) {
+    if (
+      !validateNumber(
+        preset.verticalPower,
+        `${fieldName}.verticalPower`,
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.vertical_power = preset.verticalPower;
@@ -52,11 +71,15 @@ const convertPreset = (
     ) {
       return undefined;
     }
-    result.check_if_target_is_immersed_in_water = preset.checkIfTargetIsImmersedInWater;
+    result.check_if_target_is_immersed_in_water =
+      preset.checkIfTargetIsImmersedInWater;
   }
 
   if (preset.filter !== undefined) {
-    const convertedFilter = convertEntityFilters(preset.filter, withFieldPath(ctx, 'filter'));
+    const convertedFilter = convertEntityFilters(
+      preset.filter,
+      withFieldPath(ctx, 'filter'),
+    );
     if (!convertedFilter) {
       return undefined;
     }
@@ -124,7 +147,13 @@ const convertPreset = (
   }
 
   if (preset.scaleWithDamage !== undefined) {
-    if (!validateBoolean(preset.scaleWithDamage, `${fieldName}.scaleWithDamage`, ctx)) {
+    if (
+      !validateBoolean(
+        preset.scaleWithDamage,
+        `${fieldName}.scaleWithDamage`,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.scale_with_damage = preset.scaleWithDamage;
@@ -141,7 +170,9 @@ const convertPreset = (
 export const convertApplyKnockbackRulesComponent = (
   component: Partial<ApplyKnockbackRulesComponent>,
   ctx?: ContentDiagnosticContext,
-): { 'minecraft:apply_knockback_rules': Record<string, unknown> } | undefined => {
+):
+  | { 'minecraft:apply_knockback_rules': Record<string, unknown> }
+  | undefined => {
   if (!component) {
     return undefined;
   }

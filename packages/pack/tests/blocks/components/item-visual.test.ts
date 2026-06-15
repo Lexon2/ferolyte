@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createItemVisual } from '@artifex/pack/content/block/components/item-visual';
+import { createItemVisual } from '@ferolyte/pack/content/block/components/item-visual';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 import { validItemVisual } from '../helpers/fixtures';
 
@@ -13,9 +13,14 @@ describe('createItemVisual', () => {
   });
 
   it('maps item visual fields', () => {
-    expectComponent(createItemVisual, validItemVisual, 'minecraft:item_visual', {
-      geometry: 'geometry.test.block',
-      material_instances: { '*': 'texture.test.block' },
-    });
+    expectComponent(
+      createItemVisual,
+      validItemVisual,
+      'minecraft:item_visual',
+      {
+        geometry: 'geometry.test.block',
+        material_instances: { '*': 'texture.test.block' },
+      },
+    );
   });
 });

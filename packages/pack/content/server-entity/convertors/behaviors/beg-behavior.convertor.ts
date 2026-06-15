@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BegBehavior } from '../../interfaces/behaviors/beg-behavior';
-import { validateNumber, validateComplexRange, validateStringArray } from '../common/validation';
+import {
+  validateNumber,
+  validateComplexRange,
+  validateStringArray,
+} from '../common/validation';
 
 /**
  * Converts a BegBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateNumber, validateComplexRange, validateStringArray } from '../co
  */
 export const convertBegBehavior = (
   behavior: Partial<BegBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.beg': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -54,12 +58,12 @@ export const convertBegBehavior = (
     } else if (typeof behavior.lookTime === 'object') {
       result.look_time = {
         range_min: behavior.lookTime.rangeMin,
-        range_max: behavior.lookTime.rangeMax
+        range_max: behavior.lookTime.rangeMax,
       };
     }
   }
 
   return {
-    'minecraft:behavior.beg': result
+    'minecraft:behavior.beg': result,
   };
 };

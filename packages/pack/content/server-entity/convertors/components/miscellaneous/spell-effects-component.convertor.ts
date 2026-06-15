@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SpellEffectsComponent } from '../../../interfaces/components/miscellaneous/spell-effects-component';
 import { validateBoolean, validateInteger } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateBoolean, validateInteger } from '../../common/validation';
  */
 export const convertSpellEffectsComponent = (
   component: Partial<SpellEffectsComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:spell_effects': any } | undefined => {
   if (!component) {
     return undefined;
@@ -30,7 +30,9 @@ export const convertSpellEffectsComponent = (
 
       // Validate amplifier
       if (effect.amplifier !== undefined) {
-        if (!validateInteger(effect.amplifier, `addEffects[${index}].amplifier`)) {
+        if (
+          !validateInteger(effect.amplifier, `addEffects[${index}].amplifier`)
+        ) {
           return undefined;
         }
         effectResult.amplifier = effect.amplifier;
@@ -46,8 +48,13 @@ export const convertSpellEffectsComponent = (
 
       // Validate duration
       if (effect.duration !== undefined) {
-        if (effect.duration !== 'infinite' && (typeof effect.duration !== 'number' || effect.duration < 0)) {
-          console.error(`addEffects[${index}].duration must be a non-negative number or 'infinite'`);
+        if (
+          effect.duration !== 'infinite' &&
+          (typeof effect.duration !== 'number' || effect.duration < 0)
+        ) {
+          console.error(
+            `addEffects[${index}].duration must be a non-negative number or 'infinite'`,
+          );
 
           return undefined;
         }
@@ -56,10 +63,16 @@ export const convertSpellEffectsComponent = (
 
       // Validate displayOnScreenAnimation
       if (effect.displayOnScreenAnimation !== undefined) {
-        if (!validateBoolean(effect.displayOnScreenAnimation, `addEffects[${index}].displayOnScreenAnimation`)) {
+        if (
+          !validateBoolean(
+            effect.displayOnScreenAnimation,
+            `addEffects[${index}].displayOnScreenAnimation`,
+          )
+        ) {
           return undefined;
         }
-        effectResult.display_on_screen_animation = effect.displayOnScreenAnimation;
+        effectResult.display_on_screen_animation =
+          effect.displayOnScreenAnimation;
       }
 
       // Validate effect
@@ -91,7 +104,9 @@ export const convertSpellEffectsComponent = (
     if (typeof component.removeEffects === 'string') {
       result.remove_effects = component.removeEffects;
     } else if (Array.isArray(component.removeEffects)) {
-      if (!component.removeEffects.every(effect => typeof effect === 'string')) {
+      if (
+        !component.removeEffects.every((effect) => typeof effect === 'string')
+      ) {
         console.error('removeEffects must be a string or an array of strings');
 
         return undefined;
@@ -105,6 +120,6 @@ export const convertSpellEffectsComponent = (
   }
 
   return {
-    'minecraft:spell_effects': result
+    'minecraft:spell_effects': result,
   };
 };

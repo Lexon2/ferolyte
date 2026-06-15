@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PlayerExperienceComponent } from '../../../interfaces/components/miscellaneous/player-experience-component';
 import { validateInteger } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger } from '../../common/validation';
  */
 export const convertPlayerExperienceComponent = (
   component: Partial<PlayerExperienceComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:player.experience': any } | undefined => {
   if (!component) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertPlayerExperienceComponent = (
   }
 
   return {
-    'minecraft:player.experience': result
+    'minecraft:player.experience': result,
   };
 };

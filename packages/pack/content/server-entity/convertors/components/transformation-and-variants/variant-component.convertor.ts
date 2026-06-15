@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { VariantComponent } from '../../../interfaces/components/transformation-and-variants/variant-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertVariantComponent = (
   component: Partial<VariantComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:variant': any } | undefined => {
   if (!component) {
     return undefined;
@@ -18,13 +18,15 @@ export const convertVariantComponent = (
   const result: any = {};
 
   if (component.value !== undefined) {
-    if (!validateNumberRange(component.value, 0, Number.MAX_SAFE_INTEGER, 'value')) {
+    if (
+      !validateNumberRange(component.value, 0, Number.MAX_SAFE_INTEGER, 'value')
+    ) {
       return undefined;
     }
     result.value = component.value;
   }
 
   return {
-    'minecraft:variant': result
+    'minecraft:variant': result,
   };
 };

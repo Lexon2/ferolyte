@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createShouldDespawn } from '@artifex/pack/content/item/convertors/components/should-despawn';
+import { createShouldDespawn } from '@ferolyte/pack/content/item/convertors/components/should-despawn';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createShouldDespawn', () => {
@@ -12,7 +12,17 @@ describe('createShouldDespawn', () => {
   });
 
   it('maps valid boolean to minecraft:should_despawn', () => {
-    expectComponent(createShouldDespawn, true, 'minecraft:should_despawn', true);
-    expectComponent(createShouldDespawn, false, 'minecraft:should_despawn', false);
+    expectComponent(
+      createShouldDespawn,
+      true,
+      'minecraft:should_despawn',
+      true,
+    );
+    expectComponent(
+      createShouldDespawn,
+      false,
+      'minecraft:should_despawn',
+      false,
+    );
   });
 });

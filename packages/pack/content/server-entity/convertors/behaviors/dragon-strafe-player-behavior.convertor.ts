@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DragonStrafePlayerBehavior } from '../../interfaces/behaviors/dragon-strafe-player-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertDragonStrafePlayerBehavior = (
   behavior: Partial<DragonStrafePlayerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.dragonstrafeplayer': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -51,7 +51,12 @@ export const convertDragonStrafePlayerBehavior = (
 
   // Validate switchDirectionProbability
   if (behavior.switchDirectionProbability !== undefined) {
-    if (!validateNumber(behavior.switchDirectionProbability, 'switchDirectionProbability')) {
+    if (
+      !validateNumber(
+        behavior.switchDirectionProbability,
+        'switchDirectionProbability',
+      )
+    ) {
       return undefined;
     }
     result.switch_direction_probability = behavior.switchDirectionProbability;
@@ -59,16 +64,25 @@ export const convertDragonStrafePlayerBehavior = (
 
   // Validate targetInRangeAndInViewTime
   if (behavior.targetInRangeAndInViewTime !== undefined) {
-    if (!validateNumber(behavior.targetInRangeAndInViewTime, 'targetInRangeAndInViewTime')) {
+    if (
+      !validateNumber(
+        behavior.targetInRangeAndInViewTime,
+        'targetInRangeAndInViewTime',
+      )
+    ) {
       return undefined;
     }
-    result.target_in_range_and_in_view_time = behavior.targetInRangeAndInViewTime;
+    result.target_in_range_and_in_view_time =
+      behavior.targetInRangeAndInViewTime;
   }
 
   // Validate targetZone
   if (behavior.targetZone !== undefined) {
-    if (!Array.isArray(behavior.targetZone) || behavior.targetZone.length !== 2 ||
-        !behavior.targetZone.every(n => validateNumber(n, 'targetZone'))) {
+    if (
+      !Array.isArray(behavior.targetZone) ||
+      behavior.targetZone.length !== 2 ||
+      !behavior.targetZone.every((n) => validateNumber(n, 'targetZone'))
+    ) {
       console.error('targetZone must be an array of exactly 2 numbers');
 
       return undefined;
@@ -93,6 +107,6 @@ export const convertDragonStrafePlayerBehavior = (
   }
 
   return {
-    'minecraft:behavior.dragonstrafeplayer': result
+    'minecraft:behavior.dragonstrafeplayer': result,
   };
 };

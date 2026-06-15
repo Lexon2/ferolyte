@@ -2,9 +2,9 @@ import { BUILD_CONTEXT } from '../build-context';
 import { SUPPORTED_PLUGIN_API_VERSIONS } from './api-version';
 import {
   AfterLoadEvent,
-  ArtifexPlugin,
-  ArtifexPluginHookName,
-  ArtifexPluginPaths,
+  FerolytePlugin,
+  FerolytePluginHookName,
+  FerolytePluginPaths,
   BeforeFileWriteEvent,
   BeforeFileWriteResult,
   BuildEvent,
@@ -12,13 +12,13 @@ import {
   WatchReadyEvent,
 } from './types';
 
-let plugins: ArtifexPlugin[] = [];
+let plugins: FerolytePlugin[] = [];
 let profileName = '';
 let afterLoadEmitted = false;
 let afterLoadPending = false;
 let pendingAfterLoadEvent: AfterLoadEvent | undefined;
 
-const createPathsSnapshot = (): ArtifexPluginPaths => {
+const createPathsSnapshot = (): FerolytePluginPaths => {
   const { PACKS } = BUILD_CONTEXT;
 
   return {
@@ -34,9 +34,9 @@ const createPathsSnapshot = (): ArtifexPluginPaths => {
   };
 };
 
-const validatePlugin = (plugin: ArtifexPlugin) => {
+const validatePlugin = (plugin: FerolytePlugin) => {
   if (!plugin.name) {
-    throw new Error('Artifex plugin must have a name');
+    throw new Error('Ferolyte plugin must have a name');
   }
 
   if (
@@ -51,8 +51,8 @@ const validatePlugin = (plugin: ArtifexPlugin) => {
 };
 
 const runPluginHook = async (
-  plugin: ArtifexPlugin,
-  hookName: ArtifexPluginHookName,
+  plugin: FerolytePlugin,
+  hookName: FerolytePluginHookName,
   event: unknown,
 ) => {
   const hook = plugin[hookName];
@@ -64,14 +64,14 @@ const runPluginHook = async (
     await (hook as (event: unknown) => unknown).call(plugin, event);
   } catch (error) {
     console.error(
-      `[artifex:plugin:${plugin.name}] Error in "${hookName}":`,
+      `[ferolyte:plugin:${plugin.name}] Error in "${hookName}":`,
       error,
     );
   }
 };
 
 export const initPlugins = (
-  pluginList: ArtifexPlugin[],
+  pluginList: FerolytePlugin[],
   activeProfileName: string,
 ) => {
   for (const plugin of pluginList) {
@@ -133,7 +133,7 @@ export const emitAfterLoad = async () => {
 };
 
 export const emitHook = async (
-  hookName: Exclude<ArtifexPluginHookName, 'beforeFileWrite' | 'afterLoad'>,
+  hookName: Exclude<FerolytePluginHookName, 'beforeFileWrite' | 'afterLoad'>,
   event: BuildEvent | FileEvent | WatchReadyEvent,
 ) => {
   for (const plugin of plugins) {
@@ -179,7 +179,7 @@ export const emitBeforeFileWrite = async (
       }
     } catch (error) {
       console.error(
-        `[artifex:plugin:${plugin.name}] Error in "beforeFileWrite":`,
+        `[ferolyte:plugin:${plugin.name}] Error in "beforeFileWrite":`,
         error,
       );
     }

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertStringNumberFilter } from './common/convert-string-number';
 import { IsFamilyFilter } from '../../interfaces/filters/is-family-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsFamilyFilter = (
   filter: Partial<IsFamilyFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertStringNumberFilter({
-    ...filter,
-    test: 'is_family'
-  }, ctx);
+  return convertStringNumberFilter(
+    {
+      ...filter,
+      test: 'is_family',
+    },
+    ctx,
+  );
 };

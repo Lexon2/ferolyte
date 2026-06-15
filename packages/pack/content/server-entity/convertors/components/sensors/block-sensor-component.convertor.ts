@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BlockSensorComponent } from '../../../interfaces/components/sensors/block-sensor-component';
 import { validateNumber, validateString } from '../../common/validation';
 
@@ -43,7 +43,7 @@ const validateBlockListItem = (
  */
 export const convertBlockSensorComponent = (
   component: Partial<BlockSensorComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:block_sensor': any } | undefined => {
   if (!component) {
     return undefined;

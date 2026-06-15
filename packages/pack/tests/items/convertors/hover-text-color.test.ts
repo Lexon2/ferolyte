@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createHoverTextColor } from '@artifex/pack/content/item/convertors/components/hover-text-color';
+import { createHoverTextColor } from '@ferolyte/pack/content/item/convertors/components/hover-text-color';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createHoverTextColor', () => {
@@ -12,6 +12,11 @@ describe('createHoverTextColor', () => {
   });
 
   it('maps valid color', () => {
-    expectComponent(createHoverTextColor, 'red', 'minecraft:hover_text_color', 'red');
+    expectComponent(
+      createHoverTextColor,
+      'red',
+      'minecraft:hover_text_color',
+      'red',
+    );
   });
 });

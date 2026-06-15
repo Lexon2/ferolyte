@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   FILTER_OPERATORS,
   FilterOperator,
@@ -11,16 +11,18 @@ import { validateAllowedValues } from '../../common/validation';
 
 export const convertFilterBase = (
   filter: {
-  operator?: FilterOperator;
-  subject?: FilterSubject;
-},
-  ctx?: ContentDiagnosticContext
+    operator?: FilterOperator;
+    subject?: FilterSubject;
+  },
+  ctx?: ContentDiagnosticContext,
 ): { operator?: FilterOperator; subject?: FilterSubject } | undefined => {
   const result: any = {};
 
   // Validate optional properties
   if (filter.operator !== undefined) {
-    if (!validateAllowedValues(filter.operator, FILTER_OPERATORS, 'operator', ctx)) {
+    if (
+      !validateAllowedValues(filter.operator, FILTER_OPERATORS, 'operator', ctx)
+    ) {
       return undefined;
     }
 
@@ -28,7 +30,9 @@ export const convertFilterBase = (
   }
 
   if (filter.subject !== undefined) {
-    if (!validateAllowedValues(filter.subject, FILTER_SUBJECTS, 'subject', ctx)) {
+    if (
+      !validateAllowedValues(filter.subject, FILTER_SUBJECTS, 'subject', ctx)
+    ) {
       return undefined;
     }
 

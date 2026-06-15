@@ -1,10 +1,7 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { HoldGroundBehavior } from '../../interfaces/behaviors/hold-ground-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
-import {
-  validateBoolean,
-  validateNumber,
-} from '../common/validation';
+import { validateBoolean, validateNumber } from '../common/validation';
 
 /**
  * Converts a HoldGroundBehavior to Minecraft format
@@ -13,7 +10,7 @@ import {
  */
 export const convertHoldGroundBehavior = (
   behavior: Partial<HoldGroundBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.hold_ground': any } | undefined => {
   if (!behavior) {
     return undefined;

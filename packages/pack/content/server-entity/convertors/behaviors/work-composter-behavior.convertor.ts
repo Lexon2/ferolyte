@@ -1,7 +1,14 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { WorkComposterBehavior } from '../../interfaces/behaviors/work-composter-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
-import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
+import {
+  validateNumber,
+  validateBoolean,
+  validateInteger,
+} from '../common/validation';
 
 /**
  * Converts a WorkComposterBehavior to Minecraft format
@@ -10,7 +17,7 @@ import { validateNumber, validateBoolean, validateInteger } from '../common/vali
  */
 export const convertWorkComposterBehavior = (
   behavior: Partial<WorkComposterBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.work_composter': any } | undefined => {
   const result: any = {};
 
@@ -96,7 +103,10 @@ export const convertWorkComposterBehavior = (
 
   // Validate onArrival
   if (behavior.onArrival !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onArrival, withFieldPath(ctx, 'onArrival'));
+    const convertedTrigger = convertTrigger(
+      behavior.onArrival,
+      withFieldPath(ctx, 'onArrival'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -136,6 +146,6 @@ export const convertWorkComposterBehavior = (
   }
 
   return {
-    'minecraft:behavior.work_composter': result
+    'minecraft:behavior.work_composter': result,
   };
 };

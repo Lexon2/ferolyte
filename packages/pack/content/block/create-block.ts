@@ -1,6 +1,6 @@
 import { BlockBuilder } from './block-builder';
 import { BlockConfig } from './interfaces/block-config';
-import { deepMerge } from '@artifex/common/object/deep-merge';
+import { deepMerge } from '@ferolyte/common/object/deep-merge';
 
 export const createBlock = (...sources: (BlockConfig | BlockBuilder)[]) => {
   let merged: any = {};

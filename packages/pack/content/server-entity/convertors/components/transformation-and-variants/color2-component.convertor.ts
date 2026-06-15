@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { Color2Component } from '../../../interfaces/components/transformation-and-variants/color2-component';
 import { validateNumberRange } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertColor2Component = (
   component: Partial<Color2Component>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:color2': { value: number } } | undefined => {
   if (!component) {
     return undefined;
@@ -18,7 +18,9 @@ export const convertColor2Component = (
   const result: { value: number } = { value: 0 };
 
   if (component.value !== undefined) {
-    if (!validateNumberRange(component.value, 0, Number.MAX_SAFE_INTEGER, 'value')) {
+    if (
+      !validateNumberRange(component.value, 0, Number.MAX_SAFE_INTEGER, 'value')
+    ) {
       return undefined;
     }
     result.value = component.value;

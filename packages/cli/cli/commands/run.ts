@@ -1,6 +1,6 @@
 import { defineCommand } from 'citty';
 
-import { ArtifexPack } from '../../artifex-pack';
+import { FerolytePack } from '../../ferolyte-pack';
 import { archivePacksIfEnabled } from '../../compiler/archive/create-mcaddon';
 import { buildScriptsOnce } from '../../compiler/scripts/watch-esbuild';
 import {
@@ -16,7 +16,7 @@ export const runCommand = defineCommand({
   args: compilerCommandArgs,
   async run({ args }) {
     const options = toCompilerOptions(args);
-    await ArtifexPack.build(options);
+    await FerolytePack.build(options);
     await buildScriptsOnce(options.profile);
     await archivePacksIfEnabled();
     process.exit(0);

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SquidDiveBehavior } from '../../interfaces/behaviors/squid-dive-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertSquidDiveBehavior = (
   behavior: Partial<SquidDiveBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.squid_dive': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertSquidDiveBehavior = (
   }
 
   return {
-    'minecraft:behavior.squid_dive': result
+    'minecraft:behavior.squid_dive': result,
   };
 };

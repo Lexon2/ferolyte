@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TransformationComponent } from '../../../interfaces/components/transformation-and-variants/transformation-component';
 import { validateString } from '../../common/validation';
 import { validateStringArray } from '../../common/validation';
@@ -12,7 +12,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertTransformationComponent = (
   component: Partial<TransformationComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): Record<string, any> | undefined => {
   if (!component) {
     return undefined;
@@ -22,11 +22,16 @@ export const convertTransformationComponent = (
 
   if (component.add !== undefined) {
     if (component.add.componentGroups !== undefined) {
-      if (!validateStringArray(component.add.componentGroups, 'add.componentGroups')) {
+      if (
+        !validateStringArray(
+          component.add.componentGroups,
+          'add.componentGroups',
+        )
+      ) {
         return undefined;
       }
       result.add = {
-        component_groups: component.add.componentGroups
+        component_groups: component.add.componentGroups,
       };
     }
   }
@@ -44,48 +49,85 @@ export const convertTransformationComponent = (
         return undefined;
       }
       result.delay = {
-        value: component.delay
+        value: component.delay,
       };
     } else {
       const delayResult: Record<string, any> = {};
 
       if (component.delay.blockAssistChance !== undefined) {
-        if (!validateNumberRange(component.delay.blockAssistChance, 0, 1, 'delay.blockAssistChance')) {
+        if (
+          !validateNumberRange(
+            component.delay.blockAssistChance,
+            0,
+            1,
+            'delay.blockAssistChance',
+          )
+        ) {
           return undefined;
         }
         delayResult.block_assist_chance = component.delay.blockAssistChance;
       }
 
       if (component.delay.blockChance !== undefined) {
-        if (!validateNumberRange(component.delay.blockChance, 0, 1, 'delay.blockChance')) {
+        if (
+          !validateNumberRange(
+            component.delay.blockChance,
+            0,
+            1,
+            'delay.blockChance',
+          )
+        ) {
           return undefined;
         }
         delayResult.block_chance = component.delay.blockChance;
       }
 
       if (component.delay.blockMax !== undefined) {
-        if (!validateNumberRange(component.delay.blockMax, 0, Infinity, 'delay.blockMax')) {
+        if (
+          !validateNumberRange(
+            component.delay.blockMax,
+            0,
+            Infinity,
+            'delay.blockMax',
+          )
+        ) {
           return undefined;
         }
         delayResult.block_max = component.delay.blockMax;
       }
 
       if (component.delay.blockRadius !== undefined) {
-        if (!validateNumberRange(component.delay.blockRadius, 0, Infinity, 'delay.blockRadius')) {
+        if (
+          !validateNumberRange(
+            component.delay.blockRadius,
+            0,
+            Infinity,
+            'delay.blockRadius',
+          )
+        ) {
           return undefined;
         }
         delayResult.block_radius = component.delay.blockRadius;
       }
 
       if (component.delay.blockTypes !== undefined) {
-        if (!validateStringArray(component.delay.blockTypes, 'delay.blockTypes')) {
+        if (
+          !validateStringArray(component.delay.blockTypes, 'delay.blockTypes')
+        ) {
           return undefined;
         }
         delayResult.block_types = component.delay.blockTypes;
       }
 
       if (component.delay.value !== undefined) {
-        if (!validateNumberRange(component.delay.value, 0, Infinity, 'delay.value')) {
+        if (
+          !validateNumberRange(
+            component.delay.value,
+            0,
+            Infinity,
+            'delay.value',
+          )
+        ) {
           return undefined;
         }
         delayResult.value = component.delay.value;
@@ -145,6 +187,6 @@ export const convertTransformationComponent = (
   }
 
   return {
-    'minecraft:transformation': result
+    'minecraft:transformation': result,
   };
 };

@@ -2,12 +2,12 @@ import {
   BlockFilterDescriptor,
   PlacementFilterComponent,
 } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateNonEmptyString,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 const VALID_FACES = [
   'up',
@@ -101,7 +101,11 @@ export const createPlacementFilter = (
   if (Array.isArray(options.conditions)) {
     const conditions: any[] = [];
 
-    for (let condIndex = 0; condIndex < options.conditions.length; condIndex++) {
+    for (
+      let condIndex = 0;
+      condIndex < options.conditions.length;
+      condIndex++
+    ) {
       const condition = options.conditions[condIndex];
       const condContext =
         ctx !== undefined
@@ -110,7 +114,11 @@ export const createPlacementFilter = (
       const newCondition: any = {};
 
       if (Array.isArray(condition.allowedFaces)) {
-        for (let faceIndex = 0; faceIndex < condition.allowedFaces.length; faceIndex++) {
+        for (
+          let faceIndex = 0;
+          faceIndex < condition.allowedFaces.length;
+          faceIndex++
+        ) {
           const face = condition.allowedFaces[faceIndex];
           if (
             !validateAllowedValue(
@@ -131,7 +139,11 @@ export const createPlacementFilter = (
       if (Array.isArray(condition.blockFilter)) {
         const blockFilters: any[] = [];
 
-        for (let filterIndex = 0; filterIndex < condition.blockFilter.length; filterIndex++) {
+        for (
+          let filterIndex = 0;
+          filterIndex < condition.blockFilter.length;
+          filterIndex++
+        ) {
           const filter = condition.blockFilter[filterIndex];
           const converted = convertBlockFilter(
             filter,

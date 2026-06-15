@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BreakBlocksComponent } from '../../../interfaces/components/miscellaneous/break-blocks-component';
 import { validateString } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateString } from '../../common/validation';
  */
 export const convertBreakBlocksComponent = (
   component: Partial<BreakBlocksComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:break_blocks': any } | undefined => {
   if (!component) {
     return undefined;

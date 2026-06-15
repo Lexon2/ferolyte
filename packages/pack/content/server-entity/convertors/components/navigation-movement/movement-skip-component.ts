@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MovementSkipComponent } from '../../../interfaces/components/navigation-movement/movement-skip-component';
 import { validateMaxTurn } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateMaxTurn } from '../../common/validation';
  */
 export const convertMovementSkipComponent = (
   component: Partial<MovementSkipComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:movement.skip': any } | undefined => {
   if (!component) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertMovementSkipComponent = (
   }
 
   return {
-    'minecraft:movement.skip': result
+    'minecraft:movement.skip': result,
   };
 };

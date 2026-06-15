@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createCompostable } from '@artifex/pack/content/item/convertors/components/compostable';
+import { createCompostable } from '@ferolyte/pack/content/item/convertors/components/compostable';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createCompostable', () => {
@@ -12,8 +12,13 @@ describe('createCompostable', () => {
   });
 
   it('maps composting chance', () => {
-    expectComponent(createCompostable, { compostingChance: 65 }, 'minecraft:compostable', {
-      composting_chance: 65,
-    });
+    expectComponent(
+      createCompostable,
+      { compostingChance: 65 },
+      'minecraft:compostable',
+      {
+        composting_chance: 65,
+      },
+    );
   });
 });

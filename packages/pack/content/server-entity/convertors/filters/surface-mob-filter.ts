@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { SurfaceMobFilter } from '../../interfaces/filters/surface-mob-filter';
 
@@ -9,13 +9,16 @@ import { SurfaceMobFilter } from '../../interfaces/filters/surface-mob-filter';
  */
 export const convertSurfaceMobFilter = (
   filter: Partial<SurfaceMobFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): ReturnType<typeof convertBooleanFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
   }
-  return convertBooleanFilter({
-    ...filter,
-    test: 'surface_mob'
-  }, ctx);
+  return convertBooleanFilter(
+    {
+      ...filter,
+      test: 'surface_mob',
+    },
+    ctx,
+  );
 };

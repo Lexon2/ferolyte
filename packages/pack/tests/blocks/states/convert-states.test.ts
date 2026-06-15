@@ -6,7 +6,7 @@ import {
   createEnumState,
   createFacingState,
   createIntState,
-} from '@artifex/pack/content/block/states/convert-states';
+} from '@ferolyte/pack/content/block/states/convert-states';
 
 describe('convertBlockStates', () => {
   it('returns undefined when input is missing', () => {
@@ -14,10 +14,12 @@ describe('convertBlockStates', () => {
   });
 
   it('maps enum and int range states', () => {
-    expect(convertBlockStates({
-      direction: ['north', 'south'],
-      power: { values: { min: 0, max: 15 } },
-    })).toEqual({
+    expect(
+      convertBlockStates({
+        direction: ['north', 'south'],
+        power: { values: { min: 0, max: 15 } },
+      }),
+    ).toEqual({
       direction: ['north', 'south'],
       power: { values: { min: 0, max: 15 } },
     });
@@ -28,7 +30,9 @@ describe('convertBlockStates', () => {
   });
 
   it('returns undefined when min is greater than max', () => {
-    expect(convertBlockStates({ power: { values: { min: 10, max: 5 } } })).toBeUndefined();
+    expect(
+      convertBlockStates({ power: { values: { min: 10, max: 5 } } }),
+    ).toBeUndefined();
   });
 });
 
@@ -49,6 +53,13 @@ describe('state helpers', () => {
 
   it('createDirectionState and createFacingState return directions', () => {
     expect(createDirectionState()).toEqual(['north', 'south', 'east', 'west']);
-    expect(createFacingState()).toEqual(['north', 'south', 'east', 'west', 'up', 'down']);
+    expect(createFacingState()).toEqual([
+      'north',
+      'south',
+      'east',
+      'west',
+      'up',
+      'down',
+    ]);
   });
 });

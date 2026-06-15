@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DespawnComponent } from '../../../interfaces/components/miscellaneous/despawn-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { validateNumber } from '../../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertDespawnComponent = (
   component: Partial<DespawnComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:despawn': any } | undefined => {
   if (!component) {
     return undefined;
@@ -32,16 +35,32 @@ export const convertDespawnComponent = (
   if (component.despawnFromDistance !== undefined) {
     const validatedDistance: any = {};
     if (component.despawnFromDistance.maxDistance !== undefined) {
-      if (!validateNumber(component.despawnFromDistance.maxDistance, 'despawnFromDistance.maxDistance', 0, Number.MAX_VALUE)) {
+      if (
+        !validateNumber(
+          component.despawnFromDistance.maxDistance,
+          'despawnFromDistance.maxDistance',
+          0,
+          Number.MAX_VALUE,
+        )
+      ) {
         return undefined;
       }
-      validatedDistance.max_distance = component.despawnFromDistance.maxDistance;
+      validatedDistance.max_distance =
+        component.despawnFromDistance.maxDistance;
     }
     if (component.despawnFromDistance.minDistance !== undefined) {
-      if (!validateNumber(component.despawnFromDistance.minDistance, 'despawnFromDistance.minDistance', 0, Number.MAX_VALUE)) {
+      if (
+        !validateNumber(
+          component.despawnFromDistance.minDistance,
+          'despawnFromDistance.minDistance',
+          0,
+          Number.MAX_VALUE,
+        )
+      ) {
         return undefined;
       }
-      validatedDistance.min_distance = component.despawnFromDistance.minDistance;
+      validatedDistance.min_distance =
+        component.despawnFromDistance.minDistance;
     }
     result.despawn_from_distance = validatedDistance;
   }
@@ -68,7 +87,10 @@ export const convertDespawnComponent = (
 
   // Validate filters
   if (component.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(component.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      component.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -77,7 +99,14 @@ export const convertDespawnComponent = (
 
   // Validate minRangeInactivityTimer
   if (component.minRangeInactivityTimer !== undefined) {
-    if (!validateNumber(component.minRangeInactivityTimer, 'minRangeInactivityTimer', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.minRangeInactivityTimer,
+        'minRangeInactivityTimer',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.min_range_inactivity_timer = component.minRangeInactivityTimer;
@@ -85,7 +114,14 @@ export const convertDespawnComponent = (
 
   // Validate minRangeRandomChance
   if (component.minRangeRandomChance !== undefined) {
-    if (!validateNumber(component.minRangeRandomChance, 'minRangeRandomChance', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.minRangeRandomChance,
+        'minRangeRandomChance',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.min_range_random_chance = component.minRangeRandomChance;

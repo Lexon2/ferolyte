@@ -1,8 +1,8 @@
 import { Player, world } from '@minecraft/server';
 
-import { playerJoin } from '@artifex/events/player/after/join';
-import { playerLeave } from '@artifex/events/player/before/leave';
-import { worldLoad } from '@artifex/events/world/after/world-load';
+import { playerJoin } from '@ferolyte/events/player/after/join';
+import { playerLeave } from '@ferolyte/events/player/before/leave';
+import { worldLoad } from '@ferolyte/events/world/after/world-load';
 
 type OnlinePlayerEventCallback = (player: Player) => void;
 

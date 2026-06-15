@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DefendVillageTargetBehavior } from '../../interfaces/behaviors/defend-village-target-behavior';
 import { convertSingleEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -10,7 +10,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertDefendVillageTargetBehavior = (
   behavior: Partial<DefendVillageTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.defend_village_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -29,8 +29,10 @@ export const convertDefendVillageTargetBehavior = (
   // Validate entityTypes
   if (behavior.entityTypes !== undefined) {
     if (Array.isArray(behavior.entityTypes)) {
-      const convertedTypes = behavior.entityTypes.map(type => convertSingleEntityDefinition(type));
-      if (convertedTypes.some(type => type === undefined)) {
+      const convertedTypes = behavior.entityTypes.map((type) =>
+        convertSingleEntityDefinition(type),
+      );
+      if (convertedTypes.some((type) => type === undefined)) {
         return undefined;
       }
       result.entity_types = convertedTypes;
@@ -62,6 +64,6 @@ export const convertDefendVillageTargetBehavior = (
   }
 
   return {
-    'minecraft:behavior.defend_village_target': result
+    'minecraft:behavior.defend_village_target': result,
   };
 };

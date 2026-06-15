@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 
 import { TARGET_SELECTION_METHODS } from '../../constants/target-selection-method';
 import { AvoidBlockBehavior } from '../../interfaces/behaviors/avoid-block-behavior';
@@ -18,7 +21,7 @@ import {
  */
 export const convertAvoidBlockBehavior = (
   behavior: Partial<AvoidBlockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.avoid_block': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -106,7 +109,10 @@ export const convertAvoidBlockBehavior = (
 
   // Validate onEscape
   if (behavior.onEscape !== undefined) {
-    const convertedOnEscape = convertTrigger(behavior.onEscape, withFieldPath(ctx, 'onEscape'));
+    const convertedOnEscape = convertTrigger(
+      behavior.onEscape,
+      withFieldPath(ctx, 'onEscape'),
+    );
     if (!convertedOnEscape) {
       return undefined;
     }

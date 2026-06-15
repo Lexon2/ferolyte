@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RaidTriggerComponent } from '../../../interfaces/components/miscellaneous/raid-trigger-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -9,7 +12,7 @@ import { convertTrigger } from '../../common/trigger.convertor';
  */
 export const convertRaidTriggerComponent = (
   component: Partial<RaidTriggerComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:raid_trigger': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +22,10 @@ export const convertRaidTriggerComponent = (
 
   // Validate triggeredEvent
   if (component.triggeredEvent !== undefined) {
-    const convertedTriggeredEvent = convertTrigger(component.triggeredEvent, withFieldPath(ctx, 'triggeredEvent'));
+    const convertedTriggeredEvent = convertTrigger(
+      component.triggeredEvent,
+      withFieldPath(ctx, 'triggeredEvent'),
+    );
     if (!convertedTriggeredEvent) {
       return undefined;
     }
@@ -27,6 +33,6 @@ export const convertRaidTriggerComponent = (
   }
 
   return {
-    'minecraft:raid_trigger': result
+    'minecraft:raid_trigger': result,
   };
 };

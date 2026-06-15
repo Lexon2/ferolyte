@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNonNegativeNumber } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNonNegativeNumber } from '@ferolyte/common/content/validation/content-validation';
 
 interface StorageWeightModifierOptions {
   weightInStorageItem?: number;

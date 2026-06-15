@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './common/convert-filter-base';
 import { BoolPropertyFilter } from '../../interfaces/filters/bool-property-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -11,7 +11,7 @@ import { validateString } from '../common/validation';
  */
 export const convertBoolPropertyFilter = (
   filter: Partial<BoolPropertyFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
@@ -29,7 +29,7 @@ export const convertBoolPropertyFilter = (
   const result: MinecraftJsonFilter = {
     ...baseResult,
     test: 'bool_property',
-    domain: filter.domain
+    domain: filter.domain,
   };
 
   if (filter.value !== undefined) {

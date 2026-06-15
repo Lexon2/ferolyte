@@ -1,8 +1,8 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateNonEmptyString,
   validateNonNegativeNumber,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 interface ProjectileOptions {
   projectileEntity: string;

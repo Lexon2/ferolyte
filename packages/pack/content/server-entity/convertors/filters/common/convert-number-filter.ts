@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './convert-filter-base';
 import { FilterOperator } from '../../../constants/filter-operators';
 import { FilterSubject } from '../../../constants/filter-subjects';
@@ -13,12 +13,12 @@ import { validateNumber } from '../../common/validation';
 
 export const convertNumberFilter = (
   filter: {
-  test: string;
-  operator?: FilterOperator;
-  subject?: FilterSubject;
-  value?: number;
-},
-  ctx?: ContentDiagnosticContext
+    test: string;
+    operator?: FilterOperator;
+    subject?: FilterSubject;
+    value?: number;
+  },
+  ctx?: ContentDiagnosticContext,
 ): any | undefined => {
   if (!filter) {
     return undefined;
@@ -28,7 +28,10 @@ export const convertNumberFilter = (
     return undefined;
   }
 
-  if (filter.value === undefined || !validateNumber(filter.value, 'value', undefined, undefined, ctx)) {
+  if (
+    filter.value === undefined ||
+    !validateNumber(filter.value, 'value', undefined, undefined, ctx)
+  ) {
     return undefined;
   }
 

@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EmergeBehavior } from '../../interfaces/behaviors/emerge-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateNumber } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertEmergeBehavior = (
   behavior: Partial<EmergeBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.emerge': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -44,7 +47,10 @@ export const convertEmergeBehavior = (
 
   // Validate onDone
   if (behavior.onDone !== undefined) {
-    const onDone = convertTrigger(behavior.onDone, withFieldPath(ctx, 'onDone'));
+    const onDone = convertTrigger(
+      behavior.onDone,
+      withFieldPath(ctx, 'onDone'),
+    );
     if (!onDone) {
       return undefined;
     }
@@ -52,6 +58,6 @@ export const convertEmergeBehavior = (
   }
 
   return {
-    'minecraft:behavior.emerge': result
+    'minecraft:behavior.emerge': result,
   };
 };

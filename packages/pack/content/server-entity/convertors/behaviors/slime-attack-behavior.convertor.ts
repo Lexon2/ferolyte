@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SlimeAttackBehavior } from '../../interfaces/behaviors/slime-attack-behavior';
 import { validateNumber, validateBoolean } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateBoolean } from '../common/validation';
  */
 export const convertSlimeAttackBehavior = (
   behavior: Partial<SlimeAttackBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.slime_attack': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -58,6 +58,6 @@ export const convertSlimeAttackBehavior = (
   }
 
   return {
-    'minecraft:behavior.slime_attack': result
+    'minecraft:behavior.slime_attack': result,
   };
 };

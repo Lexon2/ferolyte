@@ -1,18 +1,18 @@
 import { PlayerDimensionChangeAfterEvent, world } from '@minecraft/server';
 
-import { RequireAtLeastOne } from '@artifex/common/types';
-import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
-import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
+import { RequireAtLeastOne } from '@ferolyte/common/types';
+import { BasicEventListener } from '@ferolyte/events/common/basic-event.listener';
+import { BasicEventRouter } from '@ferolyte/events/common/basic-event.router';
 import {
   EVENT_ROUTE_GLOBAL_ID,
   EventRoutePrefix,
-} from '@artifex/events/common/constants';
+} from '@ferolyte/events/common/constants';
 import {
   EventRouteController,
   EventDimensionFromToIdsRouteOption,
-} from '@artifex/events/common/interfaces';
-import { EventAction, EventActionData } from '@artifex/events/common/types';
-import { ArtifexEventUtils } from '@artifex/events/common/utils';
+} from '@ferolyte/events/common/interfaces';
+import { EventAction, EventActionData } from '@ferolyte/events/common/types';
+import { FerolyteEventUtils } from '@ferolyte/events/common/utils';
 
 /// Private Types ///
 
@@ -60,7 +60,7 @@ export const playerDimensionChange = (
     },
   });
 
-  return ArtifexEventUtils.initializeEvent<
+  return FerolyteEventUtils.initializeEvent<
     Context,
     PlayerDimensionChangeAfterEventRouteOptions
   >(listener, router, action, options);

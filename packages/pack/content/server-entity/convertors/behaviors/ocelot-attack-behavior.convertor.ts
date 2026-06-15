@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { OcelotAttackBehavior } from '../../interfaces/behaviors/ocelot-attack-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertOcelotAttackBehavior = (
   behavior: Partial<OcelotAttackBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.ocelotattack': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -67,7 +67,9 @@ export const convertOcelotAttackBehavior = (
 
   // Validate sneakSpeedMultiplier
   if (behavior.sneakSpeedMultiplier !== undefined) {
-    if (!validateNumber(behavior.sneakSpeedMultiplier, 'sneakSpeedMultiplier')) {
+    if (
+      !validateNumber(behavior.sneakSpeedMultiplier, 'sneakSpeedMultiplier')
+    ) {
       return undefined;
     }
     result.sneak_speed_multiplier = behavior.sneakSpeedMultiplier;
@@ -75,7 +77,9 @@ export const convertOcelotAttackBehavior = (
 
   // Validate sprintSpeedMultiplier
   if (behavior.sprintSpeedMultiplier !== undefined) {
-    if (!validateNumber(behavior.sprintSpeedMultiplier, 'sprintSpeedMultiplier')) {
+    if (
+      !validateNumber(behavior.sprintSpeedMultiplier, 'sprintSpeedMultiplier')
+    ) {
       return undefined;
     }
     result.sprint_speed_multiplier = behavior.sprintSpeedMultiplier;
@@ -106,6 +110,6 @@ export const convertOcelotAttackBehavior = (
   }
 
   return {
-    'minecraft:behavior.ocelotattack': result
+    'minecraft:behavior.ocelotattack': result,
   };
 };

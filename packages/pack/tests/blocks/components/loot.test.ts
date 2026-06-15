@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createLoot } from '@artifex/pack/content/block/components/loot';
+import { createLoot } from '@ferolyte/pack/content/block/components/loot';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createLoot', () => {
@@ -12,6 +12,11 @@ describe('createLoot', () => {
   });
 
   it('maps loot table path', () => {
-    expectComponent(createLoot, 'loot_tables/blocks/test_block.json', 'minecraft:loot', 'loot_tables/blocks/test_block.json');
+    expectComponent(
+      createLoot,
+      'loot_tables/blocks/test_block.json',
+      'minecraft:loot',
+      'loot_tables/blocks/test_block.json',
+    );
   });
 });

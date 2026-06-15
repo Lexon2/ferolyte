@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { LookAtTradingPlayerBehavior } from '../../interfaces/behaviors/look-at-trading-player-behavior';
 import { convertRange } from '../common/convertors';
 import { validateInteger, validateNumber } from '../common/validation';
@@ -10,7 +10,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertLookAtTradingPlayerBehavior = (
   behavior: Partial<LookAtTradingPlayerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.look_at_trading_player': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -61,13 +61,15 @@ export const convertLookAtTradingPlayerBehavior = (
 
   // Validate angleOfViewHorizontal
   if (behavior.angleOfViewHorizontal !== undefined) {
-    if (!validateInteger(behavior.angleOfViewHorizontal, 'angleOfViewHorizontal')) {
+    if (
+      !validateInteger(behavior.angleOfViewHorizontal, 'angleOfViewHorizontal')
+    ) {
       return undefined;
     }
     result.angle_of_view_horizontal = behavior.angleOfViewHorizontal;
   }
 
   return {
-    'minecraft:behavior.look_at_trading_player': result
+    'minecraft:behavior.look_at_trading_player': result,
   };
 };

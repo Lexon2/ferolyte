@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { HarvestFarmBlockBehavior } from '../../interfaces/behaviors/harvest-farm-block-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertHarvestFarmBlockBehavior = (
   behavior: Partial<HarvestFarmBlockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.harvest_farm_block': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -27,7 +27,9 @@ export const convertHarvestFarmBlockBehavior = (
 
   // Validate maxSecondsBeforeSearch
   if (behavior.maxSecondsBeforeSearch !== undefined) {
-    if (!validateNumber(behavior.maxSecondsBeforeSearch, 'maxSecondsBeforeSearch')) {
+    if (
+      !validateNumber(behavior.maxSecondsBeforeSearch, 'maxSecondsBeforeSearch')
+    ) {
       return undefined;
     }
     result.max_seconds_before_search = behavior.maxSecondsBeforeSearch;
@@ -35,7 +37,12 @@ export const convertHarvestFarmBlockBehavior = (
 
   // Validate searchCooldownMaxSeconds
   if (behavior.searchCooldownMaxSeconds !== undefined) {
-    if (!validateNumber(behavior.searchCooldownMaxSeconds, 'searchCooldownMaxSeconds')) {
+    if (
+      !validateNumber(
+        behavior.searchCooldownMaxSeconds,
+        'searchCooldownMaxSeconds',
+      )
+    ) {
       return undefined;
     }
     result.search_cooldown_max_seconds = behavior.searchCooldownMaxSeconds;
@@ -82,6 +89,6 @@ export const convertHarvestFarmBlockBehavior = (
   }
 
   return {
-    'minecraft:behavior.harvest_farm_block': result
+    'minecraft:behavior.harvest_farm_block': result,
   };
 };

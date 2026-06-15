@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createChestObstruction } from '@artifex/pack/content/block/components/chest-obstruction';
+import { createChestObstruction } from '@ferolyte/pack/content/block/components/chest-obstruction';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createChestObstruction', () => {
@@ -12,8 +12,13 @@ describe('createChestObstruction', () => {
   });
 
   it('maps valid obstruction rule', () => {
-    expectComponent(createChestObstruction, { obstructionRule: 'always' }, 'minecraft:chest_obstruction', {
-      obstruction_rule: 'always',
-    });
+    expectComponent(
+      createChestObstruction,
+      { obstructionRule: 'always' },
+      'minecraft:chest_obstruction',
+      {
+        obstruction_rule: 'always',
+      },
+    );
   });
 });

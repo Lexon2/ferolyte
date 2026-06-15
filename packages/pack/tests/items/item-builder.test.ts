@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ItemBuilder } from '@artifex/pack/content/item/item-builder';
+import { ItemBuilder } from '@ferolyte/pack/content/item/item-builder';
 import { minimalItemConfig } from './helpers/fixtures';
 
 describe('ItemBuilder', () => {
@@ -17,15 +17,19 @@ describe('ItemBuilder', () => {
   });
 
   it('uses custom version', () => {
-    const item = new ItemBuilder(minimalItemConfig({ version: '1.21.90' })).build();
+    const item = new ItemBuilder(
+      minimalItemConfig({ version: '1.21.90' }),
+    ).build();
     expect(item.format_version).toBe('1.21.90');
   });
 
   it('maps isExperimental and menuCategory', () => {
-    const item = new ItemBuilder(minimalItemConfig({
-      isExperimental: true,
-      menuCategory: { category: 'nature' },
-    })).build();
+    const item = new ItemBuilder(
+      minimalItemConfig({
+        isExperimental: true,
+        menuCategory: { category: 'nature' },
+      }),
+    ).build();
 
     expect(item['minecraft:item'].description).toEqual({
       identifier: 'test:item',
@@ -40,13 +44,15 @@ describe('ItemBuilder', () => {
   });
 
   it('converts registered components through factory', () => {
-    const item = new ItemBuilder(minimalItemConfig({
-      components: {
-        displayName: 'Stone',
-        maxStackSize: 64,
-        glint: true,
-      },
-    })).build();
+    const item = new ItemBuilder(
+      minimalItemConfig({
+        components: {
+          displayName: 'Stone',
+          maxStackSize: 64,
+          glint: true,
+        },
+      }),
+    ).build();
 
     expect(item['minecraft:item'].components).toEqual({
       'minecraft:display_name': { value: 'Stone' },
@@ -56,11 +62,13 @@ describe('ItemBuilder', () => {
   });
 
   it('passes through unknown components', () => {
-    const item = new ItemBuilder(minimalItemConfig({
-      components: {
-        'test:custom_component': { value: 1 },
-      },
-    })).build();
+    const item = new ItemBuilder(
+      minimalItemConfig({
+        components: {
+          'test:custom_component': { value: 1 },
+        },
+      }),
+    ).build();
 
     expect(item['minecraft:item'].components).toEqual({
       'test:custom_component': { value: 1 },
@@ -68,12 +76,14 @@ describe('ItemBuilder', () => {
   });
 
   it('skips invalid components', () => {
-    const item = new ItemBuilder(minimalItemConfig({
-      components: {
-        displayName: '',
-        glint: true,
-      },
-    })).build();
+    const item = new ItemBuilder(
+      minimalItemConfig({
+        components: {
+          displayName: '',
+          glint: true,
+        },
+      }),
+    ).build();
 
     expect(item['minecraft:item'].components).toEqual({
       'minecraft:glint': true,
@@ -81,7 +91,9 @@ describe('ItemBuilder', () => {
   });
 
   it('clones config independently', () => {
-    const builder = new ItemBuilder(minimalItemConfig({ components: { glint: true } }));
+    const builder = new ItemBuilder(
+      minimalItemConfig({ components: { glint: true } }),
+    );
     const clone = builder.cloneConfig();
     clone.components = { glint: false };
 
@@ -91,7 +103,7 @@ describe('ItemBuilder', () => {
   it('resolves icon path into atlas entry and texture key', () => {
     const builder = new ItemBuilder(
       minimalItemConfig({
-        identifier: 'artifex:test',
+        identifier: 'ferolyte:test',
         components: {
           icon: 'textures/arfex/test/items/test',
         },
@@ -102,12 +114,12 @@ describe('ItemBuilder', () => {
 
     expect(item['minecraft:item'].components).toEqual({
       'minecraft:icon': {
-        textures: { default: 'artifex:test' },
+        textures: { default: 'ferolyte:test' },
       },
     });
     expect(builder.getItemTextureEntries()).toEqual([
       {
-        key: 'artifex:test',
+        key: 'ferolyte:test',
         textures: 'textures/arfex/test/items/test',
       },
     ]);

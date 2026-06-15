@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SwimUpForBreathBehavior } from '../../interfaces/behaviors/swim-up-for-breath-behavior';
-import { validateInteger, validateNumber, validateString } from '../common/validation';
+import {
+  validateInteger,
+  validateNumber,
+  validateString,
+} from '../common/validation';
 
 /**
  * Converts a SwimUpForBreathBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateInteger, validateNumber, validateString } from '../common/valid
  */
 export const convertSwimUpForBreathBehavior = (
   behavior: Partial<SwimUpForBreathBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.swim_up_for_breath': any } | undefined => {
   if (!behavior) {
     return undefined;

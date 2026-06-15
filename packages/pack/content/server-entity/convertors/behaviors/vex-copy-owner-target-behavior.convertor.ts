@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { VexCopyOwnerTargetBehavior } from '../../interfaces/behaviors/vex-copy-owner-target-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -13,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertVexCopyOwnerTargetBehavior = (
   behavior: Partial<VexCopyOwnerTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.vex_copy_owner_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,6 +42,6 @@ export const convertVexCopyOwnerTargetBehavior = (
   }
 
   return {
-    'minecraft:behavior.vex_copy_owner_target': result
+    'minecraft:behavior.vex_copy_owner_target': result,
   };
 };

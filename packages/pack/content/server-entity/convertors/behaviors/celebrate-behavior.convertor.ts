@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { CelebrateBehavior } from '../../interfaces/behaviors/celebrate-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -11,7 +14,7 @@ import { validateNumber, validateSoundEvent } from '../common/validation';
  */
 export const convertCelebrateBehavior = (
   behavior: Partial<CelebrateBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.celebrate': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -45,7 +48,10 @@ export const convertCelebrateBehavior = (
 
   // Validate jumpInterval
   if (behavior.jumpInterval !== undefined) {
-    const convertedJumpInterval = convertRange(behavior.jumpInterval, 'jumpInterval');
+    const convertedJumpInterval = convertRange(
+      behavior.jumpInterval,
+      'jumpInterval',
+    );
     if (!convertedJumpInterval) {
       return undefined;
     }
@@ -55,7 +61,10 @@ export const convertCelebrateBehavior = (
 
   // Validate onCelebrationEndEvent
   if (behavior.onCelebrationEndEvent !== undefined) {
-    const convertedOnCelebrationEndEvent = convertTrigger(behavior.onCelebrationEndEvent, withFieldPath(ctx, 'onCelebrationEndEvent'));
+    const convertedOnCelebrationEndEvent = convertTrigger(
+      behavior.onCelebrationEndEvent,
+      withFieldPath(ctx, 'onCelebrationEndEvent'),
+    );
     if (!convertedOnCelebrationEndEvent) {
       return undefined;
     }
@@ -64,7 +73,10 @@ export const convertCelebrateBehavior = (
 
   // Validate soundInterval
   if (behavior.soundInterval !== undefined) {
-    const convertedSoundInterval = convertRange(behavior.soundInterval, 'soundInterval');
+    const convertedSoundInterval = convertRange(
+      behavior.soundInterval,
+      'soundInterval',
+    );
     if (!convertedSoundInterval) {
       return undefined;
     }
@@ -73,6 +85,6 @@ export const convertCelebrateBehavior = (
   }
 
   return {
-    'minecraft:behavior.celebrate': result
+    'minecraft:behavior.celebrate': result,
   };
 };

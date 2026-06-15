@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createKineticWeapon } from '@artifex/pack/content/item/convertors/components/kinetic-weapon';
+import { createKineticWeapon } from '@ferolyte/pack/content/item/convertors/components/kinetic-weapon';
 import { expectUndefined } from '../helpers/assert-component';
 
 describe('createKineticWeapon', () => {
@@ -12,17 +12,19 @@ describe('createKineticWeapon', () => {
   });
 
   it('maps kinetic weapon fields', () => {
-    expect(createKineticWeapon({
-      reach: { min: 1, max: 3 },
-      creativeReach: { min: 2, max: 4 },
-      damageConditions: { minSpeed: 1, maxDuration: 5 },
-      knockbackConditions: { minRelativeSpeed: 0.5 },
-      dismountConditions: { minSpeed: 2 },
-      damageModifier: 1,
-      damageMultiplier: 2,
-      delay: 0.1,
-      hitboxMargin: 0.2,
-    })).toEqual({
+    expect(
+      createKineticWeapon({
+        reach: { min: 1, max: 3 },
+        creativeReach: { min: 2, max: 4 },
+        damageConditions: { minSpeed: 1, maxDuration: 5 },
+        knockbackConditions: { minRelativeSpeed: 0.5 },
+        dismountConditions: { minSpeed: 2 },
+        damageModifier: 1,
+        damageMultiplier: 2,
+        delay: 0.1,
+        hitboxMargin: 0.2,
+      }),
+    ).toEqual({
       'minecraft:kinetic_weapon': {
         reach: { min: 1, max: 3 },
         creative_reach: { min: 2, max: 4 },

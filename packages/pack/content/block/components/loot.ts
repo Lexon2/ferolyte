@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNonEmptyString } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNonEmptyString } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates a loot component for Minecraft blocks

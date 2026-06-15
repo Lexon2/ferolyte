@@ -6,7 +6,7 @@ import {
   system,
 } from '@minecraft/server';
 
-import { RequireAtLeastOne } from '@artifex/common/types';
+import { RequireAtLeastOne } from '@ferolyte/common/types';
 import {
   EventAction,
   EventActionData,
@@ -16,8 +16,8 @@ import {
   EventRouteController,
   ScriptEventCommandActionFromRouteOption,
   ScriptEventCommandRouteOption,
-} from '@artifex/events/common';
-import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
+} from '@ferolyte/events/common';
+import { BasicEventListener } from '@ferolyte/events/common/basic-event.listener';
 
 /// Private Types ///
 
@@ -48,7 +48,7 @@ const wrap = (action: Action, routeId: string, message?: string): Action => {
         action(context);
       } catch (err) {
         console.error(
-          `[Artifex] Event route ${routeId} run with error in action:`,
+          `[Ferolyte] Event route ${routeId} run with error in action:`,
           err,
         );
       }
@@ -63,7 +63,7 @@ const wrap = (action: Action, routeId: string, message?: string): Action => {
         action(context);
       } catch (err) {
         console.error(
-          `[Artifex] Event route ${routeId} run with error in action:`,
+          `[Ferolyte] Event route ${routeId} run with error in action:`,
           err,
         );
       }

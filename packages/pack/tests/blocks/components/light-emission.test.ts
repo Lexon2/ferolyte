@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createLightEmission } from '@artifex/pack/content/block/components/light-emission';
+import { createLightEmission } from '@ferolyte/pack/content/block/components/light-emission';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createLightEmission', () => {

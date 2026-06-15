@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createGlint } from '@artifex/pack/content/item/convertors/components/glint';
+import { createGlint } from '@ferolyte/pack/content/item/convertors/components/glint';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createGlint', () => {

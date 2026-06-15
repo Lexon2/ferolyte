@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertFilterBase } from './common/convert-filter-base';
 import { IsGameRuleFilter } from '../../interfaces/filters/is-game-rule-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,7 +10,7 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsGameRuleFilter = (
   filter: Partial<IsGameRuleFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
@@ -29,7 +29,7 @@ export const convertIsGameRuleFilter = (
   const result: MinecraftJsonFilter = {
     ...baseResult,
     test: 'is_game_rule',
-    domain: filter.domain
+    domain: filter.domain,
   };
 
   if (filter.value !== undefined) {

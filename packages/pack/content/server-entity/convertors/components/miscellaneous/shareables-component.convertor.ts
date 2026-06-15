@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ShareablesComponent } from '../../../interfaces/components/miscellaneous/shareables-component';
 import {
   validateBoolean,
@@ -29,21 +29,45 @@ export const convertShareablesComponent = (
   }
 
   if (component.allItemsMaxAmount !== undefined) {
-    if (!validateInteger(component.allItemsMaxAmount, 'allItemsMaxAmount', undefined, undefined, ctx)) {
+    if (
+      !validateInteger(
+        component.allItemsMaxAmount,
+        'allItemsMaxAmount',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.all_items_max_amount = component.allItemsMaxAmount;
   }
 
   if (component.allItemsSurplusAmount !== undefined) {
-    if (!validateInteger(component.allItemsSurplusAmount, 'allItemsSurplusAmount', undefined, undefined, ctx)) {
+    if (
+      !validateInteger(
+        component.allItemsSurplusAmount,
+        'allItemsSurplusAmount',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.all_items_surplus_amount = component.allItemsSurplusAmount;
   }
 
   if (component.allItemsWantAmount !== undefined) {
-    if (!validateInteger(component.allItemsWantAmount, 'allItemsWantAmount', undefined, undefined, ctx)) {
+    if (
+      !validateInteger(
+        component.allItemsWantAmount,
+        'allItemsWantAmount',
+        undefined,
+        undefined,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.all_items_want_amount = component.allItemsWantAmount;
@@ -80,7 +104,9 @@ export const convertShareablesComponent = (
       }
 
       if (item.consumeItem !== undefined) {
-        if (!validateBoolean(item.consumeItem, `items[${index}].consumeItem`, ctx)) {
+        if (
+          !validateBoolean(item.consumeItem, `items[${index}].consumeItem`, ctx)
+        ) {
           return undefined;
         }
         itemResult.consume_item = item.consumeItem;
@@ -94,56 +120,112 @@ export const convertShareablesComponent = (
       }
 
       if (item.itemAux !== undefined) {
-        if (!validateInteger(item.itemAux, `items[${index}].itemAux`, undefined, undefined, ctx)) {
+        if (
+          !validateInteger(
+            item.itemAux,
+            `items[${index}].itemAux`,
+            undefined,
+            undefined,
+            ctx,
+          )
+        ) {
           return undefined;
         }
         itemResult.item_aux = item.itemAux;
       }
 
       if (item.maxAmount !== undefined) {
-        if (!validateInteger(item.maxAmount, `items[${index}].maxAmount`, undefined, undefined, ctx)) {
+        if (
+          !validateInteger(
+            item.maxAmount,
+            `items[${index}].maxAmount`,
+            undefined,
+            undefined,
+            ctx,
+          )
+        ) {
           return undefined;
         }
         itemResult.max_amount = item.maxAmount;
       }
 
       if (item.pickupLimit !== undefined) {
-        if (!validateInteger(item.pickupLimit, `items[${index}].pickupLimit`, undefined, undefined, ctx)) {
+        if (
+          !validateInteger(
+            item.pickupLimit,
+            `items[${index}].pickupLimit`,
+            undefined,
+            undefined,
+            ctx,
+          )
+        ) {
           return undefined;
         }
         itemResult.pickup_limit = item.pickupLimit;
       }
 
       if (item.priority !== undefined) {
-        if (!validateInteger(item.priority, `items[${index}].priority`, undefined, undefined, ctx)) {
+        if (
+          !validateInteger(
+            item.priority,
+            `items[${index}].priority`,
+            undefined,
+            undefined,
+            ctx,
+          )
+        ) {
           return undefined;
         }
         itemResult.priority = item.priority;
       }
 
       if (item.storedInInventory !== undefined) {
-        if (!validateBoolean(item.storedInInventory, `items[${index}].storedInInventory`, ctx)) {
+        if (
+          !validateBoolean(
+            item.storedInInventory,
+            `items[${index}].storedInInventory`,
+            ctx,
+          )
+        ) {
           return undefined;
         }
         itemResult.stored_in_inventory = item.storedInInventory;
       }
 
       if (item.surplusAmount !== undefined) {
-        if (!validateInteger(item.surplusAmount, `items[${index}].surplusAmount`, undefined, undefined, ctx)) {
+        if (
+          !validateInteger(
+            item.surplusAmount,
+            `items[${index}].surplusAmount`,
+            undefined,
+            undefined,
+            ctx,
+          )
+        ) {
           return undefined;
         }
         itemResult.surplus_amount = item.surplusAmount;
       }
 
       if (item.wantAmount !== undefined) {
-        if (!validateInteger(item.wantAmount, `items[${index}].wantAmount`, undefined, undefined, ctx)) {
+        if (
+          !validateInteger(
+            item.wantAmount,
+            `items[${index}].wantAmount`,
+            undefined,
+            undefined,
+            ctx,
+          )
+        ) {
           return undefined;
         }
         itemResult.want_amount = item.wantAmount;
       }
 
       if (item.pickupOnly !== undefined) {
-        if (!validateBoolean(item.pickupOnly, `items[${index}].pickupOnly`, ctx)) {
+        if (
+          !validateBoolean(item.pickupOnly, `items[${index}].pickupOnly`, ctx)
+        ) {
           return undefined;
         }
         itemResult.pickup_only = item.pickupOnly;

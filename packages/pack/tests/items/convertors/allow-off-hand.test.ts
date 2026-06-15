@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createAllowOffHand } from '@artifex/pack/content/item/convertors/components/allow-off-hand';
+import { createAllowOffHand } from '@ferolyte/pack/content/item/convertors/components/allow-off-hand';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createAllowOffHand', () => {
@@ -13,6 +13,11 @@ describe('createAllowOffHand', () => {
 
   it('maps valid boolean to minecraft:allow_off_hand', () => {
     expectComponent(createAllowOffHand, true, 'minecraft:allow_off_hand', true);
-    expectComponent(createAllowOffHand, false, 'minecraft:allow_off_hand', false);
+    expectComponent(
+      createAllowOffHand,
+      false,
+      'minecraft:allow_off_hand',
+      false,
+    );
   });
 });

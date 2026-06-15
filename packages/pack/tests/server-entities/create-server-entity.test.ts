@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { createServerEntity } from '@artifex/pack/content/server-entity/create-server-entity';
-import { ServerEntityBuilder } from '@artifex/pack/content/server-entity/server-entity-builder';
+import { createServerEntity } from '@ferolyte/pack/content/server-entity/create-server-entity';
+import { ServerEntityBuilder } from '@ferolyte/pack/content/server-entity/server-entity-builder';
 
 import { minimalServerEntityConfig } from './helpers/fixtures';
 
@@ -9,7 +9,9 @@ describe('createServerEntity', () => {
   it('merges multiple ServerEntityConfig objects', () => {
     const builder = createServerEntity(
       minimalServerEntityConfig({ components: { health: { value: 10 } } }),
-      minimalServerEntityConfig({ components: { shareables: { allItems: true } } }),
+      minimalServerEntityConfig({
+        components: { shareables: { allItems: true } },
+      }),
     );
 
     expect(builder).toBeInstanceOf(ServerEntityBuilder);
@@ -34,7 +36,9 @@ describe('createServerEntity', () => {
     );
     const builder = createServerEntity(
       base,
-      minimalServerEntityConfig({ components: { shareables: { allItems: true } } }),
+      minimalServerEntityConfig({
+        components: { shareables: { allItems: true } },
+      }),
     );
 
     expect(builder.cloneConfig().components).toEqual({
@@ -46,10 +50,14 @@ describe('createServerEntity', () => {
   it('concatenates componentGroups arrays', () => {
     const builder = createServerEntity(
       minimalServerEntityConfig({
-        componentGroups: [{ name: 'baby', components: { health: { value: 5 } } }],
+        componentGroups: [
+          { name: 'baby', components: { health: { value: 5 } } },
+        ],
       }),
       minimalServerEntityConfig({
-        componentGroups: [{ name: 'adult', components: { health: { value: 20 } } }],
+        componentGroups: [
+          { name: 'adult', components: { health: { value: 20 } } },
+        ],
       }),
     );
 

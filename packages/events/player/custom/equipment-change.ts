@@ -7,17 +7,17 @@ import {
   system,
 } from '@minecraft/server';
 
-import { RequireAtLeastOne } from '@artifex/common/types';
+import { RequireAtLeastOne } from '@ferolyte/common/types';
 import {
   EventItemTypeIdsRouteOption,
   EventRouteController,
   EventRoutePrefix,
   MinecraftEventSignal,
-} from '@artifex/events/common';
-import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
-import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
-import { EventAction, EventActionData } from '@artifex/events/common/types';
-import { ArtifexEventUtils } from '@artifex/events/common/utils';
+} from '@ferolyte/events/common';
+import { BasicEventListener } from '@ferolyte/events/common/basic-event.listener';
+import { BasicEventRouter } from '@ferolyte/events/common/basic-event.router';
+import { EventAction, EventActionData } from '@ferolyte/events/common/types';
+import { FerolyteEventUtils } from '@ferolyte/events/common/utils';
 import { PlayerEquipment } from 'packages/server/player/equipment';
 import { OnlinePlayers } from 'packages/server/player/online-players';
 
@@ -95,9 +95,7 @@ function tick(includeSlots: EquipmentSlot[] = Object.values(EquipmentSlot)) {
   }
 }
 
-class PlayerEquipmentChangeEventSignal
-  implements MinecraftEventSignal<PlayerEquipmentChangeEvent>
-{
+class PlayerEquipmentChangeEventSignal implements MinecraftEventSignal<PlayerEquipmentChangeEvent> {
   constructor() {}
 
   private start(): void {
@@ -150,7 +148,7 @@ export function playerEquipmentChange(
     },
   });
 
-  return ArtifexEventUtils.initializeEvent<
+  return FerolyteEventUtils.initializeEvent<
     PlayerEquipmentChangeEvent,
     PlayerEquipmentChangeEventOptions
   >(listener, router, action, options);

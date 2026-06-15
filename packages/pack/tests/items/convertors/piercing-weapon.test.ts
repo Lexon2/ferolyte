@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createPiercingWeapon } from '@artifex/pack/content/item/convertors/components/piercing-weapon';
+import { createPiercingWeapon } from '@ferolyte/pack/content/item/convertors/components/piercing-weapon';
 import { expectUndefined } from '../helpers/assert-component';
 
 describe('createPiercingWeapon', () => {
@@ -12,11 +12,13 @@ describe('createPiercingWeapon', () => {
   });
 
   it('maps piercing weapon fields', () => {
-    expect(createPiercingWeapon({
-      reach: { min: 1, max: 5 },
-      creativeReach: { min: 2, max: 6 },
-      hitboxMargin: 0.1,
-    })).toEqual({
+    expect(
+      createPiercingWeapon({
+        reach: { min: 1, max: 5 },
+        creativeReach: { min: 2, max: 6 },
+        hitboxMargin: 0.1,
+      }),
+    ).toEqual({
       'minecraft:piercing_weapon': {
         reach: { min: 1, max: 5 },
         creative_reach: { min: 2, max: 6 },

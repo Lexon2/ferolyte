@@ -1,5 +1,8 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { ConditionalBandwidthOptimizationComponent, ConditionalBandwidthOptimizationConditionalValue } from '../../../interfaces/components/miscellaneous/conditional-bandwidth-optimization-component';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import {
+  ConditionalBandwidthOptimizationComponent,
+  ConditionalBandwidthOptimizationConditionalValue,
+} from '../../../interfaces/components/miscellaneous/conditional-bandwidth-optimization-component';
 import { validateNumber } from '../../common/validation';
 
 /**
@@ -13,13 +16,27 @@ const validateConditionalValue = (
   fieldName: string,
 ): boolean => {
   if (value.maxDroppedTicks !== undefined) {
-    if (!validateNumber(value.maxDroppedTicks, `${fieldName}.maxDroppedTicks`, 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        value.maxDroppedTicks,
+        `${fieldName}.maxDroppedTicks`,
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return false;
     }
   }
 
   if (value.maxOptimizedDistance !== undefined) {
-    if (!validateNumber(value.maxOptimizedDistance, `${fieldName}.maxOptimizedDistance`, 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        value.maxOptimizedDistance,
+        `${fieldName}.maxOptimizedDistance`,
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return false;
     }
   }
@@ -43,7 +60,7 @@ const validateConditionalValue = (
  */
 export const convertConditionalBandwidthOptimizationComponent = (
   component: Partial<ConditionalBandwidthOptimizationComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:conditional_bandwidth_optimization': any } | undefined => {
   if (!component) {
     return undefined;
@@ -72,7 +89,8 @@ export const convertConditionalBandwidthOptimizationComponent = (
         validatedValue.max_optimized_distance = value.maxOptimizedDistance;
       }
       if (value.useMotionPredictionHints !== undefined) {
-        validatedValue.use_motion_prediction_hints = value.useMotionPredictionHints;
+        validatedValue.use_motion_prediction_hints =
+          value.useMotionPredictionHints;
       }
       if (value.conditionalValues !== undefined) {
         validatedValue.conditional_values = value.conditionalValues;
@@ -91,24 +109,45 @@ export const convertConditionalBandwidthOptimizationComponent = (
   if (component.defaultValues !== undefined) {
     const validatedDefaults: any = {};
     if (component.defaultValues.maxDroppedTicks !== undefined) {
-      if (!validateNumber(component.defaultValues.maxDroppedTicks, 'defaultValues.maxDroppedTicks', 0, Number.MAX_VALUE)) {
+      if (
+        !validateNumber(
+          component.defaultValues.maxDroppedTicks,
+          'defaultValues.maxDroppedTicks',
+          0,
+          Number.MAX_VALUE,
+        )
+      ) {
         return undefined;
       }
-      validatedDefaults.max_dropped_ticks = component.defaultValues.maxDroppedTicks;
+      validatedDefaults.max_dropped_ticks =
+        component.defaultValues.maxDroppedTicks;
     }
     if (component.defaultValues.maxOptimizedDistance !== undefined) {
-      if (!validateNumber(component.defaultValues.maxOptimizedDistance, 'defaultValues.maxOptimizedDistance', 0, Number.MAX_VALUE)) {
+      if (
+        !validateNumber(
+          component.defaultValues.maxOptimizedDistance,
+          'defaultValues.maxOptimizedDistance',
+          0,
+          Number.MAX_VALUE,
+        )
+      ) {
         return undefined;
       }
-      validatedDefaults.max_optimized_distance = component.defaultValues.maxOptimizedDistance;
+      validatedDefaults.max_optimized_distance =
+        component.defaultValues.maxOptimizedDistance;
     }
     if (component.defaultValues.useMotionPredictionHints !== undefined) {
-      if (typeof component.defaultValues.useMotionPredictionHints !== 'boolean') {
-        console.error('defaultValues.useMotionPredictionHints must be a boolean');
+      if (
+        typeof component.defaultValues.useMotionPredictionHints !== 'boolean'
+      ) {
+        console.error(
+          'defaultValues.useMotionPredictionHints must be a boolean',
+        );
 
         return undefined;
       }
-      validatedDefaults.use_motion_prediction_hints = component.defaultValues.useMotionPredictionHints;
+      validatedDefaults.use_motion_prediction_hints =
+        component.defaultValues.useMotionPredictionHints;
     }
     result.default_values = validatedDefaults;
   }

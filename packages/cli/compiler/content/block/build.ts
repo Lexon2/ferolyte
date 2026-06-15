@@ -1,4 +1,4 @@
-import { BlockBuilder } from '@artifex/pack/content/block/block-builder';
+import { BlockBuilder } from '@ferolyte/pack/content/block/block-builder';
 import { ContentBuildOptions } from '../../actions/options';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { IsAvoidingMobsFilter } from '../../interfaces/filters/is-avoiding-mobs-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsAvoidingMobsFilter = (
   filter: Partial<IsAvoidingMobsFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertBooleanFilter({
-    ...filter,
-    test: 'is_avoiding_mobs'
-  }, ctx);
+  return convertBooleanFilter(
+    {
+      ...filter,
+      test: 'is_avoiding_mobs',
+    },
+    ctx,
+  );
 };

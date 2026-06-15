@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { WitherTargetHighestDamageBehavior } from '../../interfaces/behaviors/wither-target-highest-damage-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -13,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertWitherTargetHighestDamageBehavior = (
   behavior: Partial<WitherTargetHighestDamageBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.wither_target_highest_damage': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,6 +42,6 @@ export const convertWitherTargetHighestDamageBehavior = (
   }
 
   return {
-    'minecraft:behavior.wither_target_highest_damage': result
+    'minecraft:behavior.wither_target_highest_damage': result,
   };
 };

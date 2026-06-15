@@ -1,11 +1,11 @@
 import { world, WorldLoadAfterEvent } from '@minecraft/server';
 
-import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
-import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
-import { EVENT_ROUTE_GLOBAL_ID } from '@artifex/events/common/constants';
-import { EventRouteController } from '@artifex/events/common/interfaces';
-import { EventAction, EventActionData } from '@artifex/events/common/types';
-import { ArtifexEventUtils } from '@artifex/events/common/utils';
+import { BasicEventListener } from '@ferolyte/events/common/basic-event.listener';
+import { BasicEventRouter } from '@ferolyte/events/common/basic-event.router';
+import { EVENT_ROUTE_GLOBAL_ID } from '@ferolyte/events/common/constants';
+import { EventRouteController } from '@ferolyte/events/common/interfaces';
+import { EventAction, EventActionData } from '@ferolyte/events/common/types';
+import { FerolyteEventUtils } from '@ferolyte/events/common/utils';
 
 /// Private Types ///
 
@@ -54,5 +54,5 @@ export const worldLoad = (action: Action): EventRouteController | undefined => {
     });
   }
 
-  return ArtifexEventUtils.initializeEvent(listener, router, action);
+  return FerolyteEventUtils.initializeEvent(listener, router, action);
 };

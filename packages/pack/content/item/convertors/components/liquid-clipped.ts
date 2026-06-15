@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateBooleanValue } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateBooleanValue } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates a liquid_clipped component for Minecraft items

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DragonDeathBehavior } from '../../interfaces/behaviors/dragon-death-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertDragonDeathBehavior = (
   behavior: Partial<DragonDeathBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.dragondeath': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertDragonDeathBehavior = (
   }
 
   return {
-    'minecraft:behavior.dragondeath': result
+    'minecraft:behavior.dragondeath': result,
   };
 };

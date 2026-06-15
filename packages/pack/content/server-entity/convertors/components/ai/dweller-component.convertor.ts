@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 
 import { DWELLER_ROLES } from '../../../constants/dweller-roles';
 import { DWELLER_TYPES } from '../../../constants/dweller-types';
@@ -42,7 +42,7 @@ export const validateDwellerType = (value: any, fieldName: string): boolean => {
  */
 export const convertDwellerComponent = (
   component: Partial<DwellerComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:dweller': any } | undefined => {
   if (!component) {
     return undefined;

@@ -1,19 +1,19 @@
 {
-  "name": "@artifex/common",
+  "name": "@ferolyte/common",
   "version": "0.1.0",
-  "description": "Shared utilities and content foundation for Artifex",
+  "description": "Shared utilities and content foundation for Ferolyte",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lexon2/artifex.git",
+    "url": "git+https://github.com/Lexon2/ferolyte.git",
     "directory": "packages/common"
   },
   "bugs": {
-    "url": "https://github.com/Lexon2/artifex/issues"
+    "url": "https://github.com/Lexon2/ferolyte/issues"
   },
-  "homepage": "https://github.com/Lexon2/artifex#readme",
+  "homepage": "https://github.com/Lexon2/ferolyte#readme",
   "publishConfig": {
     "access": "public"
   },

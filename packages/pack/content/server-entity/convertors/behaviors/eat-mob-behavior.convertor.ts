@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EatMobBehavior } from '../../interfaces/behaviors/eat-mob-behavior';
-import { validateNumber, validateSoundEvent, validateTradeOrLootTablePath } from '../common/validation';
+import {
+  validateNumber,
+  validateSoundEvent,
+  validateTradeOrLootTablePath,
+} from '../common/validation';
 
 /**
  * Converts an EatMobBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateNumber, validateSoundEvent, validateTradeOrLootTablePath } from
  */
 export const convertEatMobBehavior = (
   behavior: Partial<EatMobBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.eat_mob': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -74,6 +78,6 @@ export const convertEatMobBehavior = (
   }
 
   return {
-    'minecraft:behavior.eat_mob': result
+    'minecraft:behavior.eat_mob': result,
   };
 };

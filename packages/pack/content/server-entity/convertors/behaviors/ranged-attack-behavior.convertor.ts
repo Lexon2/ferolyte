@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RangedAttackBehavior } from '../../interfaces/behaviors/ranged-attack-behavior';
-import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
+import {
+  validateNumber,
+  validateBoolean,
+  validateInteger,
+} from '../common/validation';
 
 /**
  * Converts a RangedAttackBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateNumber, validateBoolean, validateInteger } from '../common/vali
  */
 export const convertRangedAttackBehavior = (
   behavior: Partial<RangedAttackBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.ranged_attack': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -91,7 +95,9 @@ export const convertRangedAttackBehavior = (
 
   // Validate chargeChargedTrigger
   if (behavior.chargeChargedTrigger !== undefined) {
-    if (!validateNumber(behavior.chargeChargedTrigger, 'chargeChargedTrigger')) {
+    if (
+      !validateNumber(behavior.chargeChargedTrigger, 'chargeChargedTrigger')
+    ) {
       return undefined;
     }
     result.charge_charged_trigger = behavior.chargeChargedTrigger;
@@ -154,6 +160,6 @@ export const convertRangedAttackBehavior = (
   }
 
   return {
-    'minecraft:behavior.ranged_attack': result
+    'minecraft:behavior.ranged_attack': result,
   };
 };

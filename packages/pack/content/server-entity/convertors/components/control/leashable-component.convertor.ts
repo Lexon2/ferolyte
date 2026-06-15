@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { LeashableComponent } from '../../../interfaces/components/control/leashable-component';
 import { convertEntityFilters } from '../../common/filters.convertor';
 import { convertTrigger } from '../../common/trigger.convertor';
@@ -24,7 +27,10 @@ const convertLeashablePreset = (
 
   // Validate filter'
   if (preset.filter !== undefined) {
-    const convertedFilter = convertEntityFilters(preset.filter, withFieldPath(ctx, 'filter'));
+    const convertedFilter = convertEntityFilters(
+      preset.filter,
+      withFieldPath(ctx, 'filter'),
+    );
     if (!convertedFilter) {
       return undefined;
     }
@@ -93,7 +99,7 @@ const convertLeashablePreset = (
  */
 export const convertLeashableComponent = (
   component: Partial<LeashableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:leashable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -146,7 +152,10 @@ export const convertLeashableComponent = (
 
   // Validate onLeash
   if (component.onLeash !== undefined) {
-    const convertedOnLeash = convertTrigger(component.onLeash, withFieldPath(ctx, 'onLeash'));
+    const convertedOnLeash = convertTrigger(
+      component.onLeash,
+      withFieldPath(ctx, 'onLeash'),
+    );
     if (!convertedOnLeash) {
       return undefined;
     }
@@ -155,7 +164,10 @@ export const convertLeashableComponent = (
 
   // Validate onUnleash
   if (component.onUnleash !== undefined) {
-    const convertedOnUnleash = convertTrigger(component.onUnleash, withFieldPath(ctx, 'onUnleash'));
+    const convertedOnUnleash = convertTrigger(
+      component.onUnleash,
+      withFieldPath(ctx, 'onUnleash'),
+    );
     if (!convertedOnUnleash) {
       return undefined;
     }

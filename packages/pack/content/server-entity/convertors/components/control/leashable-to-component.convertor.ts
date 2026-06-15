@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { LeashableToComponent } from '../../../interfaces/components/control';
 import { validateBoolean } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateBoolean } from '../../common/validation';
  */
 export const convertLeashableToComponent = (
   component?: LeashableToComponent,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:leashable_to': any } | undefined => {
   if (!component) {
     return undefined;

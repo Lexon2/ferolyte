@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { StompAttackBehavior } from '../../interfaces/behaviors/stomp-attack-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import {
@@ -14,7 +17,7 @@ import {
  */
 export const convertStompAttackBehavior = (
   behavior: Partial<StompAttackBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.stomp_attack': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -122,7 +125,10 @@ export const convertStompAttackBehavior = (
 
   // Validate onAttack
   if (behavior.onAttack !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onAttack, withFieldPath(ctx, 'onAttack'));
+    const convertedTrigger = convertTrigger(
+      behavior.onAttack,
+      withFieldPath(ctx, 'onAttack'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -144,7 +150,9 @@ export const convertStompAttackBehavior = (
 
   // Validate pathFailTimeIncrease
   if (behavior.pathFailTimeIncrease !== undefined) {
-    if (!validateNumber(behavior.pathFailTimeIncrease, 'pathFailTimeIncrease')) {
+    if (
+      !validateNumber(behavior.pathFailTimeIncrease, 'pathFailTimeIncrease')
+    ) {
       return undefined;
     }
     result.path_fail_time_increase = behavior.pathFailTimeIncrease;

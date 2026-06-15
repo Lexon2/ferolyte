@@ -1,9 +1,9 @@
 import { ItemEnchantableSlots } from '../../types/item-enchantable-slots';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateNonNegativeNumber,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 const VALID_ENCHANTABLE_SLOTS: ItemEnchantableSlots[] = [
   'axe',

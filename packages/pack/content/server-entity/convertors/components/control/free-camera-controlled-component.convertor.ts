@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FreeCameraControlledComponent } from '../../../interfaces/components/control/free-camera-controlled-component';
 import { validateNumber } from '../../common/validation';
 
@@ -10,7 +10,9 @@ import { validateNumber } from '../../common/validation';
 export const convertFreeCameraControlledComponent = (
   component: Partial<FreeCameraControlledComponent>,
   ctx?: ContentDiagnosticContext,
-): { 'minecraft:free_camera_controlled': Record<string, unknown> } | undefined => {
+):
+  | { 'minecraft:free_camera_controlled': Record<string, unknown> }
+  | undefined => {
   if (!component) {
     return undefined;
   }

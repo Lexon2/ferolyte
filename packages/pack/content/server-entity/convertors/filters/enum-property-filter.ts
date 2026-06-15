@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EnumPropertyFilter } from '../../interfaces/filters/enum-property-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
 import { validateString } from '../common/validation';
@@ -11,7 +11,7 @@ import { convertFilterBase } from './common/convert-filter-base';
  */
 export const convertEnumPropertyFilter = (
   filter: Partial<EnumPropertyFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
   if (!filter) {
     return undefined;
@@ -22,7 +22,10 @@ export const convertEnumPropertyFilter = (
     return undefined;
   }
 
-  if (filter.value === undefined || !validateString(filter.value, 'value', ctx)) {
+  if (
+    filter.value === undefined ||
+    !validateString(filter.value, 'value', ctx)
+  ) {
     return undefined;
   }
 
@@ -35,7 +38,7 @@ export const convertEnumPropertyFilter = (
     ...baseResult,
     test: 'enum_property',
     domain: filter.domain,
-    value: filter.value
+    value: filter.value,
   };
 
   return result;

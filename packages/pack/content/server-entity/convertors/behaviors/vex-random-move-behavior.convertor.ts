@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { VexRandomMoveBehavior } from '../../interfaces/behaviors/vex-random-move-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber } from '../common/validation';
@@ -13,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertVexRandomMoveBehavior = (
   behavior: Partial<VexRandomMoveBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.vex_random_move': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,6 +42,6 @@ export const convertVexRandomMoveBehavior = (
   }
 
   return {
-    'minecraft:behavior.vex_random_move': result
+    'minecraft:behavior.vex_random_move': result,
   };
 };

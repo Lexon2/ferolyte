@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { OcelotSitOnBlockBehavior } from '../../interfaces/behaviors/ocelot-sit-on-block-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertOcelotSitOnBlockBehavior = (
   behavior: Partial<OcelotSitOnBlockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.ocelot_sit_on_block': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -34,6 +34,6 @@ export const convertOcelotSitOnBlockBehavior = (
   }
 
   return {
-    'minecraft:behavior.ocelot_sit_on_block': result
+    'minecraft:behavior.ocelot_sit_on_block': result,
   };
 };

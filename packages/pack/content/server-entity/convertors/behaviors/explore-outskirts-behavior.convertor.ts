@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ExploreOutskirtsBehavior } from '../../interfaces/behaviors/explore-outskirts-behavior';
 import { validateNumber, validateVector3 } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateVector3 } from '../common/validation';
  */
 export const convertExploreOutskirtsBehavior = (
   behavior: Partial<ExploreOutskirtsBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.explore_outskirts': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -114,6 +114,6 @@ export const convertExploreOutskirtsBehavior = (
   }
 
   return {
-    'minecraft:behavior.explore_outskirts': result
+    'minecraft:behavior.explore_outskirts': result,
   };
 };

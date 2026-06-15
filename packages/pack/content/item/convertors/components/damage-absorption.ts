@@ -1,5 +1,5 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateDamageSourceArray } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateDamageSourceArray } from '@ferolyte/common/content/validation/content-validation';
 
 interface DamageAbsorptionOptions {
   causes: string[];

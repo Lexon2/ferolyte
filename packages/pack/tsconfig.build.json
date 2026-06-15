@@ -16,8 +16,8 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@artifex/pack/*": ["./*"],
-      "@artifex/common/*": ["../common/*"]
+      "@ferolyte/pack/*": ["./*"],
+      "@ferolyte/common/*": ["../common/*"]
     }
   },
   "include": ["./**/*.ts"],

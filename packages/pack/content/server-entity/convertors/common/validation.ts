@@ -6,7 +6,7 @@ import {
   ContentDiagnosticContext,
   logContentError,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateBooleanValue,
@@ -14,7 +14,7 @@ import {
   validateNumberRange as validateSharedNumberRange,
   validateString as validateStringValue,
   validateVector3 as validateSharedVector3,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 import {
   CONTAINER_TYPES,
   ContainerType,
@@ -38,12 +38,7 @@ export const validateNumber = (
   ctx?: ContentDiagnosticContext,
 ): boolean => {
   if (
-    !validateNumberValue(
-      value,
-      ctx,
-      `${fieldName} must be a number`,
-      fieldName,
-    )
+    !validateNumberValue(value, ctx, `${fieldName} must be a number`, fieldName)
   ) {
     return false;
   }
@@ -75,7 +70,10 @@ export const validateInteger = (
   ctx?: ContentDiagnosticContext,
 ): boolean => {
   if (typeof value !== 'number' || !Number.isInteger(value)) {
-    logContentError(fieldCtx(ctx, fieldName), `${fieldName} must be an integer`);
+    logContentError(
+      fieldCtx(ctx, fieldName),
+      `${fieldName} must be an integer`,
+    );
     return false;
   }
 
@@ -103,12 +101,7 @@ export const validateBoolean = (
   fieldName: string,
   ctx?: ContentDiagnosticContext,
 ): boolean =>
-  validateBooleanValue(
-    value,
-    ctx,
-    `${fieldName} must be a boolean`,
-    fieldName,
-  );
+  validateBooleanValue(value, ctx, `${fieldName} must be a boolean`, fieldName);
 
 export const validateString = (
   value: unknown,
@@ -209,7 +202,9 @@ export const validateVector2 = (
   if (
     !Array.isArray(value) ||
     value.length !== 2 ||
-    !value.every((n) => validateNumber(n, `${fieldName} element`, min, max, ctx))
+    !value.every((n) =>
+      validateNumber(n, `${fieldName} element`, min, max, ctx),
+    )
   ) {
     logContentError(
       fieldCtx(ctx, fieldName),
@@ -322,7 +317,9 @@ export const validateNumberArray = (
     return false;
   }
 
-  return value.every((n) => validateNumber(n, `${fieldName} element`, undefined, undefined, ctx));
+  return value.every((n) =>
+    validateNumber(n, `${fieldName} element`, undefined, undefined, ctx),
+  );
 };
 
 export const validateMaxTurn = (
@@ -512,10 +509,7 @@ export const validateHexColor = (
   const color = value as string;
 
   if (!color.startsWith('#')) {
-    logContentError(
-      fieldCtx(ctx, fieldName),
-      `${fieldName} must start with #`,
-    );
+    logContentError(fieldCtx(ctx, fieldName), `${fieldName} must start with #`);
     return false;
   }
 

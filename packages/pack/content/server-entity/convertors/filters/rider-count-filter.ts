@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertNumberFilter } from './common/convert-number-filter';
 import { RiderCountFilter } from '../../interfaces/filters/rider-count-filter';
 
@@ -9,13 +9,16 @@ import { RiderCountFilter } from '../../interfaces/filters/rider-count-filter';
  */
 export const convertRiderCountFilter = (
   filter: Partial<RiderCountFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): ReturnType<typeof convertNumberFilter> | undefined => {
   if (!filter || filter.value === undefined) {
     return undefined;
   }
-  return convertNumberFilter({
-    ...filter,
-    test: 'rider_count'
-  }, ctx);
+  return convertNumberFilter(
+    {
+      ...filter,
+      test: 'rider_count',
+    },
+    ctx,
+  );
 };

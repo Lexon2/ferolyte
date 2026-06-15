@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MountPathingBehavior } from '../../interfaces/behaviors/mount-pathing-behavior';
 import { validateBoolean, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateBoolean, validateNumber } from '../common/validation';
  */
 export const convertMountPathingBehavior = (
   behavior: Partial<MountPathingBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.mount_pathing': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -41,7 +41,6 @@ export const convertMountPathingBehavior = (
     result.target_distance = behavior.targetDistance;
   }
 
-
   // Validate trackTarget
   if (behavior.trackTarget !== undefined) {
     if (!validateBoolean(behavior.trackTarget, 'trackTarget')) {
@@ -51,6 +50,6 @@ export const convertMountPathingBehavior = (
   }
 
   return {
-    'minecraft:behavior.mount_pathing': result
+    'minecraft:behavior.mount_pathing': result,
   };
 };

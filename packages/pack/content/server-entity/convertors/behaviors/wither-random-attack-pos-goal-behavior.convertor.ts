@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { WitherRandomAttackPosGoalBehavior } from '../../interfaces/behaviors/wither-random-attack-pos-goal-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertWitherRandomAttackPosGoalBehavior = (
   behavior: Partial<WitherRandomAttackPosGoalBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.wither_random_attack_pos_goal': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertWitherRandomAttackPosGoalBehavior = (
   }
 
   return {
-    'minecraft:behavior.wither_random_attack_pos_goal': result
+    'minecraft:behavior.wither_random_attack_pos_goal': result,
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TradeInterestBehavior } from '../../interfaces/behaviors/trade-interest-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertTradeInterestBehavior = (
   behavior: Partial<TradeInterestBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.trade_interest': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -27,7 +27,9 @@ export const convertTradeInterestBehavior = (
 
   // Validate carriedItemSwitchTime
   if (behavior.carriedItemSwitchTime !== undefined) {
-    if (!validateNumber(behavior.carriedItemSwitchTime, 'carriedItemSwitchTime')) {
+    if (
+      !validateNumber(behavior.carriedItemSwitchTime, 'carriedItemSwitchTime')
+    ) {
       return undefined;
     }
     result.carried_item_switch_time = behavior.carriedItemSwitchTime;
@@ -66,6 +68,6 @@ export const convertTradeInterestBehavior = (
   }
 
   return {
-    'minecraft:behavior.trade_interest': result
+    'minecraft:behavior.trade_interest': result,
   };
 };

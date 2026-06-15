@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MobEffectImmunityComponent } from '../../../interfaces/components/ai/mob-effect-immunity-component';
 import { validateEffectType } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateEffectType } from '../../common/validation';
  */
 export const convertMobEffectImmunityComponent = (
   component: Partial<MobEffectImmunityComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:mob_effect_immunity': any } | undefined => {
   if (!component) {
     return undefined;

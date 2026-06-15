@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { CanJoinRaidComponent } from '../../../interfaces/components/navigation-movement/can-join-raid-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertCanJoinRaidComponent = (
   component: Partial<CanJoinRaidComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:can_join_raid': any } | undefined => {
   const result = convertStateObject(component);
   if (!result) {

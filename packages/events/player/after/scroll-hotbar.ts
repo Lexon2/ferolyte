@@ -4,7 +4,7 @@ import {
   world,
 } from '@minecraft/server';
 
-import { RequireAtLeastOne } from '@artifex/common/types';
+import { RequireAtLeastOne } from '@ferolyte/common/types';
 import {
   EVENT_ROUTE_GLOBAL_ID,
   EventAction,
@@ -12,17 +12,16 @@ import {
   EventItemTypeIdsRouteOption,
   EventRouteController,
   EventRoutePrefix,
-} from '@artifex/events/common';
-import { BasicEventListener } from '@artifex/events/common/basic-event.listener';
-import { BasicEventRouter } from '@artifex/events/common/basic-event.router';
-import { ArtifexEventUtils } from '@artifex/events/common/utils';
+} from '@ferolyte/events/common';
+import { BasicEventListener } from '@ferolyte/events/common/basic-event.listener';
+import { BasicEventRouter } from '@ferolyte/events/common/basic-event.router';
+import { FerolyteEventUtils } from '@ferolyte/events/common/utils';
 
 type Action = EventAction<Context>;
-interface Context
-  extends Omit<
-    PlayerHotbarSelectedSlotChangeAfterEvent,
-    'newSlotSelected' | 'previousSlotSelected'
-  > {
+interface Context extends Omit<
+  PlayerHotbarSelectedSlotChangeAfterEvent,
+  'newSlotSelected' | 'previousSlotSelected'
+> {
   prevSlot: number;
   newSlot: number;
 }
@@ -144,7 +143,7 @@ export function playerScrollHotbar(
       },
     });
 
-    return ArtifexEventUtils.initializeEvent(
+    return FerolyteEventUtils.initializeEvent(
       globalListener,
       globalRouter,
       action,
@@ -180,7 +179,7 @@ export function playerScrollHotbar(
     },
   });
 
-  const { open, close } = ArtifexEventUtils.initializeEvent<
+  const { open, close } = FerolyteEventUtils.initializeEvent<
     Context,
     Record<string, any>
   >(specificListener, specificRouter, action, {

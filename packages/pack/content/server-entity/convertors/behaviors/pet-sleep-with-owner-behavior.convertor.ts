@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PetSleepWithOwnerBehavior } from '../../interfaces/behaviors/pet-sleep-with-owner-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertPetSleepWithOwnerBehavior = (
   behavior: Partial<PetSleepWithOwnerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.pet_sleep_with_owner': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -66,6 +66,6 @@ export const convertPetSleepWithOwnerBehavior = (
   }
 
   return {
-    'minecraft:behavior.pet_sleep_with_owner': result
+    'minecraft:behavior.pet_sleep_with_owner': result,
   };
 };

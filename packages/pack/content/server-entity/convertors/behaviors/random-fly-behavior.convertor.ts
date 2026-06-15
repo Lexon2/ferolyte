@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RandomFlyBehavior } from '../../interfaces/behaviors/random-fly-behavior';
-import { validateNumber, validateBoolean, validateInteger } from '../common/validation';
+import {
+  validateNumber,
+  validateBoolean,
+  validateInteger,
+} from '../common/validation';
 
 /**
  * Converts a RandomFlyBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateNumber, validateBoolean, validateInteger } from '../common/vali
  */
 export const convertRandomFlyBehavior = (
   behavior: Partial<RandomFlyBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.random_fly': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -66,6 +70,6 @@ export const convertRandomFlyBehavior = (
   }
 
   return {
-    'minecraft:behavior.random_fly': result
+    'minecraft:behavior.random_fly': result,
   };
 };

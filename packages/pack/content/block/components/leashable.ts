@@ -1,6 +1,6 @@
 import { LeashableComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateVector3 } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateVector3 } from '@ferolyte/common/content/validation/content-validation';
 
 /**
  * Creates a leashable component for Minecraft blocks

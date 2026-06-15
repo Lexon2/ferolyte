@@ -1,7 +1,15 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FireAtTargetBehavior } from '../../interfaces/behaviors/fire-at-target-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
-import { validateInteger, validateNumber, validateString, validateVector3 } from '../common/validation';
+import {
+  validateInteger,
+  validateNumber,
+  validateString,
+  validateVector3,
+} from '../common/validation';
 
 /**
  * Converts a FireAtTargetBehavior to Minecraft format
@@ -10,7 +18,7 @@ import { validateInteger, validateNumber, validateString, validateVector3 } from
  */
 export const convertFireAtTargetBehavior = (
   behavior: Partial<FireAtTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.fire_at_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -124,7 +132,10 @@ export const convertFireAtTargetBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (!convertedFilters) {
       return undefined;
     }

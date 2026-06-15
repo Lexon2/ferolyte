@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TypeFamilyComponent } from '../../../interfaces/components/transformation-and-variants/type-family-component';
 import { validateStringArray } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateStringArray } from '../../common/validation';
  */
 export const convertTypeFamilyComponent = (
   component: Partial<TypeFamilyComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:type_family': any } | undefined => {
   if (!component) {
     return undefined;
@@ -25,6 +25,6 @@ export const convertTypeFamilyComponent = (
   }
 
   return {
-    'minecraft:type_family': result
+    'minecraft:type_family': result,
   };
 };

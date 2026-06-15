@@ -1,4 +1,4 @@
-# @artifex/common
+# @ferolyte/common
 
 ## 0.1.0
 

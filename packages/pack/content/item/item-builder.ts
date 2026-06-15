@@ -9,9 +9,9 @@ import {
   ItemTextureEntry,
   resolveItemIcon,
 } from './utils/resolve-item-icon';
-import { ContentBuilder } from '@artifex/common/content/interfaces/content-builder';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { CONTENT_METADATA } from '@artifex/common/content/metadata';
+import { ContentBuilder } from '@ferolyte/common/content/interfaces/content-builder';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
 
 export class ItemBuilder implements ContentBuilder {
   readonly metadata = CONTENT_METADATA.ITEM;
@@ -48,7 +48,7 @@ export class ItemBuilder implements ContentBuilder {
     const { config } = this;
 
     const item: MinecraftItem = {
-      // @TODO: Add support for artifex config
+      // @TODO: Add support for ferolyte config
       format_version: config.version || '1.21.70',
       'minecraft:item': {
         description: {
@@ -95,10 +95,9 @@ export class ItemBuilder implements ContentBuilder {
     let itemComponents: MinecraftItem['minecraft:item']['components'] = {};
 
     for (const component in components) {
-      const factory =
-        itemComponentCreatorsFactory[
-          component as keyof typeof itemComponentCreatorsFactory
-        ] as ItemComponentCreator | undefined;
+      const factory = itemComponentCreatorsFactory[
+        component as keyof typeof itemComponentCreatorsFactory
+      ] as ItemComponentCreator | undefined;
 
       if (factory === undefined) {
         itemComponents = {

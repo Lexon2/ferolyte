@@ -1,6 +1,6 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNonEmptyArray } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNonEmptyArray } from '@ferolyte/common/content/validation/content-validation';
 
 interface RepairItem {
   items: string[];

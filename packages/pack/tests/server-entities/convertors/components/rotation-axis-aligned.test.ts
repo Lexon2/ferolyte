@@ -1,8 +1,11 @@
 import { describe, it } from 'vitest';
 
-import { convertRotationAxisAlignedComponent } from '@artifex/pack/content/server-entity/convertors/components/physical/rotation-axis-aligned-component.convertor';
+import { convertRotationAxisAlignedComponent } from '@ferolyte/pack/content/server-entity/convertors/components/physical/rotation-axis-aligned-component.convertor';
 
-import { expectComponent, expectUndefined } from '../../helpers/assert-component';
+import {
+  expectComponent,
+  expectUndefined,
+} from '../../helpers/assert-component';
 
 describe('convertRotationAxisAlignedComponent', () => {
   it('returns undefined when input is missing', () => {

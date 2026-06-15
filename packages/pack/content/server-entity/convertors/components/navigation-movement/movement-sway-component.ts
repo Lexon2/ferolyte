@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MovementSwayComponent } from '../../../interfaces/components/navigation-movement/movement-sway-component';
 import { validateMaxTurn } from '../../common/validation';
 import { validateNumberRange } from '../../common/validation';
@@ -10,7 +10,7 @@ import { validateNumberRange } from '../../common/validation';
  */
 export const convertMovementSwayComponent = (
   component: Partial<MovementSwayComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:movement.sway': any } | undefined => {
   if (!component) {
     return undefined;
@@ -28,7 +28,14 @@ export const convertMovementSwayComponent = (
 
   // Validate swayAmplitude
   if (component.swayAmplitude !== undefined) {
-    if (!validateNumberRange(component.swayAmplitude, 0, Number.MAX_VALUE, 'swayAmplitude')) {
+    if (
+      !validateNumberRange(
+        component.swayAmplitude,
+        0,
+        Number.MAX_VALUE,
+        'swayAmplitude',
+      )
+    ) {
       return undefined;
     }
     result.sway_amplitude = component.swayAmplitude;
@@ -36,13 +43,20 @@ export const convertMovementSwayComponent = (
 
   // Validate swayFrequency
   if (component.swayFrequency !== undefined) {
-    if (!validateNumberRange(component.swayFrequency, 0, Number.MAX_VALUE, 'swayFrequency')) {
+    if (
+      !validateNumberRange(
+        component.swayFrequency,
+        0,
+        Number.MAX_VALUE,
+        'swayFrequency',
+      )
+    ) {
       return undefined;
     }
     result.sway_frequency = component.swayFrequency;
   }
 
   return {
-    'minecraft:movement.sway': result
+    'minecraft:movement.sway': result,
   };
 };

@@ -1,5 +1,9 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { BreedableComponent, BreedsWithSpec, EnvironmentRequirements } from '../../../interfaces/components/ai/breedable-component';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import {
+  BreedableComponent,
+  BreedsWithSpec,
+  EnvironmentRequirements,
+} from '../../../interfaces/components/ai/breedable-component';
 import { validateNumber, validateString } from '../../common/validation';
 
 /**
@@ -12,11 +16,17 @@ const validateBreedsWithSpec = (
   spec: BreedsWithSpec,
   fieldName: string,
 ): boolean => {
-  if (spec.babyType !== undefined && !validateString(spec.babyType, `${fieldName}.babyType`)) {
+  if (
+    spec.babyType !== undefined &&
+    !validateString(spec.babyType, `${fieldName}.babyType`)
+  ) {
     return false;
   }
 
-  if (spec.mateType !== undefined && !validateString(spec.mateType, `${fieldName}.mateType`)) {
+  if (
+    spec.mateType !== undefined &&
+    !validateString(spec.mateType, `${fieldName}.mateType`)
+  ) {
     return false;
   }
 
@@ -58,7 +68,14 @@ const validateEnvironmentRequirements = (
   }
 
   if (requirements.count !== undefined) {
-    if (!validateNumber(requirements.count, `${fieldName}.count`, 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        requirements.count,
+        `${fieldName}.count`,
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return false;
     }
   }
@@ -79,7 +96,7 @@ const validateEnvironmentRequirements = (
  */
 export const convertBreedableComponent = (
   component: Partial<BreedableComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:breedable': any } | undefined => {
   if (!component) {
     return undefined;
@@ -109,7 +126,14 @@ export const convertBreedableComponent = (
 
   // Validate breedCooldown
   if (component.breedCooldown !== undefined) {
-    if (!validateNumber(component.breedCooldown, 'breedCooldown', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.breedCooldown,
+        'breedCooldown',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.breed_cooldown = component.breedCooldown;
@@ -201,19 +225,40 @@ export const convertBreedableComponent = (
   if (component.denyParentsVariant !== undefined) {
     const validatedVariant: any = {};
     if (component.denyParentsVariant.chance !== undefined) {
-      if (!validateNumber(component.denyParentsVariant.chance, 'denyParentsVariant.chance', 0, 1)) {
+      if (
+        !validateNumber(
+          component.denyParentsVariant.chance,
+          'denyParentsVariant.chance',
+          0,
+          1,
+        )
+      ) {
         return undefined;
       }
       validatedVariant.chance = component.denyParentsVariant.chance;
     }
     if (component.denyParentsVariant.maxVariant !== undefined) {
-      if (!validateNumber(component.denyParentsVariant.maxVariant, 'denyParentsVariant.maxVariant', 0, Number.MAX_VALUE)) {
+      if (
+        !validateNumber(
+          component.denyParentsVariant.maxVariant,
+          'denyParentsVariant.maxVariant',
+          0,
+          Number.MAX_VALUE,
+        )
+      ) {
         return undefined;
       }
       validatedVariant.max_variant = component.denyParentsVariant.maxVariant;
     }
     if (component.denyParentsVariant.minVariant !== undefined) {
-      if (!validateNumber(component.denyParentsVariant.minVariant, 'denyParentsVariant.minVariant', 0, Number.MAX_VALUE)) {
+      if (
+        !validateNumber(
+          component.denyParentsVariant.minVariant,
+          'denyParentsVariant.minVariant',
+          0,
+          Number.MAX_VALUE,
+        )
+      ) {
         return undefined;
       }
       validatedVariant.min_variant = component.denyParentsVariant.minVariant;
@@ -224,23 +269,30 @@ export const convertBreedableComponent = (
   // Validate environmentRequirements
   if (component.environmentRequirements !== undefined) {
     if (Array.isArray(component.environmentRequirements)) {
-      const validatedRequirements = component.environmentRequirements.map((req, index) => {
-        if (!validateEnvironmentRequirements(req, `environmentRequirements[${index}]`)) {
-          return undefined;
-        }
+      const validatedRequirements = component.environmentRequirements.map(
+        (req, index) => {
+          if (
+            !validateEnvironmentRequirements(
+              req,
+              `environmentRequirements[${index}]`,
+            )
+          ) {
+            return undefined;
+          }
 
-        const validatedReq: any = {};
-        if (req.blocks !== undefined) {
-          validatedReq.blocks = req.blocks;
-        }
-        if (req.count !== undefined) {
-          validatedReq.count = req.count;
-        }
-        if (req.radius !== undefined) {
-          validatedReq.radius = req.radius;
-        }
-        return validatedReq;
-      });
+          const validatedReq: any = {};
+          if (req.blocks !== undefined) {
+            validatedReq.blocks = req.blocks;
+          }
+          if (req.count !== undefined) {
+            validatedReq.count = req.count;
+          }
+          if (req.radius !== undefined) {
+            validatedReq.radius = req.radius;
+          }
+          return validatedReq;
+        },
+      );
 
       if (validatedRequirements.includes(undefined)) {
         return undefined;
@@ -248,7 +300,12 @@ export const convertBreedableComponent = (
 
       result.environment_requirements = validatedRequirements;
     } else {
-      if (!validateEnvironmentRequirements(component.environmentRequirements, 'environmentRequirements')) {
+      if (
+        !validateEnvironmentRequirements(
+          component.environmentRequirements,
+          'environmentRequirements',
+        )
+      ) {
         return undefined;
       }
 
@@ -284,19 +341,40 @@ export const convertBreedableComponent = (
   if (component.mutationFactor !== undefined) {
     const validatedFactor: any = {};
     if (component.mutationFactor.color !== undefined) {
-      if (!validateNumber(component.mutationFactor.color, 'mutationFactor.color', 0, 1)) {
+      if (
+        !validateNumber(
+          component.mutationFactor.color,
+          'mutationFactor.color',
+          0,
+          1,
+        )
+      ) {
         return undefined;
       }
       validatedFactor.color = component.mutationFactor.color;
     }
     if (component.mutationFactor.extraVariant !== undefined) {
-      if (!validateNumber(component.mutationFactor.extraVariant, 'mutationFactor.extraVariant', 0, 1)) {
+      if (
+        !validateNumber(
+          component.mutationFactor.extraVariant,
+          'mutationFactor.extraVariant',
+          0,
+          1,
+        )
+      ) {
         return undefined;
       }
       validatedFactor.extra_variant = component.mutationFactor.extraVariant;
     }
     if (component.mutationFactor.variant !== undefined) {
-      if (!validateNumber(component.mutationFactor.variant, 'mutationFactor.variant', 0, 1)) {
+      if (
+        !validateNumber(
+          component.mutationFactor.variant,
+          'mutationFactor.variant',
+          0,
+          1,
+        )
+      ) {
         return undefined;
       }
       validatedFactor.variant = component.mutationFactor.variant;
@@ -306,7 +384,10 @@ export const convertBreedableComponent = (
 
   // Validate mutationStrategy
   if (component.mutationStrategy !== undefined) {
-    if (component.mutationStrategy !== 'random' && component.mutationStrategy !== 'none') {
+    if (
+      component.mutationStrategy !== 'random' &&
+      component.mutationStrategy !== 'none'
+    ) {
       console.error('mutationStrategy must be either "random" or "none"');
 
       return undefined;
@@ -322,12 +403,14 @@ export const convertBreedableComponent = (
       return undefined;
     }
 
-    const validatedAttributes = component.parentCentricAttributeBlending.map((attr, index) => {
-      if (!validateString(attr, `parentCentricAttributeBlending[${index}]`)) {
-        return undefined;
-      }
-      return attr;
-    });
+    const validatedAttributes = component.parentCentricAttributeBlending.map(
+      (attr, index) => {
+        if (!validateString(attr, `parentCentricAttributeBlending[${index}]`)) {
+          return undefined;
+        }
+        return attr;
+      },
+    );
 
     if (validatedAttributes.includes(undefined)) {
       return undefined;
@@ -344,25 +427,39 @@ export const convertBreedableComponent = (
       return undefined;
     }
 
-    const validatedProperties = component.propertyInheritance.map((prop, index) => {
-      const validatedProp: any = {};
-      for (const [key, value] of Object.entries(prop)) {
-        if (!validateNumber(value.mutationChance, `propertyInheritance[${index}].${key}.mutationChance`, 0, 1)) {
-          return undefined;
-        }
-        if (!Array.isArray(value.mutationValues) || value.mutationValues.length === 0) {
-          console.error(`propertyInheritance[${index}].${key}.mutationValues must be a non-empty array`);
+    const validatedProperties = component.propertyInheritance.map(
+      (prop, index) => {
+        const validatedProp: any = {};
+        for (const [key, value] of Object.entries(prop)) {
+          if (
+            !validateNumber(
+              value.mutationChance,
+              `propertyInheritance[${index}].${key}.mutationChance`,
+              0,
+              1,
+            )
+          ) {
+            return undefined;
+          }
+          if (
+            !Array.isArray(value.mutationValues) ||
+            value.mutationValues.length === 0
+          ) {
+            console.error(
+              `propertyInheritance[${index}].${key}.mutationValues must be a non-empty array`,
+            );
 
-          return undefined;
+            return undefined;
+          }
+          validatedProp[key] = {
+            mutation_chance: value.mutationChance,
+            mutation_values: value.mutationValues,
+          };
         }
-        validatedProp[key] = {
-          mutation_chance: value.mutationChance,
-          mutation_values: value.mutationValues,
-        };
-      }
 
-      return validatedProp;
-    });
+        return validatedProp;
+      },
+    );
 
     if (validatedProperties.includes(undefined)) {
       return undefined;
@@ -373,30 +470,66 @@ export const convertBreedableComponent = (
 
   // Validate randomExtraVariantMutationInterval
   if (component.randomExtraVariantMutationInterval !== undefined) {
-    if (!Array.isArray(component.randomExtraVariantMutationInterval) || component.randomExtraVariantMutationInterval.length !== 2) {
-      console.error('randomExtraVariantMutationInterval must be an array of two numbers');
+    if (
+      !Array.isArray(component.randomExtraVariantMutationInterval) ||
+      component.randomExtraVariantMutationInterval.length !== 2
+    ) {
+      console.error(
+        'randomExtraVariantMutationInterval must be an array of two numbers',
+      );
 
       return undefined;
     }
-    if (!validateNumber(component.randomExtraVariantMutationInterval[0], 'randomExtraVariantMutationInterval[0]', 0, Number.MAX_VALUE) ||
-        !validateNumber(component.randomExtraVariantMutationInterval[1], 'randomExtraVariantMutationInterval[1]', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.randomExtraVariantMutationInterval[0],
+        'randomExtraVariantMutationInterval[0]',
+        0,
+        Number.MAX_VALUE,
+      ) ||
+      !validateNumber(
+        component.randomExtraVariantMutationInterval[1],
+        'randomExtraVariantMutationInterval[1]',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
-    result.random_extra_variant_mutation_interval = component.randomExtraVariantMutationInterval;
+    result.random_extra_variant_mutation_interval =
+      component.randomExtraVariantMutationInterval;
   }
 
   // Validate randomVariantMutationInterval
   if (component.randomVariantMutationInterval !== undefined) {
-    if (!Array.isArray(component.randomVariantMutationInterval) || component.randomVariantMutationInterval.length !== 2) {
-      console.error('randomVariantMutationInterval must be an array of two numbers');
+    if (
+      !Array.isArray(component.randomVariantMutationInterval) ||
+      component.randomVariantMutationInterval.length !== 2
+    ) {
+      console.error(
+        'randomVariantMutationInterval must be an array of two numbers',
+      );
 
       return undefined;
     }
-    if (!validateNumber(component.randomVariantMutationInterval[0], 'randomVariantMutationInterval[0]', 0, Number.MAX_VALUE) ||
-        !validateNumber(component.randomVariantMutationInterval[1], 'randomVariantMutationInterval[1]', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.randomVariantMutationInterval[0],
+        'randomVariantMutationInterval[0]',
+        0,
+        Number.MAX_VALUE,
+      ) ||
+      !validateNumber(
+        component.randomVariantMutationInterval[1],
+        'randomVariantMutationInterval[1]',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
-    result.random_variant_mutation_interval = component.randomVariantMutationInterval;
+    result.random_variant_mutation_interval =
+      component.randomVariantMutationInterval;
   }
 
   // Validate inheritTamed

@@ -1,9 +1,9 @@
 import { LiquidDetectionComponent } from '../interfaces/block-config';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateBooleanValue,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 type Direction =
   | 'up'
@@ -103,7 +103,11 @@ export const createLiquidDetection = (
       }
 
       if (Array.isArray(rule.stopsLiquidFlowingFromDirection)) {
-        for (let dirIndex = 0; dirIndex < rule.stopsLiquidFlowingFromDirection.length; dirIndex++) {
+        for (
+          let dirIndex = 0;
+          dirIndex < rule.stopsLiquidFlowingFromDirection.length;
+          dirIndex++
+        ) {
           const direction = rule.stopsLiquidFlowingFromDirection[dirIndex];
           if (
             !validateAllowedValue(

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DashActionComponent } from '../../../interfaces/components/control/dash-action-component';
 import {
   validateAllowedValues,
@@ -24,14 +24,24 @@ export const convertDashActionComponent = (
   const result: Record<string, unknown> = {};
 
   if (component.canDashUnderwater !== undefined) {
-    if (!validateBoolean(component.canDashUnderwater, 'canDashUnderwater', ctx)) {
+    if (
+      !validateBoolean(component.canDashUnderwater, 'canDashUnderwater', ctx)
+    ) {
       return undefined;
     }
     result.can_dash_underwater = component.canDashUnderwater;
   }
 
   if (component.cooldownTime !== undefined) {
-    if (!validateNumber(component.cooldownTime, 'cooldownTime', 0, Number.MAX_VALUE, ctx)) {
+    if (
+      !validateNumber(
+        component.cooldownTime,
+        'cooldownTime',
+        0,
+        Number.MAX_VALUE,
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.cooldown_time = component.cooldownTime;
@@ -68,7 +78,14 @@ export const convertDashActionComponent = (
   }
 
   if (component.direction !== undefined) {
-    if (!validateAllowedValues(component.direction, DASH_DIRECTIONS, 'direction', ctx)) {
+    if (
+      !validateAllowedValues(
+        component.direction,
+        DASH_DIRECTIONS,
+        'direction',
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.direction = component.direction;

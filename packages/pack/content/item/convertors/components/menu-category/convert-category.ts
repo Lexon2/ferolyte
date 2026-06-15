@@ -1,10 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateAllowedValue,
   validateBooleanValue,
   validateString,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 import { ItemMenuCategory } from '../../../interfaces/item-menu-category';
 import { ItemMenuCategoryType } from '../../../types/item-menu-category-type';
 
@@ -70,7 +70,9 @@ export const convertMenuCategory = (
 export const validateCategory = (
   category: ItemMenuCategoryType,
 ): ItemMenuCategoryType | undefined => {
-  return VALID_CATEGORIES.includes(category as (typeof VALID_CATEGORIES)[number])
+  return VALID_CATEGORIES.includes(
+    category as (typeof VALID_CATEGORIES)[number],
+  )
     ? category
     : undefined;
 };

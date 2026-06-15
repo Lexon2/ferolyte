@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ExplodeComponent } from '../../../interfaces/components/miscellaneous/explode-component';
 import { validateNumber } from '../../common/validation';
 
@@ -36,7 +36,7 @@ const validateFuseLength = (
  */
 export const convertExplodeComponent = (
   component: Partial<ExplodeComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:explode': any } | undefined => {
   if (!component) {
     return undefined;
@@ -76,7 +76,14 @@ export const convertExplodeComponent = (
 
   // Validate damageScaling
   if (component.damageScaling !== undefined) {
-    if (!validateNumber(component.damageScaling, 'damageScaling', -Number.MAX_VALUE, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.damageScaling,
+        'damageScaling',
+        -Number.MAX_VALUE,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.damage_scaling = component.damageScaling;
@@ -122,7 +129,14 @@ export const convertExplodeComponent = (
 
   // Validate knockbackScaling
   if (component.knockbackScaling !== undefined) {
-    if (!validateNumber(component.knockbackScaling, 'knockbackScaling', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.knockbackScaling,
+        'knockbackScaling',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.knockback_scaling = component.knockbackScaling;
@@ -130,7 +144,14 @@ export const convertExplodeComponent = (
 
   // Validate maxResistance
   if (component.maxResistance !== undefined) {
-    if (!validateNumber(component.maxResistance, 'maxResistance', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.maxResistance,
+        'maxResistance',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.max_resistance = component.maxResistance;

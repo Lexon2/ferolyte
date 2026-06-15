@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SleepBehavior } from '../../interfaces/behaviors/sleep-behavior';
 import { validateNumber, validateBoolean } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber, validateBoolean } from '../common/validation';
  */
 export const convertSleepBehavior = (
   behavior: Partial<SleepBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.sleep': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -90,6 +90,6 @@ export const convertSleepBehavior = (
   }
 
   return {
-    'minecraft:behavior.sleep': result
+    'minecraft:behavior.sleep': result,
   };
 };

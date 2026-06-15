@@ -1,6 +1,10 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SnackingBehavior } from '../../interfaces/behaviors/snacking-behavior';
-import { validateNumber, validatePercentage, validateStringArray } from '../common/validation';
+import {
+  validateNumber,
+  validatePercentage,
+  validateStringArray,
+} from '../common/validation';
 
 /**
  * Converts a SnackingBehavior to Minecraft format
@@ -9,7 +13,7 @@ import { validateNumber, validatePercentage, validateStringArray } from '../comm
  */
 export const convertSnackingBehavior = (
   behavior: Partial<SnackingBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.snacking': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -51,13 +55,15 @@ export const convertSnackingBehavior = (
 
   // Validate snackingStopChance
   if (behavior.snackingStopChance !== undefined) {
-    if (!validatePercentage(behavior.snackingStopChance, 'snackingStopChance')) {
+    if (
+      !validatePercentage(behavior.snackingStopChance, 'snackingStopChance')
+    ) {
       return undefined;
     }
     result.snacking_stop_chance = behavior.snackingStopChance;
   }
 
   return {
-    'minecraft:behavior.snacking': result
+    'minecraft:behavior.snacking': result,
   };
 };

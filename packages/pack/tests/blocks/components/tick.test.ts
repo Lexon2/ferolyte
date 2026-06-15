@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createTick } from '@artifex/pack/content/block/components/tick';
+import { createTick } from '@ferolyte/pack/content/block/components/tick';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createTick', () => {
@@ -12,9 +12,14 @@ describe('createTick', () => {
   });
 
   it('maps tick fields', () => {
-    expectComponent(createTick, { looping: true, intervalRange: [10, 20] }, 'minecraft:tick', {
-      looping: true,
-      interval_range: [10, 20],
-    });
+    expectComponent(
+      createTick,
+      { looping: true, intervalRange: [10, 20] },
+      'minecraft:tick',
+      {
+        looping: true,
+        interval_range: [10, 20],
+      },
+    );
   });
 });

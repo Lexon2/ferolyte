@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertBooleanFilter } from './common/convert-boolean-filter';
 import { OnGroundFilter } from '../../interfaces/filters/on-ground-filter';
 
@@ -9,10 +9,13 @@ import { OnGroundFilter } from '../../interfaces/filters/on-ground-filter';
  */
 export const convertOnGroundFilter = (
   filter: Partial<OnGroundFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): ReturnType<typeof convertBooleanFilter> | undefined => {
-  return convertBooleanFilter({
-    ...filter,
-    test: 'on_ground',
-  }, ctx);
+  return convertBooleanFilter(
+    {
+      ...filter,
+      test: 'on_ground',
+    },
+    ctx,
+  );
 };

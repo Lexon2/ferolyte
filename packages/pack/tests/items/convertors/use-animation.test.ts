@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createUseAnimation } from '@artifex/pack/content/item/convertors/components/use-animation';
+import { createUseAnimation } from '@ferolyte/pack/content/item/convertors/components/use-animation';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createUseAnimation', () => {
@@ -12,6 +12,11 @@ describe('createUseAnimation', () => {
   });
 
   it('maps valid animation', () => {
-    expectComponent(createUseAnimation, 'eat', 'minecraft:use_animation', 'eat');
+    expectComponent(
+      createUseAnimation,
+      'eat',
+      'minecraft:use_animation',
+      'eat',
+    );
   });
 });

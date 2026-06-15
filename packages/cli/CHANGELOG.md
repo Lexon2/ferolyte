@@ -1,4 +1,4 @@
-# @artifex/cli
+# @ferolyte/cli
 
 ## 0.1.0
 
@@ -9,5 +9,5 @@
 ### Patch Changes
 
 - Updated dependencies
-  - @artifex/common@0.1.0
-  - @artifex/pack@0.1.0
+  - @ferolyte/common@0.1.0
+  - @ferolyte/pack@0.1.0

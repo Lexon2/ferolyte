@@ -1,7 +1,14 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { GoAndGiveItemsToNoteblockBehavior } from '../../interfaces/behaviors/go-and-give-items-to-noteblock-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
-import { validateInteger, validateNumber, validateSoundEvent } from '../common/validation';
+import {
+  validateInteger,
+  validateNumber,
+  validateSoundEvent,
+} from '../common/validation';
 
 /**
  * Converts a GoAndGiveItemsToNoteblockBehavior to Minecraft format
@@ -10,7 +17,7 @@ import { validateInteger, validateNumber, validateSoundEvent } from '../common/v
  */
 export const convertGoAndGiveItemsToNoteblockBehavior = (
   behavior: Partial<GoAndGiveItemsToNoteblockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.go_and_give_items_to_noteblock': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -36,7 +43,10 @@ export const convertGoAndGiveItemsToNoteblockBehavior = (
 
   // Validate onItemThrow
   if (behavior.onItemThrow !== undefined) {
-    const convertedOnItemThrow = convertTrigger(behavior.onItemThrow, withFieldPath(ctx, 'onItemThrow'));
+    const convertedOnItemThrow = convertTrigger(
+      behavior.onItemThrow,
+      withFieldPath(ctx, 'onItemThrow'),
+    );
     if (!convertedOnItemThrow) {
       return undefined;
     }
@@ -84,6 +94,6 @@ export const convertGoAndGiveItemsToNoteblockBehavior = (
   }
 
   return {
-    'minecraft:behavior.go_and_give_items_to_noteblock': result
+    'minecraft:behavior.go_and_give_items_to_noteblock': result,
   };
 };

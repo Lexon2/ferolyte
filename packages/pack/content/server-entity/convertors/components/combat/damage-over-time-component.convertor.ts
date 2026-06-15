@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DamageOverTimeComponent } from '../../../interfaces/components/combat/damage-over-time-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertDamageOverTimeComponent = (
   component: Partial<DamageOverTimeComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:damage_over_time': any } | undefined => {
   if (!component) {
     return undefined;
@@ -19,7 +19,14 @@ export const convertDamageOverTimeComponent = (
 
   // Validate damagePerHurt
   if (component.damagePerHurt !== undefined) {
-    if (!validateNumber(component.damagePerHurt, 'damagePerHurt', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.damagePerHurt,
+        'damagePerHurt',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.damage_per_hurt = component.damagePerHurt;
@@ -27,7 +34,14 @@ export const convertDamageOverTimeComponent = (
 
   // Validate timeBetweenHurt
   if (component.timeBetweenHurt !== undefined) {
-    if (!validateNumber(component.timeBetweenHurt, 'timeBetweenHurt', 0, Number.MAX_VALUE)) {
+    if (
+      !validateNumber(
+        component.timeBetweenHurt,
+        'timeBetweenHurt',
+        0,
+        Number.MAX_VALUE,
+      )
+    ) {
       return undefined;
     }
     result.time_between_hurt = component.timeBetweenHurt;

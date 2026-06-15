@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { convertStringNumberFilter } from './common/convert-string-number';
 import { IsControllingPassengerFamilyFilter } from '../../interfaces/filters/is-controlling-passenger-family-filter';
 import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-filter';
@@ -10,10 +10,13 @@ import { MinecraftJsonFilter } from '../../interfaces/filters/minecraft-json-fil
  */
 export const convertIsControllingPassengerFamilyFilter = (
   filter: Partial<IsControllingPassengerFamilyFilter>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): MinecraftJsonFilter | undefined => {
-  return convertStringNumberFilter({
-    ...filter,
-    test: 'is_controlling_passenger_family',
-  }, ctx);
+  return convertStringNumberFilter(
+    {
+      ...filter,
+      test: 'is_controlling_passenger_family',
+    },
+    ctx,
+  );
 };

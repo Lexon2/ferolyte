@@ -3,13 +3,13 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   buildFieldPath,
   logContentError,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   validateBooleanValue,
   validateNonEmptyString,
   validatePositiveNumber,
   validateVector3,
-} from '@artifex/common/content/validation/content-validation';
+} from '@ferolyte/common/content/validation/content-validation';
 
 describe('buildFieldPath', () => {
   it('builds a full component field path', () => {
@@ -108,7 +108,7 @@ describe('buildFieldPath', () => {
 });
 
 describe('logContentError', () => {
-  it('logs Artifex-style validation output', () => {
+  it('logs Ferolyte-style validation output', () => {
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     logContentError(

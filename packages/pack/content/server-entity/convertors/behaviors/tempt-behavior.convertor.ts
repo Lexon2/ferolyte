@@ -1,8 +1,16 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { TemptBehavior } from '../../interfaces/behaviors/tempt-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
-import { validateNumber, validateBoolean, validateSoundEvent, validateStringArray } from '../common/validation';
+import {
+  validateNumber,
+  validateBoolean,
+  validateSoundEvent,
+  validateStringArray,
+} from '../common/validation';
 
 /**
  * Converts a TemptBehavior to Minecraft format
@@ -11,7 +19,7 @@ import { validateNumber, validateBoolean, validateSoundEvent, validateStringArra
  */
 export const convertTemptBehavior = (
   behavior: Partial<TemptBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.tempt': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -69,7 +77,10 @@ export const convertTemptBehavior = (
 
   // Validate soundInterval
   if (behavior.soundInterval !== undefined) {
-    const convertedSoundInterval = convertRange(behavior.soundInterval, 'soundInterval');
+    const convertedSoundInterval = convertRange(
+      behavior.soundInterval,
+      'soundInterval',
+    );
     if (!convertedSoundInterval) {
       return undefined;
     }
@@ -102,7 +113,10 @@ export const convertTemptBehavior = (
 
   // Validate onStart
   if (behavior.onStart !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onStart, withFieldPath(ctx, 'onStart'));
+    const convertedTrigger = convertTrigger(
+      behavior.onStart,
+      withFieldPath(ctx, 'onStart'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -111,7 +125,10 @@ export const convertTemptBehavior = (
 
   // Validate onEnd
   if (behavior.onEnd !== undefined) {
-    const convertedTrigger = convertTrigger(behavior.onEnd, withFieldPath(ctx, 'onEnd'));
+    const convertedTrigger = convertTrigger(
+      behavior.onEnd,
+      withFieldPath(ctx, 'onEnd'),
+    );
     if (!convertedTrigger) {
       return undefined;
     }
@@ -119,6 +136,6 @@ export const convertTemptBehavior = (
   }
 
   return {
-    'minecraft:behavior.tempt': result
+    'minecraft:behavior.tempt': result,
   };
 };

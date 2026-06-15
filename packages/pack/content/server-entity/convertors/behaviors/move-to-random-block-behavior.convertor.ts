@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MoveToRandomBlockBehavior } from '../../interfaces/behaviors/move-to-random-block-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertMoveToRandomBlockBehavior = (
   behavior: Partial<MoveToRandomBlockBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_to_random_block': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -50,6 +50,6 @@ export const convertMoveToRandomBlockBehavior = (
   }
 
   return {
-    'minecraft:behavior.move_to_random_block': result
+    'minecraft:behavior.move_to_random_block': result,
   };
 };

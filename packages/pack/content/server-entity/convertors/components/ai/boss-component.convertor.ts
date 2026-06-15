@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { BossComponent } from '../../../interfaces/components/ai/boss-component';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertBossComponent = (
   component: Partial<BossComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:boss': any } | undefined => {
   if (!component) {
     return undefined;
@@ -56,6 +56,6 @@ export const convertBossComponent = (
   }
 
   return {
-    'minecraft:boss': result
+    'minecraft:boss': result,
   };
 };

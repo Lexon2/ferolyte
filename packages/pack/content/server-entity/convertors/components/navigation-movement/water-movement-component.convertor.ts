@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { WaterMovementComponent } from '../../../interfaces/components/navigation-movement/water-movement';
 import { validateNumber } from '../../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../../common/validation';
  */
 export const convertWaterMovementComponent = (
   component: Partial<WaterMovementComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:water_movement': any } | undefined => {
   if (!component) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertWaterMovementComponent = (
   }
 
   return {
-    'minecraft:water_movement': result
+    'minecraft:water_movement': result,
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FindUnderwaterTreasureBehavior } from '../../interfaces/behaviors/find-underwater-treasure-behavior';
 import { validateInteger, validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateInteger, validateNumber } from '../common/validation';
  */
 export const convertFindUnderwaterTreasureBehavior = (
   behavior: Partial<FindUnderwaterTreasureBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.find_underwater_treasure': any } | undefined => {
   if (!behavior) {
     return undefined;

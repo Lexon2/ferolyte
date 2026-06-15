@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EquipItemComponent } from '../../../interfaces/components/interaction/equip-item-component';
 
 interface ExcludedItem {
@@ -12,7 +12,7 @@ interface ExcludedItem {
  */
 export const convertEquipItemComponent = (
   component: Partial<EquipItemComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:equip_item': any } | undefined => {
   if (!component) {
     return undefined;

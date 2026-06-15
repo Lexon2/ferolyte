@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import {
   EntitySensorComponent,
   Subsensor,
@@ -37,7 +40,10 @@ const convertSubsensor = (
   }
 
   if (subsensor.eventFilters) {
-    const eventFilters = convertEntityFilters(subsensor.eventFilters, withFieldPath(ctx, 'eventFilters'));
+    const eventFilters = convertEntityFilters(
+      subsensor.eventFilters,
+      withFieldPath(ctx, 'eventFilters'),
+    );
     if (!eventFilters) {
       return undefined;
     }
@@ -95,7 +101,7 @@ const convertSubsensor = (
  */
 export const convertEntitySensorComponent = (
   component: Partial<EntitySensorComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): Record<string, any> | undefined => {
   if (!component) {
     return undefined;

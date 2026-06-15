@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { FloatTemptBehavior } from '../../interfaces/behaviors/float-tempt-behavior';
 import { convertRange } from '../common/convertors';
 import { convertTrigger } from '../common/trigger.convertor';
@@ -16,7 +19,7 @@ import {
  */
 export const convertFloatTemptBehavior = (
   behavior: Partial<FloatTemptBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.float_tempt': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -110,7 +113,10 @@ export const convertFloatTemptBehavior = (
 
   // Validate onStart
   if (behavior.onStart !== undefined) {
-    const onStart = convertTrigger(behavior.onStart, withFieldPath(ctx, 'onStart'));
+    const onStart = convertTrigger(
+      behavior.onStart,
+      withFieldPath(ctx, 'onStart'),
+    );
     if (!onStart) {
       return undefined;
     }
@@ -128,7 +134,10 @@ export const convertFloatTemptBehavior = (
 
   // Validate onTemptEnd
   if (behavior.onTemptEnd !== undefined) {
-    const onTemptEnd = convertTrigger(behavior.onTemptEnd, withFieldPath(ctx, 'onTemptEnd'));
+    const onTemptEnd = convertTrigger(
+      behavior.onTemptEnd,
+      withFieldPath(ctx, 'onTemptEnd'),
+    );
     if (!onTemptEnd) {
       return undefined;
     }

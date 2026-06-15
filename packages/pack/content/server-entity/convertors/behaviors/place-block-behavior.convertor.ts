@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { PlaceBlockBehavior } from '../../interfaces/behaviors/place-block-behavior';
 import { convertRange } from '../common/convertors';
 import { convertEntityFilters } from '../common/filters.convertor';
@@ -33,14 +36,23 @@ export const convertPlaceBlockBehavior = (
   }
 
   if (behavior.affectedByGriefingRule !== undefined) {
-    if (!validateBoolean(behavior.affectedByGriefingRule, 'affectedByGriefingRule', ctx)) {
+    if (
+      !validateBoolean(
+        behavior.affectedByGriefingRule,
+        'affectedByGriefingRule',
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.affected_by_griefing_rule = behavior.affectedByGriefingRule;
   }
 
   if (behavior.canPlace !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.canPlace, withFieldPath(ctx, 'canPlace'));
+    const convertedFilters = convertEntityFilters(
+      behavior.canPlace,
+      withFieldPath(ctx, 'canPlace'),
+    );
     if (!convertedFilters) {
       return undefined;
     }
@@ -55,7 +67,10 @@ export const convertPlaceBlockBehavior = (
   }
 
   if (behavior.onPlace !== undefined) {
-    const convertedOnPlace = convertTrigger(behavior.onPlace, withFieldPath(ctx, 'onPlace'));
+    const convertedOnPlace = convertTrigger(
+      behavior.onPlace,
+      withFieldPath(ctx, 'onPlace'),
+    );
     if (!convertedOnPlace) {
       return undefined;
     }
@@ -63,7 +78,13 @@ export const convertPlaceBlockBehavior = (
   }
 
   if (behavior.placeableCarriedBlocks !== undefined) {
-    if (!validateStringArray(behavior.placeableCarriedBlocks, 'placeableCarriedBlocks', ctx)) {
+    if (
+      !validateStringArray(
+        behavior.placeableCarriedBlocks,
+        'placeableCarriedBlocks',
+        ctx,
+      )
+    ) {
       return undefined;
     }
     result.placeable_carried_blocks = behavior.placeableCarriedBlocks;
@@ -83,7 +104,13 @@ export const convertPlaceBlockBehavior = (
         const [block, weight] = entry;
         if (
           !validateString(block, `randomlyPlaceableBlocks[${index}][0]`, ctx) ||
-          !validateNumber(weight, `randomlyPlaceableBlocks[${index}][1]`, 0, undefined, ctx)
+          !validateNumber(
+            weight,
+            `randomlyPlaceableBlocks[${index}][1]`,
+            0,
+            undefined,
+            ctx,
+          )
         ) {
           return undefined;
         }

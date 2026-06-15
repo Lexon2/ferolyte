@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { OnStartTakeoffComponent } from '../../../interfaces/components/event-hooks/on-start-takeoff-component';
 import { convertTrigger } from '../../common/trigger.convertor';
 
@@ -9,7 +12,7 @@ import { convertTrigger } from '../../common/trigger.convertor';
  */
 export const convertOnStartTakeoffComponent = (
   component: Partial<OnStartTakeoffComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:on_start_takeoff': any } | undefined => {
   if (!component) {
     return undefined;

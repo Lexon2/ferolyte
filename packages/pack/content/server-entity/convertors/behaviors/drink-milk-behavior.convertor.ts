@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { DrinkMilkBehavior } from '../../interfaces/behaviors/drink-milk-behavior';
 import { convertEntityFilters } from '../common/filters.convertor';
 import { validateNumber } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertDrinkMilkBehavior = (
   behavior: Partial<DrinkMilkBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.drink_milk': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -36,7 +39,10 @@ export const convertDrinkMilkBehavior = (
 
   // Validate filters
   if (behavior.filters !== undefined) {
-    const convertedFilters = convertEntityFilters(behavior.filters, withFieldPath(ctx, 'filters'));
+    const convertedFilters = convertEntityFilters(
+      behavior.filters,
+      withFieldPath(ctx, 'filters'),
+    );
     if (convertedFilters === undefined) {
       return undefined;
     }
@@ -44,6 +50,6 @@ export const convertDrinkMilkBehavior = (
   }
 
   return {
-    'minecraft:behavior.drink_milk': result
+    'minecraft:behavior.drink_milk': result,
   };
 };

@@ -45,7 +45,7 @@ export class BasicEventRouter<
         action(context);
       } catch (err) {
         console.error(
-          `[Artifex] Event route ${routeId} run with error in action:`,
+          `[Ferolyte] Event route ${routeId} run with error in action:`,
           err,
         );
       }

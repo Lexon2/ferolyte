@@ -1,7 +1,7 @@
 import {
   ContentDiagnosticContext,
   withFieldPath,
-} from '@artifex/common/content/diagnostics/content-diagnostic';
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { SwimWithEntityBehavior } from '../../interfaces/behaviors/swim-with-entity-behavior';
 import { convertEntityDefinition } from '../common/entity-definition.convertor';
 import { validateNumber, validatePercentage } from '../common/validation';
@@ -13,7 +13,7 @@ import { validateNumber, validatePercentage } from '../common/validation';
  */
 export const convertSwimWithEntityBehavior = (
   behavior: Partial<SwimWithEntityBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.swim_with_entity': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -71,7 +71,12 @@ export const convertSwimWithEntityBehavior = (
 
   // Validate matchDirectionThreshold
   if (behavior.matchDirectionThreshold !== undefined) {
-    if (!validateNumber(behavior.matchDirectionThreshold, 'matchDirectionThreshold')) {
+    if (
+      !validateNumber(
+        behavior.matchDirectionThreshold,
+        'matchDirectionThreshold',
+      )
+    ) {
       return undefined;
     }
     result.match_direction_threshold = behavior.matchDirectionThreshold;
@@ -114,6 +119,6 @@ export const convertSwimWithEntityBehavior = (
   }
 
   return {
-    'minecraft:behavior.swim_with_entity': result
+    'minecraft:behavior.swim_with_entity': result,
   };
 };

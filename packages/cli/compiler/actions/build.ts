@@ -6,8 +6,8 @@ import { CompilerActionOptions, resolveCompilerOptions } from './options';
 import { loadConfig } from '../config/load-config';
 import { createPacksOutputPathFromInputPath } from './utils/create-output-path';
 import { getBuildCacheDistDir } from '../content/utils/build-cache-dist-dir';
-import { ArtifexContentBuilder } from '../core/builder';
-import { isArtifexContentFile } from '../core/utils/is-content-file';
+import { FerolyteContentBuilder } from '../core/builder';
+import { isFerolyteContentFile } from '../core/utils/is-content-file';
 import {
   createAfterLoadEvent,
   createBuildEvent,
@@ -23,7 +23,7 @@ import {
   flushItemTextures,
 } from '../content/items/item-texture-atlas';
 
-const SKIP_DIRECTORIES = new Set(['node_modules', '.git', '.artifex', 'dist']);
+const SKIP_DIRECTORIES = new Set(['node_modules', '.git', '.ferolyte', 'dist']);
 
 /**
  * Walks through a directory and yields all files.
@@ -71,7 +71,7 @@ const createBuildDictionary = async (): Promise<
         if (outputPath) {
           copyFilePaths[file] = outputPath;
         }
-      } else if (isArtifexContentFile(file)) {
+      } else if (isFerolyteContentFile(file)) {
         buildFilePaths.push(file);
       }
     }
@@ -116,7 +116,7 @@ export const build = async (options: CompilerActionOptions) => {
 
   await Promise.all(
     buildFilePaths.map(async (file) => {
-      const result = await ArtifexContentBuilder.buildFile(file, {
+      const result = await FerolyteContentBuilder.buildFile(file, {
         debug: false, // Initial build is not verbose
         diagnostics,
       });

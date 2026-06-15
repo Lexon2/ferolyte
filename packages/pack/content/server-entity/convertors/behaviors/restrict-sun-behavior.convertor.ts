@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RestrictSunBehavior } from '../../interfaces/behaviors/restrict-sun-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertRestrictSunBehavior = (
   behavior: Partial<RestrictSunBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.restrict_sun': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -26,6 +26,6 @@ export const convertRestrictSunBehavior = (
   }
 
   return {
-    'minecraft:behavior.restrict_sun': result
+    'minecraft:behavior.restrict_sun': result,
   };
 };

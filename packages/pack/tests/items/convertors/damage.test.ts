@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { createDamage } from '@artifex/pack/content/item/convertors/components/damage';
+import { createDamage } from '@ferolyte/pack/content/item/convertors/components/damage';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createDamage', () => {

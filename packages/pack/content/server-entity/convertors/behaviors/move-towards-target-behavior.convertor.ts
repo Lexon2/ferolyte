@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { MoveTowardsTargetBehavior } from '../../interfaces/behaviors/move-towards-target-behavior';
 import { validateNumber } from '../common/validation';
 
@@ -9,7 +9,7 @@ import { validateNumber } from '../common/validation';
  */
 export const convertMoveTowardsTargetBehavior = (
   behavior: Partial<MoveTowardsTargetBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.move_towards_target': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -42,6 +42,6 @@ export const convertMoveTowardsTargetBehavior = (
   }
 
   return {
-    'minecraft:behavior.move_towards_target': result
+    'minecraft:behavior.move_towards_target': result,
   };
 };

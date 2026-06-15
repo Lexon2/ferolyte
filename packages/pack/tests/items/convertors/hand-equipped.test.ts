@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createHandEquipped } from '@artifex/pack/content/item/convertors/components/hand-equipped';
+import { createHandEquipped } from '@ferolyte/pack/content/item/convertors/components/hand-equipped';
 import { expectComponent, expectUndefined } from '../helpers/assert-component';
 
 describe('createHandEquipped', () => {
@@ -13,6 +13,11 @@ describe('createHandEquipped', () => {
 
   it('maps valid boolean to minecraft:hand_equipped', () => {
     expectComponent(createHandEquipped, true, 'minecraft:hand_equipped', true);
-    expectComponent(createHandEquipped, false, 'minecraft:hand_equipped', false);
+    expectComponent(
+      createHandEquipped,
+      false,
+      'minecraft:hand_equipped',
+      false,
+    );
   });
 });

@@ -1,4 +1,7 @@
-import { withFieldPath, ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import {
+  withFieldPath,
+  ContentDiagnosticContext,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { GoAndGiveItemsToOwnerBehavior } from '../../interfaces/behaviors/go-and-give-items-to-owner-behavior';
 import { convertTrigger } from '../common/trigger.convertor';
 import { validateNumber, validateSoundEvent } from '../common/validation';
@@ -10,7 +13,7 @@ import { validateNumber, validateSoundEvent } from '../common/validation';
  */
 export const convertGoAndGiveItemsToOwnerBehavior = (
   behavior: Partial<GoAndGiveItemsToOwnerBehavior>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:behavior.go_and_give_items_to_owner': any } | undefined => {
   if (!behavior) {
     return undefined;
@@ -28,7 +31,10 @@ export const convertGoAndGiveItemsToOwnerBehavior = (
 
   // Validate onItemThrow
   if (behavior.onItemThrow !== undefined) {
-    const convertedOnItemThrow = convertTrigger(behavior.onItemThrow, withFieldPath(ctx, 'onItemThrow'));
+    const convertedOnItemThrow = convertTrigger(
+      behavior.onItemThrow,
+      withFieldPath(ctx, 'onItemThrow'),
+    );
     if (!convertedOnItemThrow) {
       return undefined;
     }
@@ -76,6 +82,6 @@ export const convertGoAndGiveItemsToOwnerBehavior = (
   }
 
   return {
-    'minecraft:behavior.go_and_give_items_to_owner': result
+    'minecraft:behavior.go_and_give_items_to_owner': result,
   };
 };

@@ -1,4 +1,4 @@
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { RendersWhenInvisibleComponent } from '../../../interfaces/components/miscellaneous/renders-when-invisible-component';
 import { convertStateObject } from '../../common/state-object';
 
@@ -9,7 +9,7 @@ import { convertStateObject } from '../../common/state-object';
  */
 export const convertRendersWhenInvisibleComponent = (
   component: Partial<RendersWhenInvisibleComponent>,
-  ctx?: ContentDiagnosticContext
+  ctx?: ContentDiagnosticContext,
 ): { 'minecraft:renders_when_invisible': any } | undefined => {
   const result: any = convertStateObject(component);
   if (!result) {

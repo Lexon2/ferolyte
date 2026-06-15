@@ -1,6 +1,6 @@
 import { ItemPiercingWeaponComponent } from '../../interfaces/components/piercing-weapon';
-import { ContentDiagnosticContext } from '@artifex/common/content/diagnostics/content-diagnostic';
-import { validateNumber } from '@artifex/common/content/validation/content-validation';
+import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { validateNumber } from '@ferolyte/common/content/validation/content-validation';
 import { convertWeaponReach } from './utils/weapon-reach';
 
 /**

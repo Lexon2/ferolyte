@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   convertKineticWeaponConditions,
   convertWeaponReach,
-} from '@artifex/pack/content/item/convertors/components/utils/weapon-reach';
+} from '@ferolyte/pack/content/item/convertors/components/utils/weapon-reach';
 
 describe('convertWeaponReach', () => {
   it('returns undefined when input is missing', () => {
@@ -20,11 +20,13 @@ describe('convertKineticWeaponConditions', () => {
   });
 
   it('maps condition fields to snake_case', () => {
-    expect(convertKineticWeaponConditions({
-      maxDuration: 5,
-      minRelativeSpeed: 0.5,
-      minSpeed: 1,
-    })).toEqual({
+    expect(
+      convertKineticWeaponConditions({
+        maxDuration: 5,
+        minRelativeSpeed: 0.5,
+        minSpeed: 1,
+      }),
+    ).toEqual({
       max_duration: 5,
       min_relative_speed: 0.5,
       min_speed: 1,
