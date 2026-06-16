@@ -16,6 +16,8 @@ const CRITICAL_PATHS = [
 ];
 
 const relativeImportPattern = /(?:from|export\s+\*)\s+["'](\.\.?\/[^"']+)["']/g;
+const createRequirePattern =
+  /createRequire\([^)]+\)\(\s*['"](\.\.?\/[^'"]+)['"]\s*\)/g;
 
 const shouldSkipDir = (dirPath, entryName) =>
   entryName === 'node_modules' ||
@@ -90,11 +92,22 @@ async function verifyBuiltImports() {
         errors.push(`Missing module "${importPath}" imported from ${relFile}`);
       }
     }
+
+    for (const match of content.matchAll(createRequirePattern)) {
+      const requirePath = match[1];
+      const resolved = resolve(dirname(file), requirePath);
+
+      if (!existsSync(resolved)) {
+        const relFile = file.replace(cliRoot, '').replace(/\\/g, '/');
+        errors.push(
+          `Missing createRequire target "${requirePath}" in ${relFile}`,
+        );
+      }
+    }
   }
 
   return errors;
 }
-
 function verifyPackContents() {
   const result = spawnSync(
     'npm',
