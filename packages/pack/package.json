@@ -1,6 +1,6 @@
 {
   "name": "@ferolyte/pack",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ferolyte content SDK for Minecraft BE addons",
   "license": "MIT",
   "type": "module",
@@ -19,25 +19,45 @@
   },
   "exports": {
     "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.js",
-      "default": "./dist/*.js"
+      "types": "./*.d.ts",
+      "import": "./*.js",
+      "default": "./*.js"
     }
   },
   "files": [
-    "dist"
+    "**/*.js",
+    "**/*.d.ts",
+    "**/*.js.map",
+    "**/*.d.ts.map"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@ferolyte/common": "^0.1.0"
+    "@ferolyte/common": "^0.2.0"
   },
   "devDependencies": {
     "esbuild": "^0.28.1",
     "typescript": "^5.8.3"
   },
+  "keywords": [
+    "minecraft",
+    "minecraft-bedrock",
+    "bedrock",
+    "bedrock-edition",
+    "addon",
+    "addons",
+    "minecraft-addon",
+    "mcaddon",
+    "typescript",
+    "sdk",
+    "content",
+    "blocks",
+    "items",
+    "entities",
+    "ferolyte"
+  ],
   "engines": {
     "node": ">=18"
   }

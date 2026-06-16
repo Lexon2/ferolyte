@@ -67,7 +67,7 @@ npx ferolyte run --no-debug
 
 ### Configuration
 
-Create `ferolyte.config.mts` in your project root:
+Create `ferolyte.config.mts` in your project root. Relative imports and `tsconfig.json` path aliases are resolved via esbuild when the config is loaded, so the `.ts` extension is optional in config imports.
 
 ```typescript
 import { defineFerolyteConfig } from '@ferolyte/cli/compiler/config/define-config';

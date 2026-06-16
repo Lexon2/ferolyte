@@ -22,7 +22,12 @@
     "**/.git": true,
     "**/.DS_Store": true,
     "**/node_modules": true,
-    "**/yarn.lock": true
+    "**/yarn.lock": true,
+    "packages/**/scripts/**": false,
+    "packages/**/*.js": true,
+    "packages/**/*.js.map": true,
+    "packages/**/*.d.ts": true,
+    "packages/**/*.d.ts.map": true
   },
   "cSpell.words": ["gametest", "gametests", "minecart", "shulker", "zoglin"],
   "files.associations": {

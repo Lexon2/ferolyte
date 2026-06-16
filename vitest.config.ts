@@ -3,6 +3,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   resolve: {
+    extensions: ['.ts', '.mts', '.tsx', '.js', '.mjs', '.jsx', '.json'],
     alias: {
       '@ferolyte/common': path.resolve(__dirname, 'packages/common'),
       '@ferolyte/cli': path.resolve(__dirname, 'packages/cli'),
