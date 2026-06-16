@@ -8,7 +8,12 @@ import * as esbuild from 'esbuild';
 
 const rootDir = fileURLToPath(new URL('..', import.meta.url));
 const BUILD_ARTIFACT_PATTERN = /\.(js|d\.ts)(\.map)?$/;
-const SKIP_DIRS = new Set(['node_modules', 'scripts', 'tests']);
+const packageScriptsDir = join(rootDir, 'scripts');
+
+const shouldSkipDir = (dirPath, entryName) =>
+  entryName === 'node_modules' ||
+  entryName === 'tests' ||
+  dirPath === packageScriptsDir;
 
 function resolveTypeScriptBin(startDir) {
   let dir = startDir;
@@ -58,7 +63,7 @@ async function collectTsFiles(dir, files = []) {
     const path = join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      if (SKIP_DIRS.has(entry.name)) {
+      if (shouldSkipDir(path, entry.name)) {
         continue;
       }
 
@@ -81,7 +86,7 @@ async function cleanBuildArtifacts(dir) {
     const path = join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      if (SKIP_DIRS.has(entry.name)) {
+      if (shouldSkipDir(path, entry.name)) {
         continue;
       }
 
@@ -114,7 +119,7 @@ async function fixModuleSpecifiers(dir) {
     const path = join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      if (SKIP_DIRS.has(entry.name)) {
+      if (shouldSkipDir(path, entry.name)) {
         continue;
       }
 

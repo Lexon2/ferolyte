@@ -1,5 +1,5 @@
 **/*.ts
 !**/*.d.ts
-scripts/
+/scripts/
 tests/
 tsconfig*.json
