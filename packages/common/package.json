@@ -1,6 +1,6 @@
 {
   "name": "@ferolyte/common",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Shared utilities and content foundation for Ferolyte",
   "license": "MIT",
   "type": "module",

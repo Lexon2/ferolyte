@@ -1,5 +1,14 @@
 # @ferolyte/cli
 
+## 0.2.2
+
+### Patch Changes
+
+- Fix CLI crash on startup (`ferolyte watch`, `ferolyte run`, etc.) caused by stale relative paths to `package.json` in `cli/index.ts` and `cli/commands/init.ts` after moving from `dist/cli/` to co-located `cli/` layout. Extend `verify:cli` to validate `createRequire()` paths in the published package.
+- Updated dependencies
+  - @ferolyte/common@0.2.2
+  - @ferolyte/pack@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes

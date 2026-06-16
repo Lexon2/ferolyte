@@ -1,6 +1,6 @@
 {
   "name": "@ferolyte/cli",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Ferolyte CLI and pack compiler for Minecraft BE addons",
   "license": "MIT",
   "type": "module",
@@ -38,8 +38,8 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@ferolyte/common": "^0.2.1",
-    "@ferolyte/pack": "^0.2.1",
+    "@ferolyte/common": "^0.2.2",
+    "@ferolyte/pack": "^0.2.2",
     "chokidar": "^4.0.3",
     "citty": "^0.2.2",
     "esbuild": "^0.28.1",
