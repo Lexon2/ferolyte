@@ -8,7 +8,7 @@ import { initCommand } from './commands/init';
 import { runCommand } from './commands/run';
 import { watchCommand } from './commands/watch';
 
-const { version } = createRequire(import.meta.url)('../../package.json') as {
+const { version } = createRequire(import.meta.url)('../package.json') as {
   version: string;
 };
 

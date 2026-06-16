@@ -5,7 +5,7 @@ import { defineCommand } from 'citty';
 import { createProject } from '../../scaffold/create-project';
 import { installProjectDependencies } from '../../scaffold/utils/install-project-dependencies';
 
-const { version } = createRequire(import.meta.url)('../../../package.json') as {
+const { version } = createRequire(import.meta.url)('../../package.json') as {
   version: string;
 };
 
