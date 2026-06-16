@@ -1,4 +1,4 @@
-import { readdir } from 'node:fs/promises';
+import { readdir, readFile, rm, unlink, writeFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 import * as esbuild from 'esbuild';
 
 const rootDir = fileURLToPath(new URL('..', import.meta.url));
+const BUILD_ARTIFACT_PATTERN = /\.(js|d\.ts)(\.map)?$/;
+const SKIP_DIRS = new Set(['node_modules', 'scripts', 'tests']);
 
 async function collectTsFiles(dir, files = []) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -14,7 +16,7 @@ async function collectTsFiles(dir, files = []) {
     const path = join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      if (entry.name === 'dist' || entry.name === 'node_modules' || entry.name === 'tests') {
+      if (SKIP_DIRS.has(entry.name)) {
         continue;
       }
 
@@ -30,18 +32,26 @@ async function collectTsFiles(dir, files = []) {
   return files;
 }
 
-const entryPoints = await collectTsFiles(rootDir);
+async function cleanBuildArtifacts(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
 
-await esbuild.build({
-  entryPoints,
-  outdir: join(rootDir, 'dist'),
-  outbase: rootDir,
-  platform: 'node',
-  format: 'esm',
-  target: 'es2020',
-  sourcemap: true,
-  logLevel: 'info',
-});
+  for (const entry of entries) {
+    const path = join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      if (SKIP_DIRS.has(entry.name)) {
+        continue;
+      }
+
+      await cleanBuildArtifacts(path);
+      continue;
+    }
+
+    if (BUILD_ARTIFACT_PATTERN.test(entry.name)) {
+      await unlink(path);
+    }
+  }
+}
 
 const fixRelativeImports = (content) =>
   content.replace(
@@ -55,14 +65,18 @@ const fixRelativeImports = (content) =>
     },
   );
 
-async function fixDistModuleSpecifiers(dir) {
+async function fixModuleSpecifiers(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
 
   for (const entry of entries) {
     const path = join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      await fixDistModuleSpecifiers(path);
+      if (SKIP_DIRS.has(entry.name)) {
+        continue;
+      }
+
+      await fixModuleSpecifiers(path);
       continue;
     }
 
@@ -70,13 +84,28 @@ async function fixDistModuleSpecifiers(dir) {
       continue;
     }
 
-    const { readFile, writeFile } = await import('node:fs/promises');
     const content = await readFile(path, 'utf8');
     await writeFile(path, fixRelativeImports(content));
   }
 }
 
-await fixDistModuleSpecifiers(join(rootDir, 'dist'));
+await cleanBuildArtifacts(rootDir);
+await rm(join(rootDir, 'dist'), { recursive: true, force: true });
+
+const entryPoints = await collectTsFiles(rootDir);
+
+await esbuild.build({
+  entryPoints,
+  outdir: rootDir,
+  outbase: rootDir,
+  platform: 'node',
+  format: 'esm',
+  target: 'es2020',
+  sourcemap: true,
+  logLevel: 'info',
+});
+
+await fixModuleSpecifiers(rootDir);
 
 const tsc = spawnSync('npx', ['tsc', '-p', 'tsconfig.dts.json'], {
   cwd: rootDir,
@@ -88,6 +117,6 @@ if (tsc.status !== 0) {
   process.exit(tsc.status ?? 1);
 }
 
-await fixDistModuleSpecifiers(join(rootDir, 'dist'));
+await fixModuleSpecifiers(rootDir);
 
-console.log(`Built ${entryPoints.length} JS and declaration files to dist/`);
+console.log(`Built ${entryPoints.length} JS and declaration files`);

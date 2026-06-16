@@ -22,6 +22,12 @@ const SHARED_COMPILER_OPTIONS = {
   emitDecoratorMetadata: true,
 };
 
+const FEROLYTE_PATHS = {
+  '@ferolyte/pack/*': ['node_modules/@ferolyte/pack/*'],
+  '@ferolyte/common/*': ['node_modules/@ferolyte/common/*'],
+  '@ferolyte/cli/*': ['node_modules/@ferolyte/cli/*'],
+};
+
 export const createTsconfigTemplate = ({
   pathAlias,
 }: TsconfigTemplateInput): string => {
@@ -30,6 +36,7 @@ export const createTsconfigTemplate = ({
       ...SHARED_COMPILER_OPTIONS,
       paths: {
         [`${pathAlias}/*`]: ['packs/*'],
+        ...FEROLYTE_PATHS,
       },
     },
     include: ['packs/**/*', 'ferolyte.config.mts'],
@@ -49,6 +56,7 @@ export const createTsconfigScriptsTemplate = ({
       allowJs: true,
       paths: {
         [`${pathAlias}/*`]: ['packs/*'],
+        ...FEROLYTE_PATHS,
       },
     },
     include: ['packs/scripts/**/*'],

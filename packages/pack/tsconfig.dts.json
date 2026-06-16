@@ -7,10 +7,10 @@
     "noCheck": true,
     "sourceMap": false,
     "rootDir": ".",
-    "outDir": "./dist",
+    "outDir": ".",
     "paths": {
       "@ferolyte/pack/*": ["./*"],
-      "@ferolyte/common/*": ["../common/dist/*"]
+      "@ferolyte/common/*": ["../common/*"]
     }
   }
 }

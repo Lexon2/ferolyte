@@ -1,6 +1,6 @@
 {
   "name": "@ferolyte/cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ferolyte CLI and pack compiler for Minecraft BE addons",
   "license": "MIT",
   "type": "module",
@@ -18,25 +18,28 @@
     "access": "public"
   },
   "bin": {
-    "ferolyte": "./dist/cli/index.js"
+    "ferolyte": "./cli/index.js"
   },
   "exports": {
     "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.js",
-      "default": "./dist/*.js"
+      "types": "./*.d.ts",
+      "import": "./*.js",
+      "default": "./*.js"
     }
   },
   "files": [
-    "dist"
+    "**/*.js",
+    "**/*.d.ts",
+    "**/*.js.map",
+    "**/*.d.ts.map"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@ferolyte/common": "^0.1.0",
-    "@ferolyte/pack": "^0.1.0",
+    "@ferolyte/common": "^0.2.0",
+    "@ferolyte/pack": "^0.2.0",
     "chokidar": "^4.0.3",
     "citty": "^0.2.2",
     "esbuild": "^0.28.1",
@@ -48,6 +51,23 @@
     "@types/ws": "^8.18.1",
     "typescript": "^5.8.3"
   },
+  "keywords": [
+    "minecraft",
+    "minecraft-bedrock",
+    "bedrock",
+    "bedrock-edition",
+    "addon",
+    "addons",
+    "minecraft-addon",
+    "typescript",
+    "cli",
+    "compiler",
+    "generator",
+    "script-api",
+    "watch",
+    "mcaddon",
+    "ferolyte"
+  ],
   "engines": {
     "node": ">=18"
   }
