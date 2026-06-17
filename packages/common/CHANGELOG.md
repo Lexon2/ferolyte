@@ -1,5 +1,11 @@
 # @ferolyte/common
 
+## 0.2.3
+
+### Patch Changes
+
+- 41d6998: Allow custom item tags in `createTags` instead of rejecting tags outside the vanilla allowlist. Only non-empty string validation remains.
+
 ## 0.2.2
 
 ### Patch Changes
