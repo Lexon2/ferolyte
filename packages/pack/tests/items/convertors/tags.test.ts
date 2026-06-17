@@ -7,8 +7,14 @@ describe('createTags', () => {
     expectUndefined(createTags);
   });
 
-  it('returns undefined for invalid tag', () => {
-    expectUndefined(createTags, ['invalid:tag']);
+  it('returns undefined for empty string tag', () => {
+    expectUndefined(createTags, ['']);
+  });
+
+  it('accepts custom tags', () => {
+    expectComponent(createTags, ['custom:my_tag'], 'minecraft:tags', {
+      tags: ['custom:my_tag'],
+    });
   });
 
   it('maps valid tags', () => {
