@@ -1,5 +1,11 @@
 # @ferolyte/common
 
+## 0.4.0
+
+### Minor Changes
+
+- e21faeb: Content metadata and diagnostic content types for the new content (`attachable`, `render-controller`, `recipe`, `spawn-rule`).
+
 ## 0.3.0
 
 ### Minor Changes
