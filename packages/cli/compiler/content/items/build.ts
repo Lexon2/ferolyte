@@ -1,10 +1,12 @@
-import { ItemBuilder } from '@ferolyte/pack/content/item/item-builder';
-import { ContentBuildOptions } from '../../actions/options';
 import { BUILD_CONTEXT } from '../../build-context';
+import { registerContentJson } from '../../registry/project-registry';
+import { logger } from '../../utils/logger';
+import { ItemBuilder } from '@ferolyte/pack/content/item/item-builder';
+import { registerItemLang } from '../../lang/register-content-lang';
+import { ContentBuildOptions } from '../../actions/options';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
 import { createContentPath } from '../utils/create-content-path';
-import { setSourceItemTextures } from './item-texture-atlas';
 
 export const buildItemJson = async (
   filePath: string,
@@ -16,21 +18,22 @@ export const buildItemJson = async (
     identifier: builder.cloneConfig().identifier,
     diagnostics: options.diagnostics,
     contentType: 'item',
+    minGameVersion: BUILD_CONTEXT.PACKS.MIN_GAME_VERSION,
   });
-  builder.withPackConfig({ namespace: BUILD_CONTEXT.PACKS.NAMESPACE });
 
   const json = builder.build();
+  registerContentJson(filePath, 'item', json);
+  const itemConfig = builder.cloneConfig();
+  registerItemLang(filePath, itemConfig.identifier, itemConfig.components?.displayName);
   const jsonString = serializeJson(json);
 
   const identifier = builder.cloneConfig().identifier ?? '';
   const outFile = createContentPath(filePath, undefined, { identifier });
   if (identifier === undefined || outFile === undefined) {
-    console.error(`Error creating content path for ${filePath}`);
+    logger.error(`Error creating content path for ${filePath}`);
 
     return;
   }
-
-  setSourceItemTextures(filePath, builder.getItemTextureEntries());
 
   const writeResult = await writeWithPlugins(
     filePath,

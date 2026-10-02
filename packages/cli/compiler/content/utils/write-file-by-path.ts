@@ -1,3 +1,4 @@
+import { logger } from '../../utils/logger';
 import { writeFile, mkdir } from 'fs/promises';
 import { dirname } from 'path';
 
@@ -10,7 +11,7 @@ export const writeFileByPath = async (
   try {
     await mkdir(directoryPath, { recursive: true });
   } catch (error) {
-    console.error(`Error creating directories for ${filePath}:`, error);
+    logger.error(`Error creating directories for ${filePath}:`, error);
 
     return;
   }

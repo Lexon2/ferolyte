@@ -21,10 +21,18 @@ const applyTsConfig = async (config: FerolyteProfileConfig) => {
       BUILD_CONTEXT.TS.ALIASES[alias] = parsed.compilerOptions.paths[alias][0];
     }
   }
+
+  // Generated typed ids: works without a tsconfig entry (the editor needs one).
+  BUILD_CONTEXT.TS.ALIASES['@ferolyte/ids'] ??= join(
+    process.cwd(),
+    '.ferolyte',
+    'types',
+    'ids.ts',
+  );
 };
 
 export const applyConfig = async (config: FerolyteProfileConfig) => {
-  const { packs, scripts } = config;
+  const { packs, scripts, server } = config;
   const { alias, output, minGameVersion, input, namespace } = packs;
 
   await applyTsConfig(config);
@@ -111,6 +119,12 @@ export const applyConfig = async (config: FerolyteProfileConfig) => {
     ? join(currentWorkingDirectory, scripts.entry)
     : join(currentWorkingDirectory, 'packs', 'scripts', 'main.ts');
   BUILD_CONTEXT.PACKS.SCRIPT_MINIFY = scripts?.minify ?? false;
+  BUILD_CONTEXT.SERVER.PORT = server?.port ?? 8080;
+  BUILD_CONTEXT.SERVER.HTTP = server?.http
+    ? { port: server.http.port, host: server.http.host ?? '127.0.0.1' }
+    : false;
+  BUILD_CONTEXT.SERVER.RELOAD_ON_PACK_CHANGE =
+    server?.reloadOnPackChange ?? false;
   BUILD_CONTEXT.PACKS.PACK_ALIAS = alias;
   BUILD_CONTEXT.PACKS.NAMESPACE = namespace;
   BUILD_CONTEXT.PACKS.MINIFY_JSON = packs.minifyJSON ?? false;
@@ -130,6 +144,9 @@ export const applyConfig = async (config: FerolyteProfileConfig) => {
     currentWorkingDirectory,
     '.ferolyte/cache',
   );
+
+  BUILD_CONTEXT.PACKS.LANG.DEFAULT_LOCALE = packs.lang?.defaultLocale ?? 'en_US';
+  BUILD_CONTEXT.PACKS.LANG.LOCALES = packs.lang?.locales ?? [];
 
   BUILD_CONTEXT.PACKS.CONTENT_SUFFIX_REGISTRY = buildContentSuffixRegistry(
     packs.contentSuffixes,

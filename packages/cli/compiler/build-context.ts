@@ -2,6 +2,11 @@ import { buildContentSuffixRegistry } from './content/utils/content-suffix-regis
 
 export const BUILD_CONTEXT = {
   IS_LOADED: false,
+  SERVER: {
+    PORT: 8080,
+    HTTP: false as false | { port: number; host: string },
+    RELOAD_ON_PACK_CHANGE: false,
+  },
   TS: {
     CONFIG_PATH: '',
     ALIASES: {} as Record<string, string>,
@@ -21,6 +26,10 @@ export const BUILD_CONTEXT = {
     INPUT_BEHAVIOR_PACK_PATH: '',
     INPUT_RESOURCE_PACK_PATH: '',
     CACHE_PATH: '',
+    LANG: {
+      DEFAULT_LOCALE: 'en_US',
+      LOCALES: [] as string[],
+    },
     CONTENT_SUFFIX_REGISTRY: buildContentSuffixRegistry(),
   },
 };

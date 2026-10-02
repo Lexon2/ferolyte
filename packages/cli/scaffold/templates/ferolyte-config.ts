@@ -6,7 +6,7 @@ export interface FerolyteConfigTemplateInput {
 export const createFerolyteConfigTemplate = ({
   alias,
   namespace,
-}: FerolyteConfigTemplateInput): string => `import { defineFerolyteConfig } from '@ferolyte/cli/compiler/config/define-config';
+}: FerolyteConfigTemplateInput): string => `import { defineFerolyteConfig } from '@ferolyte/cli/config';
 
 export default defineFerolyteConfig({
   profiles: {

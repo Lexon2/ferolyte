@@ -2,6 +2,7 @@ import { access } from 'fs/promises';
 import { join } from 'path';
 
 import { writeFileByPath } from '../compiler/content/utils/write-file-by-path';
+import { createAgentsTemplate, createClaudeMdTemplate } from './templates/agents';
 import { createFerolyteConfigTemplate } from './templates/ferolyte-config';
 import { createBehaviorPackManifestTemplate } from './templates/behavior-pack-manifest';
 import { createGitignoreTemplate } from './templates/gitignore';
@@ -86,6 +87,8 @@ export const createProject = async ({
     ['tsconfig.json', createTsconfigTemplate({ pathAlias })],
     ['tsconfig.scripts.json', createTsconfigScriptsTemplate({ pathAlias })],
     ['.gitignore', createGitignoreTemplate()],
+    ['AGENTS.md', createAgentsTemplate({ displayName })],
+    ['CLAUDE.md', createClaudeMdTemplate()],
     [
       'packs/BP/manifest.json',
       createBehaviorPackManifestTemplate({
