@@ -8,10 +8,6 @@
   "block/minecraft:tags": [
     "REJECTED"
   ],
-  "client_entity/document": [
-    "LOST_FIELD",
-    "CHANGED"
-  ],
   "entity/minecraft:angry": [
     "LOST_FIELD"
   ],

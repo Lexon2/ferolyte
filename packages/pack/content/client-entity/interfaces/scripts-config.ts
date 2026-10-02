@@ -1,5 +1,6 @@
 import { OneOfRecord } from '@ferolyte/common/types/core/one-of-record';
-import { Molang, type MolangStatementInput } from '../../molang';
+import type { MolangBuilder } from '../../molang/format-molang-value';
+import { Molang } from '../../molang';
 import { MolangMath, MolangQuery } from '../../molang/types';
 
 type AnimationKeys<T> =
@@ -21,12 +22,12 @@ export interface ClientEntityScriptsConfig<
   /**
    * Clientside molang variables that are to be evaluated during the creation of the entity.
    */
-  initialize?: MolangStatementInput[];
+  initialize?: Array<string | MolangBuilder>;
 
   /**
    * Clientside molang variables that are to be evaluated during the animation.
    */
-  preAnimation?: MolangStatementInput[];
+  preAnimation?: Array<string | MolangBuilder>;
 
   /**
    * The minecraft molang definition that results in a float.
@@ -59,6 +60,26 @@ export interface ClientEntityScriptsConfig<
    * The scale z of the mob's geometry.
    */
   scalez?: number | string;
+
+  /**
+   * Scale of the geometry on the X axis (written as `scaleX`).
+   */
+  scaleX?: number | string;
+
+  /**
+   * Scale of the geometry on the Y axis (written as `scaleY`).
+   */
+  scaleY?: number | string;
+
+  /**
+   * Scale of the geometry on the Z axis (written as `scaleZ`).
+   */
+  scaleZ?: number | string;
+
+  /**
+   * Hides the held items while the expression is not 0.
+   */
+  hideHeldItems?: number | string;
 
   /**
    * Bones and effects will still be updated if the entity is off screen if this expression returns anything other than 0.0.

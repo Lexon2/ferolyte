@@ -43,11 +43,11 @@ export class DocumentBuilder<K extends DocumentKind = DocumentKind>
 {
   readonly metadata: (typeof METADATA)[K];
 
-  private buildContext?: ContentDiagnosticContext;
+  protected buildContext?: ContentDiagnosticContext;
 
   constructor(
     readonly kind: K,
-    private readonly config: Partial<DocumentConfigs[K]>,
+    protected readonly config: Partial<DocumentConfigs[K]>,
   ) {
     this.metadata = METADATA[kind];
   }

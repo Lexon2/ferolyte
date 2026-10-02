@@ -138,6 +138,42 @@ Names are inferred as literals (no `as const`); a typo in a group / event / prop
 Configs that declare no `events` / `componentGroups` / `properties` stay unrestricted. Events that target other
 entities (`target: 'other'`) and `minecraft:*` events are not restricted.
 
+Attachable — `packs/RP/attachables/sword.att.ts` (same render description as `.ce.ts`)
+
+```ts
+import { createAttachable, q } from '@ferolyte/pack';
+
+export default createAttachable({
+  identifier: 'myaddon:sword',
+  item: { 'myaddon:sword': q.isOwnerIdentifierAny('minecraft:player') },
+  geometry: 'geometry.myaddon.sword',
+  textures: 'textures/myaddon/sword',
+  materials: 'entity_alphatest',
+  animations: { hold: { id: 'animation.myaddon.sword.hold', speed: 2 } }, // patched clone, source untouched
+  scripts: { animate: ['hold'] },
+  renderControllers: ['controller.render.myaddon.sword'],
+});
+```
+
+Render controller — `packs/RP/render_controllers/sword.rc.ts` (several builders in a file -> one JSON)
+
+```ts
+import { createRenderController, q } from '@ferolyte/pack';
+
+export default [
+  createRenderController({
+    id: 'controller.render.myaddon.sword',
+    geometry: 'Geometry.default',
+    materials: [{ '*': 'Material.default' }],
+    textures: ['Texture.default'],
+    partVisibility: [{ '*': true }, { blade: q.isSneaking }],
+  }),
+];
+```
+
+`createAttachableDocument` / `createRenderControllerDocument` mirror the JSON file 1:1 (camelCase) when the flat form lacks a field.
+The compiler checks that every `Geometry.x` / `Texture.x` / `Material.x` a render controller uses is a key of each entity / attachable that uses it.
+
 Client entity — `packs/RP/entity/cow.ce.ts`
 
 ```ts

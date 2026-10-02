@@ -4,10 +4,10 @@ import { join } from 'path';
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { createAttachable } from '@ferolyte/pack/content/documents/create-attachable';
-import { createRecipe } from '@ferolyte/pack/content/documents/create-recipe';
-import { createRenderController } from '@ferolyte/pack/content/documents/create-render-controller';
-import { createSpawnRule } from '@ferolyte/pack/content/documents/create-spawn-rule';
+import { createAttachableDocument } from '@ferolyte/pack/content/documents/create-attachable';
+import { createRecipeDocument } from '@ferolyte/pack/content/documents/create-recipe-document';
+import { createRenderControllerDocument } from '@ferolyte/pack/content/documents/create-render-controller';
+import { createSpawnRuleDocument } from '@ferolyte/pack/content/documents/create-spawn-rule-document';
 import { BUILD_CONTEXT } from '../../build-context';
 import { buildContentJson } from '../content.factory';
 import { buildContentSuffixRegistry } from '../utils/content-suffix-registry';
@@ -44,7 +44,7 @@ describe('buildContentJson with generated documents', () => {
   it('writes an attachable into the resource pack', async () => {
     const { path, json } = await build(
       'wand.att.ts',
-      createAttachable({
+      createAttachableDocument({
         attachable: {
           description: {
             identifier: 'test:wand',
@@ -69,7 +69,7 @@ describe('buildContentJson with generated documents', () => {
   it('names a render controller file after its source file', async () => {
     const { path, json } = await build(
       'mob.rc.ts',
-      createRenderController({
+      createRenderControllerDocument({
         renderControllers: {
           'controller.render.mob': {
             geometry: 'Geometry.default',
@@ -91,7 +91,7 @@ describe('buildContentJson with generated documents', () => {
   it('writes recipes and spawn rules into the behavior pack', async () => {
     const recipe = await build(
       'plank.recipe.ts',
-      createRecipe({
+      createRecipeDocument({
         furnace: {
           description: { identifier: 'test:smelt' },
           input: 'test:ore',
@@ -106,7 +106,7 @@ describe('buildContentJson with generated documents', () => {
 
     const spawn = await build(
       'mob.spawn.ts',
-      createSpawnRule({
+      createSpawnRuleDocument({
         spawnRules: {
           description: { identifier: 'test:mob', populationControl: 'animal' },
           conditions: [{ weight: { default: 10 } }],

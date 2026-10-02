@@ -9,10 +9,10 @@ import {
 } from '@ferolyte/pack/content/documents/convert-document';
 import { DocumentBuilder } from '@ferolyte/pack/content/documents/document-builder';
 import { spawnRuleConditionRegistry } from '@ferolyte/pack/content/generated/spawn-rule/registry';
-import { createAttachable } from '@ferolyte/pack/content/documents/create-attachable';
-import { createRecipe } from '@ferolyte/pack/content/documents/create-recipe';
-import { createRenderController } from '@ferolyte/pack/content/documents/create-render-controller';
-import { createSpawnRule } from '@ferolyte/pack/content/documents/create-spawn-rule';
+import { createAttachableDocument } from '@ferolyte/pack/content/documents/create-attachable';
+import { createRecipeDocument } from '@ferolyte/pack/content/documents/create-recipe-document';
+import { createRenderControllerDocument } from '@ferolyte/pack/content/documents/create-render-controller';
+import { createSpawnRuleDocument } from '@ferolyte/pack/content/documents/create-spawn-rule-document';
 
 const run = (fn: () => Record<string, unknown>) => {
   const collector = collectDiagnostics({ silent: true });
@@ -224,31 +224,31 @@ describe('spawn rule conditions area', () => {
 
 describe('DocumentBuilder', () => {
   it('is a content builder with the matching metadata and file identifier', () => {
-    const attachable = createAttachable({
+    const attachable = createAttachableDocument({
       attachable: { description: { identifier: 'test:wand' } },
     });
     expect(attachable.metadata).toBe(CONTENT_METADATA.ATTACHABLE);
     expect(attachable.identifier()).toBe('test:wand');
 
-    const recipe = createRecipe({
+    const recipe = createRecipeDocument({
       furnace: { description: { identifier: 'test:smelt' } },
     });
     expect(recipe.metadata).toBe(CONTENT_METADATA.RECIPE);
     expect(recipe.identifier()).toBe('test:smelt');
 
     expect(
-      createSpawnRule({
+      createSpawnRuleDocument({
         spawnRules: {
           description: { identifier: 'test:mob', populationControl: 'animal' },
         },
       }).identifier(),
     ).toBe('test:mob');
-    expect(createRenderController({}).identifier()).toBeUndefined();
-    expect(createRenderController({}) instanceof DocumentBuilder).toBe(true);
+    expect(createRenderControllerDocument({}).identifier()).toBeUndefined();
+    expect(createRenderControllerDocument({}) instanceof DocumentBuilder).toBe(true);
   });
 
   it('builds with the default format version and clones its config', () => {
-    const builder = createAttachable({
+    const builder = createAttachableDocument({
       attachable: { description: { identifier: 'test:wand' } },
     }).withBuildContext({ diagnostics: false });
     const { json } = run(() => builder.build());

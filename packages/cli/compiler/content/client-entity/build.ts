@@ -1,21 +1,15 @@
 import { registerContentJson } from '../../registry/project-registry';
 import { logger } from '../../utils/logger';
-import { join } from 'path';
 
 import { ClientEntityBuilder } from '@ferolyte/pack/content/client-entity/client-entity-builder';
 import { ContentBuildOptions } from '../../actions/options';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
 import { createContentPath } from '../utils/create-content-path';
-import { BUILD_CONTEXT } from '../../build-context';
-import { getAnimationIndex } from '../../animation/animation-index';
 import {
-  createAnimationResolver,
-  hasAnimationOptions,
-} from '../../animation/animation-resolver';
-import { addEntryInputs } from '../../core/graph';
-
-const DEFAULT_ANIMATION_FORMAT_VERSION = '1.8.0';
+  prepareAnimationOptions,
+  writeAnimationClones,
+} from '../utils/animation-clones';
 
 export const buildClientEntityJson = async (
   filePath: string,
@@ -25,19 +19,13 @@ export const buildClientEntityJson = async (
   const config = builder.cloneConfig();
   const identifier = config.identifier ?? '';
 
-  const animations = hasAnimationOptions(config.animations)
-    ? createAnimationResolver(
-        await getAnimationIndex(),
-        options.diagnostics
-          ? {
-              sourceFile: filePath,
-              identifier,
-              diagnostics: true,
-              contentType: 'client-entity',
-            }
-          : undefined,
-      )
-    : undefined;
+  const animations = await prepareAnimationOptions(
+    filePath,
+    config.animations,
+    identifier,
+    'client-entity',
+    options.diagnostics,
+  );
   if (animations) {
     builder.withAnimationResolver(animations.resolve);
   }
@@ -46,7 +34,6 @@ export const buildClientEntityJson = async (
   registerContentJson(filePath, 'client-entity', json, {
     animations: animations ? [...animations.resolution.clones.keys()] : [],
   });
-  const jsonString = serializeJson(json);
 
   const outFile = createContentPath(filePath, undefined, { identifier });
   if (identifier === undefined || outFile === undefined) {
@@ -58,7 +45,7 @@ export const buildClientEntityJson = async (
   const writeResult = await writeWithPlugins(
     filePath,
     outFile,
-    jsonString,
+    serializeJson(json),
     'content',
     'utf-8',
   );
@@ -68,39 +55,14 @@ export const buildClientEntityJson = async (
   }
 
   const outputs = [writeResult.destinationPath];
-
   if (animations) {
-    // Editing a source animation rebuilds the entity (and its clones).
-    addEntryInputs(filePath, animations.resolution.sources);
-
-    const { clones } = animations.resolution;
-    if (clones.size > 0) {
-      const versions = [...clones.values()]
-        .map((clone) => clone.formatVersion)
-        .filter((version): version is string => version !== undefined)
-        .sort();
-      const cloneFile = join(
-        BUILD_CONTEXT.PACKS.OUTPUT_RESOURCE_PACK_PATH,
-        'animations',
-        'ferolyte',
-        `${identifier.split(':').pop()}.animation.json`,
-      );
-      const cloneResult = await writeWithPlugins(
-        filePath,
-        cloneFile,
-        serializeJson({
-          format_version:
-            versions[versions.length - 1] ?? DEFAULT_ANIMATION_FORMAT_VERSION,
-          animations: Object.fromEntries(
-            [...clones].map(([id, clone]) => [id, clone.definition]),
-          ),
-        }),
-        'content',
-        'utf-8',
-      );
-      if (cloneResult.written) {
-        outputs.push(cloneResult.destinationPath);
-      }
+    const clones = await writeAnimationClones(
+      filePath,
+      animations,
+      identifier.split(':').pop() as string,
+    );
+    if (clones) {
+      outputs.push(clones);
     }
   }
 

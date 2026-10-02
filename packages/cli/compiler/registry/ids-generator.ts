@@ -2,7 +2,7 @@ import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
 
-import { RegistryIndex } from './project-registry';
+import { createEmptyIndex, RegistryIndex } from './project-registry';
 
 export const IDS_RELATIVE_PATH = join('.ferolyte', 'types', 'ids.ts');
 
@@ -138,6 +138,10 @@ export const generateIdsSource = (
     flat('BlockId', index.blocks.keys(), '', warnings),
     flat('AnimationId', index.animations, /^animation\./, warnings),
     flat('AnimationControllerId', index.animationControllers, /^controller\.animation\./, warnings),
+    flat('AttachableId', index.attachables, '', warnings),
+    flat('RenderControllerId', index.renderControllers, /^controller\.render\./, warnings),
+    flat('RecipeId', index.recipes, '', warnings),
+    flat('SpawnRuleId', index.spawnRules, '', warnings),
     flat('GeometryId', index.geometries, /^geometry\./, warnings),
     flat('ItemTextureKey', index.itemTextures, '', warnings),
     flat('SoundId', index.sounds, '', warnings),
@@ -195,25 +199,6 @@ export const ensureIdsFile = async (): Promise<void> => {
   if (existsSync(getIdsFilePath())) {
     return;
   }
-  const empty: RegistryIndex = {
-    animations: new Set(),
-    generatedAnimations: new Set(),
-    animationControllers: new Set(),
-    geometries: new Set(),
-    renderControllers: new Set(),
-    itemTextures: new Set(),
-    terrainTextures: new Set(),
-    sounds: new Set(),
-    particles: new Set(),
-    bpAnimations: new Set(),
-    bpAnimationControllers: new Set(),
-    entities: new Map(),
-    items: new Set(),
-    blocks: new Map(),
-    lootTables: new Set(),
-    tradeTables: new Set(),
-    functions: new Set(),
-    documents: [],
-  };
+  const empty = createEmptyIndex();
   await writeIdsFile(empty);
 };

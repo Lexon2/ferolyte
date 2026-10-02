@@ -39,6 +39,12 @@ export interface RegistryIndex {
   animationControllers: Set<string>;
   geometries: Set<string>;
   renderControllers: Set<string>;
+  /** Attachable identifiers. */
+  attachables: Set<string>;
+  /** Recipe identifiers (`description.identifier` of every recipe). */
+  recipes: Set<string>;
+  /** Spawn rule identifiers. */
+  spawnRules: Set<string>;
   itemTextures: Set<string>;
   terrainTextures: Set<string>;
   sounds: Set<string>;
@@ -58,7 +64,6 @@ type ResourceKind =
   | 'animations'
   | 'animationControllers'
   | 'geometries'
-  | 'renderControllers'
   | 'itemTextures'
   | 'terrainTextures'
   | 'sounds'
@@ -184,7 +189,7 @@ const RULES: Rule[] = [
   { pack: 'RP', dir: 'animations', ext: '.json', entry: (j) => ({ type: 'ids', kind: 'animations', ids: keysOf(j?.animations) }) },
   { pack: 'RP', dir: 'animation_controllers', ext: '.json', entry: (j) => ({ type: 'ids', kind: 'animationControllers', ids: keysOf(j?.animation_controllers) }) },
   { pack: 'RP', dir: 'models', ext: '.json', entry: (j) => ({ type: 'ids', kind: 'geometries', ids: geometryIds(j) }) },
-  { pack: 'RP', dir: 'render_controllers', ext: '.json', entry: (j) => ({ type: 'ids', kind: 'renderControllers', ids: keysOf(j?.render_controllers) }) },
+  { pack: 'RP', dir: 'render_controllers', ext: '.json', entry: () => ({ type: 'document', kind: 'render-controller' }) },
   { pack: 'RP', dir: 'textures', ext: '.json', file: 'textures/item_texture.json', entry: (j) => ({ type: 'ids', kind: 'itemTextures', ids: textureKeys(j) }) },
   { pack: 'RP', dir: 'textures', ext: '.json', file: 'textures/terrain_texture.json', entry: (j) => ({ type: 'ids', kind: 'terrainTextures', ids: textureKeys(j) }) },
   { pack: 'RP', dir: 'sounds', ext: '.json', file: 'sounds/sound_definitions.json', entry: (j) => ({ type: 'ids', kind: 'sounds', ids: soundIds(j) }) },
@@ -292,6 +297,8 @@ const idOf = (document: ProjectDocument): string | undefined => {
   const root =
     document.json?.['minecraft:entity'] ??
     document.json?.['minecraft:client_entity'] ??
+    document.json?.['minecraft:attachable'] ??
+    document.json?.['minecraft:spawn_rules'] ??
     document.json?.['minecraft:item'] ??
     document.json?.['minecraft:block'];
   const id = root?.description?.identifier;
@@ -299,28 +306,34 @@ const idOf = (document: ProjectDocument): string | undefined => {
   return typeof id === 'string' ? id : undefined;
 };
 
+/** An index without any entry. */
+export const createEmptyIndex = (): RegistryIndex => ({
+  animations: new Set(),
+  generatedAnimations: new Set(),
+  animationControllers: new Set(),
+  geometries: new Set(),
+  renderControllers: new Set(),
+  attachables: new Set(),
+  recipes: new Set(),
+  spawnRules: new Set(),
+  itemTextures: new Set(),
+  terrainTextures: new Set(),
+  sounds: new Set(),
+  particles: new Set(),
+  bpAnimations: new Set(),
+  bpAnimationControllers: new Set(),
+  entities: new Map(),
+  items: new Set(),
+  blocks: new Map(),
+  lootTables: new Set(),
+  tradeTables: new Set(),
+  functions: new Set(),
+  documents: [],
+});
+
 /** Builds the lookup sets from built content plus scanned pack files. */
 export const buildIndex = (): RegistryIndex => {
-  const index: RegistryIndex = {
-    animations: new Set(),
-    generatedAnimations: new Set(),
-    animationControllers: new Set(),
-    geometries: new Set(),
-    renderControllers: new Set(),
-    itemTextures: new Set(),
-    terrainTextures: new Set(),
-    sounds: new Set(),
-    particles: new Set(),
-    bpAnimations: new Set(),
-    bpAnimationControllers: new Set(),
-    entities: new Map(),
-    items: new Set(),
-    blocks: new Map(),
-    lootTables: new Set(),
-    tradeTables: new Set(),
-    functions: new Set(),
-    documents: [],
-  };
+  const index = createEmptyIndex();
 
   for (const entry of resources.values()) {
     if (entry.type === 'ids') {
@@ -354,6 +367,21 @@ export const buildIndex = (): RegistryIndex => {
       index.blocks.set(id, {
         states: new Set(keysOf(document.json['minecraft:block'].description?.states)),
       });
+    } else if (document.kind === 'attachable' && id) {
+      index.attachables.add(id);
+    } else if (document.kind === 'spawn-rule' && id) {
+      index.spawnRules.add(id);
+    } else if (document.kind === 'recipe') {
+      for (const value of Object.values<any>(document.json ?? {})) {
+        const recipeId = value?.description?.identifier;
+        if (typeof recipeId === 'string') {
+          index.recipes.add(recipeId);
+        }
+      }
+    } else if (document.kind === 'render-controller') {
+      keysOf(document.json?.render_controllers).forEach((key) =>
+        index.renderControllers.add(key),
+      );
     } else if (document.kind === 'animation-controller-rp') {
       keysOf(document.json?.animation_controllers).forEach((key) =>
         index.animationControllers.add(key),
