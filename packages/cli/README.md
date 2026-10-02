@@ -23,8 +23,9 @@ This installs `@ferolyte/common` and `@ferolyte/pack` as dependencies. The `fero
 | `ferolyte watch [profile]`             | Watch packs and scripts; rebuild incrementally on file changes       |
 | `ferolyte check [profile]`             | Validate every content file in memory (nothing is written); exit 1 on errors |
 | `ferolyte inspect <file>`              | Print the JSON a content file would produce (`--profile`, `--out`, `--compact`) |
+| `ferolyte types [profile]`             | Regenerate typed ids (`.ferolyte/types/ids.ts`, imported as `@ferolyte/ids`) |
 
-`check --json` and `run --json` print the diagnostics to stdout as
+`check` also accepts `--types` (adds TypeScript errors from `tsc --noEmit`) and `--strict`. `check --json` and `run --json` print the diagnostics to stdout as
 `{ file, contentType, component, fieldPath, message, severity }[]` (build logs go to stderr) and exit with `1` when at least one record has `severity: "error"`.
 
 `run` and `watch` accept shared flags:
@@ -36,6 +37,10 @@ This installs `@ferolyte/common` and `@ferolyte/pack` as dependencies. The `fero
 | `--no-debug`       | —         | Disable build progress output           |
 | `--diagnostics`    | `true`    | Enable content validation diagnostics   |
 | `--no-diagnostics` | —         | Disable validation diagnostics          |
+| `--quiet`          | —         | Only print errors                       |
+| `--verbose`        | —         | Print output paths and full error details |
+| `--strict`         | —         | Unknown references (geometry, animation, texture, events…) are errors |
+| `--json`           | —         | `run` only: diagnostics as JSON on stdout (`--stats` adds timings) |
 
 `init` flags:
 

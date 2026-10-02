@@ -1,153 +1,201 @@
+<div align="center">
+
 # Ferolyte
 
-Craft Minecraft Bedrock addons easily with TypeScript.
+**Minecraft Bedrock add-ons in TypeScript: typed, validated against Mojang's schemas, and rebuilt in milliseconds.**
 
-Ferolyte is a monorepo of npm packages that let you define addon content in TypeScript, compile it to vanilla Minecraft JSON, bundle scripts, and deploy to your game or a distributable `.mcaddon` archive.
+[![npm](https://img.shields.io/npm/v/@ferolyte/cli?label=%40ferolyte%2Fcli&color=cb3837)](https://www.npmjs.com/package/@ferolyte/cli)
+[![npm](https://img.shields.io/npm/v/@ferolyte/pack?label=%40ferolyte%2Fpack&color=cb3837)](https://www.npmjs.com/package/@ferolyte/pack)
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![node](https://img.shields.io/badge/node-%3E%3D18-339933)](https://nodejs.org)
 
-## Goals
+</div>
 
-Ferolyte is built around a few core ideas:
+You write blocks, items and entities as TypeScript. Ferolyte compiles them to the exact vanilla JSON Minecraft
+expects, checks every field against the Bedrock schemas, and keeps your packs and `@minecraft/server`
+scripts in one project, with one `/connect` for live reload.
 
-- **TypeScript templating** — reuse addon logic through TypeScript templates and builders instead of copying raw JSON. Compose blocks, items, and entities with typed helpers from `@ferolyte/pack`.
-- **Content and scripts together** — unify content definitions and `@minecraft/server` scripts in one TypeScript project with shared tooling, path aliases, and identifiers so behavior pack JSON and scripts stay in sync.
-- **Incremental builds** — Ferolyte tracks a dependency graph and rebuilds only the changed file (plus its dependents) during watch mode, instead of re-copying the whole pack on every save.
-- **Dev tools out of the box** — watch mode includes a WebSocket reload server on port `8080`. Run `ferolyte watch development`, type `/connect localhost:8080` in-game once, and script changes trigger `reload` automatically — no manual `/reload` needed.
+```ts
+// packs/BP/entities/zombie.se.ts
+import { createServerEntity, defineServerEntity } from '@ferolyte/pack';
 
-See [Watch and live reload](#watch-and-live-reload) below for the WebSocket workflow.
+const zombie = defineServerEntity({
+  identifier: 'myaddon:zombie',
+  properties: { 'myaddon:state': { type: 'enum', values: ['idle', 'angry'], default: 'idle' } },
+  componentGroups: [{ name: 'angry', components: { movement: { value: 0.35 } } }],
+  events: {
+    'myaddon:become_angry': {
+      add: { componentGroups: ['angry'] },            // ✓ checked: the group exists
+      setProperty: { 'myaddon:state': 'angry' },      // ✓ checked: 'idle' | 'angry'
+    },
+  },
+  components: {
+    health: { value: 20, max: 20 },
+    behaviors: { lookAtPlayer: { priority: 7, lookDistance: 6 } },
+  },
+});
 
-## Packages
-
-| Package                               | Description                                         | Docs                                |
-| ------------------------------------- | --------------------------------------------------- | ----------------------------------- |
-| [`@ferolyte/common`](packages/common) | Shared utilities and content foundation             | [README](packages/common/README.md) |
-| [`@ferolyte/pack`](packages/pack)     | Content SDK — blocks, items, server/client entities | [README](packages/pack/README.md)   |
-| [`@ferolyte/cli`](packages/cli)       | CLI compiler, watch mode, script bundling, plugins  | [README](packages/cli/README.md)    |
-
-## Requirements
-
-- **Node.js** >= 18
-
-## Installation
-
-### End-user (published packages)
-
-Install the CLI as a dev dependency. `@ferolyte/pack` and `@ferolyte/common` are pulled in automatically.
-
-```bash
-npm install -D @ferolyte/cli
+export default createServerEntity(zombie);
 ```
 
-To use the content SDK directly in your project:
+## Why Ferolyte
 
-```bash
-npm install @ferolyte/pack @ferolyte/common
-```
-
-### Monorepo development
-
-```bash
-git clone https://github.com/Lexon2/ferolyte.git
-cd ferolyte
-npm install   # runs postinstall → build:packages
-```
+|  |  |
+|---|---|
+| 🧬 **Generated from the schemas** | Entity, item and block components are generated from the Bedrock JSON schemas and checked against Mojang's official schemas and the vanilla `bedrock-samples`. Types, JSDoc and validation always match what the game accepts, including 1.26.50. |
+| 🛡️ **Errors before the game sees them** | Unknown fields, wrong shapes, removed components (e.g. `pushable` from 1.26.10), missing animations, geometries, texture keys or component groups are reported with the file, the field path and a *did you mean* suggestion. |
+| ⚡ **Fast incremental builds** | One esbuild pass, in-memory evaluation and a real dependency graph. Editing a shared constant rebuilds exactly its dependents. Typical project: about 0.5 s cold, about 10 ms per file. |
+| 🔗 **Packs and scripts together** | Generated `@ferolyte/ids` (`EntityId`, `ItemId`, `EntityEvent`, `EntityProperty`, `BlockState`, …) are shared by content and `@minecraft/server` scripts, so ids can't drift. |
+| 🎮 **One connection to the game** | `/connect localhost:8080` once. Scripts reload on save, and plugins and tools use the same connection (commands, events, optional HTTP API). |
+| 🤖 **Built for AI agents too** | `ferolyte check --json --types`, `ferolyte inspect <file>`, and `AGENTS.md` / `llms.txt` shipped in the package. An agent can verify its own work without opening the game. |
 
 ## Quick start
 
-Scaffold a new project:
-
 ```bash
-npx ferolyte init my-addon myalias
+npx @ferolyte/cli init my-addon myaddon
 cd my-addon
-npm run dev
+npm run dev            # ferolyte watch development
 ```
 
-Or configure manually — create `ferolyte.config.mts` in your project root:
+Then, in Minecraft (cheats on): `/connect localhost:8080`.
 
-```typescript
-import { defineFerolyteConfig } from '@ferolyte/cli/compiler/config/define-config';
+`init` creates the config, BP/RP manifests, a script entry, `tsconfig` and `AGENTS.md`. The `development` profile deploys
+straight into the game's development pack folders; the `default` profile builds to `./build` (optionally a `.mcaddon`).
+
+```ts
+// ferolyte.config.mts
+import { defineFerolyteConfig } from '@ferolyte/cli/config';
 
 export default defineFerolyteConfig({
   profiles: {
-    default: {
-      packs: {
-        alias: 'myaddon',
-        namespace: 'myaddon',
-        output: 'build',
-        archive: true,
-      },
-    },
+    default: { packs: { alias: 'myaddon', namespace: 'myaddon', output: 'build', archive: true } },
     development: {
-      packs: {
-        alias: 'myaddon',
-        namespace: 'myaddon',
-        output: 'minecraft-dev',
-      },
-      scripts: {
-        entry: 'packs/scripts/main.ts',
-      },
+      packs: { alias: 'myaddon', namespace: 'myaddon', output: 'minecraft-dev' },
+      scripts: { entry: 'packs/scripts/main.ts' },
+      server: { port: 8080 },
     },
   },
 });
 ```
 
-The `default` profile builds to `./build` and can produce a `.mcaddon` archive. The `development` profile deploys to the game's development pack folders for local iteration.
+## What you can write in TypeScript
 
-Add TypeScript content files under `packs/`:
+| File | Becomes | Factory |
+|---|---|---|
+| `*.item.ts` | BP `items/` | `createItem` |
+| `*.block.ts` | BP `blocks/` | `createBlock` |
+| `*.se.ts` | BP `entities/` (server entity) | `createServerEntity` / `defineServerEntity` |
+| `*.ce.ts` | RP `entity/` (client entity) | `createClientEntity` |
+| `*.ac.bp.ts`, `*.ac.rp.ts` | `animation_controllers/` | `createAnimationController` |
+
+Everything else in `packs/` (textures, models, animations, sounds, `item_texture.json`, …) is copied as is; JSON with
+comments is fine. `displayName` values are merged into `texts/<locale>.lang`. Suffixes are configurable.
+
+<details>
+<summary><b>Client entity with animation options</b></summary>
+
+```ts
+import { createClientEntity } from '@ferolyte/pack';
+
+export default createClientEntity({
+  identifier: 'myaddon:zombie',
+  geometry: 'geometry.myaddon.zombie',
+  textures: 'textures/entity/zombie',
+  materials: { default: 'entity_alphatest' },
+  animations: {
+    // the source .animation.json stays untouched; a patched clone gets its own id
+    walk: { id: 'animation.myaddon.zombie.walk', speed: 'query.modified_move_speed' },
+    idle: 'animation.myaddon.zombie.idle',
+  },
+});
+```
+</details>
+
+<details>
+<summary><b>Animation controller with reusable states</b></summary>
+
+```ts
+import { createAnimationController, defineRpState, not, q } from '@ferolyte/pack';
+
+const idle = defineRpState({ animations: ['idle'], transitions: [{ walk: q.isMoving }] });
+const walk = defineRpState({
+  animations: ['walk'],
+  transitions: [{ idle: not(q.isMoving) }],
+  blendTransition: 0.2,
+});
+
+export default createAnimationController({
+  id: 'controller.animation.myaddon.zombie.move',
+  initialState: 'idle',
+  states: { idle, walk },
+});
+```
+</details>
+
+<details>
+<summary><b>Molang without string soup</b></summary>
+
+```ts
+import { math, molang, q, v } from '@ferolyte/pack';
+
+const speed = v('speed');
+molang`${q.isMoving} && ${speed} > 1 ? ${math.clamp(speed, 0, 2)} : 0`;
+// → "query.is_moving && variable.speed > 1 ? math.clamp(variable.speed, 0, 2) : 0"
+```
+</details>
+
+## Commands
+
+| Command | What it does |
+|---|---|
+| `ferolyte init <name> <alias>` | Scaffold a project |
+| `ferolyte watch [profile]` | Incremental rebuilds, script bundling, live reload |
+| `ferolyte run [profile]` | Build once (optionally `.mcaddon`) |
+| `ferolyte check [profile]` | Validate all content in memory, nothing written (`--json`, `--types`, `--strict`) |
+| `ferolyte inspect <file>` | Print the JSON a content file produces |
+| `ferolyte types [profile]` | Regenerate `@ferolyte/ids` |
+
+Build output is compact and test-friendly (`--quiet`, `--verbose`):
 
 ```
-my-addon/
-├── ferolyte.config.mts
-└── packs/
-    ├── BP/
-    │   └── blocks/custom.block.ts
-    ├── RP/
-    │   └── entity/custom-cow.ce.ts
-    └── scripts/
-        └── main.ts
+✓ build development · 0.46 s
+  content 29 files → 44 json   bundle 141 ms · eval 10 ms · write 72 ms
+  copy    297 files            239 ms
+  ⚠ 1 warning  ✖ 0 errors
+⚠ RP/entity/cow.ce.ts  animations.walk  unknown animation "animation.myaddon.cow.walk" (did you mean "animation.myaddon.cow.walk_1"?)
 ```
 
-Build once or watch for changes:
+## Packages
+
+| Package | |
+|---|---|
+| [`@ferolyte/cli`](packages/cli) | Compiler, watch mode, `check` / `inspect` / `types`, WebSocket hub, plugin API |
+| [`@ferolyte/pack`](packages/pack) | Content SDK: generated component types, builders, Molang, animation controllers |
+| [`@ferolyte/common`](packages/common) | Shared types, diagnostics and utilities |
+| [`packages/blockbench-plugin`](packages/blockbench-plugin) | Open `.ce.ts` client entities directly in Blockbench |
+
+Extend the pipeline with plugins (`defineFerolytePlugin` from `@ferolyte/cli/plugin`): file hooks, write
+interception, access to the game connection and a clean shutdown signal. See the
+[CLI README](packages/cli/README.md#plugin-system).
+
+## Contributing
 
 ```bash
-npx ferolyte run
-npx ferolyte watch development
+git clone https://github.com/Lexon2/ferolyte.git
+cd ferolyte
+npm install          # builds all packages
+npm test
 ```
 
-### Watch and live reload
-
-1. Run `npx ferolyte watch development` — packs deploy to the `minecraft-dev` output preset and a WebSocket server starts on port `8080`.
-2. In Minecraft Bedrock, connect once: `/connect localhost:8080`
-3. Edit scripts — changes are bundled and the game reloads automatically. Edit content `.ts` files — only the affected JSON is rebuilt incrementally on disk.
-
-For output presets, plugins, and full configuration options, see [`packages/cli/README.md`](packages/cli/README.md).
-
-## Project layout
-
-| Path                    | Purpose                                              |
-| ----------------------- | ---------------------------------------------------- |
-| `ferolyte.config.mts`   | Profiles, pack settings, plugins                     |
-| `packs/BP/`             | Behavior pack sources (content `.ts` and assets)     |
-| `packs/RP/`             | Resource pack sources (content `.ts` and assets)     |
-| `packs/scripts/main.ts` | Script entry (configurable per profile)              |
-| `*.block.ts` (default)  | Block definitions → mirrored `*.json` suffix         |
-| `*.item.ts` (default)   | Item definitions → mirrored `*.json` suffix          |
-| `*.se.ts` (default)     | Server entity definitions → mirrored `*.json` suffix |
-| `*.ce.ts` (default)     | Client entity definitions → mirrored `*.json` suffix |
-
-Non-`.ts` assets (textures, lang files, manifests, etc.) are copied into the output packs automatically.
-
-Customize input suffixes via `packs.contentSuffixes` in `ferolyte.config.mts` (see [`packages/cli/README.md`](packages/cli/README.md)).
-
-## Architecture
-
-- **`@ferolyte/common`** — shared types, validation, diagnostics, and object utilities
-- **`@ferolyte/pack`** — typed content builders that produce vanilla Minecraft JSON (see [Molang and content API](packages/pack/README.md))
-- **`@ferolyte/cli`** — compiles content, copies assets, bundles scripts, and runs watch mode with live reload. Extend the pipeline with plugin hooks via `defineFerolytePlugin` — see [plugin system](packages/cli/README.md#plugin-system).
+Component types are generated: change the generator or a schema patch, never `content/generated/` by hand.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the codegen workflow (`npm run codegen`, `codegen:check`, round-trip tests).
 
 ## Status
 
-Ferolyte is still in active development. APIs and behavior may change, and bugs are possible. Report issues on [GitHub](https://github.com/Lexon2/ferolyte/issues).
+Ferolyte is in active development (0.x): APIs can still change between minor versions. Breaking changes are
+listed in each release's changelog. Issues and ideas are welcome on
+[GitHub](https://github.com/Lexon2/ferolyte/issues).
 
 ## License
 
-MIT — Copyright (c) 2024 Lexon2. See [LICENSE](LICENSE) for the full text.
+MIT © 2024 Lexon2. See [LICENSE](LICENSE).
