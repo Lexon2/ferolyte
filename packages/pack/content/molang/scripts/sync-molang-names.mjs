@@ -1,6 +1,6 @@
 /**
  * Syncs Molang query and math name lists from bedrock.dev stable docs.
- * Usage: node packages/pack/content/molang/scripts/sync-molang-names.mjs [docs-path]
+ * Usage: node packages/pack/content/molang/scripts/sync-molang-names.mjs <docs-path>
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -8,21 +8,13 @@ import { fileURLToPath } from 'node:url';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const typesDir = join(scriptDir, '..', 'types');
-const defaultDocPath = join(
-  scriptDir,
-  '..',
-  '..',
-  '..',
-  '..',
-  '..',
-  '.cursor',
-  'projects',
-  'e-inmine-tools-ferolyte-main',
-  'agent-tools',
-  'ef8908f3-82d9-43ec-b4be-795ccd4869d0.txt',
-);
-
-const docPath = process.argv[2] ?? defaultDocPath;
+const docPath = process.argv[2];
+if (!docPath) {
+  console.error(
+    'Usage: node packages/pack/content/molang/scripts/sync-molang-names.mjs <docs-path>',
+  );
+  process.exit(2);
+}
 const doc = readFileSync(docPath, 'utf8');
 
 const mathFunctions = [
