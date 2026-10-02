@@ -1,9 +1,9 @@
 # @ferolyte/pack
 
 > TypeScript SDK for writing Minecraft Bedrock add-on content (items, blocks, server/client
-> entities, animation controllers, Molang). Used with the `@ferolyte/cli` compiler, which turns
+> entities, animation controllers, attachables, render controllers, recipes, spawn rules, Molang). Used with the `@ferolyte/cli` compiler, which turns
 > `export default` builders in `*.item.ts`, `*.block.ts`, `*.se.ts`, `*.ce.ts`, `*.ac.bp.ts`,
-> `*.ac.rp.ts` files into pack JSON.
+> `*.ac.rp.ts`, `*.att.ts`, `*.rc.ts`, `*.recipe.ts`, `*.spawn.ts` files into pack JSON.
 
 Start with AGENTS.md: file suffix table, rules (camelCase config, MinMaxRange, rawComponents),
 a canonical example per content type and how to verify (`ferolyte check --json`, `ferolyte inspect`).
@@ -11,8 +11,10 @@ a canonical example per content type and how to verify (`ferolyte check --json`,
 ## Entry points
 
 - `@ferolyte/pack`: everything public (`createItem`, `createBlock`, `createServerEntity`,
-  `createClientEntity`, `createAnimationController`, `defineRpState`, `defineBpState`, `Molang`, `q`, `not`)
-- `@ferolyte/pack/item`, `/block`, `/entity` (server + client), `/molang`, `/animation`: same names, one area
+  `createClientEntity`, `createAnimationController`, `createAttachable`, `createRenderController`, `shapedRecipe` (+ `shapelessRecipe`, `furnaceRecipe`, `brewingMixRecipe`, `brewingContainerRecipe`, `smithingTransformRecipe`, `smithingTrimRecipe`, `createRecipe`), `createSpawnRule`, `defineRpState`, `defineBpState`, `Molang`, `q`, `not`)
+- `@ferolyte/pack/item`, `/block`, `/entity` (server + client), `/molang`, `/animation`, `/attachable`, `/render-controller`, `/recipe`, `/spawn-rule`: same names, one area
+- `create{Attachable,RenderController,Recipe,SpawnRule}Document`: 1:1 camelCase mirror of the JSON file (escape hatch when the flat form lacks a field)
+- `@ferolyte/ids` (generated `.ferolyte/types/ids.ts`): `EntityId`, `ItemId`, `BlockId`, `AttachableId`, `RenderControllerId`, `RecipeId`, `SpawnRuleId`, …
 - `@ferolyte/cli/config`: `defineFerolyteConfig`; `@ferolyte/cli/plugin`: `defineFerolytePlugin`
 
 ## Docs

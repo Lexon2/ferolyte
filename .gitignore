@@ -19,6 +19,7 @@ packages/**/*.d.ts
 packages/**/*.d.ts.map
 
 packages/wip/*
+packages/pack/tests/docs/__examples__/
 
 test/
 !test/events/
