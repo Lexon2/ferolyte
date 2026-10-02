@@ -43,6 +43,8 @@ const runCodegen = (patch: object) => {
 
 describe.skipIf(!schemasCached)(
   'codegen is fail-closed for loose schemas',
+  // Each test runs the whole codegen in a child process.
+  { timeout: 120_000 },
   () => {
     it('fails and lists a component whose schema has no properties', () => {
       const result = runCodegen({ type: 'object' });
