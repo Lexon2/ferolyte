@@ -17,18 +17,58 @@
   "publishConfig": {
     "access": "public"
   },
-  "exports": {
-    "./*": {
-      "types": "./*.d.ts",
-      "import": "./*.js",
-      "default": "./*.js"
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*",
+        "dist/*/index.d.ts"
+      ]
     }
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./item": {
+      "types": "./dist/item.d.ts",
+      "import": "./dist/item.js",
+      "default": "./dist/item.js"
+    },
+    "./block": {
+      "types": "./dist/block.d.ts",
+      "import": "./dist/block.js",
+      "default": "./dist/block.js"
+    },
+    "./entity": {
+      "types": "./dist/entity.d.ts",
+      "import": "./dist/entity.js",
+      "default": "./dist/entity.js"
+    },
+    "./molang": {
+      "types": "./dist/molang.d.ts",
+      "import": "./dist/molang.js",
+      "default": "./dist/molang.js"
+    },
+    "./animation": {
+      "types": "./dist/animation.d.ts",
+      "import": "./dist/animation.js",
+      "default": "./dist/animation.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
-    "**/*.js",
-    "**/*.d.ts",
-    "**/*.js.map",
-    "**/*.d.ts.map"
+    "dist",
+    "AGENTS.md",
+    "llms.txt"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",

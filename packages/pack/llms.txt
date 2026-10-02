@@ -1,0 +1,23 @@
+# @ferolyte/pack
+
+> TypeScript SDK for writing Minecraft Bedrock add-on content (items, blocks, server/client
+> entities, animation controllers, Molang). Used with the `@ferolyte/cli` compiler, which turns
+> `export default` builders in `*.item.ts`, `*.block.ts`, `*.se.ts`, `*.ce.ts`, `*.ac.bp.ts`,
+> `*.ac.rp.ts` files into pack JSON.
+
+Start with AGENTS.md: file suffix table, rules (camelCase config, MinMaxRange, rawComponents),
+a canonical example per content type and how to verify (`ferolyte check --json`, `ferolyte inspect`).
+
+## Entry points
+
+- `@ferolyte/pack`: everything public (`createItem`, `createBlock`, `createServerEntity`,
+  `createClientEntity`, `createAnimationController`, `defineRpState`, `defineBpState`, `Molang`, `q`, `not`)
+- `@ferolyte/pack/item`, `/block`, `/entity` (server + client), `/molang`, `/animation`: same names, one area
+- `@ferolyte/cli/config`: `defineFerolyteConfig`; `@ferolyte/cli/plugin`: `defineFerolytePlugin`
+
+## Docs
+
+- [AGENTS.md](AGENTS.md): conventions, examples and verification workflow
+- [README.md](README.md): package overview and the Molang builder
+- Types live in the `*.d.ts` files next to each module; component/behavior/filter types are generated from the official
+  Bedrock schemas (`content/generated/...`), every field carries its description and `@minecraft <snake_name>`

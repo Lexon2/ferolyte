@@ -7,11 +7,25 @@
     "noCheck": true,
     "sourceMap": false,
     "rootDir": ".",
-    "outDir": ".",
+    "outDir": "./dist",
     "paths": {
-      "@ferolyte/cli/*": ["./*"],
-      "@ferolyte/common/*": ["../common/*"],
-      "@ferolyte/pack/*": ["../pack/*"]
+      "@ferolyte/cli/*": [
+        "./*"
+      ],
+      "@ferolyte/common/*": [
+        "../common/*"
+      ],
+      "@ferolyte/pack/*": [
+        "../pack/*"
+      ]
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "scripts",
+    "tests",
+    "dist",
+    "**/*.test.ts",
+    "**/*.d.ts"
+  ]
 }

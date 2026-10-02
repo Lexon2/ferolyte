@@ -5,6 +5,16 @@
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "noCheck": true,
-    "sourceMap": false
-  }
+    "sourceMap": false,
+    "outDir": "./dist",
+    "rootDir": "."
+  },
+  "exclude": [
+    "node_modules",
+    "scripts",
+    "tests",
+    "dist",
+    "**/*.test.ts",
+    "**/*.d.ts"
+  ]
 }

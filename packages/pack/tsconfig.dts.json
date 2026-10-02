@@ -7,10 +7,22 @@
     "noCheck": true,
     "sourceMap": false,
     "rootDir": ".",
-    "outDir": ".",
+    "outDir": "./dist",
     "paths": {
-      "@ferolyte/pack/*": ["./*"],
-      "@ferolyte/common/*": ["../common/*"]
+      "@ferolyte/pack/*": [
+        "./*"
+      ],
+      "@ferolyte/common/*": [
+        "../common/*"
+      ]
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "scripts",
+    "tests",
+    "dist",
+    "**/*.test.ts",
+    "**/*.d.ts"
+  ]
 }

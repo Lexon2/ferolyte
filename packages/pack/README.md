@@ -16,6 +16,19 @@ npm install @ferolyte/pack
 
 **Requirements:** Node.js >= 18
 
+## Imports
+
+Import from the package root; subpaths group one area:
+
+```ts
+import { createItem, createBlock, createServerEntity, createClientEntity } from '@ferolyte/pack';
+import { createAnimationController, defineRpState } from '@ferolyte/pack/animation';
+import { q, not } from '@ferolyte/pack/molang';
+```
+
+Entry points: `@ferolyte/pack`, `/item`, `/block`, `/entity` (server + client), `/molang`, `/animation`. Deep `@ferolyte/pack/content/...` imports remain supported. Use `moduleResolution: "bundler"` in `tsconfig.json` (the `ferolyte init` template does).
+AI agents: see [AGENTS.md](AGENTS.md) and [llms.txt](llms.txt), shipped in this package.
+
 ## Feature scope
 
 All vanilla Minecraft Bedrock components for **blocks**, **items**, and **server/client entities** are ported. In TypeScript configs they use **camelCase** (e.g. `saturationModifier`, `displayName`); builders convert them to snake_case vanilla JSON at build time.
@@ -26,6 +39,7 @@ All vanilla Minecraft Bedrock components for **blocks**, **items**, and **server
 | Items           | `@ferolyte/pack/content/item/*`          |
 | Server entities | `@ferolyte/pack/content/server-entity/*` |
 | Client entities | `@ferolyte/pack/content/client-entity/*` |
+| Animation controllers | `@ferolyte/pack/animation` (`*.ac.bp.ts` / `*.ac.rp.ts`) |
 
 ### Molang
 
@@ -56,7 +70,7 @@ When used with `@ferolyte/cli`, content files must `export default` a builder (o
 **Block** — `packs/BP/blocks/custom.block.ts`:
 
 ```typescript
-import { createBlock } from '@ferolyte/pack/content/block/create-block';
+import { createBlock } from '@ferolyte/pack';
 
 export default createBlock({
   identifier: 'myaddon:custom_block',
@@ -67,7 +81,7 @@ export default createBlock({
 **Item** — `packs/BP/items/apple.item.ts`:
 
 ```typescript
-import { createItem } from '@ferolyte/pack/content/item/create-item';
+import { createItem } from '@ferolyte/pack';
 
 export default createItem({
   identifier: 'myaddon:golden_apple',
@@ -81,7 +95,7 @@ export default createItem({
 **Multiple Items** — `packs/BP/items/apples.item.ts`:
 
 ```typescript
-import { createItem } from '@ferolyte/pack/content/item/create-item';
+import { createItem } from '@ferolyte/pack';
 
 export default [
   'myaddon:golden_apple',
@@ -92,7 +106,7 @@ export default [
     identifier,
     components: {
       displayName: 'Golden Apple',
-      icon: identifier,
+      icon: identifier, // key in textures/item_texture.json
       food: { nutrition: 4, saturationModifier: 1.2 },
     },
   }),
@@ -102,7 +116,7 @@ export default [
 **Server entity** — `packs/BP/entities/cow.se.ts`:
 
 ```typescript
-import { createServerEntity } from '@ferolyte/pack/content/server-entity/create-server-entity';
+import { createServerEntity } from '@ferolyte/pack';
 
 export default createServerEntity({
   identifier: 'myaddon:cow',
@@ -133,7 +147,7 @@ export default createServerEntity({
 **Client entity** — `packs/RP/entity/cow.ce.ts`:
 
 ```typescript
-import { createClientEntity } from '@ferolyte/pack/content/client-entity/create-client-entity';
+import { createClientEntity } from '@ferolyte/pack';
 
 export default createClientEntity({
   identifier: 'myaddon:cow',
