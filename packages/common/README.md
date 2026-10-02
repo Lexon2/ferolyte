@@ -24,35 +24,43 @@ This package is usually installed as a transitive dependency of `@ferolyte/pack`
 | `RequireAtLeastOne` | `@ferolyte/common/types/object/require-at-least-one` | Utility type requiring at least one key from an object |
 | `OneOfRecord`       | `@ferolyte/common/types/core/one-of-record`          | Discriminated union of single-key records              |
 | `IntRange`          | `@ferolyte/common/types/number/int-range`            | Compile-time integer range type                        |
+| `LooseString<T>`    | `@ferolyte/common/types/core/loose-string`           | Known literals as suggestions, any string accepted     |
 
 ### Content foundation
 
 | Export             | Path                                                  | Description                                                                    |
 | ------------------ | ----------------------------------------------------- | ------------------------------------------------------------------------------ |
 | `ContentBuilder`   | `@ferolyte/common/content/interfaces/content-builder` | Contract for Ferolyte content modules (`metadata`, `cloneConfig()`, `build()`) |
-| `CONTENT_METADATA` | `@ferolyte/common/content/metadata`                   | Tags for item, block, server-entity, client-entity content types               |
+| `CONTENT_METADATA` | `@ferolyte/common/content/metadata`                   | Tags for item, block, server/client entity and BP/RP animation controller types |
 
 ### Diagnostics
 
-Structured validation error reporting with file links, field paths, and content-type labels.
+Structured diagnostics with file links, camelCase field paths and content-type labels. A sink collects
+them as records (used by `ferolyte check --json` / `run --json`).
 
-| Export                                                        | Path                                                      |
-| ------------------------------------------------------------- | --------------------------------------------------------- |
-| `ContentDiagnosticContext`, `ContentType`, `ContentSection`   | `@ferolyte/common/content/diagnostics/content-diagnostic` |
-| `buildFieldPath`, `createFileLink`, `logContentError`         | `@ferolyte/common/content/diagnostics/content-diagnostic` |
-| `withFieldPath`, `withComponentContext`, `withSectionContext` | `@ferolyte/common/content/diagnostics/content-diagnostic` |
+| Export | Path |
+| --- | --- |
+| `ContentDiagnosticContext`, `ContentDiagnosticRecord`, `ContentDiagnosticSeverity`, `ContentType`, `ContentSection` | `@ferolyte/common/content/diagnostics/content-diagnostic` |
+| `logContentError`, `logContentWarning`, `reportContentFailure`, `reportDiagnosticRecord` | `@ferolyte/common/content/diagnostics/content-diagnostic` |
+| `setContentDiagnosticSink`, `getContentDiagnosticSink` | `@ferolyte/common/content/diagnostics/content-diagnostic` |
+| `buildFieldPath`, `createFileLink`, `withFieldPath`, `withComponentContext`, `withSectionContext` | `@ferolyte/common/content/diagnostics/content-diagnostic` |
+| `hintSnakeCaseComponent`, `hintSnakeCaseFields`, `isSnakeCase`, `snakeToCamel` | `@ferolyte/common/content/diagnostics/snake-case-hint` |
 
 ### Validation
 
-Type-guard validators that log via `logContentError` on failure:
+Type-guard validators for hand-written SDK sugar (generated components are validated by precompiled schema
+validators in `@ferolyte/pack`). They report through the diagnostics context on failure:
 
-- `validateBooleanValue`, `validateNonEmptyString`, `validateString`
-- `validatePositiveNumber`, `validateNonNegativeNumber`, `validateNumber`
-- `validateIntegerRange`, `validateNumberRange`, `validateAllowedValue`
-- `validateNonEmptyArray`, `validateNonEmptyStringArray`
-- `validateDamageSourceArray`, `validateVector3`, `validateCustomComponentIds`
+`validateBooleanValue`, `validateString`, `validateNonEmptyString`, `validateNumber`, `validateNumberRange`,
+`validateAllowedValue`, `validateNonEmptyArray`, `validateVector`. Import from
+`@ferolyte/common/content/validation/content-validation`.
 
-Import from `@ferolyte/common/content/validation/content-validation`.
+### Localization and versions
+
+| Export | Path | Description |
+| --- | --- | --- |
+| `LocalizedString`, `Locale`, `toTranslations`, `isValidLocalizedString` | `@ferolyte/common/content/localization/localized-string` | `string` or `{ en_US, ru_RU, … }` for `displayName` → `.lang` |
+| `compareVersions`, `isVersionAtLeast` | `@ferolyte/common/content/versions/compare-version` | `format_version` comparison for version-gated fields |
 
 ### Content tools
 
@@ -89,4 +97,4 @@ Import from `@ferolyte/common/content/validation/content-validation`.
 
 ## License
 
-MIT — Copyright (c) 2024 Lexon2. See [LICENSE](../../LICENSE) for the full text.
+MIT © 2024 Lexon2. See [LICENSE](../../LICENSE).

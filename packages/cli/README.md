@@ -84,7 +84,7 @@ import { defineFerolyteConfig } from '@ferolyte/cli/config';
 import {
   defineFerolytePlugin,
   FerolytePluginApiVersion,
-} from '@ferolyte/cli/compiler/plugins/define-plugin';
+} from '@ferolyte/cli/plugin';
 
 export default defineFerolyteConfig({
   profiles: {

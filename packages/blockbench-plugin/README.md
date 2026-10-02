@@ -6,7 +6,7 @@ resolved from the same resource pack that contains the source.
 
 ## Requirements
 - Blockbench desktop app (4.8+).
-- `@ferolyte/cli` with the `inspect` command (any version newer than 0.2.3; 0.2.2 and older do not have it)
+- `@ferolyte/cli` with the `inspect` command (0.3.0 or newer)
   installed in the project (`node_modules/@ferolyte/cli` in a parent folder of the source). Older CLIs
   produce a dialog with the installed version and the project path.
 - `node` on `PATH` (otherwise Blockbench's own runtime is used).
