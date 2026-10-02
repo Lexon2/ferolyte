@@ -1,0 +1,44 @@
+{
+  "x-new-component": "minecraft:pushable",
+  "x-removed": {
+    "since": "1.26.10",
+    "replacement": [
+      "pushableByEntity",
+      "pushableByBlock"
+    ],
+    "reason": "vanilla corpus: format 1.26.0 still uses it (25/33 files), 1.26.10 and newer use pushable_by_entity/pushable_by_block only; absent from the official schemas"
+  },
+  "type": "object",
+  "description": "Legacy component, replaced by `pushable_by_entity` / `pushable_by_block` since format 1.26.10. Vanilla files of format 1.26.0 and older still contain it.",
+  "additionalProperties": false,
+  "properties": {
+    "is_pushable": {
+      "type": "boolean",
+      "description": "Whether other entities can push this entity."
+    },
+    "is_pushable_by_piston": {
+      "type": "boolean",
+      "description": "Whether pistons can push this entity."
+    }
+  },
+  "x-evidence": {
+    "method": "scripts/schemas/removal-evidence.mjs",
+    "component": "minecraft:pushable",
+    "replacements": [
+      "minecraft:pushable_by_entity",
+      "minecraft:pushable_by_block"
+    ],
+    "corpus": "Mojang/bedrock-samples@46ba6ea behavior_pack/entities",
+    "lastUsed": "1.26.0",
+    "since": "1.26.10",
+    "rows": {
+      "1.21.90": "1/1 use it",
+      "1.26.0": "25/33 use it",
+      "1.26.10": "0/8 use it, 8 use a replacement",
+      "1.26.20": "0/10, 10 replaced",
+      "1.26.30": "0/19, 19 replaced",
+      "1.26.40": "0/1, 1 replaced",
+      "1.26.50": "0/56, 53 replaced"
+    }
+  }
+}

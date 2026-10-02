@@ -1,14 +1,16 @@
 import { EntityFilters } from './filters';
 import { EntityEventTarget } from '../constants/event-target';
+import { MolangBuilder } from '../../molang/format-molang-value';
 
 /**
- * Interface for entity events
+ * Recursive entity event node. Used for event roots and every item of
+ * `sequence` / `randomize` / `firstValid`.
  */
-export interface EntityEvents extends EntityEventBase {
+export interface EntityEventNode extends EntityEventBase {
   /**
    * Run a sequence of commands
    */
-  sequence?: Array<EntityEventBase>;
+  sequence?: Array<EntityEventNode>;
 
   /**
    * Randomize between different options
@@ -18,13 +20,20 @@ export interface EntityEvents extends EntityEventBase {
   /**
    * Only execute the first valid event
    */
-  firstValid?: Array<EntityEventBase>;
+  firstValid?: Array<EntityEventNode>;
 
   /**
    * Emit a particle
    */
   emitParticle?: {
     particle: string;
+  };
+
+  /**
+   * Emit a vibration game event
+   */
+  emitVibration?: {
+    vibration: string;
   };
 
   /**
@@ -40,12 +49,17 @@ export interface EntityEvents extends EntityEventBase {
   };
 }
 
-export interface EntityEventRandomize extends EntityEvents {
+export type EntityEventRandomize = EntityEventNode & {
   /**
    * The weight on how likely this section is to trigger.
    */
-  weight: number;
-}
+  weight?: number;
+};
+
+/**
+ * Interface for entity events
+ */
+export type EntityEvents = EntityEventNode;
 
 export interface EntityEventBase {
   /**
@@ -84,7 +98,7 @@ export interface EntityEventBase {
    * Set a property on the entity
    */
   setProperty?: {
-    [key: string]: any;
+    [key: string]: boolean | number | string | MolangBuilder;
   };
 
   /**

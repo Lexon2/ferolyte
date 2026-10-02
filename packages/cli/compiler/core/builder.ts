@@ -1,124 +1,174 @@
-import { rm, unlink } from 'fs/promises';
-import { basename, join } from 'path';
-import { pathToFileURL } from 'url';
+import { unlink } from 'fs/promises';
+import { basename, resolve } from 'path';
 
-import * as esbuild from 'esbuild';
+import { reportContentFailure } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 
-import { addFile, removeFile } from './graph';
+import { bundleEntries, evaluateBundle } from './bundle';
+import { getDependentEntries, hasEntry, removeEntry } from './graph';
 import {
   buildContentJson,
   BuildContentJsonResult,
 } from '../content/content.factory';
-import { createEsbuildConfig } from './utils/build-esbuild-config';
 import { isFerolyteContentFile } from './utils/is-content-file';
-import { getBuildCacheDistDir } from '../content/utils/build-cache-dist-dir';
 import { createContentPath } from '../content/utils/create-content-path';
 import {
   deleteAllContentOutputs,
   replaceContentOutputs,
 } from '../content/utils/content-output-registry';
 import { ContentBuildOptions } from '../actions/options';
-import {
-  flushItemTextures,
-  removeSourceItemTextures,
-} from '../content/items/item-texture-atlas';
+import { DEFAULT_CONCURRENCY, mapLimit } from '../utils/map-limit';
+import { logger } from '../utils/logger';
+import { addPhaseTime } from './build-metrics';
+import { removeSourceLang } from '../lang/lang-registry';
+import { removeSourceDocuments } from '../registry/project-registry';
+
+/** First useful line of an esbuild failure: `message (line:column)`. */
+const describeBundleError = (error: unknown): string => {
+  const first = (error as { errors?: Array<{ text: string; location?: { line: number; column: number } | null }> })
+    .errors?.[0];
+  if (first) {
+    const place = first.location ? ` (${first.location.line}:${first.location.column})` : '';
+
+    return `${first.text}${place}`;
+  }
+
+  return (String(error).split(/\r?\n/)[0] ?? '').trim();
+};
+
+/** Per-file output paths, shown with `--verbose` only. */
+const logBuilt = (result: BuildContentJsonResult) => {
+  const paths = Array.isArray(result.outFile)
+    ? result.outFile
+    : [result.outFile];
+  logger.verbose(
+    `  ${result.source}\n${paths.map((p) => `    → ${logger.link(p)}`).join('\n')}`,
+  );
+};
 
 /**
- * Builds a file using esbuild and imports it.
+ * Builds content files with a single esbuild pass; bundles are evaluated in
+ * memory. Updates the dependency graph of every built entry.
+ * @param filePaths - The content files to build.
+ * @returns Results of the entries that were built successfully.
+ */
+export const buildFiles = async (
+  filePaths: string[],
+  options: ContentBuildOptions = { debug: true, diagnostics: true },
+): Promise<BuildContentJsonResult[]> => {
+  const { debug, diagnostics } = options;
+
+  const bundleStart = performance.now();
+  const { bundled, failed } = await bundleEntries(
+    filePaths.map((file) => resolve(process.cwd(), file)),
+  );
+  addPhaseTime('bundle', performance.now() - bundleStart);
+
+  for (const { entry, error } of failed) {
+    reportContentFailure(entry, describeBundleError(error));
+    logger.verbose(`✖ ${entry}
+${String(error)}`);
+  }
+
+  const loopStart = performance.now();
+  let evalTotal = 0;
+  const results = await mapLimit(
+    bundled,
+    DEFAULT_CONCURRENCY,
+    async ({ entry, code }) => {
+      try {
+        const evalStart = performance.now();
+        const moduleExports = evaluateBundle(code, entry);
+        evalTotal += performance.now() - evalStart;
+        const buildResult = await buildContentJson(entry, moduleExports, {
+          debug,
+          diagnostics,
+        });
+        if (buildResult instanceof Error) {
+          reportContentFailure(entry, buildResult.message);
+          logger.verbose(buildResult.message.trim());
+
+          return;
+        }
+
+        if (buildResult === undefined) {
+          reportContentFailure(entry, 'Failed to build: no content was produced');
+        } else {
+          const outputs = Array.isArray(buildResult.outFile)
+            ? buildResult.outFile
+            : [buildResult.outFile];
+          await replaceContentOutputs(entry, outputs);
+        }
+
+        return buildResult;
+      } catch (error) {
+        reportContentFailure(entry, String(error));
+        logger.verbose(`✖ ${entry}\n${String(error)}`);
+      }
+    },
+  );
+
+  addPhaseTime('eval', evalTotal);
+  addPhaseTime('write', Math.max(0, performance.now() - loopStart - evalTotal));
+
+  const built = results.filter(
+    (result): result is BuildContentJsonResult => result !== undefined,
+  );
+
+  built.forEach(logBuilt);
+
+  return built;
+};
+
+/**
+ * Builds a file using esbuild and evaluates it in memory.
  * @param filePath - The path to the file to build.
- * @returns A promise that resolves when the file is built and imported.
  */
 export const buildFile = async (
   filePath: string,
   options: ContentBuildOptions = { debug: true, diagnostics: true },
 ): Promise<BuildContentJsonResult | undefined> => {
-  const { debug, diagnostics } = options;
-  const startTime = Date.now();
-  const fileName = basename(filePath, '.ts') + Date.now().toString() + '.js';
-  const outFile = join(getBuildCacheDistDir(), fileName);
-
-  await esbuild.build(createEsbuildConfig(filePath, outFile));
-
-  const url = pathToFileURL(outFile).toString();
-
-  let result: BuildContentJsonResult | undefined;
-
-  try {
-    const buildResult = await buildContentJson(filePath, url, {
-      debug,
-      diagnostics,
-    });
-    if (buildResult instanceof Error) {
-      console.error(buildResult.message);
-
-      return;
-    }
-
-    result = buildResult;
-  } catch (error) {
-    if (debug) {
-      console.error(`\n🛑 Error building file: ${error}\n`);
-    }
-
-    return;
-  }
-
-  await unlink(outFile);
-
-  if (result !== undefined) {
-    const outputs = Array.isArray(result.outFile)
-      ? result.outFile
-      : [result.outFile];
-    await replaceContentOutputs(filePath, outputs);
-  }
-
-  if (debug && result !== undefined) {
-    const endTime = Date.now();
-    const duration = endTime - startTime;
-
-    const path = !Array.isArray(result.outFile)
-      ? [result.outFile]
-      : result.outFile;
-
-    const link = path.map(
-      (p) =>
-        `\u001b]8;;file:///${p.replace(/\\/g, '/')}\u0007${p}\u001b]8;;\u0007`,
-    );
-    console.log(
-      `\n✅ Built: ${result.source}\n   Path: ${link.join('\n         ')}\n   Time: ${duration}ms\n`,
-    );
-  }
+  const [result] = await buildFiles([filePath], options);
 
   return result;
 };
 
 /**
- * Rebuilds a file and its dependencies.
- * @param filePath - The path to the file to rebuild.
- * @returns A promise that resolves when the file and its dependencies are rebuilt.
+ * Content entries affected by a change of the given files: the dependents
+ * known to the graph, plus the files themselves when they are new content files.
  */
-export const rebuildFile = async (
+export const getAffectedEntries = (filePaths: string[]): string[] => {
+  const affected = new Set<string>();
+  for (const filePath of filePaths) {
+    const resolved = resolve(process.cwd(), filePath);
+    for (const entry of getDependentEntries(resolved)) {
+      affected.add(entry);
+    }
+    if (isFerolyteContentFile(resolved) && !hasEntry(resolved)) {
+      affected.add(resolved);
+    }
+  }
+
+  return [...affected];
+};
+
+/**
+ * Rebuilds changed files and every content entry that depends on them in one pass.
+ * @param filePaths - The changed files.
+ */
+export const rebuildFiles = (
+  filePaths: string[],
+  options: ContentBuildOptions = { debug: true, diagnostics: true },
+): Promise<BuildContentJsonResult[]> =>
+  buildFiles(getAffectedEntries(filePaths), options);
+
+/**
+ * Rebuilds a file and its dependents.
+ * @param filePath - The path to the file to rebuild.
+ */
+export const rebuildFile = (
   filePath: string,
   options: ContentBuildOptions = { debug: true, diagnostics: true },
-): Promise<BuildContentJsonResult[]> => {
-  await rm(getBuildCacheDistDir(), { recursive: true, force: true });
-
-  const filesToRebuild = await addFile(filePath);
-  const results: BuildContentJsonResult[] = [];
-
-  await Promise.all(
-    [...filesToRebuild].filter(isFerolyteContentFile).map(async (file) => {
-      const result = await buildFile(file, options);
-      if (result) {
-        results.push(result);
-      }
-    }),
-  );
-
-  await flushItemTextures();
-
-  return results;
-};
+): Promise<BuildContentJsonResult[]> => rebuildFiles([filePath], options);
 
 /**
  * Deletes a file and its dependencies.
@@ -139,19 +189,19 @@ export const unlinkContentFile = async (
         removedOutputs = [distPath];
       } catch (error) {
         if (debug) {
-          console.error(`\n🛑 Error deleting file: ${error}\n`);
+          logger.verbose(`✖ could not delete ${distPath}: ${String(error)}`);
         }
       }
     }
   }
 
-  removeSourceItemTextures(filePath);
-  await flushItemTextures({ force: true });
-  removeFile(filePath);
+  removeSourceLang(filePath);
+  removeSourceDocuments(filePath);
+  removeEntry(filePath);
 
   const filename = basename(filePath);
   if (debug && removedOutputs.length > 0) {
-    console.log(`\n🗑️ Deleted: ${filename}\n`);
+    logger.verbose(`🗑 ${filename}`);
   }
 
   return removedOutputs;
@@ -159,7 +209,9 @@ export const unlinkContentFile = async (
 
 const FerolyteContentBuilder = {
   buildFile,
+  buildFiles,
   rebuildFile,
+  rebuildFiles,
   unlinkContentFile,
 };
 

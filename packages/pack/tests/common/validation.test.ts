@@ -7,7 +7,6 @@ import {
 import {
   validateBooleanValue,
   validateNonEmptyString,
-  validatePositiveNumber,
   validateVector3,
 } from '@ferolyte/common/content/validation/content-validation';
 
@@ -165,21 +164,6 @@ describe('content validation helpers', () => {
     expect(
       validateNonEmptyString('namespace:block', undefined, 'Must be a string'),
     ).toBe(true);
-  });
-
-  it('validatePositiveNumber rejects non-positive values', () => {
-    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-
-    expect(
-      validatePositiveNumber(
-        0,
-        { component: 'fuel', fieldPath: 'duration' },
-        'Fuel duration must be a positive number',
-        'duration',
-      ),
-    ).toBe(false);
-
-    errorSpy.mockRestore();
   });
 
   it('validateVector3 accepts valid arrays and rejects invalid values', () => {

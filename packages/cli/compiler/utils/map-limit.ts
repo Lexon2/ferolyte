@@ -1,0 +1,26 @@
+export const DEFAULT_CONCURRENCY = 64;
+
+/**
+ * `Promise.all(items.map(fn))` with at most `limit` calls in flight.
+ * Results keep the order of `items`; the first rejection rejects the result.
+ */
+export const mapLimit = async <T, R>(
+  items: readonly T[],
+  limit: number,
+  fn: (item: T, index: number) => Promise<R> | R,
+): Promise<R[]> => {
+  const results = new Array<R>(items.length);
+  let next = 0;
+
+  const worker = async () => {
+    while (next < items.length) {
+      const index = next++;
+      results[index] = await fn(items[index], index);
+    }
+  };
+
+  const workers = Math.max(1, Math.min(limit, items.length));
+  await Promise.all(Array.from({ length: workers }, worker));
+
+  return results;
+};

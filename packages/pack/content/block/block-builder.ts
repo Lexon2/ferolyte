@@ -1,10 +1,11 @@
 import { convertBlockComponents } from './convert-components';
-import { BlockConfig } from './interfaces/block-config';
+import { BlockComponents, BlockConfig } from './interfaces/block-config';
 import { createBlockPermutations } from './permutations/create-permuation';
 import { convertBlockStates } from './states/convert-states';
 import { convertBlockTraits } from './traits/convert-traits';
 import { ContentBuilder } from '@ferolyte/common/content/interfaces/content-builder';
 import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { isVersionAtLeast } from '@ferolyte/common/content/versions/compare-version';
 import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
 import { convertMenuCategory } from '../item/convertors/components/menu-category/convert-category';
 
@@ -35,12 +36,23 @@ export class BlockBuilder implements ContentBuilder {
     return `${fileName}.block.json`;
   }
 
+  private defaultFormatVersion(): string {
+    const minVersion = this.buildContext?.minGameVersion;
+
+    return minVersion !== undefined &&
+      minVersion.length > 0 &&
+      isVersionAtLeast(minVersion, '1.26.40')
+      ? isVersionAtLeast(minVersion, '1.26.50')
+        ? '1.26.50'
+        : '1.26.40'
+      : '1.21.70';
+  }
+
   public build(): any {
     const { config } = this;
 
     const minecraftBlock = {
-      // @TODO: Add support for ferolyte config
-      format_version: config.version || '1.21.70',
+      format_version: config.version || this.defaultFormatVersion(),
       'minecraft:block': {
         description: {
           identifier: config.identifier,
@@ -75,20 +87,30 @@ export class BlockBuilder implements ContentBuilder {
   }
 
   private formatComponents(file: any) {
-    const { components } = this.config;
-    if (components === undefined) {
+    const { components, rawComponents } = this.config;
+
+    const minecraftComponents =
+      components !== undefined
+        ? convertBlockComponents(components, {
+            contentType: 'block',
+            ...this.buildContext,
+            formatVersion:
+              this.config.version ||
+              this.buildContext?.minGameVersion ||
+              undefined,
+          })
+        : undefined;
+    if (
+      minecraftComponents === undefined &&
+      (rawComponents === undefined || Object.keys(rawComponents).length === 0)
+    ) {
       return;
     }
 
-    const minecraftComponents = convertBlockComponents(
-      components,
-      this.buildContext,
-    );
-    if (minecraftComponents === undefined) {
-      return;
-    }
-
-    file['minecraft:block'].components = { ...minecraftComponents };
+    file['minecraft:block'].components = {
+      ...minecraftComponents,
+      ...rawComponents,
+    };
   }
 
   private formatPermutations(file: any) {
@@ -143,7 +165,12 @@ export class BlockBuilder implements ContentBuilder {
         ? { ...this.buildContext, section: 'traits' }
         : undefined;
 
-    const minecraftTraits = convertBlockTraits(traits, traitsContext);
+    const minecraftTraits = convertBlockTraits(
+      traits,
+      traitsContext,
+      this.config.components as BlockComponents | undefined,
+      this.config.version || this.defaultFormatVersion(),
+    );
     if (minecraftTraits === undefined) {
       return;
     }

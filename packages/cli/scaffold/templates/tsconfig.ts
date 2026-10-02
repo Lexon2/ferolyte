@@ -3,12 +3,11 @@ export interface TsconfigTemplateInput {
 }
 
 const SHARED_COMPILER_OPTIONS = {
-  module: 'ES2020',
+  module: 'ESNext',
   target: 'es2020',
   lib: ['es2020', 'dom'],
-  moduleResolution: 'node',
+  moduleResolution: 'bundler',
   rootDir: '.',
-  baseUrl: '.',
   declaration: false,
   noEmit: true,
   noEmitHelpers: true,
@@ -16,16 +15,11 @@ const SHARED_COMPILER_OPTIONS = {
   pretty: true,
   forceConsistentCasingInFileNames: true,
   strict: true,
+  skipLibCheck: true,
   resolveJsonModule: true,
   allowSyntheticDefaultImports: true,
   experimentalDecorators: true,
   emitDecoratorMetadata: true,
-};
-
-const FEROLYTE_PATHS = {
-  '@ferolyte/pack/*': ['node_modules/@ferolyte/pack/*'],
-  '@ferolyte/common/*': ['node_modules/@ferolyte/common/*'],
-  '@ferolyte/cli/*': ['node_modules/@ferolyte/cli/*'],
 };
 
 export const createTsconfigTemplate = ({
@@ -35,11 +29,11 @@ export const createTsconfigTemplate = ({
     compilerOptions: {
       ...SHARED_COMPILER_OPTIONS,
       paths: {
-        [`${pathAlias}/*`]: ['packs/*'],
-        ...FEROLYTE_PATHS,
+        [`${pathAlias}/*`]: ['./packs/*'],
+        '@ferolyte/ids': ['./.ferolyte/types/ids.ts'],
       },
     },
-    include: ['packs/**/*', 'ferolyte.config.mts'],
+    include: ['packs/**/*', 'ferolyte.config.mts', '.ferolyte/types/**/*'],
     exclude: ['node_modules'],
     compileOnSave: false,
   };
@@ -55,8 +49,8 @@ export const createTsconfigScriptsTemplate = ({
       ...SHARED_COMPILER_OPTIONS,
       allowJs: true,
       paths: {
-        [`${pathAlias}/*`]: ['packs/*'],
-        ...FEROLYTE_PATHS,
+        [`${pathAlias}/*`]: ['./packs/*'],
+        '@ferolyte/ids': ['./.ferolyte/types/ids.ts'],
       },
     },
     include: ['packs/scripts/**/*'],

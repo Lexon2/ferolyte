@@ -1,3 +1,4 @@
+import { LooseString } from '@ferolyte/common/types';
 import {
   EntityGeometriesCollection,
   EntityMaterialsCollection,
@@ -7,7 +8,7 @@ import {
 import { ClientEntityAnimationsCollection } from './animations-collection';
 import { ClientEntityScriptsConfig } from './scripts-config';
 
-type ClientEntityVersions = '1.10.0' | '1.8.0';
+export type ClientEntityVersions = '1.10.0' | '1.8.0';
 
 /**
  * A client side entity definition.
@@ -20,7 +21,7 @@ export interface ClientEntityConfig<
    * The version of the client entity config.
    * @default '1.10.0'
    */
-  version?: ClientEntityVersions;
+  version?: LooseString<ClientEntityVersions>;
 
   /**
    * The identifier of the client entity.
@@ -74,7 +75,7 @@ export interface ClientEntityConfig<
   /**
    * The scripts of the client entity.
    */
-  scripts?: ClientEntityScriptsConfig<Animations>;
+  scripts?: ClientEntityScriptsConfig<{ [K in keyof Animations]: string }>;
 
   /**
    * The render controllers of the client entity.

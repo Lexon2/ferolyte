@@ -1,7 +1,11 @@
+import { BUILD_CONTEXT } from '../../build-context';
+import { registerContentJson } from '../../registry/project-registry';
+import { logger } from '../../utils/logger';
 import { join } from 'path';
 
 import { Float } from '@ferolyte/common/content/tools/float';
 import { ServerEntityBuilder } from '@ferolyte/pack/content/server-entity/server-entity-builder';
+import { registerServerEntityLang } from '../../lang/register-content-lang';
 import { ContentBuildOptions } from '../../actions/options';
 import { serializeJson } from '../utils/serialize-json';
 import { writeWithPlugins } from '../../plugins/write-with-plugins';
@@ -57,9 +61,13 @@ export const buildServerEntityJson = async (
     identifier: builder.cloneConfig().identifier,
     diagnostics: options.diagnostics,
     contentType: 'server-entity',
+    minGameVersion: BUILD_CONTEXT.PACKS.MIN_GAME_VERSION,
   });
 
   const json = builder.build();
+  registerContentJson(filePath, 'server-entity', json);
+  const entityConfig = builder.cloneConfig();
+  registerServerEntityLang(filePath, entityConfig.identifier, entityConfig.displayName);
   replaceTrailingZeroFloats(json);
 
   const jsonString = serializeJson(json);
@@ -67,7 +75,7 @@ export const buildServerEntityJson = async (
   const identifier = builder.cloneConfig().identifier ?? '';
   const outFile = createContentPath(filePath, undefined, { identifier });
   if (identifier === undefined || outFile === undefined) {
-    console.error(`Error creating content path for ${filePath}`);
+    logger.error(`Error creating content path for ${filePath}`);
 
     return;
   }

@@ -1,0 +1,33 @@
+{
+  "properties": {
+    "projectiles": {
+      "items": {
+        "oneOf": {
+          "$append": [
+            {
+              "type": "object",
+              "description": "Projectile definition with vanilla-only fields (`lose_target`, `chance`).",
+              "properties": {
+                "lose_target": {
+                  "type": "boolean"
+                },
+                "chance": {
+                  "type": "number"
+                },
+                "aux_val": {
+                  "type": "integer"
+                },
+                "def": {
+                  "type": "string"
+                },
+                "filters": {
+                  "$ref": "../../filters/filters.json"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

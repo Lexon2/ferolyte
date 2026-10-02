@@ -1,0 +1,8 @@
+{
+  "x-new-component": "minecraft:random_ticking",
+  "x-official": "official 1.26.20–1.26.20",
+  "title": "Random Ticking Component",
+  "type": "object",
+  "additionalProperties": {},
+  "x-free-form": "the official Mojang schema has a body without properties"
+}

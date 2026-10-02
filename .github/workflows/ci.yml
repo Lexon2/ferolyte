@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          # npm 10 (Node 22) crashes in arborist #loadPeerSet ("reading 'edgesOut'") on this
+          # workspace without a lockfile; npm 11 (Node 24) installs it fine.
+          node-version: 24
+      # package-lock.json is not committed (see .gitignore), so `npm ci` and the npm cache are not usable.
+      - run: npm install --no-audit --no-fund
+      # Generated SDK types/validators must match the pinned schemas + patches.
+      # Also fetches the schema/sample caches used by the schema and round-trip tests below.
+      - run: npm run codegen:check
+      - run: npx tsc -p packages/pack/tsconfig.json --noEmit
+      - run: npx tsc -p packages/common/tsconfig.json --noEmit
+      - run: npx vitest run

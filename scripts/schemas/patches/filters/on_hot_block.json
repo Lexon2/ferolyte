@@ -1,0 +1,12 @@
+{
+  "x-new-component": "on_hot_block",
+  "type": "object",
+  "description": "Filter test used by vanilla but missing from the Blockception schemas.",
+  "properties": {
+    "test": { "type": "string", "const": "on_hot_block" },
+    "subject": { "type": "string" },
+    "operator": { "type": "string" },
+    "domain": { "type": "string" },
+    "value": {}
+  }
+}

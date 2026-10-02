@@ -1,0 +1,7 @@
+{
+  "component": "tick",
+  "config": {
+    "looping": true,
+    "intervalRange": [1, 1]
+  }
+}

@@ -1,9 +1,10 @@
 import { OneOfRecord } from '@ferolyte/common/types/core/one-of-record';
+import { Molang, type MolangStatementInput } from '../../molang';
 import { MolangMath, MolangQuery } from '../../molang/types';
 
 type AnimationKeys<T> =
   T extends Record<infer K extends string, string>
-    ? K | OneOfRecord<K, MolangMath | MolangQuery>
+    ? K | OneOfRecord<K, MolangMath | MolangQuery | Molang>
     : never;
 
 /**
@@ -20,12 +21,12 @@ export interface ClientEntityScriptsConfig<
   /**
    * Clientside molang variables that are to be evaluated during the creation of the entity.
    */
-  initialize?: `${string};`[];
+  initialize?: MolangStatementInput[];
 
   /**
    * Clientside molang variables that are to be evaluated during the animation.
    */
-  preAnimation?: `${string};`[];
+  preAnimation?: MolangStatementInput[];
 
   /**
    * The minecraft molang definition that results in a float.

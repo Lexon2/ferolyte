@@ -1,0 +1,12 @@
+{
+  "x-new-component": "actor_has_item_with_enchantment_in_slot",
+  "type": "object",
+  "description": "Filter test used by vanilla but missing from the Blockception schemas.",
+  "properties": {
+    "test": { "type": "string", "const": "actor_has_item_with_enchantment_in_slot" },
+    "subject": { "type": "string" },
+    "operator": { "type": "string" },
+    "domain": { "type": "string" },
+    "value": {}
+  }
+}

@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
+import { Molang } from '@ferolyte/pack/content/molang/molang';
 import { ServerEntityBuilder } from '@ferolyte/pack/content/server-entity/server-entity-builder';
 
 import { minimalServerEntityConfig } from './helpers/fixtures';
@@ -127,19 +128,23 @@ describe('ServerEntityBuilder', () => {
     });
   });
 
-  it('skips invalid components', () => {
+  it('drops unknown fields of components (and reports them)', () => {
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const entity = new ServerEntityBuilder(
       minimalServerEntityConfig({
         components: {
-          health: { value: -1 },
+          health: { unknownField: 1 } as never,
           shareables: { allItems: true },
         },
       }),
     ).build();
 
     expect(entity['minecraft:entity'].components).toEqual({
+      'minecraft:health': {},
       'minecraft:shareables': { all_items: true },
     });
+    expect(errorSpy).toHaveBeenCalled();
+    errorSpy.mockRestore();
   });
 
   it('clones config independently', () => {
@@ -150,5 +155,19 @@ describe('ServerEntityBuilder', () => {
     clone.components = { health: { value: 99 } };
 
     expect(builder.cloneConfig().components?.health).toEqual({ value: 10 });
+  });
+
+  it('converts scripts.animate Molang values', () => {
+    const entity = new ServerEntityBuilder(
+      minimalServerEntityConfig({
+        scripts: {
+          animate: ['walk', { run: new Molang().query('is_sprinting') }],
+        },
+      }),
+    ).build();
+
+    expect(entity['minecraft:entity'].description.scripts).toEqual({
+      animate: ['walk', { run: 'query.is_sprinting' }],
+    });
   });
 });

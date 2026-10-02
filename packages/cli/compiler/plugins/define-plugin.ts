@@ -8,7 +8,16 @@ export type {
   BeforeFileWriteEvent,
   BeforeFileWriteResult,
   BuildEvent,
+  FerolyteMinecraftContext,
   FileEvent,
+  MinecraftCommandResult,
+  MinecraftConnection,
+  MinecraftGameMessage,
+  MinecraftHttpHandler,
+  MinecraftHttpRequest,
+  MinecraftHttpResponse,
+  StopEvent,
+  StopReason,
   WatchReadyEvent,
 } from './types';
 import { FerolytePlugin } from './types';

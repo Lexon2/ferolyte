@@ -1,0 +1,9 @@
+{
+  "component": "useModifiers",
+  "config": {
+    "useDuration": 1,
+    "movementModifier": 1,
+    "emitVibrations": true,
+    "startSound": "test"
+  }
+}

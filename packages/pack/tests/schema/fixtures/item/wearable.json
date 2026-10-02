@@ -1,0 +1,9 @@
+{
+  "component": "wearable",
+  "config": {
+    "protection": 1,
+    "dispensable": true,
+    "slot": "none",
+    "hidesPlayerLocation": true
+  }
+}

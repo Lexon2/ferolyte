@@ -12,6 +12,9 @@ export type EntityFilterNode =
   | EntityFilterNode[]
   | { allOf: EntityFilterNode[] }
   | { anyOf: EntityFilterNode[] }
-  | { noneOf: EntityFilterNode[] };
+  | { noneOf: EntityFilterNode[] }
+  /** Legacy vanilla spellings, written as is. */
+  | { AND: unknown[] }
+  | { OR: unknown[] };
 
 export type EntityFilters = EntityFilterNode;

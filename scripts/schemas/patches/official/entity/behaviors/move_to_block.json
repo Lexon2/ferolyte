@@ -1,0 +1,10 @@
+{
+  "properties": {
+    "speed_multiplier": {
+      "default": 1,
+      "description": "Movement speed multiplier of the mob when using this AI Goal.",
+      "type": "number",
+      "x-since": "1.26.40"
+    }
+  }
+}

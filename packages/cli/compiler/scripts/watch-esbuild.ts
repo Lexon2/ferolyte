@@ -5,11 +5,10 @@ import * as esbuild from 'esbuild';
 
 import { BUILD_CONTEXT } from '../build-context';
 import { loadConfig } from '../config/load-config';
+import { jsoncEsbuildPlugin } from '../core/utils/jsonc-esbuild-plugin';
 import { createScriptsOutputPath } from './create-scripts-output-path';
-import { MinecraftServer } from './minecraft-reload-server';
+import { getMinecraftHub } from './start-minecraft-server';
 
-let socket: MinecraftServer | undefined;
-let started = false;
 
 const hasScriptEntry = async () => {
   try {
@@ -24,29 +23,9 @@ const createReloadPlugin = (): esbuild.Plugin => ({
   name: 'ReloadPlugin',
   setup(build) {
     build.onEnd(async () => {
-      const reloadCommand = 'reload';
-
-      if (!started) {
-        started = true;
-        console.log('To use automatic reload type: /connect localhost:8080');
-      }
-
       console.log('Transpilation completed');
 
-      if (!socket) {
-        return;
-      }
-
-      for (const client of socket.clients) {
-        const { status, message } = await client.sendCommand(reloadCommand);
-        if (status === 0) {
-          client.sendMessage('Scripts and functions reloaded.');
-          console.log('Scripts and functions reloaded.');
-
-          return;
-        }
-        client.sendMessage(`Reload failed.\nError: ${message}`);
-      }
+      await getMinecraftHub()?.reloadAll();
     });
   },
 });
@@ -75,7 +54,9 @@ const createEsbuildConfig = (reloadPlugin?: esbuild.Plugin): esbuild.BuildOption
     '@minecraft/server-editor-bindings',
     '@minecraft/debug-utilities',
   ],
-  plugins: reloadPlugin ? [reloadPlugin] : [],
+  plugins: reloadPlugin
+    ? [jsoncEsbuildPlugin(), reloadPlugin]
+    : [jsoncEsbuildPlugin()],
 });
 
 export const buildScriptsOnce = async (profile: string = 'default') => {
@@ -88,16 +69,21 @@ export const buildScriptsOnce = async (profile: string = 'default') => {
   await esbuild.build(createEsbuildConfig());
 };
 
-export const watchScripts = async (profile: string = 'default') => {
+export const watchScripts = async (
+  profile: string = 'default',
+): Promise<() => Promise<void>> => {
   await loadConfig(profile);
 
   if (!(await hasScriptEntry())) {
-    return;
+    return async () => {};
   }
 
-  socket = new MinecraftServer(8080);
   const ctx = await esbuild.context(createEsbuildConfig(createReloadPlugin()));
 
   await ctx.watch();
   console.log('🚀 Watching for changes...');
+
+  return async () => {
+    await ctx.dispose();
+  };
 };

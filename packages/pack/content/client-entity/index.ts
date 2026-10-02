@@ -9,7 +9,12 @@ export {
   type EntityVanillaMaterials,
 } from './constants/entity-vanilla-materials';
 
-export type { ClientEntityAnimationsCollection } from './interfaces/animations-collection';
+export type {
+  ClientEntityAnimationOptions,
+  ClientEntityAnimationResolver,
+  ClientEntityAnimationsCollection,
+  ClientEntityAnimationValue,
+} from './interfaces/animations-collection';
 
 export type { ClientEntityConfig } from './interfaces/client-entity-config';
 

@@ -21,6 +21,12 @@ This installs `@ferolyte/common` and `@ferolyte/pack` as dependencies. The `fero
 | `ferolyte init <project-name> <alias>` | Scaffold a new Ferolyte project in `./<project-name>/`               |
 | `ferolyte run [profile]`               | Build packs and scripts once; optionally create a `.mcaddon` archive |
 | `ferolyte watch [profile]`             | Watch packs and scripts; rebuild incrementally on file changes       |
+| `ferolyte check [profile]`             | Validate every content file in memory (nothing is written); exit 1 on errors |
+| `ferolyte inspect <file>`              | Print the JSON a content file would produce (`--profile`, `--out`, `--compact`) |
+| `ferolyte types [profile]`             | Regenerate typed ids (`.ferolyte/types/ids.ts`, imported as `@ferolyte/ids`) |
+
+`check` also accepts `--types` (adds TypeScript errors from `tsc --noEmit`) and `--strict`. `check --json` and `run --json` print the diagnostics to stdout as
+`{ file, contentType, component, fieldPath, message, severity }[]` (build logs go to stderr) and exit with `1` when at least one record has `severity: "error"`.
 
 `run` and `watch` accept shared flags:
 
@@ -31,6 +37,10 @@ This installs `@ferolyte/common` and `@ferolyte/pack` as dependencies. The `fero
 | `--no-debug`       | —         | Disable build progress output           |
 | `--diagnostics`    | `true`    | Enable content validation diagnostics   |
 | `--no-diagnostics` | —         | Disable validation diagnostics          |
+| `--quiet`          | —         | Only print errors                       |
+| `--verbose`        | —         | Print output paths and full error details |
+| `--strict`         | —         | Unknown references (geometry, animation, texture, events…) are errors |
+| `--json`           | —         | `run` only: diagnostics as JSON on stdout (`--stats` adds timings) |
 
 `init` flags:
 
@@ -70,11 +80,11 @@ npx ferolyte run --no-debug
 Create `ferolyte.config.mts` in your project root. Relative imports and `tsconfig.json` path aliases are resolved via esbuild when the config is loaded, so the `.ts` extension is optional in config imports.
 
 ```typescript
-import { defineFerolyteConfig } from '@ferolyte/cli/compiler/config/define-config';
+import { defineFerolyteConfig } from '@ferolyte/cli/config';
 import {
   defineFerolytePlugin,
   FerolytePluginApiVersion,
-} from '@ferolyte/cli/compiler/plugins/define-plugin';
+} from '@ferolyte/cli/plugin';
 
 export default defineFerolyteConfig({
   profiles: {
@@ -263,10 +273,20 @@ Default input suffixes (see [`contentSuffixes`](#contentsuffixes) in Configurati
 | Item          | `*.item.ts`          | `BP/items/{namespace}/`    |
 | Server entity | `*.se.ts`            | `BP/entities/{namespace}/` |
 | Client entity | `*.ce.ts`            | `RP/entity/{namespace}/`   |
+| BP animation controller | `*.ac.bp.ts` | `BP/animation_controllers/{namespace}/` |
+| RP animation controller | `*.ac.rp.ts` | `RP/animation_controllers/{namespace}/` |
 
 Output JSON mirrors the matched input suffix. For example, `cow.e.bp.ts` becomes `cow.e.bp.json` when configured with `'server-entity': ['e.bp']`.
 
-Content files must `export default` a `ContentBuilder` or an array of builders.
+Content files must `export default` a `ContentBuilder` or an array of builders. They are bundled as CommonJS and evaluated in memory, so top-level `await` and `import.meta` are not available in content files.
+
+#### Localization (`.lang`)
+
+`displayName` of items, blocks and server entities (a string or `{ en_US: '...', ru_RU: '...' }`) is written to `RP/texts/<locale>.lang` and `languages.json`. Your own `RP/texts/*.lang` files are merged, not copied: your lines and comments are kept, your value wins on conflicts (with a warning), generated lines are appended under `## ferolyte`. Configure with `packs.lang: { defaultLocale, locales }`.
+
+#### Blockbench
+
+`packages/blockbench-plugin` opens `*.ce.ts` client entities in Blockbench through `ferolyte inspect`; see its README.
 
 ### Asset pipeline
 
@@ -277,6 +297,31 @@ Content files must `export default` a `ContentBuilder` or an array of builders.
 
 - Bundles the script entry (default [`scripts.entry`](#scripts-ferolytescriptsconfig)) with esbuild
 - Watch mode runs a parallel esbuild watch alongside pack rebuilds
+
+### Game connection (`server`)
+
+`ferolyte watch` starts one WebSocket hub; in game run `/connect localhost:<port>` once.
+Script rebuilds trigger `/reload` on **every** connected client.
+
+```ts
+profiles: {
+  default: {
+    // ...
+    server: {
+      port: 8080,               // default
+      reloadOnPackChange: true, // also /reload after pack file changes
+      http: { port: 8081 },     // optional HTTP API (127.0.0.1 only)
+    },
+  },
+}
+```
+
+HTTP API (only when `server.http` is set): `GET /status`, `POST /command` `{command}`,
+`POST /scriptevent` `{id, message}`, `GET /events?since=<seq>`, `POST /subscribe` `{eventName}`.
+
+Plugins (API 1.1.0) get `event.minecraft` in `afterLoad` / `afterWatchReady` (undefined outside watch):
+`sendCommand`, `scriptEvent`, `subscribe(eventName, handler?)`, `onMessage`, `clients`, and
+`http?.route(method, path, handler)` when HTTP is enabled. Sockets close automatically on shutdown.
 
 ### Plugin system
 
@@ -292,6 +337,31 @@ Define plugins with `defineFerolytePlugin()` and hook into the build lifecycle:
 | `afterFileUpdate` | After a file is updated during watch                           |
 | `afterFileRemove` | After a file is removed during watch                           |
 | `afterWatchReady` | After watch mode is ready                                      |
+| `beforeStop`      | Once on shutdown (Ctrl+C, SIGTERM, error, end of `run`); 5 s timeout |
+
+#### Cleaning up (API 1.1.0)
+
+`afterLoad` and `afterWatchReady` events carry a `signal: AbortSignal` that is aborted when
+Ferolyte stops. `beforeStop({ profile, reason })` runs once per plugin (`reason` is
+`'signal' | 'error' | 'build-end'`); errors are logged and a hook that takes longer than 5 s is skipped.
+Use `apiVersion: FerolytePluginApiVersion.V1_1_0` to opt in (`1.0.0` plugins keep working).
+
+```ts
+import { spawn, type ChildProcess } from 'child_process';
+
+let child: ChildProcess | undefined;
+
+export const serverPlugin = defineFerolytePlugin({
+  name: 'dev-server',
+  apiVersion: FerolytePluginApiVersion.V1_1_0,
+  afterWatchReady({ signal }) {
+    child = spawn('node', ['server.js'], { stdio: 'inherit', signal });
+  },
+  beforeStop() {
+    child?.kill();
+  },
+});
+```
 
 When [`packs.archive`](#packs-ferolytepackconfig) is `true`, a `{alias}.mcaddon` file is created in the project root after a full build.
 

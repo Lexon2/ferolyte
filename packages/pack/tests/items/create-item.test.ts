@@ -31,8 +31,8 @@ describe('createItem', () => {
       minimalItemConfig({ components: { glint: true } }),
     );
     const builder = createItem(
-      base,
       minimalItemConfig({ components: { maxStackSize: 32 } }),
+      base,
     );
 
     expect(builder.cloneConfig().components).toEqual({

@@ -1,191 +1,126 @@
-import { join, resolve } from 'path';
-
-import * as esbuild from 'esbuild';
-
-import { BUILD_CONTEXT } from '../build-context';
-import { FileDependencyGraph } from '../types/dependency-graph';
-import { DependencyInfo } from '../types/dependency-info';
-
-export const DEPENDENCY_GRAPH: FileDependencyGraph = {};
+import { resolve } from 'path';
 
 /**
- * Creates a new dependency info object.
- * @returns A new DependencyInfo object.
+ * Dependency graph between content entries and the files they import.
+ *
+ * - `entry -> Set<input>`: every file reachable from the entry (the entry itself included).
+ * - `input -> Set<entry>`: reverse index, derived from the forward sets.
+ *
+ * An entry's input set is always replaced as a whole, shared inputs are never cleared.
  */
-const createDependencyInfo = (): DependencyInfo => ({
-  dependsOn: new Set<string>(),
-  dependents: new Set<string>(),
-});
+const ENTRY_INPUTS = new Map<string, Set<string>>();
+const INPUT_ENTRIES = new Map<string, Set<string>>();
+
+const NODE_MODULES_PATTERN = /[\\/]node_modules[\\/]/;
+
+const normalize = (filePath: string) => resolve(process.cwd(), filePath);
 
 /**
- * Adds a file to the dependency graph.
- * @param filePath - The path to the file to add.
- * @returns A promise that resolves to an array of files that depend on the added file.
+ * Whether the path is something the graph tracks (synthetic esbuild ids and
+ * `node_modules` are ignored).
  */
-const addFile = async (filePath: string): Promise<Set<string>> => {
-  const resolvedPath = resolve(process.cwd(), filePath);
-  const result: Set<string> = new Set();
+export const isTrackedInput = (filePath: string) =>
+  !filePath.includes('<runtime>') && !NODE_MODULES_PATTERN.test(filePath);
 
-  if (DEPENDENCY_GRAPH[resolvedPath]) {
-    result.add(resolvedPath);
-
-    const dependents = DEPENDENCY_GRAPH[resolvedPath].dependents;
-    for (const dependent of dependents) {
-      result.add(dependent);
-
-      // Recursively get transitive dependents
-      const transitiveDependents = await addFile(dependent);
-      for (const transitive of transitiveDependents) {
-        result.add(transitive);
-      }
-    }
-
-    return result;
+const detach = (entryPath: string, input: string) => {
+  const entries = INPUT_ENTRIES.get(input);
+  entries?.delete(entryPath);
+  if (entries?.size === 0) {
+    INPUT_ENTRIES.delete(input);
   }
-
-  const buildResult = await esbuild.build({
-    entryPoints: [resolvedPath],
-    outdir: join(BUILD_CONTEXT.PACKS.CACHE_PATH, 'dist'),
-    bundle: true,
-    write: false,
-    metafile: true,
-    alias: BUILD_CONTEXT.TS.ALIASES,
-    tsconfig: BUILD_CONTEXT.TS.CONFIG_PATH,
-    external: [
-      '@minecraft/server',
-      '@minecraft/server-ui',
-      '@minecraft/server-net',
-      '@minecraft/server-admin',
-      '@minecraft/server-editor',
-      '@minecraft/server-gametest',
-      '@minecraft/server-editor-bindings',
-      '@minecraft/debug-utilities',
-      'fs',
-      'path',
-    ],
-  });
-
-  const { inputs } = buildResult.metafile;
-
-  for (const file in inputs) {
-    const resolvedPath = resolve(process.cwd(), file);
-    const dependents: DependencyInfo = (DEPENDENCY_GRAPH[resolvedPath] ??=
-      createDependencyInfo());
-    dependents.dependsOn.clear();
-    dependents.dependents.clear();
-
-    result.add(resolvedPath);
-
-    for (const { path } of inputs[file].imports) {
-      const resolvedImportPath = resolve(process.cwd(), path);
-      if (resolvedImportPath.endsWith('<runtime>')) {
-        // Skip runtime files
-        continue;
-      }
-
-      dependents.dependsOn.add(resolvedImportPath);
-      result.add(resolvedImportPath);
-
-      // Build the reverse dependency graph
-      (DEPENDENCY_GRAPH[resolvedImportPath] ??=
-        createDependencyInfo()).dependents.add(resolvedPath);
-    }
-  }
-
-  return result;
 };
 
 /**
- * Removes a file from the dependency graph.
- * @param filePath - The path to the file to remove.
+ * Atomically replaces the input set of an entry and updates the reverse index.
+ * @param entry - The content entry file.
+ * @param inputs - Every file the entry depends on.
  */
-const removeFile = (filePath: string) => {
-  const resolvedPath = resolve(process.cwd(), filePath);
+export const setEntryInputs = (entry: string, inputs: Iterable<string>) => {
+  const entryPath = normalize(entry);
+  const next = new Set<string>([entryPath]);
+  for (const input of inputs) {
+    const inputPath = normalize(input);
+    if (isTrackedInput(inputPath)) {
+      next.add(inputPath);
+    }
+  }
 
-  if (!DEPENDENCY_GRAPH[resolvedPath]) {
+  for (const input of ENTRY_INPUTS.get(entryPath) ?? []) {
+    if (!next.has(input)) {
+      detach(entryPath, input);
+    }
+  }
+
+  for (const input of next) {
+    let entries = INPUT_ENTRIES.get(input);
+    if (!entries) {
+      entries = new Set();
+      INPUT_ENTRIES.set(input, entries);
+    }
+    entries.add(entryPath);
+  }
+
+  ENTRY_INPUTS.set(entryPath, next);
+};
+
+/**
+ * Adds extra dependencies to an entry that were discovered while building it
+ * (files the bundler does not see, e.g. source animations).
+ */
+export const addEntryInputs = (entry: string, inputs: Iterable<string>) => {
+  const entryPath = normalize(entry);
+  const current = ENTRY_INPUTS.get(entryPath);
+  if (!current) {
     return;
   }
-
-  const { dependents, dependsOn } = DEPENDENCY_GRAPH[resolvedPath];
-
-  for (const dependent of dependents) {
-    DEPENDENCY_GRAPH[dependent].dependsOn.delete(resolvedPath);
-  }
-  for (const dependency of dependsOn) {
-    DEPENDENCY_GRAPH[dependency].dependents.delete(resolvedPath);
-  }
-
-  delete DEPENDENCY_GRAPH[resolvedPath];
+  setEntryInputs(entryPath, [...current, ...inputs]);
 };
 
 /**
- * Rebuilds the file and all its dependencies.
- * @param filePath - The path to the file to rebuild.
+ * Removes an entry from the graph.
+ * @param entry - The content entry file.
  */
-const updateFile = async (filePath: string): Promise<Set<string>> => {
-  removeFile(filePath);
-
-  return addFile(filePath);
+export const removeEntry = (entry: string) => {
+  const entryPath = normalize(entry);
+  for (const input of ENTRY_INPUTS.get(entryPath) ?? []) {
+    detach(entryPath, input);
+  }
+  ENTRY_INPUTS.delete(entryPath);
 };
 
 /**
- * Builds the dependency graph for all files in the source directory.
- * @returns A promise that resolves when the build is complete.
+ * Content entries that must be rebuilt when the file changes (the file itself
+ * included when it is an entry).
+ * @param filePath - The changed file.
  */
-const create = async () => {
-  const result = await esbuild.build({
-    entryPoints: [
-      join(BUILD_CONTEXT.PACKS.INPUT_BEHAVIOR_PACK_PATH, '**/*.ts'),
-      join(BUILD_CONTEXT.PACKS.INPUT_RESOURCE_PACK_PATH, '**/*.ts'),
-    ],
-    outdir: join(BUILD_CONTEXT.PACKS.CACHE_PATH, 'dist'),
-    bundle: true,
-    write: false,
-    metafile: true,
-    alias: BUILD_CONTEXT.TS.ALIASES,
-    tsconfig: BUILD_CONTEXT.TS.CONFIG_PATH,
-    external: [
-      '@minecraft/server',
-      '@minecraft/server-ui',
-      '@minecraft/server-net',
-      '@minecraft/server-admin',
-      '@minecraft/server-editor',
-      '@minecraft/server-gametest',
-      '@minecraft/server-editor-bindings',
-      '@minecraft/debug-utilities',
-      'fs',
-      'path',
-    ],
-  });
+export const getDependentEntries = (filePath: string): Set<string> =>
+  new Set(INPUT_ENTRIES.get(normalize(filePath)));
 
-  for (const [sourceFile, meta] of Object.entries(result.metafile.inputs)) {
-    if (sourceFile.endsWith('<runtime>')) {
-      // Skip runtime files
-      continue;
-    }
+/**
+ * Whether the entry has been built (is known to the graph).
+ */
+export const hasEntry = (entry: string) => ENTRY_INPUTS.has(normalize(entry));
 
-    const dependents: DependencyInfo = createDependencyInfo();
+/**
+ * Every tracked input file known to the graph.
+ */
+export const getGraphInputs = (): string[] => [...INPUT_ENTRIES.keys()];
 
-    const resolvedPath = resolve(process.cwd(), sourceFile);
-    DEPENDENCY_GRAPH[resolvedPath] = dependents;
-
-    for (const { path } of meta.imports) {
-      const resolvedImportPath = resolve(process.cwd(), path);
-      if (resolvedImportPath.endsWith('<runtime>')) {
-        // Skip runtime files
-        continue;
-      }
-      dependents.dependsOn.add(resolvedImportPath);
-
-      // Build the reverse dependency graph
-      (DEPENDENCY_GRAPH[resolvedImportPath] ??=
-        createDependencyInfo()).dependents.add(resolvedPath);
-    }
-  }
+/**
+ * Drops the whole graph.
+ */
+export const clearGraph = () => {
+  ENTRY_INPUTS.clear();
+  INPUT_ENTRIES.clear();
 };
 
-const DependencyGraphActions = { addFile, removeFile, updateFile, create };
-
-export { addFile, removeFile, updateFile, create };
+const DependencyGraphActions = {
+  setEntryInputs,
+  removeEntry,
+  getDependentEntries,
+  hasEntry,
+  getGraphInputs,
+  clearGraph,
+};
 
 export { DependencyGraphActions };

@@ -9,10 +9,12 @@ import * as esbuild from 'esbuild';
 const rootDir = fileURLToPath(new URL('..', import.meta.url));
 const BUILD_ARTIFACT_PATTERN = /\.(js|d\.ts)(\.map)?$/;
 const packageScriptsDir = join(rootDir, 'scripts');
+const distDir = join(rootDir, 'dist');
 
 const shouldSkipDir = (dirPath, entryName) =>
   entryName === 'node_modules' ||
   entryName === 'tests' ||
+  entryName === 'dist' ||
   dirPath === packageScriptsDir;
 
 async function collectTsFiles(dir, files = []) {
@@ -30,7 +32,11 @@ async function collectTsFiles(dir, files = []) {
       continue;
     }
 
-    if (entry.name.endsWith('.ts') && !entry.name.endsWith('.d.ts')) {
+    if (
+      entry.name.endsWith('.ts') &&
+      !entry.name.endsWith('.d.ts') &&
+      !entry.name.endsWith('.test.ts')
+    ) {
       files.push(path);
     }
   }
@@ -118,13 +124,13 @@ async function fixModuleSpecifiers(dir) {
 }
 
 await cleanBuildArtifacts(rootDir);
-await rm(join(rootDir, 'dist'), { recursive: true, force: true });
+await rm(distDir, { recursive: true, force: true });
 
 const entryPoints = await collectTsFiles(rootDir);
 
 await esbuild.build({
   entryPoints,
-  outdir: rootDir,
+  outdir: distDir,
   outbase: rootDir,
   platform: 'node',
   format: 'esm',
@@ -133,7 +139,7 @@ await esbuild.build({
   logLevel: 'info',
 });
 
-await fixModuleSpecifiers(rootDir);
+await fixModuleSpecifiers(distDir);
 
 const tsc = spawnSync('npx', ['tsc', '-p', 'tsconfig.dts.json'], {
   cwd: rootDir,
@@ -145,6 +151,16 @@ if (tsc.status !== 0) {
   process.exit(tsc.status ?? 1);
 }
 
-await fixModuleSpecifiers(rootDir);
+await fixModuleSpecifiers(distDir);
+
+// `createRequire(import.meta.url)('../package.json')` in dist/cli/*.js resolves to this file.
+const { name, version } = JSON.parse(
+  await readFile(join(rootDir, 'package.json'), 'utf8'),
+);
+await writeFile(
+  join(distDir, 'package.json'),
+  `${JSON.stringify({ name, version, type: 'module' }, null, 2)}
+`,
+);
 
 console.log(`Built ${entryPoints.length} JS and declaration files`);

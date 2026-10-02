@@ -1,0 +1,7 @@
+{
+  "x-new-component": "minecraft:underwater_mount_breathing",
+  "x-free-form": "the official Mojang schema lists the component without a body (\"Dynamic value\")",
+  "type": "object",
+  "description": "Lets the mount breathe underwater. Free-form: the official schema has no body for it.",
+  "additionalProperties": {}
+}

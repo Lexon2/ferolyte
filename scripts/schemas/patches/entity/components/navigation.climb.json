@@ -1,0 +1,1 @@
+{ "properties": { "using_door_annotation": { "type": "boolean", "description": "Used by vanilla entities; not documented in the schemas." } } }

@@ -1,0 +1,6 @@
+{
+  "component": "chestObstruction",
+  "config": {
+    "obstructionRule": "never"
+  }
+}

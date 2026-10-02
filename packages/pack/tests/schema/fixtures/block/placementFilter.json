@@ -1,0 +1,11 @@
+{
+  "component": "placementFilter",
+  "config": {
+    "conditions": [
+      {
+        "allowedFaces": ["all"],
+        "blockFilter": ["test"]
+      }
+    ]
+  }
+}

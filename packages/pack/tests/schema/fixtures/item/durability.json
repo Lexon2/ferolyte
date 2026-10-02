@@ -1,0 +1,10 @@
+{
+  "component": "durability",
+  "config": {
+    "maxDurability": 1,
+    "damageChance": {
+      "min": 1,
+      "max": 1
+    }
+  }
+}

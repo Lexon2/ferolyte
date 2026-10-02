@@ -1,0 +1,8 @@
+{
+  "component": "durabilitySensor",
+  "config": {
+    "durability": 1,
+    "particleType": "test",
+    "soundEvent": "add.chest"
+  }
+}

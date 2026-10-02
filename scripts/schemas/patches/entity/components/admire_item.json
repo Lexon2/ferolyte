@@ -1,0 +1,1 @@
+{ "properties": { "duration": { "type": "number" }, "cooldown_after_being_attacked": { "type": "integer" } } }

@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "attack_radius": { "type": "number", "deprecated": true, "description": "Pre-1.26.50 name of the maximum of attack_range." },
+    "attack_radius_min": { "type": "number", "deprecated": true, "description": "Pre-1.26.50 name of the minimum of attack_range." },
+    "attack_interval_min": { "type": "number", "deprecated": true, "description": "Pre-1.21 name of the minimum of attack_interval." },
+    "attack_interval_max": { "type": "number", "deprecated": true, "description": "Pre-1.21 name of the maximum of attack_interval." }
+  }
+}

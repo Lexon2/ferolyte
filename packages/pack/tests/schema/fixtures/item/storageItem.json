@@ -1,0 +1,9 @@
+{
+  "component": "storageItem",
+  "config": {
+    "allowNestedStorageItems": true,
+    "allowedItems": ["test"],
+    "bannedItems": ["test"],
+    "maxSlots": 1
+  }
+}

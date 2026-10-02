@@ -1,0 +1,39 @@
+{
+  "properties": {
+    "effects": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+      }
+    },
+    "remove_effects": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+      }
+    },
+    "on_use_action": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+      }
+    },
+    "on_use_range": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+      }
+    },
+    "is_meat": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+      }
+    },
+    "cooldown_type": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+      }
+    },
+    "cooldown_time": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+      }
+    }
+  }
+}

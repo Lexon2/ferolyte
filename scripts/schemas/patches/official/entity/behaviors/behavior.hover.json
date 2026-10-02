@@ -1,0 +1,27 @@
+{
+  "x-new-component": "minecraft:behavior.hover",
+  "x-official": "official 1.21.80–1.26.50",
+  "description": "Allows the mob to hover in place.",
+  "properties": {
+    "control_flags": {
+      "default": [],
+      "items": {
+        "enum": [
+          "move",
+          "look",
+          "jump"
+        ],
+        "title": "Goal's control flags",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "priority": {
+      "default": 0,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "title": "minecraft:behavior.hover",
+  "type": "object"
+}

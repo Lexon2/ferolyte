@@ -1,16 +1,22 @@
-import { createIcon } from './convertors/components/icon';
-import { itemComponentCreatorsFactory } from './convertors/components';
-import { ItemComponentCreator } from './convertors/components/index';
+import {
+  hintSnakeCaseComponent,
+  hintSnakeCaseFields,
+} from '@ferolyte/common/content/diagnostics/snake-case-hint';
+import { itemComponentRegistry } from '../generated/item/registry';
+import {
+  convertWithOverride,
+  passthroughNormalizers,
+} from '../generated/runtime';
+import { itemOverrides } from './overrides';
 import { convertMenuCategory } from './convertors/components/menu-category/convert-category';
 import { ItemConfig } from './interfaces/item-config';
 import { MinecraftItem } from './interfaces/minecraft-item';
-import {
-  ItemIconPackConfig,
-  ItemTextureEntry,
-  resolveItemIcon,
-} from './utils/resolve-item-icon';
 import { ContentBuilder } from '@ferolyte/common/content/interfaces/content-builder';
-import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import {
+  ContentDiagnosticContext,
+  logContentError,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { isVersionAtLeast } from '@ferolyte/common/content/versions/compare-version';
 import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
 
 export class ItemBuilder implements ContentBuilder {
@@ -18,8 +24,6 @@ export class ItemBuilder implements ContentBuilder {
 
   private config: ItemConfig;
   private buildContext?: ContentDiagnosticContext;
-  private packConfig?: ItemIconPackConfig;
-  private itemTextureEntries: ItemTextureEntry[] = [];
 
   constructor(config: ItemConfig) {
     this.config = config;
@@ -30,21 +34,11 @@ export class ItemBuilder implements ContentBuilder {
     return this;
   }
 
-  public withPackConfig(packConfig: ItemIconPackConfig): this {
-    this.packConfig = packConfig;
-    return this;
-  }
-
   public cloneConfig(): ItemConfig {
     return structuredClone(this.config);
   }
 
-  public getItemTextureEntries(): ItemTextureEntry[] {
-    return this.itemTextureEntries;
-  }
-
   public build(): MinecraftItem {
-    this.itemTextureEntries = [];
     const { config } = this;
 
     const item: MinecraftItem = {
@@ -59,8 +53,30 @@ export class ItemBuilder implements ContentBuilder {
 
     this.formatDescription(item);
     this.formatComponents(item);
+    this.validateHasComponents(item);
 
     return item;
+  }
+
+  /**
+   * Since format version 1.26.30 an item without components is invalid.
+   */
+  private validateHasComponents(item: MinecraftItem) {
+    const { version } = this.config;
+    if (
+      version === undefined ||
+      !isVersionAtLeast(version, '1.26.30') ||
+      Object.keys(item['minecraft:item'].components ?? {}).length > 0
+    ) {
+      return;
+    }
+
+    logContentError(
+      this.buildContext !== undefined
+        ? { ...this.buildContext, section: 'components' }
+        : undefined,
+      `Items with format_version ${version} must define at least one component`,
+    );
   }
 
   private formatDescription(item: MinecraftItem) {
@@ -86,58 +102,54 @@ export class ItemBuilder implements ContentBuilder {
   }
 
   private formatComponents(item: MinecraftItem) {
-    const { components } = this.config;
+    const { components = {}, rawComponents = {} } = this.config;
 
-    if (components === undefined || Object.keys(components).length === 0) {
+    if (
+      Object.keys(components).length === 0 &&
+      Object.keys(rawComponents).length === 0
+    ) {
       return;
     }
 
     let itemComponents: MinecraftItem['minecraft:item']['components'] = {};
 
     for (const component in components) {
-      const factory = itemComponentCreatorsFactory[
-        component as keyof typeof itemComponentCreatorsFactory
-      ] as ItemComponentCreator | undefined;
+      const componentData = components[component as keyof typeof components];
+      const componentContext: ContentDiagnosticContext = {
+        contentType: 'item',
+        ...this.buildContext,
+        component,
+        fieldPath: undefined,
+        formatVersion:
+          this.config.version || this.buildContext?.minGameVersion || undefined,
+      };
+      const generated = itemComponentRegistry[component];
 
-      if (factory === undefined) {
-        itemComponents = {
-          ...itemComponents,
-          [component]: components[component as keyof typeof components],
-        };
+      if (generated === undefined) {
+        // Namespaced custom components pass through; unknown camelCase keys are reported.
+        hintSnakeCaseComponent(
+          component,
+          (camel) => camel in itemComponentRegistry,
+          componentContext,
+        );
+        if (component.includes(':')) {
+          itemComponents = { ...itemComponents, [component]: componentData };
+        } else {
+          logContentError(
+            componentContext,
+            `Item component "${component}" is not supported`,
+          );
+        }
         continue;
       }
 
-      const componentData = components[component as keyof typeof components];
-      const componentContext: ContentDiagnosticContext | undefined =
-        this.buildContext !== undefined
-          ? { ...this.buildContext, component, fieldPath: undefined }
-          : undefined;
-
-      let minecraftComponent: Record<string, unknown> | undefined;
-
-      if (
-        component === 'icon' &&
-        this.packConfig !== undefined &&
-        componentData !== undefined
-      ) {
-        const resolved = resolveItemIcon(
-          componentData as Parameters<typeof resolveItemIcon>[0],
-          this.config.identifier,
-          this.packConfig,
-        );
-
-        if (resolved !== undefined) {
-          this.itemTextureEntries.push(...resolved.textureEntries);
-          minecraftComponent = createIcon(
-            { textures: resolved.iconTextures },
-            componentContext,
-          );
-        }
-      }
-
-      if (minecraftComponent === undefined) {
-        minecraftComponent = factory(componentData, componentContext);
-      }
+      const minecraftComponent = convertWithOverride(
+        generated,
+        componentData,
+        passthroughNormalizers,
+        componentContext,
+        itemOverrides[component],
+      );
 
       if (minecraftComponent === undefined) {
         continue;
@@ -146,6 +158,9 @@ export class ItemBuilder implements ContentBuilder {
       itemComponents = { ...itemComponents, ...minecraftComponent };
     }
 
-    item['minecraft:item'].components = itemComponents;
+    item['minecraft:item'].components = {
+      ...itemComponents,
+      ...rawComponents,
+    };
   }
 }

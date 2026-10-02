@@ -1,0 +1,10 @@
+{
+  "x-new-component": "minecraft:scaffolding_climber",
+  "type": "object",
+  "description": "Makes an entity able to climb scaffolding.",
+  "additionalProperties": false,
+  "properties": {},
+  "x-deprecated": {
+    "reason": "not in the official Mojang schemas (any version from 1.21.80); the vanilla corpus does not prove a removal; no vanilla file of 1.21.90-1.26.50 uses it"
+  }
+}

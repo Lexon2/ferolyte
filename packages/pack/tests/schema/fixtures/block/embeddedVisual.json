@@ -1,0 +1,16 @@
+{
+  "component": "embeddedVisual",
+  "config": {
+    "geometry": "test",
+    "materialInstances": {
+      "up": "test",
+      "down": "test",
+      "north": "test",
+      "south": "test",
+      "east": "test",
+      "west": "test",
+      "side": "test",
+      "*": "test"
+    }
+  }
+}

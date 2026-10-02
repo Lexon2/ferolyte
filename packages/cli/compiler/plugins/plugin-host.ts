@@ -8,7 +8,10 @@ import {
   BeforeFileWriteEvent,
   BeforeFileWriteResult,
   BuildEvent,
+  FerolyteMinecraftContext,
   FileEvent,
+  StopEvent,
+  StopReason,
   WatchReadyEvent,
 } from './types';
 
@@ -17,6 +20,17 @@ let profileName = '';
 let afterLoadEmitted = false;
 let afterLoadPending = false;
 let pendingAfterLoadEvent: AfterLoadEvent | undefined;
+let abortController = new AbortController();
+let stopPromise: Promise<void> | undefined;
+
+const BEFORE_STOP_TIMEOUT_MS = 5000;
+let minecraftContext: FerolyteMinecraftContext | undefined;
+
+export const setMinecraftContext = (
+  context: FerolyteMinecraftContext | undefined,
+) => {
+  minecraftContext = context;
+};
 
 const createPathsSnapshot = (): FerolytePluginPaths => {
   const { PACKS } = BUILD_CONTEXT;
@@ -83,6 +97,8 @@ export const initPlugins = (
   afterLoadEmitted = false;
   afterLoadPending = false;
   pendingAfterLoadEvent = undefined;
+  abortController = new AbortController();
+  stopPromise = undefined;
 };
 
 export const getActiveProfile = () => profileName;
@@ -95,6 +111,8 @@ export const createBuildEvent = (): BuildEvent => ({
 export const createWatchReadyEvent = (): WatchReadyEvent => ({
   profile: profileName,
   paths: createPathsSnapshot(),
+  signal: abortController.signal,
+  minecraft: minecraftContext,
 });
 
 export const createFileEvent = (
@@ -133,7 +151,7 @@ export const emitAfterLoad = async () => {
 };
 
 export const emitHook = async (
-  hookName: Exclude<FerolytePluginHookName, 'beforeFileWrite' | 'afterLoad'>,
+  hookName: Exclude<FerolytePluginHookName, 'beforeFileWrite' | 'afterLoad' | 'beforeStop'>,
   event: BuildEvent | FileEvent | WatchReadyEvent,
 ) => {
   for (const plugin of plugins) {
@@ -207,4 +225,47 @@ export const createAfterLoadEvent = (
   profile: profileName,
   paths: createPathsSnapshot(),
   files,
+  signal: abortController.signal,
+  minecraft: minecraftContext,
 });
+
+const runBeforeStop = async (plugin: FerolytePlugin, event: StopEvent) => {
+  if (!plugin.beforeStop) {
+    return;
+  }
+
+  let timer: NodeJS.Timeout | undefined;
+  const timeout = new Promise<void>((resolve) => {
+    timer = setTimeout(() => {
+      console.error(
+        `[ferolyte:plugin:${plugin.name}] "beforeStop" timed out after ${BEFORE_STOP_TIMEOUT_MS} ms`,
+      );
+      resolve();
+    }, BEFORE_STOP_TIMEOUT_MS);
+  });
+
+  try {
+    await Promise.race([runPluginHook(plugin, 'beforeStop', event), timeout]);
+  } finally {
+    clearTimeout(timer);
+  }
+};
+
+/**
+ * Aborts plugin signals and calls `beforeStop` on every plugin.
+ * Idempotent: repeated calls return the same promise. Never throws.
+ */
+export const stopPlugins = (reason: StopReason): Promise<void> => {
+  if (stopPromise) {
+    return stopPromise;
+  }
+
+  stopPromise = (async () => {
+    abortController.abort();
+    const event: StopEvent = { profile: profileName, reason };
+
+    await Promise.all(plugins.map((plugin) => runBeforeStop(plugin, event)));
+  })();
+
+  return stopPromise;
+};

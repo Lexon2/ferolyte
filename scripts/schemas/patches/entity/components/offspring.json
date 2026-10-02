@@ -1,0 +1,24 @@
+{
+  "properties": {
+    "property_inheritance": {
+      "type": "object",
+      "description": "Entity properties copied from the parents (1.26.50).",
+      "additionalProperties": {}
+    },
+    "deny_parents_variant": {
+      "type": "object",
+      "description": "Chance of a baby that does not inherit the parents' variant.",
+      "properties": {
+        "chance": {
+          "type": "number"
+        },
+        "min_variant": {
+          "type": "integer"
+        },
+        "max_variant": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

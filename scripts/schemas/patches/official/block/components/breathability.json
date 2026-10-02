@@ -1,0 +1,8 @@
+{
+  "x-new-component": "minecraft:breathability",
+  "x-official": "official 1.26.20–1.26.20",
+  "title": "Block Breathability Component",
+  "type": "object",
+  "additionalProperties": {},
+  "x-free-form": "the official Mojang schema has a body without properties"
+}

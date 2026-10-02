@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { BlockBuilder } from '@ferolyte/pack/content/block/block-builder';
 import { minimalBlockConfig } from './helpers/fixtures';
 
@@ -63,10 +63,10 @@ describe('BlockBuilder', () => {
     expect(block['minecraft:block'].components).toBeUndefined();
   });
 
-  it('passes through unknown components', () => {
+  it('passes through rawComponents', () => {
     const block = new BlockBuilder(
       minimalBlockConfig({
-        components: {
+        rawComponents: {
           'test:custom_component': { value: 1 },
         },
       }),
@@ -126,5 +126,31 @@ describe('BlockBuilder', () => {
     clone.components = { replaceable: false };
 
     expect(builder.cloneConfig().components?.replaceable).toBe(true);
+  });
+
+  it('defaults format_version by minGameVersion', () => {
+    const build = (minGameVersion?: string) =>
+      new BlockBuilder({ identifier: 'test:block' })
+        .withBuildContext({ minGameVersion })
+        .build().format_version;
+
+    expect(build()).toBe('1.21.70');
+    expect(build('1.26.20')).toBe('1.21.70');
+    expect(build('1.26.40')).toBe('1.26.40');
+    expect(build('1.26.50')).toBe('1.26.50');
+    expect(build('1.27.0')).toBe('1.26.50');
+  });
+
+  it('passes components to the multi block trait validation', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const block = new BlockBuilder({
+      identifier: 'test:block',
+      traits: { multiBlock: { direction: 'north' } },
+      components: { randomOffset: { x: { steps: 2 } } },
+    }).build();
+
+    expect(block['minecraft:block'].description.traits).toEqual({});
+    expect(error).toHaveBeenCalled();
+    error.mockRestore();
   });
 });

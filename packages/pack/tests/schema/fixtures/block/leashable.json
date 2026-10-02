@@ -1,0 +1,6 @@
+{
+  "component": "leashable",
+  "config": {
+    "offset": [1, 1, 1]
+  }
+}

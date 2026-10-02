@@ -1,0 +1,9 @@
+{
+  "component": "blockEntity",
+  "config": {
+    "dynamicProperties": true,
+    "container": {
+      "slotCount": 27
+    }
+  }
+}

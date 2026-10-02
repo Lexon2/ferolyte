@@ -34,7 +34,13 @@
     "lint": "eslint \"./packages/**/*.ts\"",
     "lint:fix": "eslint \"./packages/**/*.ts\" --fix",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "schemas": "node scripts/schemas/fetch.mjs && node scripts/schemas/report.mjs",
+    "schemas:official": "node scripts/schemas/fetch-samples.mjs && node scripts/schemas/compare-official.mjs && node scripts/schemas/classify-official.mjs",
+    "schemas:official:patches": "node scripts/schemas/fetch-samples.mjs && node scripts/schemas/generate-official-patches.mjs && node scripts/schemas/codegen.mjs",
+    "codegen:check": "node scripts/schemas/codegen-check.mjs",
+    "codegen": "node scripts/schemas/fetch.mjs && node scripts/schemas/fetch-samples.mjs && node scripts/schemas/codegen.mjs",
+    "roundtrip": "node scripts/schemas/fetch.mjs && node scripts/schemas/fetch-samples.mjs && node scripts/schemas/roundtrip.mjs"
   },
   "dependencies": {
     "@minecraft/server": "^2.6.0",
@@ -42,13 +48,15 @@
     "@minecraft/vanilla-data": "^1.26.20"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.8",
+    "@eslint/js": "^9.39.4",
     "@ferolyte/cli": "workspace:*",
     "@ferolyte/common": "workspace:*",
     "@ferolyte/pack": "workspace:*",
-    "@changesets/cli": "^2.29.8",
-    "@eslint/js": "^9.39.4",
     "@stylistic/eslint-plugin-ts": "^4.2.0",
     "@typescript-eslint/parser": "^8.29.0",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
     "eslint": "^9.39.4",
     "eslint-import-resolver-typescript": "^4.3.1",
     "eslint-plugin-import-x": "^4.10.3",

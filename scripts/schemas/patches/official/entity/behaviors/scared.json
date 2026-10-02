@@ -1,0 +1,15 @@
+{
+  "properties": {
+    "sound_delay": {
+      "default": 0,
+      "description": "The interval in which a sound will play when active in a 1/delay chance to kick off.",
+      "type": "integer",
+      "x-since": "1.26.30"
+    },
+    "sound_interval": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    }
+  }
+}

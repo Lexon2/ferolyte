@@ -1,0 +1,8 @@
+{
+  "x-new-component": "minecraft:memory_sensor.game_event",
+  "x-official": "official 1.26.20–1.26.50",
+  "title": "Game Event Sensor Component Definition",
+  "type": "object",
+  "additionalProperties": {},
+  "x-free-form": "the official Mojang schema has a body without properties"
+}

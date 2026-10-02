@@ -64,7 +64,7 @@ export const convertMenuCategory = (
     result.group = input.group;
   }
 
-  return result as ItemMenuCategory;
+  return result as unknown as ItemMenuCategory;
 };
 
 export const validateCategory = (

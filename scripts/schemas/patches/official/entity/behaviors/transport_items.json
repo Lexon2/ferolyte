@@ -1,0 +1,18 @@
+{
+  "properties": {
+    "control_flags": {
+      "default": [],
+      "items": {
+        "enum": [
+          "move",
+          "look",
+          "jump"
+        ],
+        "title": "Goal's control flags",
+        "type": "string"
+      },
+      "type": "array",
+      "x-since": "1.21.100"
+    }
+  }
+}

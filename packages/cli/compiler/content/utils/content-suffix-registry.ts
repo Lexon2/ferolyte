@@ -21,6 +21,8 @@ export const DEFAULT_CONTENT_SUFFIXES: Record<
   item: ['item'],
   'server-entity': ['se'],
   'client-entity': ['ce'],
+  'animation-controller-bp': ['ac.bp'],
+  'animation-controller-rp': ['ac.rp'],
 };
 
 const CONTENT_TYPE_TO_METADATA: Record<
@@ -31,6 +33,8 @@ const CONTENT_TYPE_TO_METADATA: Record<
   item: CONTENT_METADATA.ITEM,
   'server-entity': CONTENT_METADATA.SERVER_ENTITY,
   'client-entity': CONTENT_METADATA.CLIENT_ENTITY,
+  'animation-controller-bp': CONTENT_METADATA.ANIMATION_CONTROLLER_BP,
+  'animation-controller-rp': CONTENT_METADATA.ANIMATION_CONTROLLER_RP,
 };
 
 const CONTENT_TYPE_OUTPUT_DIRS: Record<
@@ -41,6 +45,8 @@ const CONTENT_TYPE_OUTPUT_DIRS: Record<
   item: { pack: 'BP', subdir: 'items' },
   'server-entity': { pack: 'BP', subdir: 'entities' },
   'client-entity': { pack: 'RP', subdir: 'entity' },
+  'animation-controller-bp': { pack: 'BP', subdir: 'animation_controllers' },
+  'animation-controller-rp': { pack: 'RP', subdir: 'animation_controllers' },
 };
 
 interface ContentSuffixRule {

@@ -1,0 +1,10 @@
+{
+  "component": "transformation",
+  "config": {
+    "rotation": [1, 1, 1],
+    "scale": [1, 1, 1],
+    "translation": [1, 1, 1],
+    "scalePivot": [1, 1, 1],
+    "rotationPivot": [1, 1, 1]
+  }
+}

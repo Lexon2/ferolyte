@@ -1,0 +1,1 @@
+{ "properties": { "look_distance": { "type": "number", "description": "Not documented in the schemas, used by vanilla." } } }

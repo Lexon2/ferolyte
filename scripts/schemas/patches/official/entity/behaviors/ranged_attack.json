@@ -1,0 +1,56 @@
+{
+  "properties": {
+    "attack_radius": {
+      "x-removed": {
+        "since": "1.26.50",
+        "replacement": [
+          "attackRange"
+        ],
+        "reason": "the official schema of minecraft:behavior.ranged_attack has it in 1.26.40–1.26.40 and drops it from 1.26.50. Vanilla corpus uses it in 1.26.30: 4, 1.26.0: 4, 1.26.20: 1."
+      },
+      "x-evidence": {
+        "method": "official per-version schemas (metadata/json_schemas)",
+        "component": "minecraft:behavior.ranged_attack",
+        "field": "attack_radius",
+        "officialVersions": [
+          "1.26.40"
+        ],
+        "vanillaUsage": {
+          "1.26.30": 4,
+          "1.26.0": 4,
+          "1.26.20": 1
+        }
+      }
+    },
+    "attack_radius_min": {
+      "x-removed": {
+        "since": "1.26.50",
+        "replacement": [
+          "attackRange"
+        ],
+        "reason": "the official schema of minecraft:behavior.ranged_attack has it in 1.26.40–1.26.40 and drops it from 1.26.50. Vanilla corpus uses it in 1.26.20: 1."
+      },
+      "x-evidence": {
+        "method": "official per-version schemas (metadata/json_schemas)",
+        "component": "minecraft:behavior.ranged_attack",
+        "field": "attack_radius_min",
+        "officialVersions": [
+          "1.26.40"
+        ],
+        "vanillaUsage": {
+          "1.26.20": 1
+        }
+      }
+    },
+    "attack_interval_min": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.20: 1, 1.26.0: 3."
+      }
+    },
+    "attack_interval_max": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.20: 1, 1.26.0: 3."
+      }
+    }
+  }
+}

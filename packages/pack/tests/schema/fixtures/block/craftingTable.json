@@ -1,0 +1,7 @@
+{
+  "component": "craftingTable",
+  "config": {
+    "craftingTags": ["test"],
+    "tableName": "test"
+  }
+}

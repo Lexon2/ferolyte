@@ -1,0 +1,6 @@
+{
+  "component": "storageWeightLimit",
+  "config": {
+    "maxWeightLimit": 1
+  }
+}

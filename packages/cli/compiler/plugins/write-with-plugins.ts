@@ -1,8 +1,10 @@
+import { logger } from '../utils/logger';
 import { readFile } from 'fs/promises';
-import { parse as parseJsonc } from 'jsonc-parser';
 
 import { BUILD_CONTEXT } from '../build-context';
+import { serializeJson } from '../content/utils/serialize-json';
 import { writeFileByPath } from '../content/utils/write-file-by-path';
+import { parseJsonc } from '../utils/read-jsonc';
 import { FerolyteFileKind } from './types';
 import { createBeforeFileWriteEvent, emitBeforeFileWrite } from './plugin-host';
 
@@ -11,26 +13,35 @@ export interface WriteWithPluginsResult {
   destinationPath: string;
 }
 
-const minifyJsonData = (
+const normalizeJsonData = (
+  sourcePath: string,
   destinationPath: string,
   data: string | Buffer,
+  kind: FerolyteFileKind,
 ): string | Buffer => {
-  if (!BUILD_CONTEXT.PACKS.MINIFY_JSON || !destinationPath.endsWith('.json')) {
+  if (
+    !destinationPath.endsWith('.json') ||
+    (kind !== 'copy' && !BUILD_CONTEXT.PACKS.MINIFY_JSON)
+  ) {
     return data;
   }
 
   const text = typeof data === 'string' ? data : data.toString('utf-8');
+  const result = parseJsonc(text);
 
-  try {
-    const parsed = parseJsonc(text);
-    if (parsed === undefined) {
-      return data;
-    }
-
-    return JSON.stringify(parsed);
-  } catch {
+  if (!result.ok) {
+    const [first] = result.errors;
+    logger.warn(
+      `Invalid JSONC, copied as is: ${sourcePath}:${first.line}:${first.column + 1}: ${first.message}`,
+    );
     return data;
   }
+
+  if (result.value === undefined) {
+    return data;
+  }
+
+  return serializeJson(result.value);
 };
 
 export const writeWithPlugins = async (
@@ -58,7 +69,12 @@ export const writeWithPlugins = async (
   }
 
   const rawData = result.data ?? data;
-  const finalData = minifyJsonData(finalDestination, rawData);
+  const finalData = normalizeJsonData(
+    sourcePath,
+    finalDestination,
+    rawData,
+    kind,
+  );
   await writeFileByPath(finalDestination, finalData, encoding);
 
   return {

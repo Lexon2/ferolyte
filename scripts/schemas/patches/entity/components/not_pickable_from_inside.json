@@ -1,0 +1,7 @@
+{
+  "x-new-component": "minecraft:not_pickable_from_inside",
+  "type": "object",
+  "description": "Prevents the entity from being picked (targeted by the crosshair) while the player camera is inside of it. Added in 1.26.40.",
+  "additionalProperties": false,
+  "properties": {}
+}

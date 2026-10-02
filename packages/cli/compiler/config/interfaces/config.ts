@@ -12,11 +12,27 @@ export type FerolyteContentTypeKey =
   | 'block'
   | 'item'
   | 'server-entity'
-  | 'client-entity';
+  | 'client-entity'
+  | 'animation-controller-bp'
+  | 'animation-controller-rp';
 
 export type FerolyteContentSuffixConfig = Partial<
   Record<FerolyteContentTypeKey, string | string[]>
 >;
+
+export interface FerolyteLangConfig {
+  /**
+   * Locale used for plain-string `displayName` values.
+   * @default 'en_US'
+   */
+  defaultLocale?: string;
+
+  /**
+   * Locales that always get a `texts/<locale>.lang` file. Entries without a
+   * translation fall back to the default locale.
+   */
+  locales?: string[];
+}
 
 export interface FerolytePackConfig {
   /**
@@ -88,6 +104,12 @@ export interface FerolytePackConfig {
    * ```
    */
   contentSuffixes?: FerolyteContentSuffixConfig;
+
+  /**
+   * Generation of `texts/*.lang` from content `displayName` values.
+   * Generated entries are merged with the `texts/*.lang` files of the resource pack input.
+   */
+  lang?: FerolyteLangConfig;
 }
 
 export interface FerolyteScriptsConfig {
@@ -106,9 +128,36 @@ export interface FerolyteScriptsConfig {
   minify?: boolean;
 }
 
+export interface FerolyteServerHttpConfig {
+  port: number;
+  /** Only loopback is allowed. */
+  host?: '127.0.0.1';
+}
+
+export interface FerolyteServerConfig {
+  /**
+   * Port of the WebSocket hub the game connects to (`/connect localhost:<port>`).
+   * @default 8080
+   */
+  port?: number;
+
+  /**
+   * Optional HTTP API (`/status`, `/command`, `/scriptevent`, `/events`, `/subscribe`
+   * plus plugin routes). Disabled by default.
+   */
+  http?: false | FerolyteServerHttpConfig;
+
+  /**
+   * Send `/reload` to the game after pack files change in watch mode.
+   * @default false
+   */
+  reloadOnPackChange?: boolean;
+}
+
 export interface FerolyteProfileConfig {
   packs: FerolytePackConfig;
   scripts?: FerolyteScriptsConfig;
+  server?: FerolyteServerConfig;
   /**
    * The path to the tsconfig file for the pack.
    *

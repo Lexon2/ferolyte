@@ -5,7 +5,7 @@ import { ServerEntityBuilder } from '@ferolyte/pack/content/server-entity/server
 import { minimalServerEntityConfig } from './helpers/fixtures';
 
 describe('ServerEntityBuilder component conversion', () => {
-  it('skips invalid registered components and logs diagnostics', () => {
+  it('keeps invalid registered components in the output and logs diagnostics', () => {
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     const entity = new ServerEntityBuilder(
@@ -23,7 +23,9 @@ describe('ServerEntityBuilder component conversion', () => {
       })
       .build();
 
+    // Generated components are validated, not dropped: Minecraft decides what to do with them.
     expect(entity['minecraft:entity'].components).toEqual({
+      'minecraft:dash_action': { direction: 'invalid' },
       'minecraft:shareables': { all_items: true },
     });
 

@@ -1,0 +1,13 @@
+{
+  "minecraft:addrider": "addRider",
+  "minecraft:behavior.dragonchargeplayer": "dragonChargePlayer",
+  "minecraft:behavior.dragondeath": "dragonDeath",
+  "minecraft:behavior.dragonflaming": "dragonFlaming",
+  "minecraft:behavior.dragonholdingpattern": "dragonHoldingPattern",
+  "minecraft:behavior.dragonlanding": "dragonLanding",
+  "minecraft:behavior.dragonscanning": "dragonScanning",
+  "minecraft:behavior.dragonstrafeplayer": "dragonStrafePlayer",
+  "minecraft:behavior.dragontakeoff": "dragonTakeoff",
+  "minecraft:behavior.ocelotattack": "ocelotAttack",
+  "minecraft:behavior.stay_near_noteblock": "stayNearNoteBlock"
+}

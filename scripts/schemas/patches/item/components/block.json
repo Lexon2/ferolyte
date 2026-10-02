@@ -1,0 +1,8 @@
+{
+  "x-new-component": "minecraft:block",
+  "type": "string",
+  "description": "Block placed by the item (vanilla; not in the schemas).",
+  "x-deprecated": {
+    "reason": "not in the official Mojang schemas (item index 1.26.30); the vanilla corpus items still use it"
+  }
+}

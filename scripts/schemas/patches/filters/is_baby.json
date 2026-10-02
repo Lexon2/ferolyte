@@ -1,0 +1,12 @@
+{
+  "x-new-component": "is_baby",
+  "type": "object",
+  "description": "Filter test used by vanilla but missing from the Blockception schemas.",
+  "properties": {
+    "test": { "type": "string", "const": "is_baby" },
+    "subject": { "type": "string" },
+    "operator": { "type": "string" },
+    "domain": { "type": "string" },
+    "value": {}
+  }
+}

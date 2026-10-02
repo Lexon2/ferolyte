@@ -5,8 +5,18 @@ import { BUILD_CONTEXT } from '../build-context';
 import { CompilerActionOptions, resolveCompilerOptions } from './options';
 import { loadConfig } from '../config/load-config';
 import { createPacksOutputPathFromInputPath } from './utils/create-output-path';
-import { getBuildCacheDistDir } from '../content/utils/build-cache-dist-dir';
 import { FerolyteContentBuilder } from '../core/builder';
+import { clearGraph } from '../core/graph';
+import { ensureIdsFile } from '../registry/ids-generator';
+import { clearRegistry } from '../registry/project-registry';
+import { refreshRegistry } from '../registry/refresh';
+import { DEFAULT_CONCURRENCY, mapLimit } from '../utils/map-limit';
+import {
+  clearAllLang,
+  flushLang,
+  isLangInput,
+  markLangDirty,
+} from '../lang/lang-registry';
 import { isFerolyteContentFile } from '../core/utils/is-content-file';
 import {
   createAfterLoadEvent,
@@ -18,10 +28,13 @@ import {
 } from '../plugins/plugin-host';
 import { copyWithPlugins } from '../plugins/write-with-plugins';
 import { clearAllContentOutputs } from '../content/utils/content-output-registry';
-import {
-  clearAllSourceItemTextures,
-  flushItemTextures,
-} from '../content/items/item-texture-atlas';
+import { collectDiagnostics } from '../check/diagnostics-collector';
+import type { ContentDiagnosticRecord } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { getBuildMetrics, resetBuildMetrics } from '../core/build-metrics';
+import { getLangStats } from '../lang/lang-registry';
+import { BuildStats, formatBuildSummary } from '../utils/format-output';
+import { logger } from '../utils/logger';
+import { printDiagnostics } from '../utils/report';
 
 const SKIP_DIRECTORIES = new Set(['node_modules', '.git', '.ferolyte', 'dist']);
 
@@ -30,7 +43,7 @@ const SKIP_DIRECTORIES = new Set(['node_modules', '.git', '.ferolyte', 'dist']);
  * @param dir - The directory to walk through.
  * @returns An async generator of file paths.
  */
-async function* walkFiles(dir: string): AsyncGenerator<string> {
+export async function* walkFiles(dir: string): AsyncGenerator<string> {
   const files = await readdir(dir, { withFileTypes: true });
 
   for (const file of files) {
@@ -65,7 +78,10 @@ const createBuildDictionary = async (): Promise<
     INPUT_RESOURCE_PACK_PATH,
   ]) {
     for await (const file of walkFiles(inputPath)) {
-      if (!file.endsWith('.ts')) {
+      if (isLangInput(file)) {
+        // texts/*.lang and languages.json are merged by the lang generator
+        markLangDirty();
+      } else if (!file.endsWith('.ts')) {
         const outputPath = createPacksOutputPathFromInputPath(file);
 
         if (outputPath) {
@@ -88,77 +104,145 @@ const clearBuildDirectory = async () => {
     BUILD_CONTEXT.PACKS;
 
   await Promise.all([
-    rm(getBuildCacheDistDir(), { recursive: true, force: true }),
     rm(OUTPUT_BEHAVIOR_PACK_PATH, { recursive: true, force: true }),
     rm(OUTPUT_RESOURCE_PACK_PATH, { recursive: true, force: true }),
   ]);
 };
 
 /**
- * Builds the content.
+ * Builds the content and prints a summary (unless `--quiet`).
+ * @returns Phase timings and counters of the build.
  */
-export const build = async (options: CompilerActionOptions) => {
+export const build = async (options: CompilerActionOptions): Promise<BuildStats> => {
   const { profile, debug, diagnostics } = resolveCompilerOptions(options);
-
-  if (debug) {
-    console.log('🔄 Building...');
-  }
-  const startTime = Date.now();
+  const startTime = performance.now();
 
   await loadConfig(profile);
-  await emitHook('beforeBuild', createBuildEvent());
-  await clearBuildDirectory();
+  // Diagnostics are reported as one line each after the build.
+  const collector = collectDiagnostics({ silent: true });
+  resetBuildMetrics();
 
-  const [copyFilePaths, buildFilePaths] = await createBuildDictionary();
+  try {
+    await emitHook('beforeBuild', createBuildEvent());
+    await clearBuildDirectory();
 
-  clearAllContentOutputs();
-  clearAllSourceItemTextures();
+    const [copyFilePaths, buildFilePaths] = await createBuildDictionary();
 
-  await Promise.all(
-    buildFilePaths.map(async (file) => {
-      const result = await FerolyteContentBuilder.buildFile(file, {
-        debug: false, // Initial build is not verbose
+    clearGraph();
+    clearAllLang();
+    clearRegistry();
+    await ensureIdsFile();
+    clearAllContentOutputs();
+
+    const content = { json: 0, byType: {} as Record<string, number> };
+
+    // Bundling (native esbuild threads) and copying (I/O) are independent: run both.
+    const buildContent = async () => {
+      const results = await FerolyteContentBuilder.buildFiles(buildFilePaths, {
+        debug: false, // per-file output is shown with --verbose only
         diagnostics,
       });
 
-      if (!result) {
-        return;
+      for (const result of results) {
+        content.json += Array.isArray(result.outFile) ? result.outFile.length : 1;
+        const type = BUILD_CONTEXT.PACKS.CONTENT_SUFFIX_REGISTRY.resolveContentFile(
+          result.source,
+        )?.contentType;
+        if (type !== undefined) {
+          content.byType[type] = (content.byType[type] ?? 0) + 1;
+        }
       }
 
-      await emitHook(
-        'afterFileAdd',
-        createFileEvent(file, 'content', result.outFile),
+      await mapLimit(results, DEFAULT_CONCURRENCY, (result) =>
+        emitHook(
+          'afterFileAdd',
+          createFileEvent(result.source, 'content', result.outFile),
+        ),
       );
-    }),
-  );
 
-  await Promise.all(
-    Object.entries(copyFilePaths).map(async ([source, destination]) => {
-      const copyResult = await copyWithPlugins(source, destination);
+      return results.length;
+    };
 
-      if (!copyResult.written) {
-        return;
-      }
+    // Bounded: thousands of pack files must not be opened at once (EMFILE).
+    let copied = 0;
+    const copyFiles = async () => {
+      const copyStart = performance.now();
+      await mapLimit(
+        Object.entries(copyFilePaths),
+        DEFAULT_CONCURRENCY,
+        async ([source, destination]) => {
+          const copyResult = await copyWithPlugins(source, destination);
 
-      await emitHook(
-        'afterFileAdd',
-        createFileEvent(source, 'copy', copyResult.destinationPath),
+          if (!copyResult.written) {
+            return;
+          }
+          copied++;
+
+          await emitHook(
+            'afterFileAdd',
+            createFileEvent(source, 'copy', copyResult.destinationPath),
+          );
+        },
       );
-    }),
-  );
 
-  await flushItemTextures();
+      return performance.now() - copyStart;
+    };
 
-  await emitHook('afterBuild', createBuildEvent());
-  scheduleAfterLoad(
-    createAfterLoadEvent({
-      content: buildFilePaths,
-      copy: Object.keys(copyFilePaths),
-    }),
-  );
-  await emitAfterLoad();
+    const [builtFiles, copyMs] = await Promise.all([buildContent(), copyFiles()]);
 
-  if (debug) {
-    console.log(`🔄 Complete build in ${Date.now() - startTime}ms`);
+    const langStart = performance.now();
+    await flushLang({ force: true });
+    const langMs = performance.now() - langStart;
+
+    // Reference checks + generated ids (`.ferolyte/types/ids.ts`).
+    await refreshRegistry();
+
+    await emitHook('afterBuild', createBuildEvent());
+    scheduleAfterLoad(
+      createAfterLoadEvent({
+        content: buildFilePaths,
+        copy: Object.keys(copyFilePaths),
+      }),
+    );
+    await emitAfterLoad();
+
+    const metrics = getBuildMetrics();
+    const lang = getLangStats();
+    const stats: BuildStats = {
+      profile,
+      totalMs: performance.now() - startTime,
+      content: {
+        files: builtFiles,
+        json: content.json,
+        byType: content.byType,
+        bundleMs: metrics.bundle,
+        evalMs: metrics.eval,
+        writeMs: metrics.write,
+      },
+      copy: { files: copied, ms: copyMs },
+      lang: { ...lang, ms: langMs },
+    };
+
+    collector.stop();
+    if (debug) {
+      printBuildReport(stats, collector.records);
+    }
+
+    return stats;
+  } finally {
+    collector.stop();
   }
+};
+
+const printBuildReport = (
+  stats: BuildStats,
+  records: readonly ContentDiagnosticRecord[],
+) => {
+  const errors = records.filter((record) => record.severity === 'error').length;
+  const warnings = records.length - errors;
+
+  logger.info(
+    formatBuildSummary(stats, { warnings, errors }, { color: logger.useColor }),
+  );
+  printDiagnostics(records);
 };

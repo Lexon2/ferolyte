@@ -1,0 +1,23 @@
+{
+  "x-new-component": "minecraft:behavior.follow_target_captain",
+  "type": "object",
+  "description": "Allows the mob to follow its target captain.",
+  "additionalProperties": false,
+  "properties": {
+    "priority": {
+      "type": "integer"
+    },
+    "follow_distance": {
+      "type": "number"
+    },
+    "speed_multiplier": {
+      "type": "number"
+    },
+    "within_radius": {
+      "type": "number"
+    }
+  },
+  "x-deprecated": {
+    "reason": "not in the official Mojang schemas (any version from 1.21.80); the vanilla corpus does not prove a removal; vanilla format 1.26.0 still uses it in 2/33 files and nothing replaces it"
+  }
+}

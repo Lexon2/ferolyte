@@ -1,0 +1,7 @@
+{
+  "component": "movable",
+  "config": {
+    "movementType": "popped",
+    "sticky": "none"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "x-new-component": "minecraft:hover_text_color",
+  "description": "Color of the item name while hovering. A color string, or `{ value }`.",
+  "oneOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Specifies the color of the item's hover text."
+        }
+      }
+    }
+  ]
+}

@@ -1,9 +1,23 @@
-import { Identifier } from '@ferolyte/common/types';
+import { LocalizedString } from '@ferolyte/common/content/localization/localized-string';
+import { Identifier, LooseString } from '@ferolyte/common/types';
 
 import { ColorValue } from '../../../content/common/types/color-value';
 import { ItemMenuCategory } from '../../item/interfaces/item-menu-category';
 import { BlockTags } from '../components/tags';
 import { Molang } from '../../molang';
+
+import type {
+  GeneratedBlockComponents,
+} from '../../generated/block/components';
+import type {
+  ConnectionTrait,
+  MultiBlockTrait,
+  PlacementDirectionTrait,
+  PlacementPositionTrait,
+} from '../../generated/block/traits';
+
+// The typed block components keep their pre-codegen names.
+export type * from '../../generated/block/components';
 
 // Interface for block states
 export interface BlockStates {
@@ -14,22 +28,45 @@ export interface BlockStates {
     | boolean[];
 }
 
-// Interface for block traits
+// Interface for block traits (generated from the schemas; `states` / `yRotation` are SDK aliases)
+/** A trait accepts `enabledStates` (schema name) or its SDK alias `states` — exactly one of the two. */
+type WithStatesAlias<T extends { enabledStates?: unknown }, Extra = {}> =
+  | (T & Extra)
+  | (Omit<T, 'enabledStates'> & Extra & { states: T['enabledStates'] });
+
 export interface BlockTraits {
   /**
    * Placement direction trait
+   * @minecraft minecraft:placement_direction
    */
-  placementDirection?: {
-    states?: ('minecraft:cardinal_direction' | 'minecraft:facing_direction')[];
-    yRotation?: 90 | 180 | 270 | -90 | -180 | -270;
-  };
+  placementDirection?: WithStatesAlias<
+    PlacementDirectionTrait,
+    {
+      /** Alias of `yRotationOffset` (horizontal state values only). */
+      yRotation?: 90 | 180 | 270 | -90 | -180 | -270;
+    }
+  >;
 
   /**
    * Placement position trait
+   * @minecraft minecraft:placement_position
    */
-  placementPosition?: {
-    states?: ('minecraft:block_face' | 'minecraft:vertical_half')[];
-  };
+  placementPosition?: WithStatesAlias<PlacementPositionTrait>;
+
+  /**
+   * Connection trait (fences, glass panes). Adds the
+   * `minecraft:connection_{north,east,south,west}` states.
+   * @minecraft minecraft:connection
+   */
+  connection?: WithStatesAlias<ConnectionTrait> | Record<string, never>;
+
+  /**
+   * Multi block trait (doors, beds). Treats several parts as a single block.
+   * Cannot be combined with `connection` or `placementPosition`; a horizontal
+   * direction also cannot be combined with `randomOffset`.
+   * @minecraft minecraft:multi_block
+   */
+  multiBlock?: MultiBlockTrait;
 }
 
 // Interface for block permutation
@@ -61,35 +98,6 @@ export interface BlockPermutationCondition {
 // Block component types
 export type Vector3 = [number, number, number];
 
-// Interface for collision box component
-export interface CollisionBoxComponent {
-  origin?: Vector3;
-  size?: Vector3;
-}
-
-// Interface for crafting table component
-export interface CraftingTableComponent {
-  craftingTags?: string[];
-  tableName?: string;
-}
-
-// Interface for destructible by explosion component
-export interface DestructibleByExplosionComponent {
-  /**
-   * Describes how resistant the block is to explosion. Greater values mean the block is less likely to break when near an explosion (or has higher resistance to explosions). The scale will be different for different explosion power levels. A negative value or 0 means it will easily explode; larger numbers increase level of resistance.
-   */
-  explosionResistance?: number;
-}
-
-// Interface for destructible by mining component
-export interface DestructibleByMiningComponent {
-  secondsToDestroy?: number;
-  itemSpecificSpeeds?: Array<{
-    item: string | { tags: string };
-    destroySpeed: number;
-  }>;
-}
-
 export type TintMethod =
   | 'none'
   | 'default_foliage'
@@ -99,49 +107,6 @@ export type TintMethod =
   | 'grass'
   | 'water';
 
-// Interface for destruction particles component
-export interface DestructionParticlesComponent {
-  texture?: string;
-  tintMethod?: TintMethod;
-  particleCount?: number;
-}
-
-// Interface for flammable component
-export interface FlammableComponent {
-  catchChanceModifier?: number;
-  destroyChanceModifier?: number;
-}
-
-// Interface for geometry component
-export interface GeometryComponent {
-  identifier: string;
-  boneVisibility?: Record<string, boolean | string>;
-  culling?: string;
-  cullingLayer?: string;
-  cullingShape?: string;
-  uvLock?: boolean | string[];
-}
-
-// Interface for item visual component
-export interface ItemVisualComponent {
-  geometry: string | GeometryComponent;
-  materialInstances: MaterialInstancesComponent;
-}
-
-export type EmbeddedVisualComponent = ItemVisualComponent;
-
-// Interface for liquid detection component
-export interface LiquidDetectionComponent {
-  detectionRules?: Array<{
-    canContainLiquid?: boolean;
-    liquidType?: 'water';
-    onLiquidTouches?: 'blocking' | 'broken' | 'popped' | 'no_reaction';
-    stopsLiquidFlowingFromDirection?: Array<
-      'up' | 'down' | 'north' | 'south' | 'east' | 'west' | 'side' | 'all'
-    >;
-    useLiquidClipping?: boolean;
-  }>;
-}
 
 // Interface for material instances component
 export const enum MaterialInstanceFace {
@@ -155,161 +120,34 @@ export const enum MaterialInstanceFace {
   All = '*',
 }
 
-export type MaterialInstancesComponent = {
-  [face in MaterialInstanceFace | (string & {})]?:
-    | string
-    | {
-        ambientOcclusion?: boolean | number;
-        faceDimming?: boolean;
-        renderMethod?:
-          | 'opaque'
-          | 'double_sided'
-          | 'blend'
-          | 'alpha_test'
-          | 'alpha_test_single_sided'
-          | 'blend_to_opaque'
-          | 'alpha_test_to_opaque'
-          | 'alpha_test_single_sided_to_opaque';
-        texture?: string;
-        isotropic?: boolean;
-        tintMethod?: TintMethod;
-        alphaMaskedTint?: boolean;
-      };
-};
-
 export type BlockFilterDescriptor =
   | string
   | { tags: string }
   | {
+      /**
+       * A minecraft block identifier.
+       * @minecraft name
+       */
       name: string;
+      /**
+       * @minecraft states
+       */
       states?: Record<string, boolean | number | string>;
+      /**
+       * Molang definition.
+       * @minecraft tags
+       */
       tags?: string;
     };
 
-// Interface for placement filter component
-export interface PlacementFilterComponent {
-  conditions?: Array<{
-    allowedFaces?: Array<
-      'up' | 'down' | 'north' | 'south' | 'east' | 'west' | 'side' | 'all'
-    >;
-    blockFilter?: BlockFilterDescriptor[];
-  }>;
-}
-
-// Interface for redstone conductivity component
-export interface RedstoneConductivityComponent {
-  allowsWireToStepDown?: boolean;
-  redstoneConductor?: boolean;
-}
-
-// Interface for selection box component
-export interface SelectionBoxComponent {
-  origin?: Vector3;
-  size?: Vector3;
-}
-
-// Interface for transformation component
-export interface TransformationComponent {
-  rotation?: Vector3;
-  scale?: Vector3;
-  translation?: Vector3;
-  scalePivot?: Vector3;
-  rotationPivot?: Vector3;
-}
-
-// Interface for tick component
-export interface TickComponent {
-  looping?: boolean;
-  intervalRange?: [number, number];
-}
-
-// Interface for entity fall on component
-export interface EntityFallOnComponent {
-  minFallDistance?: number;
-}
-
-export interface ChestObstructionComponent {
-  obstructionRule?: 'always' | 'never' | 'shape';
-}
-
-export interface ConnectionRuleComponent {
-  acceptsConnectionsFrom?: 'all' | 'none' | 'only_fences';
-  enabledDirections?: Array<'east' | 'north' | 'south' | 'west'>;
-}
-
-export interface LeashableComponent {
-  offset?: Vector3;
-}
-
-export interface MovableComponent {
-  movementType: 'push_pull' | 'push' | 'popped' | 'immovable';
-  sticky?: 'same' | 'none';
-}
-
-export interface PrecipitationInteractionsComponent {
-  precipitationBehavior:
-    | 'obstruct_rain'
-    | 'obstruct_rain_accumulate_snow'
-    | 'none'
-    | 'snow_log_no_collision';
-}
-
-export interface RandomOffsetAxis {
-  range?: { min?: number; max?: number };
-  steps?: number;
-}
-
-export interface RandomOffsetComponent {
-  x?: RandomOffsetAxis;
-  y?: RandomOffsetAxis;
-  z?: RandomOffsetAxis;
-}
-
-export interface RedstoneConsumerComponent {
-  minPower: number;
-  propagatesPower?: boolean;
-}
-
-export interface RedstoneProducerComponent {
-  power: number;
-  stronglyPoweredFace?: Array<
-    'up' | 'down' | 'north' | 'south' | 'east' | 'west' | 'side' | 'all'
-  >;
-  connectedFaces?: Array<
-    'up' | 'down' | 'north' | 'south' | 'east' | 'west' | 'side' | 'all'
-  >;
-  transformRelative?: boolean;
-}
-
-export interface SupportComponent {
-  shape: 'fence' | 'stair';
-}
-
-export type MapColorComponent =
-  | ColorValue
-  | { color: ColorValue; tintMethod?: string };
-
-// Main block components interface
-export interface BlockComponents<Legacy extends boolean = false> {
+// Block components. Generated from the Bedrock schemas (`npm run codegen`);
+// `tags`, `displayName` and `customComponents` accept SDK sugar (see `block/overrides.ts`).
+export interface BlockComponents<Legacy extends boolean = false>
+  extends Omit<GeneratedBlockComponents, 'tags' | 'displayName' | 'customComponents'> {
   /**
-   * Collision box for the block
+   * Custom components (`namespace:name`) registered in scripts. Emitted verbatim.
    */
-  collisionBox?: boolean | CollisionBoxComponent | CollisionBoxComponent[];
-
-  /**
-   * Chest obstruction rule
-   */
-  chestObstruction?: ChestObstructionComponent;
-
-  /**
-   * Makes block into a custom crafting table
-   */
-  craftingTable?: CraftingTableComponent;
-
-  /**
-   * Connection rule for fences, walls, etc.
-   */
-  connectionRule?: ConnectionRuleComponent;
+  [customComponent: `${string}:${string}`]: unknown;
 
   /**
    * Custom component definitions
@@ -318,152 +156,13 @@ export interface BlockComponents<Legacy extends boolean = false> {
   customComponents?: Legacy extends true ? string[] : never;
 
   /**
-   * Destructible by explosion properties
+   * Display name of the block. Converted to a language key automatically.
+   * @minecraft minecraft:display_name
    */
-  destructibleByExplosion?: boolean | DestructibleByExplosionComponent;
+  displayName?: LocalizedString;
 
   /**
-   * Destructible by mining properties
-   */
-  destructibleByMining?: boolean | DestructibleByMiningComponent;
-
-  /**
-   * Particles shown when the block is destroyed
-   */
-  destructionParticles?: DestructionParticlesComponent;
-
-  /**
-   * Display name of the block
-   */
-  displayName?: string;
-
-  /**
-   * Visual when embedded in another block (e.g. flowerpot)
-   */
-  embeddedVisual?: EmbeddedVisualComponent;
-
-  /**
-   * Flammable properties
-   */
-  flammable?: boolean | FlammableComponent;
-
-  /**
-   * Allows embedding in a flowerpot
-   */
-  flowerPottable?: boolean;
-
-  /**
-   * Friction value for the block (0.0-0.9)
-   */
-  friction?: number;
-
-  /**
-   * Geometry for the block
-   */
-  geometry?: string | GeometryComponent;
-
-  /**
-   * Item visual properties
-   */
-  itemVisual?: ItemVisualComponent;
-
-  /**
-   * Leash attachment offset
-   */
-  leashable?: LeashableComponent;
-
-  /**
-   * Light dampening value (0-15)
-   */
-  lightDampening?: number;
-
-  /**
-   * Light emission value (0-15)
-   */
-  lightEmission?: number;
-
-  /**
-   * Liquid detection properties
-   */
-  liquidDetection?: LiquidDetectionComponent;
-
-  /**
-   * Path to the loot table
-   */
-  loot?: string;
-
-  /**
-   * Color on maps
-   */
-  mapColor?: MapColorComponent;
-
-  /**
-   * Material instances for faces
-   */
-  materialInstances?: MaterialInstancesComponent;
-
-  /**
-   * Piston movement behavior
-   */
-  movable?: MovableComponent;
-
-  /**
-   * Placement filter conditions
-   */
-  placementFilter?: PlacementFilterComponent;
-
-  /**
-   * Rain and snow interaction behavior
-   */
-  precipitationInteractions?: PrecipitationInteractionsComponent;
-
-  /**
-   * Random position offset like foliage
-   */
-  randomOffset?: RandomOffsetComponent;
-
-  /**
-   * Redstone conductivity properties
-   */
-  redstoneConductivity?: RedstoneConductivityComponent;
-
-  /**
-   * Redstone signal consumer
-   */
-  redstoneConsumer?: RedstoneConsumerComponent;
-
-  /**
-   * Redstone signal producer
-   */
-  redstoneProducer?: RedstoneProducerComponent;
-
-  /**
-   * Block can be replaced when another block is placed
-   */
-  replaceable?: boolean;
-
-  /**
-   * Selection box for the block
-   */
-  selectionBox?: boolean | SelectionBoxComponent;
-
-  /**
-   * Support shape (fence, stair)
-   */
-  support?: SupportComponent;
-
-  /**
-   * Tick component properties
-   */
-  tick?: TickComponent;
-
-  /**
-   * Transformation properties
-   */
-  transformation?: TransformationComponent;
-
-  /**
-   * Block tags
+   * Block tags (`tag:<name>` keys are generated)
    */
   tags?: (BlockTags | (string & {}))[];
 }
@@ -477,12 +176,17 @@ export type BlockVersions =
   | '1.21.120'
   | '1.21.130'
   | '1.26.10'
-  | '1.26.20';
+  | '1.26.20'
+  | '1.26.30'
+  | '1.26.40'
+  | '1.26.50';
 
 /**
  * Main interface for block configuration
  */
-export interface BlockConfig<Version extends BlockVersions = BlockVersions> {
+export interface BlockConfig<
+  Version extends LooseString<BlockVersions> = LooseString<BlockVersions>,
+> {
   /**
    * Block version
    */
@@ -511,9 +215,16 @@ export interface BlockConfig<Version extends BlockVersions = BlockVersions> {
   /**
    * Block components
    */
-  components?:
-    | BlockComponents<Version extends '1.21.70' | '1.21.80' ? true : false>
-    | Record<Identifier, any>;
+  components?: BlockComponents<
+    Version extends '1.21.70' | '1.21.80' ? true : false
+  >;
+
+  /**
+   * Raw components
+   * @description Escape hatch for components that have no typed entry yet. Merged into the output as is.
+   * Not to be confused with `minecraft:custom_components`.
+   */
+  rawComponents?: Record<`${string}:${string}`, unknown>;
 
   /**
    * Block permutations based on states

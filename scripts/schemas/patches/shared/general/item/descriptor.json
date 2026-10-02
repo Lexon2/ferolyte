@@ -1,0 +1,12 @@
+{
+  "definitions": {
+    "object_item_descriptor": {
+      "properties": {
+        "name": { "type": "string", "description": "Identifier of the item or block (vanilla 1.26.50 also uses this form)." },
+        "states": { "type": "object", "description": "Block states to match." },
+        "count": { "type": "integer" },
+        "data": { "type": "integer" }
+      }
+    }
+  }
+}

@@ -1,11 +1,19 @@
-import { entityBehaviorConvertorsFactory } from './convertors/behavior-convertors.factory';
-import { entityComponentConvertorsFactory } from './convertors/component-convertors-factory';
+import {
+  hintSnakeCaseComponent,
+  hintSnakeCaseFields,
+} from '@ferolyte/common/content/diagnostics/snake-case-hint';
 import { convertEntityEvents } from './convertors/entity-events.convertor';
 import { convertEntityProperties } from './convertors/entity-properties.convertor';
 import { EntityBehaviors } from './interfaces/entity-behaviors';
+import { convertGeneratedEntity } from './convertors/generated-entity';
+import {
+  entityBehaviorRegistry,
+  entityComponentRegistry,
+} from '../generated/entity/registry';
 import { EntityComponents } from './interfaces/entity-components';
 import { MinecraftServerEntity } from './interfaces/minecraft-server-entity';
 import { ServerEntityConfig } from './interfaces/server-entity-config';
+import { formatEntityScriptsAnimate } from '../molang/parse-molang-expression';
 import {
   ContentDiagnosticContext,
   logContentError,
@@ -46,11 +54,32 @@ export class ServerEntityBuilder implements ContentBuilder {
     };
 
     this.formatDescription(entity);
+    this.validateProjectilePhysics();
     this.formatComponents(entity);
     this.formatComponentGroups(entity);
     this.formatEvents(entity);
 
     return entity;
+  }
+
+  /**
+   * `isolated_physics` cannot be combined with a vanilla projectile
+   * `runtime_identifier`.
+   */
+  private validateProjectilePhysics() {
+    const { runtimeIdentifier, components } = this.config;
+    if (
+      components?.projectile?.isolatedPhysics === true &&
+      typeof runtimeIdentifier === 'string' &&
+      runtimeIdentifier.startsWith('minecraft:')
+    ) {
+      logContentError(
+        this.buildContext !== undefined
+          ? { ...this.buildContext, component: 'projectile' }
+          : undefined,
+        `projectile.isolatedPhysics cannot be used with the vanilla runtimeIdentifier "${runtimeIdentifier}"`,
+      );
+    }
   }
 
   // @TODO: Add MinecraftEntity interface
@@ -88,7 +117,9 @@ export class ServerEntityBuilder implements ContentBuilder {
     }
 
     if (scripts !== undefined) {
-      description.scripts = scripts;
+      description.scripts = {
+        animate: formatEntityScriptsAnimate(scripts.animate),
+      };
     }
 
     if (properties !== undefined) {
@@ -117,52 +148,49 @@ export class ServerEntityBuilder implements ContentBuilder {
     for (const component in components) {
       if (component === 'behaviors') {
         const convertedBehaviors = this.convertBehaviors(components.behaviors);
-        if (convertedBehaviors === undefined) {
-          logContentError(
-            this.buildContext !== undefined
-              ? {
-                  ...this.buildContext,
-                  component: 'behaviors',
-                  fieldPath: undefined,
-                }
-              : undefined,
-            'Entity behaviors are invalid',
-          );
-          continue;
+        if (convertedBehaviors !== undefined) {
+          entityComponents = { ...entityComponents, ...convertedBehaviors };
         }
-        entityComponents = { ...entityComponents, ...convertedBehaviors };
         continue;
       }
 
-      const factory =
-        entityComponentConvertorsFactory[component as keyof EntityComponents];
-      if (factory === undefined) {
+      const componentContext: ContentDiagnosticContext = {
+        contentType: 'server-entity',
+        ...this.buildContext,
+        component,
+        fieldPath: undefined,
+        formatVersion: this.formatVersion(),
+      };
+      const generated = entityComponentRegistry[component];
+      if (generated === undefined) {
+        hintSnakeCaseComponent(
+          component,
+          (camel) => camel in entityComponentRegistry,
+          componentContext,
+        );
         logContentError(
-          this.buildContext !== undefined
-            ? { ...this.buildContext, component, fieldPath: undefined }
-            : undefined,
+          componentContext,
           `Entity component "${component}" is not supported`,
         );
         continue;
       }
-      const componentData = components[component as keyof typeof components];
-      const componentContext: ContentDiagnosticContext | undefined =
-        this.buildContext !== undefined
-          ? { ...this.buildContext, component, fieldPath: undefined }
-          : undefined;
 
-      const minecraftComponent = factory(componentData, componentContext);
-      if (minecraftComponent === undefined) {
-        logContentError(
-          componentContext,
-          `Entity component "${component}" is invalid`,
-        );
-        continue;
+      const converted = convertGeneratedEntity(
+        generated,
+        components[component as keyof typeof components],
+        componentContext,
+      );
+      if (converted !== undefined) {
+        entityComponents = { ...entityComponents, ...converted };
       }
-      entityComponents = { ...entityComponents, ...minecraftComponent };
     }
 
     return entityComponents;
+  }
+
+  /** The `version` of the config, else the profile `minGameVersion`. */
+  private formatVersion(): string | undefined {
+    return this.config.version || this.buildContext?.minGameVersion || undefined;
   }
 
   private convertBehaviors(behaviors: Partial<EntityBehaviors> | undefined) {
@@ -173,41 +201,30 @@ export class ServerEntityBuilder implements ContentBuilder {
     let entityBehaviors: any = {};
 
     for (const behavior in behaviors) {
-      const factory =
-        entityBehaviorConvertorsFactory[behavior as keyof EntityBehaviors];
-      if (factory === undefined) {
+      const behaviorContext: ContentDiagnosticContext = {
+        contentType: 'server-entity',
+        ...this.buildContext,
+        component: 'behaviors',
+        fieldPath: behavior,
+        formatVersion: this.formatVersion(),
+      };
+      const generated = entityBehaviorRegistry[behavior];
+      if (generated === undefined) {
         logContentError(
-          this.buildContext !== undefined
-            ? {
-                ...this.buildContext,
-                component: 'behaviors',
-                fieldPath: behavior,
-              }
-            : undefined,
+          behaviorContext,
           `Entity behavior "${behavior}" is not supported`,
         );
         continue;
       }
 
-      const behaviorData = behaviors[behavior as keyof typeof behaviors];
-      const behaviorContext: ContentDiagnosticContext | undefined =
-        this.buildContext !== undefined
-          ? {
-              ...this.buildContext,
-              component: 'behaviors',
-              fieldPath: behavior,
-            }
-          : undefined;
-
-      const minecraftBehavior = factory(behaviorData, behaviorContext);
-      if (minecraftBehavior === undefined) {
-        logContentError(
-          behaviorContext,
-          `Entity behavior "${behavior}" is invalid`,
-        );
-        continue;
+      const converted = convertGeneratedEntity(
+        generated,
+        behaviors[behavior as keyof typeof behaviors],
+        behaviorContext,
+      );
+      if (converted !== undefined) {
+        entityBehaviors = { ...entityBehaviors, ...converted };
       }
-      entityBehaviors = { ...entityBehaviors, ...minecraftBehavior };
     }
 
     return entityBehaviors;
@@ -219,10 +236,24 @@ export class ServerEntityBuilder implements ContentBuilder {
    */
   // @TODO: Add MinecraftEntity interface
   private formatComponents(entity: any) {
-    const { components } = this.config;
+    const { components, rawComponents } = this.config;
 
     const entityComponents = this.convertComponents(components);
-    entity['minecraft:entity'].components = entityComponents;
+    entity['minecraft:entity'].components = this.mergeRawComponents(
+      entityComponents,
+      rawComponents,
+    );
+  }
+
+  private mergeRawComponents(
+    converted: Record<string, unknown> | undefined,
+    raw: Record<string, unknown> | undefined,
+  ) {
+    if (raw === undefined || Object.keys(raw).length === 0) {
+      return converted;
+    }
+
+    return { ...converted, ...raw };
   }
 
   private formatComponentGroups(entity: any) {
@@ -237,9 +268,10 @@ export class ServerEntityBuilder implements ContentBuilder {
 
     entity['minecraft:entity'].component_groups = {};
 
-    for (const { components, name } of componentGroups) {
+    for (const { components, rawComponents, name } of componentGroups) {
       const entityComponents = this.convertComponents(components);
-      entity['minecraft:entity'].component_groups[name] = entityComponents;
+      entity['minecraft:entity'].component_groups[name] =
+        this.mergeRawComponents(entityComponents, rawComponents) ?? {};
     }
   }
 

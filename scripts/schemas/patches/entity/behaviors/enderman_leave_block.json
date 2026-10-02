@@ -1,0 +1,12 @@
+{
+  "x-new-component": "minecraft:behavior.enderman_leave_block",
+  "type": "object",
+  "description": "Allows the enderman to drop a block they are carrying. The official schema lists it without a body (\"Dynamic value\").",
+  "additionalProperties": false,
+  "properties": {
+    "priority": {
+      "type": "integer",
+      "description": "How important this behavior is. Lower priority behaviors will be executed first."
+    }
+  }
+}

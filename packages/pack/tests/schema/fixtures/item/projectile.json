@@ -1,0 +1,7 @@
+{
+  "component": "projectile",
+  "config": {
+    "projectileEntity": "test",
+    "minimumCriticalPower": 1
+  }
+}

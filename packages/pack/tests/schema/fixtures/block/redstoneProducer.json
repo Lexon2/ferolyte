@@ -1,0 +1,9 @@
+{
+  "component": "redstoneProducer",
+  "config": {
+    "power": 1,
+    "stronglyPoweredFace": ["all"],
+    "connectedFaces": ["all"],
+    "transformRelative": true
+  }
+}

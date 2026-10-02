@@ -1,0 +1,6 @@
+{
+  "component": "dyeable",
+  "config": {
+    "defaultColor": "#FFFFFF"
+  }
+}

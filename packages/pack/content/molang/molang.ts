@@ -77,6 +77,7 @@ const RESERVED_PROXY_KEYS = new Set([
   'eq',
   'neq',
   'nullCoalesce',
+  'clone',
   'constructor',
   'then',
   'catch',
@@ -373,6 +374,10 @@ export class Molang implements MolangBuilder {
 
   build(): string {
     return this._expression.build();
+  }
+
+  clone(): Molang {
+    return new Molang(this.build());
   }
 
   toString(): string {

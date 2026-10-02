@@ -1,0 +1,12 @@
+{
+  "x-new-component": "was_last_hurt_by",
+  "type": "object",
+  "description": "Filter test used by vanilla but missing from the Blockception schemas.",
+  "properties": {
+    "test": { "type": "string", "const": "was_last_hurt_by" },
+    "subject": { "type": "string" },
+    "operator": { "type": "string" },
+    "domain": { "type": "string" },
+    "value": {}
+  }
+}
