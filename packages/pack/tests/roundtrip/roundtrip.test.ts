@@ -26,7 +26,8 @@ const reasons: Record<string, string> = existsSync(reasonsFile)
   : {};
 
 describe.skipIf(!cachesAvailable)('round-trip: vanilla + schema variants', () => {
-  const result = runRoundtrip();
+  // The describe body is collected even when skipped: don't touch the caches without them.
+  const result = cachesAvailable ? runRoundtrip() : { total: 0, failures: [] as Failure[] };
 
   const out = process.env.ROUNDTRIP_OUT;
   if (out !== undefined && out !== '') {

@@ -6,6 +6,9 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// Git may check files out with CRLF (core.autocrlf on Windows); the generator writes LF.
+const readText = (file) => readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
+
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const COMMITTED = path.join(ROOT, 'packages/pack/content/generated');
 const fresh = mkdtempSync(path.join(tmpdir(), 'ferolyte-codegen-'));
@@ -41,7 +44,7 @@ try {
       const committed = path.join(committedDir, file);
       if (!existsSync(committed)) {
         problems.push(`missing: ${area.name}/${file}`);
-      } else if (readFileSync(committed, 'utf8') !== readFileSync(path.join(freshDir, file), 'utf8')) {
+      } else if (readText(committed) !== readText(path.join(freshDir, file))) {
         problems.push(`outdated: ${area.name}/${file}`);
       }
     }
