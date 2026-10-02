@@ -1,0 +1,7 @@
+{
+  "component": "redstoneConsumer",
+  "config": {
+    "minPower": 1,
+    "propagatesPower": true
+  }
+}

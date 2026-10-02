@@ -1,0 +1,41 @@
+{
+  "block/minecraft:custom_components": [
+    "TYPE"
+  ],
+  "block/minecraft:instrument_sound": [
+    "REJECTED"
+  ],
+  "block/minecraft:tags": [
+    "REJECTED"
+  ],
+  "entity/minecraft:angry": [
+    "LOST_FIELD"
+  ],
+  "entity/minecraft:area_attack": [
+    "REJECTED",
+    "TYPE"
+  ],
+  "entity/minecraft:breathable": [
+    "LOST_FIELD"
+  ],
+  "entity/minecraft:damage_sensor": [
+    "REJECTED",
+    "TYPE",
+    "LOST_FIELD"
+  ],
+  "entity/minecraft:environment_sensor": [
+    "REJECTED",
+    "TYPE"
+  ],
+  "entity/minecraft:looked_at": [
+    "TYPE",
+    "LOST_FIELD"
+  ],
+  "item/minecraft:icon": [
+    "CHANGED"
+  ],
+  "item/minecraft:tags": [
+    "REJECTED",
+    "TYPE"
+  ]
+}

@@ -36,7 +36,96 @@ describe('ServerEntityBuilder diagnostics', () => {
     expect(output).toContain('Server entity validation error');
     expect(output).toContain('test.se.ts');
     expect(output).toContain('components.damageSensor.triggers[0].dealsDamage');
-    expect(output).toContain('dealsDamage must be one of:');
+    expect(output).toContain('Must be one of:');
+
+    errorSpy.mockRestore();
+  });
+
+  it('logs formatted error for invalid timer.time', () => {
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    new ServerEntityBuilder(
+      minimalServerEntityConfig({
+        components: {
+          timer: {
+            time: 'query.life_time' as never,
+            timeDownEvent: {
+              event: 'test:event',
+              target: 'self',
+            },
+          },
+        },
+      }),
+    )
+      .withBuildContext({
+        sourceFile: 'E:/project/entities/test.se.ts',
+        identifier: 'test:entity',
+        contentType: 'server-entity',
+      })
+      .build();
+
+    const output = errorSpy.mock.calls
+      .map((call) => String(call[0]))
+      .join('\n');
+
+    expect(output).toContain('components.timer.time');
+
+    errorSpy.mockRestore();
+  });
+
+  it('builds damageSensor with onDamage filters only', () => {
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const result = new ServerEntityBuilder(
+      minimalServerEntityConfig({
+        components: {
+          damageSensor: {
+            triggers: [
+              {
+                cause: 'all',
+                onDamage: {
+                  filters: {
+                    allOf: [
+                      {
+                        test: 'is_family',
+                        subject: 'other',
+                        value: 'player',
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+        },
+      }),
+    )
+      .withBuildContext({
+        sourceFile: 'E:/project/entities/test.se.ts',
+        identifier: 'test:entity',
+        contentType: 'server-entity',
+      })
+      .build();
+
+    const output = errorSpy.mock.calls
+      .map((call) => String(call[0]))
+      .join('\n');
+
+    expect(output).not.toContain('Server entity validation error');
+    expect(
+      result['minecraft:entity'].components?.['minecraft:damage_sensor']
+        ?.triggers?.[0]?.on_damage,
+    ).toEqual({
+      filters: {
+        all_of: [
+          {
+            test: 'is_family',
+            subject: 'other',
+            value: 'player',
+          },
+        ],
+      },
+    });
 
     errorSpy.mockRestore();
   });

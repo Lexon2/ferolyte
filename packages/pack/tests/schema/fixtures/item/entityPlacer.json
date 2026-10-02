@@ -1,0 +1,8 @@
+{
+  "component": "entityPlacer",
+  "config": {
+    "entity": "test",
+    "dispenseOn": ["test"],
+    "useOn": ["test"]
+  }
+}

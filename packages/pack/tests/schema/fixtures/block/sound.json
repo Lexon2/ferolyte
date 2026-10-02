@@ -1,0 +1,6 @@
+{
+  "component": "sound",
+  "config": {
+    "sound": "stone"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "component": "precipitationInteractions",
+  "config": {
+    "precipitationBehavior": "none"
+  }
+}

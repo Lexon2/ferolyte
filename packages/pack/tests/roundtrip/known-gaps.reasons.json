@@ -1,0 +1,13 @@
+{
+  "block/minecraft:custom_components": "typed `never` on purpose: custom components of 1.21.90+ are namespaced component keys, `customComponents` is only the pre-1.21.90 string list",
+  "block/minecraft:instrument_sound": "schema variant noise: `up`/`down` must match `^note.`, the generator cannot produce it",
+  "block/minecraft:tags": "SDK sugar: `tags: [...]` is written as legacy `tag:<name>` keys (works on every version); vanilla 1.26.50 uses `minecraft:tags: [...]`",
+  "entity/minecraft:angry": "vanilla uses legacy camelCase keys (`broadcastAnger`, `broadcastRange`) that Minecraft accepts next to the snake_case schema names; the SDK writes the schema names",
+  "entity/minecraft:area_attack": "vanilla enum_property filter uses a non-string `domain` in a nested filter",
+  "entity/minecraft:breathable": "vanilla legacy camelCase keys (`totalSupply`, `suffocateTime`), see angry",
+  "entity/minecraft:damage_sensor": "vanilla `cause` values missing from the schema enum and legacy `other_with_families` filter",
+  "entity/minecraft:environment_sensor": "vanilla filters that omit a `value` the schema marks as required",
+  "entity/minecraft:looked_at": "vanilla `looked_at_event.filter` (legacy key of the event object)",
+  "item/minecraft:icon": "SDK sugar: `icon: 'key'` is written as `{ textures: { default: 'key' } }`",
+  "item/minecraft:tags": "SDK sugar: `tags: [...]` is written as `{ tags: [...] }`; schema variant noise for tag enums"
+}

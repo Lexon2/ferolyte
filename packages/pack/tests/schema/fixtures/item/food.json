@@ -1,0 +1,9 @@
+{
+  "component": "food",
+  "config": {
+    "canAlwaysEat": true,
+    "nutrition": 1,
+    "saturationModifier": 1,
+    "usingConvertsTo": "test"
+  }
+}

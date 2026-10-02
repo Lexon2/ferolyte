@@ -1,0 +1,16 @@
+{
+  "component": "shooter",
+  "config": {
+    "ammunition": [
+      {
+        "item": "test",
+        "useOffhand": true,
+        "searchInventory": true,
+        "useInCreative": true
+      }
+    ],
+    "chargeOnDraw": true,
+    "maxDrawDuration": 1,
+    "scalePowerByDrawDuration": true
+  }
+}

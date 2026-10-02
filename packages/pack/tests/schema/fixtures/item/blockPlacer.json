@@ -1,0 +1,13 @@
+{
+  "component": "blockPlacer",
+  "config": {
+    "block": "test",
+    "useOn": [
+      {
+        "name": "test"
+      }
+    ],
+    "replaceBlockItem": true,
+    "alignedPlacement": true
+  }
+}

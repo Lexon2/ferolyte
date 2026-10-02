@@ -1,0 +1,14 @@
+{
+  "component": "liquidDetection",
+  "config": {
+    "detectionRules": [
+      {
+        "canContainLiquid": true,
+        "liquidType": "water",
+        "onLiquidTouches": "blocking",
+        "stopsLiquidFlowingFromDirection": ["all"],
+        "useLiquidClipping": true
+      }
+    ]
+  }
+}

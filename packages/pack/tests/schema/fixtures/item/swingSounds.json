@@ -1,0 +1,8 @@
+{
+  "component": "swingSounds",
+  "config": {
+    "attackCriticalHit": "test",
+    "attackHit": "test",
+    "attackMiss": "test"
+  }
+}

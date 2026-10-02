@@ -1,0 +1,12 @@
+{
+  "component": "digger",
+  "config": {
+    "useEfficiency": true,
+    "destroySpeeds": [
+      {
+        "speed": 1,
+        "block": "test"
+      }
+    ]
+  }
+}

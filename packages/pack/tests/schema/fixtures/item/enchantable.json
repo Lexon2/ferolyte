@@ -1,0 +1,7 @@
+{
+  "component": "enchantable",
+  "config": {
+    "slot": "bow",
+    "value": 1
+  }
+}

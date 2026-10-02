@@ -1,0 +1,6 @@
+{
+  "component": "compostable",
+  "config": {
+    "compostingChance": 1
+  }
+}

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { convertBlockTraits } from '@ferolyte/pack/content/block/traits/convert-traits';
 
 describe('convertBlockTraits', () => {
@@ -28,7 +28,8 @@ describe('convertBlockTraits', () => {
     });
   });
 
-  it('omits invalid yRotation but keeps valid states', () => {
+  it('keeps an invalid yRotation and reports it', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
     expect(
       convertBlockTraits({
         placementDirection: {
@@ -39,16 +40,23 @@ describe('convertBlockTraits', () => {
     ).toEqual({
       'minecraft:placement_direction': {
         enabled_states: ['minecraft:facing_direction'],
-        y_rotation_offset: undefined,
+        y_rotation_offset: 45,
       },
     });
+    expect(error).toHaveBeenCalled();
+    error.mockRestore();
   });
 
-  it('skips traits with invalid states', () => {
+  it('keeps invalid states and reports them', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
     expect(
       convertBlockTraits({
         placementDirection: { states: ['invalid' as never] },
       }),
-    ).toEqual({});
+    ).toEqual({
+      'minecraft:placement_direction': { enabled_states: ['invalid'] },
+    });
+    expect(error).toHaveBeenCalled();
+    error.mockRestore();
   });
 });

@@ -2,9 +2,12 @@ import { BlockBuilder } from './block-builder';
 import { BlockConfig } from './interfaces/block-config';
 import { deepMerge } from '@ferolyte/common/object/deep-merge';
 
-export const createBlock = (...sources: (BlockConfig | BlockBuilder)[]) => {
+export const createBlock = (
+  config: BlockConfig,
+  ...rest: (Partial<BlockConfig> | BlockBuilder)[]
+) => {
   let merged: any = {};
-  for (const source of sources) {
+  for (const source of [config, ...rest]) {
     if (source instanceof BlockBuilder) {
       merged = deepMerge(merged, source.cloneConfig());
     } else {

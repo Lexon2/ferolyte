@@ -1,7 +1,18 @@
-import { blockComponentCreatorsFactory } from './components';
-import { BlockComponentCreator } from './components/index';
+import {
+  hintSnakeCaseComponent,
+  hintSnakeCaseFields,
+} from '@ferolyte/common/content/diagnostics/snake-case-hint';
+import {
+  ContentDiagnosticContext,
+  logContentError,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { blockComponentRegistry } from '../generated/block/registry';
+import {
+  convertWithOverride,
+  passthroughNormalizers,
+} from '../generated/runtime';
 import { BlockComponents } from './interfaces/block-config';
-import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { blockOverrides } from './overrides';
 
 export interface MinecraftBlockComponents {
   [key: string]: any;
@@ -18,37 +29,53 @@ export const convertBlockComponents = (
   }
 
   for (const componentId in components) {
-    const factory = blockComponentCreatorsFactory[
-      componentId as keyof typeof blockComponentCreatorsFactory
-    ] as BlockComponentCreator | undefined;
+    const generated = blockComponentRegistry[componentId];
+    const componentData = components[componentId as keyof typeof components];
 
-    let componentData: any = {};
-    if (factory !== undefined) {
-      const componentContext: ContentDiagnosticContext | undefined =
+    if (generated === undefined) {
+      hintSnakeCaseComponent(
+        componentId,
+        (camel) => camel in blockComponentRegistry,
         ctx !== undefined
-          ? {
-              ...ctx,
-              section: 'components',
-              component: componentId,
-              fieldPath: undefined,
-            }
-          : undefined;
-
-      componentData = factory(
-        components[componentId as keyof typeof components],
-        componentContext,
+          ? { ...ctx, component: componentId, fieldPath: undefined }
+          : undefined,
       );
-
-      if (componentData === undefined) {
-        continue;
+      // Namespaced custom components pass through; unknown vanilla-style keys are errors.
+      if (componentId.includes(':')) {
+        result = { ...result, [componentId]: componentData };
+      } else {
+        logContentError(
+          ctx !== undefined
+            ? { ...ctx, component: componentId, fieldPath: undefined }
+            : undefined,
+          `Block component "${componentId}" is not supported`,
+        );
       }
-    } else {
-      componentData = {
-        [componentId]: components[componentId as keyof typeof components],
-      };
+      continue;
     }
 
-    result = { ...result, ...componentData };
+    const componentContext: ContentDiagnosticContext | undefined =
+      ctx !== undefined
+        ? {
+            ...ctx,
+            section: 'components',
+            component: componentId,
+            fieldPath: undefined,
+          }
+        : undefined;
+
+    hintSnakeCaseFields(componentData, componentContext);
+    const converted = convertWithOverride(
+      generated,
+      componentData,
+      passthroughNormalizers,
+      componentContext,
+      blockOverrides[componentId],
+    );
+
+    if (converted !== undefined) {
+      result = { ...result, ...converted };
+    }
   }
 
   return result;

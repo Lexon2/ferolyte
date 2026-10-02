@@ -1,0 +1,14 @@
+{
+  "component": "piercingWeapon",
+  "config": {
+    "creativeReach": {
+      "min": 1,
+      "max": 1
+    },
+    "hitboxMargin": 1,
+    "reach": {
+      "min": 1,
+      "max": 1
+    }
+  }
+}

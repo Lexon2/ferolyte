@@ -1,7 +1,3 @@
-import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
-import { logContentError } from '@ferolyte/common/content/diagnostics/content-diagnostic';
-import { validateNonEmptyArray } from '@ferolyte/common/content/validation/content-validation';
-
 export const vanillaTags = [
   'diamond_tier_destructible',
   'iron_tier_destructible',
@@ -17,36 +13,3 @@ export const vanillaTags = [
 ] as const;
 
 export type BlockTags = (typeof vanillaTags)[number];
-
-/**
- * Creates a tag component for Minecraft blocks
- * @param tags Array of block tags to apply
- * @returns The tag component in Minecraft format or undefined if validation fails
- */
-export const createBlockTags = (
-  tags?: string[],
-  ctx?: ContentDiagnosticContext,
-): Record<string, object> | undefined => {
-  if (
-    !validateNonEmptyArray(tags, ctx, 'Block tags must be a non-empty array')
-  ) {
-    return undefined;
-  }
-
-  const result: Record<string, object> = {};
-
-  for (let index = 0; index < tags.length; index++) {
-    const tag = tags[index];
-    if (typeof tag !== 'string' || tag.length === 0) {
-      logContentError(
-        ctx !== undefined ? { ...ctx, fieldPath: `[${index}]` } : undefined,
-        'Block tags must be non-empty strings',
-      );
-      return undefined;
-    }
-
-    result[`tag:${tag}`] = {};
-  }
-
-  return result;
-};

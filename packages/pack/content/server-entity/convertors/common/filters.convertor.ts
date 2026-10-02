@@ -3,23 +3,34 @@ import {
   logContentError,
   withFieldPath,
 } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { filterRegistry } from '../../../generated/filters/registry';
+import { convertGeneratedValue } from '../../../generated/runtime';
 import { EntityFilters } from '../../interfaces/filters';
-import { entityFilterConvertorsFactory } from '../filter-convertors.factory';
+
+const GROUPS = [
+  ['allOf', 'all_of'],
+  ['anyOf', 'any_of'],
+  ['noneOf', 'none_of'],
+] as const;
+
+/** Legacy (pre-1.8) group spellings of vanilla files: copied as written. */
+const LEGACY_GROUPS = ['AND', 'OR'] as const;
 
 const resolveFilterContext = (
   ctx: ContentDiagnosticContext | undefined,
-): ContentDiagnosticContext => {
-  if (ctx !== undefined) {
-    return ctx;
-  }
+): ContentDiagnosticContext =>
+  ctx ?? { section: 'filters', contentType: 'server-entity' };
 
-  return { section: 'filters', contentType: 'server-entity' };
+const normalizers = {
+  filters: (value: unknown, ctx?: ContentDiagnosticContext) =>
+    convertEntityFilters(value as never, ctx),
+  trigger: (value: unknown) => value,
 };
 
 /**
- * Converts Filters to Minecraft format
- * @param filters The filters to convert
- * @returns The filters in Minecraft format or undefined if validation fails
+ * Converts filters to Minecraft format: a list is an implicit `all_of`, groups
+ * are `allOf`/`anyOf`/`noneOf`, a test is validated by its generated schema.
+ * @returns The filters in Minecraft format or undefined when nothing valid remains
  */
 export const convertEntityFilters = (
   filters?: Partial<EntityFilters>,
@@ -30,42 +41,61 @@ export const convertEntityFilters = (
   }
 
   const filterCtx = resolveFilterContext(ctx);
-  let result: any = {};
+  const input = filters as Record<string, unknown>;
 
   if (Array.isArray(filters)) {
-    result.all_of = filters
-      .map((filter, index) =>
-        convertEntityFilters(filter, withFieldPath(filterCtx, `[${index}]`)),
-      )
-      .filter(Boolean);
-  } else if ('test' in filters && filters.test) {
-    const convertor = entityFilterConvertorsFactory[filters.test];
-    if (convertor) {
-      const converted = convertor(filters, filterCtx);
-      if (converted) {
-        result = { test: filters.test, ...converted };
-      }
-    } else {
+    return {
+      all_of: (filters as unknown[])
+        .map((filter, index) =>
+          convertEntityFilters(
+            filter as never,
+            withFieldPath(filterCtx, `[${index}]`),
+          ),
+        )
+        .filter(Boolean),
+    };
+  }
+
+  let result: Record<string, unknown> = {};
+
+  if (typeof input.test === 'string') {
+    const entry = filterRegistry[input.test];
+    if (entry === undefined) {
       logContentError(
         withFieldPath(filterCtx, 'test'),
-        `Unknown filter test: ${String(filters.test)}`,
+        `Unknown filter test: ${input.test}`,
+      );
+
+      return undefined;
+    }
+    const { allOf, anyOf, noneOf, ...leaf } = input;
+    const { test, ...properties } = leaf;
+    result = {
+      test,
+      ...(convertGeneratedValue(
+        entry,
+        properties,
+        normalizers,
+        filterCtx,
+      ) as Record<string, unknown>),
+    };
+  }
+
+  for (const [camel, snake] of GROUPS) {
+    const group = input[camel];
+    if (Array.isArray(group)) {
+      result[snake] = group.map((filter, index) =>
+        convertEntityFilters(
+          filter,
+          withFieldPath(filterCtx, `${camel}[${index}]`),
+        ),
       );
     }
-  } else if ('allOf' in filters && Array.isArray(filters.allOf)) {
-    result.all_of = filters.allOf.map((filter, index) =>
-      convertEntityFilters(filter, withFieldPath(filterCtx, `allOf[${index}]`)),
-    );
-  } else if ('anyOf' in filters && Array.isArray(filters.anyOf)) {
-    result.any_of = filters.anyOf.map((filter, index) =>
-      convertEntityFilters(filter, withFieldPath(filterCtx, `anyOf[${index}]`)),
-    );
-  } else if ('noneOf' in filters && Array.isArray(filters.noneOf)) {
-    result.none_of = filters.noneOf.map((filter, index) =>
-      convertEntityFilters(
-        filter,
-        withFieldPath(filterCtx, `noneOf[${index}]`),
-      ),
-    );
+  }
+  for (const legacy of LEGACY_GROUPS) {
+    if (input[legacy] !== undefined) {
+      result[legacy] = input[legacy];
+    }
   }
 
   return result;

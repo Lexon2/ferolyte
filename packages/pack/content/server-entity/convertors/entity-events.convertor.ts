@@ -2,11 +2,7 @@ import {
   ContentDiagnosticContext,
   withFieldPath,
 } from '@ferolyte/common/content/diagnostics/content-diagnostic';
-import {
-  EntityEventBase,
-  EntityEventRandomize,
-  EntityEvents,
-} from '../interfaces/entity-events';
+import { EntityEventRandomize } from '../interfaces/entity-events';
 import { ServerEntityEvents } from '../interfaces/server-entity-config';
 import { convertEntityFilters } from './common/filters.convertor';
 import {
@@ -34,10 +30,20 @@ const eventContext = (
   };
 };
 
-export const convertEntityEventBase = (
-  event: EntityEventBase,
+/**
+ * Converts an entity event node to Minecraft format. Recursive: used for event
+ * roots and every `sequence` / `randomize` / `first_valid` item.
+ * @param event The event to convert
+ * @returns The event in Minecraft format or undefined if validation fails
+ */
+export const convertEntityEvent = (
+  event: EntityEventRandomize | undefined,
   ctx?: ContentDiagnosticContext,
 ): { [key: string]: any } | undefined => {
+  if (event === undefined) {
+    return undefined;
+  }
+
   const result: any = {};
 
   if (event.filters) {
@@ -112,54 +118,16 @@ export const convertEntityEventBase = (
   }
 
   if (event.setProperty) {
-    result.set_property = event.setProperty;
-  }
-
-  return result;
-};
-
-export const convertEntityEventRandomize = (
-  event: EntityEventRandomize,
-  ctx?: ContentDiagnosticContext,
-): { [key: string]: any } | undefined => {
-  const result: any = {};
-
-  const base = convertEntityEventBase(event, ctx);
-  if (!base) {
-    return undefined;
-  }
-
-  Object.assign(result, base);
-
-  if (event.weight !== undefined) {
-    if (!validateNumber(event.weight, 'weight', undefined, undefined, ctx)) {
-      return undefined;
+    result.set_property = {};
+    for (const [key, value] of Object.entries(event.setProperty)) {
+      result.set_property[key] =
+        typeof value === 'object' ? value.build() : value;
     }
-    result.weight = event.weight;
   }
-
-  return result;
-};
-
-/**
- * Converts an EntityEvent to Minecraft format
- * @param event The event to convert
- * @returns The event in Minecraft format or undefined if validation fails
- */
-export const convertEntityEvent = (
-  event: EntityEvents | undefined,
-  ctx?: ContentDiagnosticContext,
-): { [key: string]: any } | undefined => {
-  if (event === undefined) {
-    return undefined;
-  }
-
-  const result: { [key: string]: any } =
-    convertEntityEventBase(event, ctx) ?? {};
 
   if (event.sequence) {
     const convertedSequence = event.sequence.map((item, index) =>
-      convertEntityEventBase(item, withFieldPath(ctx, `sequence[${index}]`)),
+      convertEntityEvent(item, withFieldPath(ctx, `sequence[${index}]`)),
     );
     if (convertedSequence.some((item) => !item)) {
       return undefined;
@@ -170,10 +138,7 @@ export const convertEntityEvent = (
 
   if (event.randomize) {
     const convertedRandomize = event.randomize.map((item, index) =>
-      convertEntityEventRandomize(
-        item,
-        withFieldPath(ctx, `randomize[${index}]`),
-      ),
+      convertEntityEvent(item, withFieldPath(ctx, `randomize[${index}]`)),
     );
     if (convertedRandomize.some((item) => !item)) {
       return undefined;
@@ -184,13 +149,20 @@ export const convertEntityEvent = (
 
   if (event.firstValid) {
     const convertedFirstValid = event.firstValid.map((item, index) =>
-      convertEntityEventBase(item, withFieldPath(ctx, `firstValid[${index}]`)),
+      convertEntityEvent(item, withFieldPath(ctx, `firstValid[${index}]`)),
     );
     if (convertedFirstValid.some((item) => !item)) {
       return undefined;
     }
 
     result.first_valid = convertedFirstValid;
+  }
+
+  if (event.weight !== undefined) {
+    if (!validateNumber(event.weight, 'weight', undefined, undefined, ctx)) {
+      return undefined;
+    }
+    result.weight = event.weight;
   }
 
   if (event.stopMovement) {
@@ -265,6 +237,19 @@ export const convertEntityEvent = (
     result.execute_event_on_home_block = {
       event: event.executeEventOnHomeBlock.event,
     };
+  }
+
+  if (event.emitVibration) {
+    if (
+      !validateString(
+        event.emitVibration.vibration,
+        'emitVibration.vibration',
+        ctx,
+      )
+    ) {
+      return undefined;
+    }
+    result.emit_vibration = { vibration: event.emitVibration.vibration };
   }
 
   return result;

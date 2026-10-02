@@ -1,0 +1,7 @@
+{
+  "component": "redstoneConductivity",
+  "config": {
+    "allowsWireToStepDown": true,
+    "redstoneConductor": true
+  }
+}

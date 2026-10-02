@@ -35,10 +35,10 @@ describe('createServerEntity', () => {
       minimalServerEntityConfig({ components: { health: { value: 10 } } }),
     );
     const builder = createServerEntity(
-      base,
       minimalServerEntityConfig({
         components: { shareables: { allItems: true } },
       }),
+      base,
     );
 
     expect(builder.cloneConfig().components).toEqual({

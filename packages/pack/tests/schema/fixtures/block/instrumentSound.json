@@ -1,0 +1,7 @@
+{
+  "component": "instrumentSound",
+  "config": {
+    "up": "note.harp",
+    "down": "note.bass"
+  }
+}

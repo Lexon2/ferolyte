@@ -1,0 +1,6 @@
+{
+  "component": "bundleInteraction",
+  "config": {
+    "numViewableSlots": 1
+  }
+}

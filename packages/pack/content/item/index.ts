@@ -8,20 +8,6 @@ export type { ItemMenuCategory } from './interfaces/item-menu-category';
 
 export type { MinecraftItem } from './interfaces/minecraft-item';
 
-export type { ItemDiggerComponent } from './interfaces/components/digger';
-
-export type { ItemDurabilitySensorComponent } from './interfaces/components/durability-sensor';
-
-export type { ItemKineticWeaponComponent } from './interfaces/components/kinetic-weapon';
-
-export type { ItemPiercingWeaponComponent } from './interfaces/components/piercing-weapon';
-
-export type { ItemRecordComponent } from './interfaces/components/record';
-
-export type { ItemRepairableComponent } from './interfaces/components/repairable';
-
-export type { ItemSwingSoundsComponent } from './interfaces/components/swing-sounds';
-
 export * from './types/item-enchantable-slots';
 
 export * from './types/item-hover-text-color';
@@ -40,18 +26,19 @@ export * from './types/item-versions';
 
 export * from './types/item-wearable-slot';
 
-export * from './types/item-weapon-reach';
-
-export * from './utils/resolve-item-icon';
-
-export * from './convertors/components';
-
 export {
   convertMenuCategory,
   validateCategory,
 } from './convertors/components/menu-category/convert-category';
 
-export {
-  convertWeaponReach,
-  convertKineticWeaponConditions,
-} from './convertors/components/utils/weapon-reach';
+
+// Pre-codegen names of the typed item components.
+export type {
+  DiggerComponent as ItemDiggerComponent,
+  DurabilitySensorComponent as ItemDurabilitySensorComponent,
+  KineticWeaponComponent as ItemKineticWeaponComponent,
+  PiercingWeaponComponent as ItemPiercingWeaponComponent,
+  RecordComponent as ItemRecordComponent,
+  RepairableComponent as ItemRepairableComponent,
+  SwingSoundsComponent as ItemSwingSoundsComponent,
+} from '../generated/item/components';

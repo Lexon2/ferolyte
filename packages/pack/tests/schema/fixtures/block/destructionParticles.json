@@ -1,0 +1,8 @@
+{
+  "component": "destructionParticles",
+  "config": {
+    "texture": "test",
+    "tintMethod": "none",
+    "particleCount": 1
+  }
+}

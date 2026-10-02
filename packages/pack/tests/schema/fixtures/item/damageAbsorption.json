@@ -1,0 +1,8 @@
+{
+  "component": "damageAbsorption",
+  "config": {
+    "absorbableCauses": [
+      "none"
+    ]
+  }
+}

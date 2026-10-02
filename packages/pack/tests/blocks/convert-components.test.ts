@@ -28,15 +28,16 @@ describe('convertBlockComponents', () => {
     });
   });
 
-  it('skips invalid registered components', () => {
+  it('keeps invalid values of known components and reports them', () => {
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(
       convertBlockComponents({
-        loot: '',
+        collisionBox: { origin: 'x' as never },
         replaceable: true,
       }),
     ).toEqual({
+      'minecraft:collision_box': { origin: 'x' },
       'minecraft:replaceable': {},
     });
 

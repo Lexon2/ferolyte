@@ -1,0 +1,8 @@
+{
+  "component": "record",
+  "config": {
+    "soundEvent": "13",
+    "comparatorSignal": 1,
+    "duration": 1
+  }
+}

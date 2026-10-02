@@ -1,8 +1,22 @@
+import { LocalizedString } from '@ferolyte/common/content/localization/localized-string';
+import { LooseString } from '@ferolyte/common/types';
 import { EntityComponentGroup } from './entity-component-group';
 import { EntityComponents } from './entity-components';
 import { EntityEvents } from './entity-events';
 import { EntityProperties } from './entity-properties';
 import { SpawnCategory } from '../constants/spawn-category';
+import { Molang } from '../../molang';
+
+export type ServerEntityVersions =
+  | '1.21.70'
+  | '1.21.80'
+  | '1.21.90'
+  | '1.21.100'
+  | '1.21.110'
+  | '1.21.120'
+  | '1.21.130'
+  | '1.26.10'
+  | '1.26.20';
 
 /**
  * Main configuration interface for Minecraft entities
@@ -13,7 +27,7 @@ export interface ServerEntityConfig {
    * @description The version of the entity. This is used to determine the format of the entity data.
    * @default Takes the version from `ferolyte.config.ts` by default
    */
-  version?: string;
+  version?: LooseString<ServerEntityVersions>;
 
   /**
    * Is Experimental
@@ -21,6 +35,14 @@ export interface ServerEntityConfig {
    * @default false
    */
   isExperimental?: boolean;
+
+  /**
+   * Display Name
+   * @description Name of the entity and of its spawn egg. A string uses the default locale,
+   * a record maps locale codes to translations.
+   * @file Automatically added to the `.lang` file(s) as `entity.<id>.name` and `item.spawn_egg.entity.<id>.name`.
+   */
+  displayName?: LocalizedString;
 
   /**
    * Is Spawnable
@@ -64,7 +86,7 @@ export interface ServerEntityConfig {
   scripts?: {
     animate: (
       | {
-          [key: string]: string;
+          [key: string]: string | Molang;
         }
       | string
     )[];
@@ -92,6 +114,13 @@ export interface ServerEntityConfig {
   components?: EntityComponents;
 
   /**
+   * Raw components
+   * @description Escape hatch for components that have no typed entry yet. Merged into the output as is.
+   * Not to be confused with `minecraft:custom_components`.
+   */
+  rawComponents?: Record<`${string}:${string}`, unknown>;
+
+  /**
    * Component Groups
    * @description Each group when add / remove the default components.
    */
@@ -108,7 +137,7 @@ export type ServerEntityEvents = {
   [key in MinecraftEvents | (string & {})]?: EntityEvents;
 };
 
-type MinecraftEvents =
+export type MinecraftEvents =
   | 'minecraft:entity_spawned'
   | 'minecraft:on_prime'
   | 'minecraft:entity_transformed'

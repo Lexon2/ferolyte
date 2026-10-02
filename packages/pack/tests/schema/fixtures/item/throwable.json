@@ -1,0 +1,11 @@
+{
+  "component": "throwable",
+  "config": {
+    "doSwingAnimation": true,
+    "launchPowerScale": 1,
+    "maxDrawDuration": 1,
+    "minDrawDuration": 1,
+    "maxLaunchPower": 1,
+    "scalePowerByDrawDuration": true
+  }
+}

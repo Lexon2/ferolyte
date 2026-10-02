@@ -1,0 +1,6 @@
+{
+  "component": "storageWeightModifier",
+  "config": {
+    "weightInStorageItem": 1
+  }
+}

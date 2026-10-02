@@ -1,0 +1,8 @@
+{
+  "component": "cooldown",
+  "config": {
+    "category": "test",
+    "duration": 1,
+    "type": "attack"
+  }
+}

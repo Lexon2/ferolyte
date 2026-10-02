@@ -31,8 +31,8 @@ describe('createBlock', () => {
       minimalBlockConfig({ components: { replaceable: true } }),
     );
     const builder = createBlock(
-      base,
       minimalBlockConfig({ components: { friction: 0.4 } }),
+      base,
     );
 
     expect(builder.cloneConfig().components).toEqual({
