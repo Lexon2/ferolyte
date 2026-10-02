@@ -15,6 +15,10 @@ Reference for the SDK: `llms.txt` (same folder), types and JSDoc in the `*.d.ts`
 | `.ce.ts`    | client (resource) entity | RP   | `entity/`                | `createClientEntity`        |
 | `.ac.bp.ts` | animation controller     | BP   | `animation_controllers/` | `createAnimationController` |
 | `.ac.rp.ts` | animation controller     | RP   | `animation_controllers/` | `createAnimationController` |
+| `.att.ts`   | attachable               | RP   | `attachables/`           | `createAttachable`          |
+| `.rc.ts`    | render controller(s)     | RP   | `render_controllers/`    | `createRenderController`    |
+| `.recipe.ts`| recipe                   | BP   | `recipes/`               | `shapedRecipe`, `createRecipe`, … |
+| `.spawn.ts` | spawn rule               | BP   | `spawn_rules/`           | `createSpawnRule`           |
 
 Suffixes can be changed with `contentSuffixes` in `ferolyte.config.mts`. Any other
 non-`.ts` file in `packs/` is copied as is. `texts/*.lang` is merged with the entries
@@ -45,7 +49,7 @@ generated from `displayName`. A file may export one builder or an array of build
 - Reference checks: unknown geometry / animation / render controller / texture / item icon / component group /
   event / entity property references are warnings with a "did you mean" hint (`--strict` makes them errors).
 - Typed ids: every build/watch batch (and `ferolyte types`) writes `.ferolyte/types/ids.ts`; import it as
-  `import { EntityId, EntityEvent, AnimationId } from '@ferolyte/ids'` instead of retyping id strings
+  `import { EntityId, EntityEvent, AnimationId } from '@ferolyte/ids'` instead of retyping id strings (`ItemId`, `BlockId`, `AttachableId`, `RenderControllerId`, `RecipeId`, `SpawnRuleId`, `GeometryId`, …)
   (works in `@minecraft/server` scripts too). Existing projects add `"@ferolyte/ids": ["./.ferolyte/types/ids.ts"]`
   to `compilerOptions.paths` in tsconfig (the compiler resolves the alias on its own).
 
@@ -138,6 +142,118 @@ Names are inferred as literals (no `as const`); a typo in a group / event / prop
 Configs that declare no `events` / `componentGroups` / `properties` stay unrestricted. Events that target other
 entities (`target: 'other'`) and `minecraft:*` events are not restricted.
 
+Attachable — `packs/RP/attachables/sword.att.ts` (same render description as `.ce.ts`)
+
+```ts
+import { createAttachable, q } from '@ferolyte/pack';
+
+export default createAttachable({
+  identifier: 'myaddon:sword',
+  item: { 'myaddon:sword': q.isOwnerIdentifierAny('minecraft:player') },
+  geometry: 'geometry.myaddon.sword',
+  textures: 'textures/myaddon/sword',
+  materials: 'entity_alphatest',
+  animations: { hold: { id: 'animation.myaddon.sword.hold', speed: 2 } }, // patched clone, source untouched
+  scripts: { animate: ['hold'] },
+  renderControllers: ['controller.render.myaddon.sword'],
+});
+```
+
+Render controller — `packs/RP/render_controllers/sword.rc.ts` (several builders in a file -> one JSON)
+
+```ts
+import { createRenderController, q } from '@ferolyte/pack';
+
+export default [
+  createRenderController({
+    id: 'controller.render.myaddon.sword',
+    geometry: 'Geometry.default',
+    materials: [{ '*': 'Material.default' }],
+    textures: ['Texture.default'],
+    partVisibility: [{ '*': true }, { blade: q.isSneaking }],
+  }),
+];
+```
+
+`createAttachableDocument` / `createRenderControllerDocument` / `createRecipeDocument` / `createSpawnRuleDocument` mirror the JSON file 1:1 (camelCase) when the flat form lacks a field.
+The compiler checks that every `Geometry.x` / `Texture.x` / `Material.x` a render controller uses is a key of each entity / attachable that uses it.
+
+Recipe — `packs/BP/recipes/ruby_block.recipe.ts`
+
+```ts
+import { shapedRecipe } from '@ferolyte/pack';
+
+export default shapedRecipe({
+  identifier: 'myaddon:ruby_block',
+  pattern: ['###', '###', '###'],
+  key: { '#': 'myaddon:ruby' }, // 'ns:item', 'ns:item:2' (data), { item, count }, { tag }
+  result: 'myaddon:ruby_block',
+  unlock: 'myaddon:ruby',
+});
+```
+
+Output:
+
+```json
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "myaddon:ruby_block" },
+    "tags": ["crafting_table"],
+    "unlock": [{ "item": "myaddon:ruby" }],
+    "pattern": ["###", "###", "###"],
+    "key": { "#": "myaddon:ruby" },
+    "result": "myaddon:ruby_block"
+  }
+}
+```
+
+Helpers: `shapedRecipe`, `shapelessRecipe` (`ingredients`), `furnaceRecipe` (`input`, `output`, `tags`), `brewingMixRecipe`,
+`brewingContainerRecipe`, `smithingTransformRecipe`, `smithingTrimRecipe`, and `createRecipe({ type: 'shaped', ... })` as one dispatcher.
+The compiler reports pattern symbols missing from `key`, unused keys, patterns larger than 3×3 and empty results;
+items of your own namespace must exist (vanilla ids are not checked).
+
+Spawn rule — `packs/BP/spawn_rules/ruby_golem.spawn.ts`
+
+```ts
+import { createSpawnRule } from '@ferolyte/pack';
+
+export default createSpawnRule({
+  identifier: 'myaddon:ruby_golem', // the entity, must exist in the project
+  populationControl: 'monster',
+  conditions: [
+    {
+      spawnsOnSurface: {},
+      weight: { default: 10 },
+      herd: { minSize: 1, maxSize: 2 },
+      biomeFilter: { test: 'has_biome_tag', value: 'plains' },
+    },
+  ],
+});
+```
+
+Output:
+
+```json
+{
+  "format_version": "1.8.0",
+  "minecraft:spawn_rules": {
+    "description": { "identifier": "myaddon:ruby_golem", "population_control": "monster" },
+    "conditions": [
+      {
+        "minecraft:spawns_on_surface": {},
+        "minecraft:weight": { "default": 10 },
+        "minecraft:herd": { "min_size": 1, "max_size": 2 },
+        "minecraft:biome_filter": { "test": "has_biome_tag", "value": "plains" }
+      }
+    ]
+  }
+}
+```
+
+Conditions are the generated spawn rule conditions (`weight`, `densityLimit`, `herd`, `heightFilter`, `biomeFilter`, …);
+filters use the same format as entity filters.
+
 Client entity — `packs/RP/entity/cow.ce.ts`
 
 ```ts
@@ -145,14 +261,11 @@ import { createClientEntity } from '@ferolyte/pack';
 
 export default createClientEntity({
   identifier: 'myaddon:cow',
-  description: {
-    identifier: 'myaddon:cow',
-    textures: 'textures/entity/cow',
-    geometry: 'geometry.cow',
-    animations: {
-      walk: { id: 'animation.cow.walk', speed: 'query.modified_move_speed' },
-      idle: 'animation.cow.idle',
-    },
+  textures: 'textures/entity/cow',
+  geometry: 'geometry.cow',
+  animations: {
+    walk: { id: 'animation.cow.walk', speed: 'query.modified_move_speed' },
+    idle: 'animation.cow.idle',
   },
 });
 ```

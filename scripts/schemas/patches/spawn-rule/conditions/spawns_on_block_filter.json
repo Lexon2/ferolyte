@@ -1,0 +1,15 @@
+{
+  "oneOf": [
+    { "type": "string" },
+    { "type": "object", "additionalProperties": false, "properties": { "name": { "type": "string" } } },
+    {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "object", "additionalProperties": false, "properties": { "name": { "type": "string" } } }
+        ]
+      }
+    }
+  ]
+}

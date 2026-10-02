@@ -3,6 +3,10 @@ export type ContentType =
   | 'block'
   | 'server-entity'
   | 'client-entity'
+  | 'attachable'
+  | 'render-controller'
+  | 'recipe'
+  | 'spawn-rule'
   | 'animation-controller-bp'
   | 'animation-controller-rp';
 
@@ -168,6 +172,10 @@ const contentTypeLabels: Record<ContentType, string> = {
   block: 'Block',
   'server-entity': 'Server entity',
   'client-entity': 'Client entity',
+  attachable: 'Attachable',
+  'render-controller': 'Render controller',
+  recipe: 'Recipe',
+  'spawn-rule': 'Spawn rule',
   'animation-controller-bp': 'BP animation controller',
   'animation-controller-rp': 'RP animation controller',
 };

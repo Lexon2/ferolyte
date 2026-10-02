@@ -11,8 +11,12 @@ const PATHS = [
   'behavior_pack/items',
   'behavior_pack/blocks',
   'behavior_pack/animation_controllers',
+  'behavior_pack/recipes',
+  'behavior_pack/spawn_rules',
   'resource_pack/entity',
   'resource_pack/animation_controllers',
+  'resource_pack/attachables',
+  'resource_pack/render_controllers',
   'metadata/json_schemas',
 ];
 

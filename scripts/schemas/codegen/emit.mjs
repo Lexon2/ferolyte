@@ -166,7 +166,7 @@ export const createTypeEmitter = () => {
     const inner = `${indent}  `;
     const body = props
       .map(([key, value]) => {
-        const camel = snakeToCamel(key);
+        const camel = value['x-sdk-name'] ?? snakeToCamel(key);
 
         return `${jsdoc(value, key, inner)}${inner}${quote(camel)}${required.has(key) ? '' : '?'}: ${emit(value, inner)};`;
       })
@@ -212,7 +212,7 @@ export const buildKeyMap = (node) => {
       const child = buildKeyMap(value);
       own.p ??= {};
       const marker = fieldMarker(value);
-      own.p[snakeToCamel(key)] = marker
+      own.p[value['x-sdk-name'] ?? snakeToCamel(key)] = marker
         ? [key, child, marker]
         : Object.keys(child).length
           ? [key, child]

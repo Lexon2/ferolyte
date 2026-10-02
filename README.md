@@ -87,6 +87,10 @@ export default defineFerolyteConfig({
 | `*.se.ts` | BP `entities/` (server entity) | `createServerEntity` / `defineServerEntity` |
 | `*.ce.ts` | RP `entity/` (client entity) | `createClientEntity` |
 | `*.ac.bp.ts`, `*.ac.rp.ts` | `animation_controllers/` | `createAnimationController` |
+| `*.att.ts` | RP `attachables/` | `createAttachable` |
+| `*.rc.ts` | RP `render_controllers/` | `createRenderController` (several per file → one JSON) |
+| `*.recipe.ts` | BP `recipes/` | `shapedRecipe`, `shapelessRecipe`, `furnaceRecipe`, `brewingMixRecipe`, `brewingContainerRecipe`, `smithingTransformRecipe`, `smithingTrimRecipe`, `createRecipe` |
+| `*.spawn.ts` | BP `spawn_rules/` | `createSpawnRule` |
 
 Everything else in `packs/` (textures, models, animations, sounds, `item_texture.json`, …) is copied as is; JSON with
 comments is fine. `displayName` values are merged into `texts/<locale>.lang`. Suffixes are configurable.

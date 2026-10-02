@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "input": { "type": null, "$ref": "./base types/item.json" },
+    "output": { "type": null, "$ref": "./base types/item.json" },
+    "priority": { "type": "integer", "title": "Priority", "description": "Order in which the recipe is chosen when several recipes match." }
+  }
+}

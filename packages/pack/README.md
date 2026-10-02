@@ -20,7 +20,7 @@ import { createAnimationController, defineRpState } from '@ferolyte/pack/animati
 import { molang, q, v, math, not } from '@ferolyte/pack/molang';
 ```
 
-Entry points: `@ferolyte/pack`, `/item`, `/block`, `/entity` (server + client), `/molang`, `/animation`.
+Entry points: `@ferolyte/pack`, `/item`, `/block`, `/entity` (server + client), `/molang`, `/animation`, `/attachable`, `/render-controller`, `/recipe`, `/spawn-rule`.
 Both `moduleResolution: "bundler"` (the `ferolyte init` template) and `"node"` work.
 
 ## Rules of the config
@@ -153,6 +153,78 @@ export default createAnimationController({
 
 Use `defineBpState` for behavior-pack controllers. `onEntry` / `onExit` there accept commands (`/say hi`) and
 events (`@s myaddon:event`).
+
+### Attachable: `packs/RP/attachables/ruby_sword.att.ts`
+
+```ts
+import { createAttachable } from '@ferolyte/pack';
+
+export default createAttachable({
+  identifier: 'myaddon:ruby_sword',
+  geometry: 'geometry.myaddon.ruby_sword',
+  textures: 'textures/myaddon/ruby_sword',
+  materials: 'entity_alphatest',
+  renderControllers: ['controller.render.myaddon.ruby_sword'],
+});
+```
+
+### Render controller: `packs/RP/render_controllers/ruby_sword.rc.ts`
+
+A file may export several builders, they are written into one JSON:
+
+```ts
+import { createRenderController, q } from '@ferolyte/pack';
+
+export default [
+  createRenderController({
+    id: 'controller.render.myaddon.ruby_sword',
+    geometry: 'Geometry.default',
+    materials: [{ '*': 'Material.default' }],
+    textures: ['Texture.default'],
+    partVisibility: [{ '*': true }, { blade: q.isSneaking }],
+  }),
+];
+```
+
+### Recipes: `packs/BP/recipes/ruby.recipe.ts`
+
+```ts
+import { furnaceRecipe, shapelessRecipe } from '@ferolyte/pack';
+
+export default [
+  furnaceRecipe({
+    identifier: 'myaddon:smelt_ruby',
+    input: 'myaddon:ruby_ore',
+    output: 'myaddon:ruby',
+    tags: ['furnace', 'blast_furnace'],
+  }),
+  shapelessRecipe({
+    identifier: 'myaddon:ruby_from_block',
+    ingredients: ['myaddon:ruby_block'],
+    result: { item: 'myaddon:ruby', count: 9 },
+  }),
+];
+```
+
+`shapedRecipe`, `brewingMixRecipe`, `brewingContainerRecipe`, `smithingTransformRecipe`, `smithingTrimRecipe` and the dispatcher
+`createRecipe({ type, ... })` follow the same flat form. Items are `'ns:item'`, `'ns:item:2'` (data value), `{ item, count }` or `{ tag }`.
+Shaped patterns are checked against `key` (unknown symbol, unused key, at most 3×3).
+
+### Spawn rules: `packs/BP/spawn_rules/ruby_golem.spawn.ts`
+
+```ts
+import { createSpawnRule } from '@ferolyte/pack';
+
+export default createSpawnRule({
+  identifier: 'myaddon:ruby_golem',
+  populationControl: 'monster',
+  conditions: [{ spawnsOnSurface: {}, weight: { default: 10 }, biomeFilter: { test: 'has_biome_tag', value: 'plains' } }],
+});
+```
+
+When the flat form lacks a field, `createAttachableDocument`, `createRenderControllerDocument`, `createRecipeDocument` and
+`createSpawnRuleDocument` mirror the JSON file 1:1 in camelCase (generated from the Bedrock schemas, validated the same way).
+Ids of the new content are exported to `@ferolyte/ids` (`AttachableId`, `RenderControllerId`, `RecipeId`, `SpawnRuleId`).
 
 ## Molang
 

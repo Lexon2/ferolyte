@@ -13,6 +13,10 @@ export type FerolyteContentTypeKey =
   | 'item'
   | 'server-entity'
   | 'client-entity'
+  | 'attachable'
+  | 'render-controller'
+  | 'recipe'
+  | 'spawn-rule'
   | 'animation-controller-bp'
   | 'animation-controller-rp';
 

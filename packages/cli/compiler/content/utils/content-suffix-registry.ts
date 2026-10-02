@@ -21,6 +21,10 @@ export const DEFAULT_CONTENT_SUFFIXES: Record<
   item: ['item'],
   'server-entity': ['se'],
   'client-entity': ['ce'],
+  attachable: ['att'],
+  'render-controller': ['rc'],
+  recipe: ['recipe'],
+  'spawn-rule': ['spawn'],
   'animation-controller-bp': ['ac.bp'],
   'animation-controller-rp': ['ac.rp'],
 };
@@ -33,6 +37,10 @@ const CONTENT_TYPE_TO_METADATA: Record<
   item: CONTENT_METADATA.ITEM,
   'server-entity': CONTENT_METADATA.SERVER_ENTITY,
   'client-entity': CONTENT_METADATA.CLIENT_ENTITY,
+  attachable: CONTENT_METADATA.ATTACHABLE,
+  'render-controller': CONTENT_METADATA.RENDER_CONTROLLER,
+  recipe: CONTENT_METADATA.RECIPE,
+  'spawn-rule': CONTENT_METADATA.SPAWN_RULE,
   'animation-controller-bp': CONTENT_METADATA.ANIMATION_CONTROLLER_BP,
   'animation-controller-rp': CONTENT_METADATA.ANIMATION_CONTROLLER_RP,
 };
@@ -45,6 +53,10 @@ const CONTENT_TYPE_OUTPUT_DIRS: Record<
   item: { pack: 'BP', subdir: 'items' },
   'server-entity': { pack: 'BP', subdir: 'entities' },
   'client-entity': { pack: 'RP', subdir: 'entity' },
+  attachable: { pack: 'RP', subdir: 'attachables' },
+  'render-controller': { pack: 'RP', subdir: 'render_controllers' },
+  recipe: { pack: 'BP', subdir: 'recipes' },
+  'spawn-rule': { pack: 'BP', subdir: 'spawn_rules' },
   'animation-controller-bp': { pack: 'BP', subdir: 'animation_controllers' },
   'animation-controller-rp': { pack: 'RP', subdir: 'animation_controllers' },
 };

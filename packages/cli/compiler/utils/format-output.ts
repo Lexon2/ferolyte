@@ -47,6 +47,10 @@ const TYPE_GROUPS: Array<[label: string, keys: string[]]> = [
   ['blocks', ['block']],
   ['ac', ['animation-controller-bp', 'animation-controller-rp']],
   ['ce', ['client-entity']],
+  ['attachables', ['attachable']],
+  ['render controllers', ['render-controller']],
+  ['recipes', ['recipe']],
+  ['spawn rules', ['spawn-rule']],
 ];
 
 const formatTypes = (byType: Record<string, number>): string => {

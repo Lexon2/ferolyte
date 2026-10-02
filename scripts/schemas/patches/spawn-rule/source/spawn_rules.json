@@ -1,0 +1,6 @@
+{
+  "properties": {
+    "format_version": { "enum": null, "type": "string" },
+    "minecraft:spawn_rules": { "x-sdk-name": "spawnRules" }
+  }
+}

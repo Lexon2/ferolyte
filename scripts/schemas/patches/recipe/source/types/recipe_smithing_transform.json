@@ -1,0 +1,12 @@
+{
+  "properties": {
+    "template": {
+      "title": "Template",
+      "description": "Smithing template item of the recipe.",
+      "oneOf": [
+        { "$ref": "./base types/item.json" },
+        { "type": "array", "items": { "$ref": "./base types/item.json" } }
+      ]
+    }
+  }
+}

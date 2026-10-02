@@ -1,0 +1,6 @@
+{
+  "properties": {
+    "format_version": { "pattern": null },
+    "minecraft:attachable": { "x-sdk-name": "attachable" }
+  }
+}

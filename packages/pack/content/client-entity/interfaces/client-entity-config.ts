@@ -58,6 +58,11 @@ export interface ClientEntityConfig<
   animations?: Animations;
 
   /**
+   * Legacy `animation_controllers` list: `[{ general: 'controller.animation.x.general' }]`.
+   */
+  animationControllers?: Array<Record<string, string>>;
+
+  /**
    * The sound effects of the client entity.
    */
   soundEffects?: Record<string, string>;
@@ -98,6 +103,11 @@ export interface ClientEntityConfig<
    * @default false
    */
   heldItemIgnoresLighting?: boolean;
+
+  /**
+   * Scale of the held item.
+   */
+  heldItemScale?: number;
 
   /**
    * UNDOCUMENTED.
