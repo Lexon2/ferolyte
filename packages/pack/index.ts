@@ -18,3 +18,8 @@ export type {
   LootComponent,
   TransformationComponent,
 } from './entity';
+export * from './attachable';
+export * from './render-controller';
+export * from './recipe';
+export * from './spawn-rule';
+export * from './documents';

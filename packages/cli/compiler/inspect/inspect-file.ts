@@ -41,6 +41,10 @@ const CONTENT_TYPE_BY_METADATA: Record<string, string> = {
   [CONTENT_METADATA.BLOCK]: 'block',
   [CONTENT_METADATA.SERVER_ENTITY]: 'server-entity',
   [CONTENT_METADATA.CLIENT_ENTITY]: 'client-entity',
+  [CONTENT_METADATA.ATTACHABLE]: 'attachable',
+  [CONTENT_METADATA.RENDER_CONTROLLER]: 'render-controller',
+  [CONTENT_METADATA.RECIPE]: 'recipe',
+  [CONTENT_METADATA.SPAWN_RULE]: 'spawn-rule',
   [CONTENT_METADATA.ANIMATION_CONTROLLER_BP]: 'animation-controller-bp',
   [CONTENT_METADATA.ANIMATION_CONTROLLER_RP]: 'animation-controller-rp',
 };

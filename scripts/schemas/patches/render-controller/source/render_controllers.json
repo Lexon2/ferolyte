@@ -1,0 +1,6 @@
+{
+  "properties": {
+    "format_version": { "$ref": null, "type": "string" },
+    "render_controllers": { "additionalProperties": { "required": ["geometry"] } }
+  }
+}

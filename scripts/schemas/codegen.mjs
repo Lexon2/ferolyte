@@ -305,6 +305,122 @@ const report = [];
   ]);
 }
 
+// --------------------------------------------------------------- documents
+// C0: whole-document areas. The document root schema becomes one `document` entry (types, key map, validator);
+// patches mirror the source layout: patches/<area>/source/<path under the area's source folder>.json
+// (the root wrapper keys get SDK names with `x-sdk-name`). `conditions` adds an optional component area.
+const RESOURCE = path.join(SCHEMAS, 'source/resource');
+const walkJson = (dir, rel = '') =>
+  readdirSync(path.join(dir, rel), { withFileTypes: true }).flatMap((entry) =>
+    entry.isDirectory()
+      ? walkJson(dir, path.posix.join(rel, entry.name))
+      : entry.name.endsWith('.json')
+        ? [path.posix.join(rel, entry.name)]
+        : [],
+  );
+
+const addSourcePatches = (loader, area, baseDir) => {
+  const dir = path.join(PATCHES, area, 'source');
+  if (!existsSync(dir)) return;
+  for (const rel of walkJson(dir)) {
+    loader.addPatch(path.join(baseDir, rel), readJson(path.join(dir, rel)));
+  }
+};
+
+/** `minecraft:foo_bar` keys inside a document get the same SDK name as the component areas (`fooBar`). */
+const nameMinecraftKeys = (node) => {
+  if (Array.isArray(node)) return node.forEach(nameMinecraftKeys);
+  if (node === null || typeof node !== 'object') return;
+  for (const [key, value] of Object.entries(node.properties ?? {})) {
+    if (key.startsWith('minecraft:') && value['x-sdk-name'] === undefined) {
+      value['x-sdk-name'] = mechanicalKey(key);
+    }
+  }
+  Object.values(node).forEach(nameMinecraftKeys);
+};
+
+const documentArea = ({ id, baseDir, root, key, sdkKey, aggregate, conditions }) => {
+  const loader = loaderFor();
+  addSourcePatches(loader, id, baseDir);
+  const entries = [];
+  const kinds = {
+    document: {
+      file: 'documents',
+      aggregate,
+      suffix: 'Document',
+      registry: `${snakeToCamel(id.replace(/-/g, '_'))}DocumentRegistry`,
+    },
+  };
+  // Conditions first: their patches must be registered before the document tree inlines them.
+  if (conditions !== undefined) {
+    const index = loader.readSchema(path.join(baseDir, root));
+    entries.push(
+      ...collect({
+        loader,
+        area: id,
+        props: conditions(index),
+        baseDir,
+        kindOf: () => 'condition',
+        patchDir: () => 'conditions',
+        sdkNames: readSdkNames(id),
+      }),
+    );
+    addNewComponents(entries, id, [['conditions', 'condition']], readSdkNames(id));
+    kinds.condition = {
+      file: 'conditions',
+      aggregate: 'GeneratedSpawnRuleConditions',
+      suffix: 'Condition',
+      registry: 'spawnRuleConditionRegistry',
+    };
+  }
+  entries.push({
+    key,
+    kind: 'document',
+    sdkKey,
+    tree: loader.resolve(path.join(baseDir, root)),
+  });
+  nameMinecraftKeys(entries.at(-1).tree);
+  report.push([
+    id,
+    emitArea({ id, outDir: path.join(OUT, id), entries: sorted(entries), kinds }),
+  ]);
+};
+
+documentArea({
+  id: 'attachable',
+  baseDir: path.join(RESOURCE, 'attachables'),
+  root: '1.10.0/attachables.json',
+  key: 'minecraft:attachable',
+  sdkKey: 'attachable',
+  aggregate: 'GeneratedAttachableDocuments',
+});
+documentArea({
+  id: 'render-controller',
+  baseDir: path.join(RESOURCE, 'render_controllers'),
+  root: 'render_controllers.json',
+  key: 'render_controllers',
+  sdkKey: 'renderController',
+  aggregate: 'GeneratedRenderControllerDocuments',
+});
+documentArea({
+  id: 'recipe',
+  baseDir: path.join(SOURCE, 'recipes'),
+  root: 'recipes.json',
+  key: 'minecraft:recipe',
+  sdkKey: 'recipe',
+  aggregate: 'GeneratedRecipeDocuments',
+});
+documentArea({
+  id: 'spawn-rule',
+  baseDir: path.join(SOURCE, 'spawn_rules'),
+  root: 'spawn_rules.json',
+  key: 'minecraft:spawn_rules',
+  sdkKey: 'spawnRule',
+  aggregate: 'GeneratedSpawnRuleDocuments',
+  conditions: (index) =>
+    index.properties['minecraft:spawn_rules'].properties.conditions.items.properties,
+});
+
 for (const [area, counts] of report) {
   console.log(`codegen ${area}: ${JSON.stringify(counts)}`);
 }

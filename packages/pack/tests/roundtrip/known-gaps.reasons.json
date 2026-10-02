@@ -2,6 +2,7 @@
   "block/minecraft:custom_components": "typed `never` on purpose: custom components of 1.21.90+ are namespaced component keys, `customComponents` is only the pre-1.21.90 string list",
   "block/minecraft:instrument_sound": "schema variant noise: `up`/`down` must match `^note.`, the generator cannot produce it",
   "block/minecraft:tags": "SDK sugar: `tags: [...]` is written as legacy `tag:<name>` keys (works on every version); vanilla 1.26.50 uses `minecraft:tags: [...]`",
+  "client_entity/document": "the hand-written client entity builder (C1 extracts the shared render description) has no field for `animation_controllers` (77 vanilla files), `scripts.scaleX/Y/Z`, `scripts.hide_held_items` and `held_item_scale`, and appends `;` to every `pre_animation` string, which breaks multi-line statements such as `(v.x) ? {`",
   "entity/minecraft:angry": "vanilla uses legacy camelCase keys (`broadcastAnger`, `broadcastRange`) that Minecraft accepts next to the snake_case schema names; the SDK writes the schema names",
   "entity/minecraft:area_attack": "vanilla enum_property filter uses a non-string `domain` in a nested filter",
   "entity/minecraft:breathable": "vanilla legacy camelCase keys (`totalSupply`, `suffocateTime`), see angry",

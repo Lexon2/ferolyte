@@ -7,6 +7,10 @@ import { parseJsonc } from '../utils/read-jsonc';
 export type DocumentKind =
   | 'server-entity'
   | 'client-entity'
+  | 'attachable'
+  | 'render-controller'
+  | 'recipe'
+  | 'spawn-rule'
   | 'item'
   | 'block'
   | 'animation-controller-bp'
@@ -190,6 +194,9 @@ const RULES: Rule[] = [
     return { type: 'ids', kind: 'particles', ids: typeof id === 'string' ? [id] : [] };
   } },
   { pack: 'RP', dir: 'entity', ext: '.json', entry: () => ({ type: 'document', kind: 'client-entity' }) },
+  { pack: 'RP', dir: 'attachables', ext: '.json', entry: () => ({ type: 'document', kind: 'attachable' }) },
+  { pack: 'BP', dir: 'recipes', ext: '.json', entry: () => ({ type: 'document', kind: 'recipe' }) },
+  { pack: 'BP', dir: 'spawn_rules', ext: '.json', entry: () => ({ type: 'document', kind: 'spawn-rule' }) },
   { pack: 'BP', dir: 'entities', ext: '.json', entry: () => ({ type: 'document', kind: 'server-entity' }) },
   { pack: 'BP', dir: 'items', ext: '.json', entry: () => ({ type: 'document', kind: 'item' }) },
   { pack: 'BP', dir: 'blocks', ext: '.json', entry: () => ({ type: 'document', kind: 'block' }) },

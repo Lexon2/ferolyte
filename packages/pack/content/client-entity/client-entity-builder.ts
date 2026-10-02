@@ -154,7 +154,13 @@ export class ClientEntityBuilder implements ContentBuilder {
     }
 
     if (spawnEgg !== undefined) {
-      description.spawn_egg = spawnEgg;
+      description.spawn_egg =
+        'baseColor' in spawnEgg
+          ? {
+              base_color: spawnEgg.baseColor,
+              overlay_color: spawnEgg.overlayColor,
+            }
+          : { texture: spawnEgg.texture, texture_index: spawnEgg.textureIndex };
     }
   }
 

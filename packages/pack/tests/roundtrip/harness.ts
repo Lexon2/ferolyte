@@ -25,7 +25,24 @@ import {
 } from '@ferolyte/pack/content/generated/entity/registry';
 import { ServerEntityBuilder } from '@ferolyte/pack/content/server-entity/server-entity-builder';
 
-export type Area = 'entity' | 'entity_behavior' | 'item' | 'block';
+import {
+  collectDocuments,
+  generatedKindOf,
+  isDocumentArea,
+  runDocument,
+} from './documents';
+
+export type Area =
+  | 'entity'
+  | 'entity_behavior'
+  | 'item'
+  | 'block'
+  | 'attachable'
+  | 'render_controller'
+  | 'recipe'
+  | 'spawn_rule'
+  | 'client_entity'
+  | 'animation_controller';
 export type Category =
   | 'REJECTED'
   | 'TYPE'
@@ -503,7 +520,7 @@ export const diff = (
 
 // ------------------------------------------------------------------ build
 
-const factories: Record<Area, Record<string, unknown>> = {
+const factories: Partial<Record<Area, Record<string, unknown>>> = {
   entity: entityComponentRegistry,
   entity_behavior: entityBehaviorRegistry,
   item: itemComponentRegistry,
@@ -589,11 +606,15 @@ export const runInstance = (
   instance: Instance,
 ): { failure?: Failure; sdkKey: string; camel: unknown } => {
   const { area, component, value } = instance;
-  const generatedKey = Object.values(factories[area]).find(
+  if (isDocumentArea(area)) {
+    return runDocument(instance);
+  }
+  const registry = factories[area] as Record<string, unknown>;
+  const generatedKey = Object.values(registry).find(
     (entry) => (entry as { key?: string }).key === component,
   ) as { sdkKey: string } | undefined;
   const sdkKey = generatedKey?.sdkKey ?? toSdkKey(component);
-  const entry = (factories[area] as Record<string, { map?: KeyMapNode }>)[sdkKey];
+  const entry = (registry as Record<string, { map?: KeyMapNode }>)[sdkKey];
   const camel =
     entry?.map !== undefined
       ? camelizeWithMap(value, entry.map)
@@ -606,7 +627,7 @@ export const runInstance = (
     json: value,
   };
 
-  if (!(sdkKey in factories[area])) {
+  if (!(sdkKey in registry)) {
     return {
       sdkKey,
       camel,
@@ -671,7 +692,11 @@ export const runInstance = (
 
 // -------------------------------------------------------------- TS check
 
-const typeNames: Record<Area, string> = {
+const typeNames: Partial<Record<Area, string>> = {
+  attachable: "DocumentConfigs['attachable']",
+  render_controller: "DocumentConfigs['renderController']",
+  recipe: "DocumentConfigs['recipe']",
+  spawn_rule: "DocumentConfigs['spawnRule']",
   entity: 'EntityComponents',
   entity_behavior: "NonNullable<EntityComponents['behaviors']>",
   item: 'ItemComponents',
@@ -687,12 +712,15 @@ export const typeCheck = (
     "import type { EntityComponents } from '@ferolyte/pack/content/server-entity/interfaces/entity-components';",
     "import type { ItemComponents } from '@ferolyte/pack/content/item/interfaces/item-config';",
     "import type { BlockComponents } from '@ferolyte/pack/content/block/interfaces/block-config';",
+    "import type { DocumentConfigs } from '@ferolyte/pack/content/documents/convert-document';",
   ];
   const lineOf = new Map<number, number>();
   items.forEach(({ instance, sdkKey, camel }, index) => {
     lineOf.set(lines.length + 1, index);
     lines.push(
-      `export const t${index}: ${typeNames[instance.area]} = ${JSON.stringify({ [sdkKey]: camel })};`,
+      `export const t${index}: ${typeNames[instance.area]} = ${JSON.stringify(
+        generatedKindOf(instance.area) !== undefined ? camel : { [sdkKey]: camel },
+      )};`,
     );
   });
 
@@ -735,7 +763,11 @@ export const typeCheck = (
 
 export const runRoundtrip = (): RoundtripResult => {
   const seen = new Set<string>();
-  const instances = [...collectVanilla(), ...collectVariants()].filter(
+  const instances = [
+    ...collectVanilla(),
+    ...collectDocuments(),
+    ...collectVariants(),
+  ].filter(
     (instance) => {
       const key = `${instance.area}|${instance.component}|${JSON.stringify(instance.value)}`;
       if (seen.has(key)) return false;
@@ -753,7 +785,12 @@ export const runRoundtrip = (): RoundtripResult => {
   // TS check only for components the SDK knows (the others are UNKNOWN already).
   const known = runs
     .map((run, index) => ({ run, index }))
-    .filter(({ run }) => run.failure?.categories[0] !== 'UNKNOWN_COMPONENT');
+    .filter(
+      ({ run }) =>
+        run.failure?.categories[0] !== 'UNKNOWN_COMPONENT' &&
+        (!isDocumentArea(run.instance.area) ||
+          generatedKindOf(run.instance.area) !== undefined),
+    );
   const typeErrors = typeCheck(
     known.map(({ run }) => ({
       instance: run.instance,

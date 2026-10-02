@@ -1,0 +1,58 @@
+{
+  "properties": {
+    "minecraft:recipe_furnace": {
+      "x-sdk-name": "furnace"
+    },
+    "minecraft:recipe_brewing_container": {
+      "x-sdk-name": "brewingContainer"
+    },
+    "minecraft:recipe_brewing_mix": {
+      "x-sdk-name": "brewingMix"
+    },
+    "minecraft:recipe_shaped": {
+      "x-sdk-name": "shaped"
+    },
+    "minecraft:recipe_shapeless": {
+      "x-sdk-name": "shapeless"
+    },
+    "minecraft:recipe_smithing_transform": {
+      "x-sdk-name": "smithingTransform"
+    },
+    "minecraft:recipe_smithing_trim": {
+      "x-sdk-name": "smithingTrim",
+      "type": "object",
+      "title": "Smithing Trim Recipe",
+      "description": "Represents a smithing table recipe that applies an armor trim.",
+      "additionalProperties": false,
+      "required": [
+        "description"
+      ],
+      "properties": {
+        "description": {
+          "$ref": "./types/base types/definition.json"
+        },
+        "tags": {
+          "$ref": "./types/base types/tags.json"
+        },
+        "unlock": {
+          "$ref": "./types/base types/unlock.json"
+        },
+        "template": {
+          "title": "Template",
+          "description": "Smithing template item of the recipe.",
+          "$ref": "./types/base types/item.json"
+        },
+        "base": {
+          "title": "Base",
+          "description": "Item the trim is applied to.",
+          "$ref": "./types/base types/item.json"
+        },
+        "addition": {
+          "title": "Addition",
+          "description": "Trim material item.",
+          "$ref": "./types/base types/item.json"
+        }
+      }
+    }
+  }
+}

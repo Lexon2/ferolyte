@@ -3,6 +3,7 @@ import { basename } from 'path';
 import { buildBlockJson } from './block/build';
 import { buildAnimationControllerJson } from './animation-controller-build';
 import { buildClientEntityJson } from './client-entity/build';
+import { buildDocumentJson } from './document/build';
 import { buildItemJson } from './items/build';
 import { buildServerEntityJson } from './server-entity/build';
 import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
@@ -19,6 +20,10 @@ const contentFactory = {
   [CONTENT_METADATA.SERVER_ENTITY]: buildServerEntityJson,
   [CONTENT_METADATA.CLIENT_ENTITY]: buildClientEntityJson,
   [CONTENT_METADATA.BLOCK]: buildBlockJson,
+  [CONTENT_METADATA.ATTACHABLE]: buildDocumentJson,
+  [CONTENT_METADATA.RENDER_CONTROLLER]: buildDocumentJson,
+  [CONTENT_METADATA.RECIPE]: buildDocumentJson,
+  [CONTENT_METADATA.SPAWN_RULE]: buildDocumentJson,
   [CONTENT_METADATA.ANIMATION_CONTROLLER_BP]: buildAnimationControllerJson,
   [CONTENT_METADATA.ANIMATION_CONTROLLER_RP]: buildAnimationControllerJson,
 };

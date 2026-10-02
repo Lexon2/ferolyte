@@ -145,4 +145,39 @@ describe('buildContentSuffixRegistry', () => {
       registry.createContentOutputPath('/packs/BP/entities/foo.e.bp.ts'),
     ).toBe(join('/out/BP', 'entities', 'myaddon', 'foo.e.bp.json'));
   });
+
+  it('registers attachables, render controllers, recipes and spawn rules', () => {
+    const registry = buildContentSuffixRegistry();
+    const cases = [
+      ['/packs/RP/attachables/wand.att.ts', 'attachable', CONTENT_METADATA.ATTACHABLE, join('/out/RP', 'attachables', 'myaddon', 'wand.att.json')],
+      ['/packs/RP/render_controllers/mob.rc.ts', 'render-controller', CONTENT_METADATA.RENDER_CONTROLLER, join('/out/RP', 'render_controllers', 'myaddon', 'mob.rc.json')],
+      ['/packs/BP/recipes/plank.recipe.ts', 'recipe', CONTENT_METADATA.RECIPE, join('/out/BP', 'recipes', 'myaddon', 'plank.recipe.json')],
+      ['/packs/BP/spawn_rules/mob.spawn.ts', 'spawn-rule', CONTENT_METADATA.SPAWN_RULE, join('/out/BP', 'spawn_rules', 'myaddon', 'mob.spawn.json')],
+    ] as const;
+
+    for (const [file, contentType, metadata, output] of cases) {
+      expect(registry.resolveContentFile(file)).toMatchObject({
+        contentType,
+        metadata,
+      });
+      expect(registry.createContentOutputPath(file)).toBe(output);
+    }
+  });
+
+  it('keeps the new suffixes configurable', () => {
+    const registry = buildContentSuffixRegistry({
+      recipe: ['rcp'],
+      'spawn-rule': ['sr'],
+    });
+
+    expect(
+      registry.resolveContentFile('/packs/BP/recipes/a.rcp.ts')?.contentType,
+    ).toBe('recipe');
+    expect(
+      registry.resolveContentFile('/packs/BP/recipes/a.recipe.ts'),
+    ).toBeUndefined();
+    expect(
+      registry.resolveContentFile('/packs/BP/spawn_rules/a.sr.ts')?.contentType,
+    ).toBe('spawn-rule');
+  });
 });

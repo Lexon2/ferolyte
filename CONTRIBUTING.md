@@ -67,6 +67,15 @@ Field level markers (in a property of a patch): `x-since` (introduced in a forma
 `x-removed` + `x-evidence` (error + not written from `since`; only with the official per-version history / vanilla corpus as proof).
 `packages/pack/tests/schema/ignored-diffs.json` lists the remaining differences that are intentionally kept, with a reason (checked by `official-diffs.test.ts`).
 
+Whole documents (attachables, render controllers, recipes, spawn rules): each is an area with one `document` entry
+(`generated/<area>/documents.ts`, `documentRegistry` in `content/documents/convert-document.ts`); `convertDocument(kind, config, ctx)` runs the same
+normalize → rename → validate pipeline over the whole file. Patches mirror the source layout:
+`scripts/schemas/patches/<area>/source/<path under the source folder>.json` (wrapper keys get SDK names with `"x-sdk-name": "attachable"`;
+`minecraft:` keys inside a document are named like the component areas). Spawn rule conditions are also a component area
+(`spawnRuleConditionRegistry`). The round-trip checks whole vanilla documents of these kinds plus client entities and animation controllers
+(`tests/roundtrip/documents.ts`). Adding a content type: a `documentArea(...)` call in `codegen.mjs`, an entry in `DocumentConfigs`/`documentRegistry`,
+`CONTENT_METADATA`, the cli suffix registry, `content.factory.ts`.
+
 Rules of the generated pipeline: unknown fields are reported (did-you-mean) and **not written**; invalid values of
 known fields are written as given plus an error; `oneOf` is validated as `anyOf`; free-form maps are never renamed.
 

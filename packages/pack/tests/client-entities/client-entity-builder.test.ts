@@ -30,4 +30,24 @@ describe('ClientEntityBuilder', () => {
       pre_animation: ['variable.x = 0;'],
     });
   });
+
+  it('writes spawn_egg with snake_case keys', () => {
+    const color = new ClientEntityBuilder({
+      identifier: 'test:entity',
+      spawnEgg: { baseColor: '#112233', overlayColor: '#445566' },
+    }).build();
+    expect(color['minecraft:client_entity'].description.spawn_egg).toEqual({
+      base_color: '#112233',
+      overlay_color: '#445566',
+    });
+
+    const texture = new ClientEntityBuilder({
+      identifier: 'test:entity',
+      spawnEgg: { texture: 'egg', textureIndex: 3 },
+    }).build();
+    expect(texture['minecraft:client_entity'].description.spawn_egg).toEqual({
+      texture: 'egg',
+      texture_index: 3,
+    });
+  });
 });
