@@ -5,12 +5,9 @@ import { camelToSnake, snakeToCamel } from '../../content/molang/utils/case';
 
 describe('Molang builder', () => {
   it('builds the fluent example with named operators', () => {
-    const expression = new Molang()
-      .allAnimationsFinished
-      .and
+    const expression = new Molang().allAnimationsFinished.and
       .math('abs', 1)
-      .or
-      .math.randomInteger(10, 100)
+      .or.math.randomInteger(10, 100)
       .build();
 
     expect(expression).toBe(
@@ -19,8 +16,7 @@ describe('Molang builder', () => {
   });
 
   it('builds the fluent example with op() escape hatch', () => {
-    const expression = new Molang()
-      .allAnimationsFinished
+    const expression = new Molang().allAnimationsFinished
       .op('&&')
       .math('abs', 1)
       .op('||')
@@ -38,14 +34,16 @@ describe('Molang builder', () => {
   });
 
   it('supports parameterized query() fallback', () => {
-    expect(
-      new Molang().query('is_item_equipped', 'main_hand').build(),
-    ).toBe("query.is_item_equipped('main_hand')");
+    expect(new Molang().query('is_item_equipped', 'main_hand').build()).toBe(
+      "query.is_item_equipped('main_hand')",
+    );
   });
 
   it('supports math callable, namespace methods, aliases, and pi constant', () => {
     expect(new Molang().math('cos', 45).build()).toBe('math.cos(45)');
-    expect(new Molang().math.clamp(1, 0, 2).build()).toBe('math.clamp(1, 0, 2)');
+    expect(new Molang().math.clamp(1, 0, 2).build()).toBe(
+      'math.clamp(1, 0, 2)',
+    );
     expect(new Molang().math.randomInt(10, 100).build()).toBe(
       'math.random_integer(10, 100)',
     );
@@ -53,17 +51,16 @@ describe('Molang builder', () => {
   });
 
   it('supports comparison and null coalescing operators', () => {
-    expect(
-      new Molang().num(1).eq.num(1).nullCoalesce.num(2).build(),
-    ).toBe('1 == 1 ?? 2');
+    expect(new Molang().num(1).eq.num(1).nullCoalesce.num(2).build()).toBe(
+      '1 == 1 ?? 2',
+    );
   });
 
   it('wraps nested expressions with group()', () => {
     expect(
       new Molang()
         .group((expression) => expression.num(1).add.num(2))
-        .mul
-        .num(3)
+        .mul.num(3)
         .build(),
     ).toBe('(1 + 2) * 3');
   });
@@ -80,8 +77,12 @@ describe('Molang builder', () => {
   });
 
   it('converts camelCase and snake_case consistently', () => {
-    expect(snakeToCamel('all_animations_finished')).toBe('allAnimationsFinished');
-    expect(camelToSnake('allAnimationsFinished')).toBe('all_animations_finished');
+    expect(snakeToCamel('all_animations_finished')).toBe(
+      'allAnimationsFinished',
+    );
+    expect(camelToSnake('allAnimationsFinished')).toBe(
+      'all_animations_finished',
+    );
     expect(snakeToCamel('random_integer')).toBe('randomInteger');
   });
 
@@ -92,13 +93,29 @@ describe('Molang builder', () => {
     expect(`${expression}`).toBe('42');
   });
 
+  it('clones the current expression into a new independent builder', () => {
+    const original = new Molang().allAnimationsFinished.and.math('abs', 1);
+    const copy = original.clone();
+
+    expect(copy.build()).toBe('query.all_animations_finished && math.abs(1)');
+    expect(original.build()).toBe(
+      'query.all_animations_finished && math.abs(1)',
+    );
+
+    copy.or.math.randomInt(10, 100);
+
+    expect(copy.build()).toBe(
+      'query.all_animations_finished && math.abs(1) || math.random_integer(10, 100)',
+    );
+    expect(original.build()).toBe(
+      'query.all_animations_finished && math.abs(1)',
+    );
+  });
+
   it('supports ternary, returnExpr, loop, forEach, and arrow helpers', () => {
-    expect(
-      new Molang()
-        .query('is_baby')
-        .ternary(-8, 0)
-        .build(),
-    ).toBe('query.is_baby ? -8 : 0');
+    expect(new Molang().query('is_baby').ternary(-8, 0).build()).toBe(
+      'query.is_baby ? -8 : 0',
+    );
 
     expect(
       new Molang()

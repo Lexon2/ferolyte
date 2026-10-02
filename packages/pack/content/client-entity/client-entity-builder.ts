@@ -1,4 +1,9 @@
 import { ClientEntityConfig } from './interfaces/client-entity-config';
+import { ClientEntityAnimationResolver } from './interfaces/animations-collection';
+import {
+  formatEntityScriptsAnimate,
+  parseMolangStatement,
+} from '../molang/parse-molang-expression';
 import { ContentBuilder } from '@ferolyte/common/content/interfaces/content-builder';
 import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
 
@@ -7,8 +12,18 @@ export class ClientEntityBuilder implements ContentBuilder {
 
   private config: ClientEntityConfig;
 
+  private animationResolver?: ClientEntityAnimationResolver;
+
   constructor(config: ClientEntityConfig) {
     this.config = config;
+  }
+
+  /**
+   * Installs the resolver that turns animations with options into derived ids.
+   */
+  public withAnimationResolver(resolver: ClientEntityAnimationResolver): this {
+    this.animationResolver = resolver;
+    return this;
   }
 
   public cloneConfig(): ClientEntityConfig {
@@ -31,6 +46,21 @@ export class ClientEntityBuilder implements ContentBuilder {
     this.formatScripts(entity);
 
     return entity;
+  }
+
+  private formatAnimations(animations: NonNullable<ClientEntityConfig['animations']>) {
+    const result: Record<string, string> = {};
+    for (const [key, value] of Object.entries(animations)) {
+      if (typeof value === 'string') {
+        result[key] = value;
+      } else {
+        result[key] = this.animationResolver
+          ? this.animationResolver(this.config.identifier, key, value)
+          : value.id;
+      }
+    }
+
+    return result;
   }
 
   private formatDescription(entity: any) {
@@ -88,7 +118,7 @@ export class ClientEntityBuilder implements ContentBuilder {
     }
 
     if (animations !== undefined) {
-      description.animations = animations;
+      description.animations = this.formatAnimations(animations);
     }
 
     if (soundEffects !== undefined) {
@@ -152,27 +182,15 @@ export class ClientEntityBuilder implements ContentBuilder {
       entity['minecraft:client_entity'].description.scripts ?? {};
 
     if (animate !== undefined) {
-      const formattedAnimate: (Record<string, string> | string)[] = [];
-      for (const item of animate) {
-        if (typeof item === 'string') {
-          formattedAnimate.push(item);
-          continue;
-        }
-
-        // To handle object with multiple animations in it.
-        for (const [key, value] of Object.entries(item)) {
-          formattedAnimate.push({ [key]: value });
-        }
-      }
-      entityScripts.animate = formattedAnimate;
+      entityScripts.animate = formatEntityScriptsAnimate(animate);
     }
 
     if (initialize !== undefined) {
-      entityScripts.initialize = initialize;
+      entityScripts.initialize = initialize.map(parseMolangStatement);
     }
 
     if (preAnimation !== undefined) {
-      entityScripts.pre_animation = preAnimation;
+      entityScripts.pre_animation = preAnimation.map(parseMolangStatement);
     }
 
     if (parentSetup !== undefined) {
