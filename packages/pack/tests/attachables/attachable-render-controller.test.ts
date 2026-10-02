@@ -52,7 +52,7 @@ describe('createAttachable', () => {
 });
 
 describe('client entity fields shared with attachables', () => {
-  it('writes animation_controllers, scaleX/Y/Z, hide_held_items, held_item_scale and keeps strings as they are', () => {
+  it('writes animation_controllers, scaleX/Y/Z, hide_held_items, held_item_scale and terminates statements without breaking blocks', () => {
     const entity = createClientEntity({
       identifier: 'ns:e',
       animationControllers: [{ general: 'controller.animation.ns.general' }],
@@ -62,7 +62,8 @@ describe('client entity fields shared with attachables', () => {
         scaleY: 'variable.y',
         scaleZ: 'variable.z',
         hideHeldItems: 'variable.hide',
-        preAnimation: ['(variable.a) ? {', 'variable.b = 1;', q.isBaby],
+        initialize: ['variable.c = 0'],
+        preAnimation: ['(variable.a) ? {', 'variable.b = 1;', '};', q.isBaby],
       },
     }).build()['minecraft:client_entity'].description;
 
@@ -73,7 +74,8 @@ describe('client entity fields shared with attachables', () => {
       scaleY: 'variable.y',
       scaleZ: 'variable.z',
       hide_held_items: 'variable.hide',
-      pre_animation: ['(variable.a) ? {', 'variable.b = 1;', 'query.is_baby;'],
+      initialize: ['variable.c = 0;'],
+      pre_animation: ['(variable.a) ? {', 'variable.b = 1;', '};', 'query.is_baby;'],
     });
   });
 });
