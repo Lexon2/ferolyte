@@ -1,0 +1,23 @@
+{
+  "x-new-component": "minecraft:seed",
+  "type": "object",
+  "description": "Crop planted by this item (vanilla; not in the schemas).",
+  "properties": {
+    "crop_result": {
+      "type": "string"
+    },
+    "plant_at": {},
+    "plant_at_any_block": {
+      "type": "boolean"
+    },
+    "plant_at_face": {
+      "type": "string"
+    },
+    "plant_at_any_solid_surface": {
+      "type": "boolean"
+    }
+  },
+  "x-deprecated": {
+    "reason": "not in the official Mojang schemas (item index 1.26.30); the vanilla corpus items still use it"
+  }
+}

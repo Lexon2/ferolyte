@@ -1,0 +1,24 @@
+{
+  "properties": {
+    "max_dist": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    },
+    "reach_multiplier": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    },
+    "set_persistent": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    },
+    "target_dist": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    }
+  }
+}

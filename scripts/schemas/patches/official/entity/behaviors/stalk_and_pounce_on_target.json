@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "leap_distance": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    }
+  }
+}

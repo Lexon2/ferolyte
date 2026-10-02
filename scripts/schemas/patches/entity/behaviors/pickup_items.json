@@ -1,0 +1,1 @@
+{ "properties": { "excluded_items": { "type": "array", "description": "Items that are never picked up.", "items": { "$ref": "../../../../general/item/descriptor.json" } } } }

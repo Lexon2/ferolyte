@@ -1,0 +1,417 @@
+{
+  "properties": {
+    "attack_types": {
+      "default": "",
+      "description": "Defines the entity types this entity will attack.",
+      "type": "string",
+      "x-since": "1.21.120"
+    },
+    "can_spread_on_fire": {
+      "default": false,
+      "description": "Allows the mob, if on fire and empty handed, to ignite its target upon a successful attack.",
+      "type": "boolean",
+      "x-since": "1.21.120"
+    },
+    "control_flags": {
+      "default": [],
+      "items": {
+        "enum": [
+          "move",
+          "look",
+          "jump"
+        ],
+        "title": "Goal's control flags",
+        "type": "string"
+      },
+      "type": "array",
+      "x-since": "1.21.120"
+    },
+    "inner_boundary_time_increase": {
+      "default": 0.25,
+      "description": "Time, in seconds, added to the attack path recalculation interval when the target is beyond \"path_inner_boundary\".",
+      "minimum": 0,
+      "type": "number",
+      "x-since": "1.21.120"
+    },
+    "on_attack": {
+      "properties": {
+        "event": {
+          "default": "",
+          "type": "string"
+        },
+        "filters": {
+          "description": "Filters allow data objects to specify test criteria which allows their use. Filters can be defined by a single object of type (Filter Test), an array of tests, collection groups, or a combination of these objects.",
+          "oneOf": [
+            {
+              "properties": {
+                "domain": {
+                  "description": "The domain the test should be performed in.",
+                  "oneOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-control-value-type": "uint32"
+                },
+                "operator": {
+                  "description": "The comparison to apply with 'value'.",
+                  "oneOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-control-value-type": "uint32"
+                },
+                "subject": {
+                  "description": "The subject of this filter test.",
+                  "oneOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-control-value-type": "uint32"
+                },
+                "test": {
+                  "description": "The name of the test to apply.",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "The value being compared with the test.",
+                  "oneOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-control-value-type": "uint32"
+                }
+              },
+              "required": [
+                "test"
+              ],
+              "title": "Filter Test",
+              "type": "object"
+            },
+            {
+              "items": {
+                "x-recursive": true,
+                "description": "Filters allow data objects to specify test criteria which allows their use. Filters can be defined by a single object of type (Filter Test), an array of tests, collection groups, or a combination of these objects."
+              },
+              "type": "array"
+            },
+            {
+              "description": "Filters allow data objects to specify test criteria which allows their use. Filters can be defined by a single object of type (Filter Test), an array of tests, collection groups, or a combination of these objects.",
+              "properties": {
+                "AND": {
+                  "x-recursive": true,
+                  "description": "Evaluates all tests in the group, all must pass in order for the group to pass."
+                },
+                "NOT": {
+                  "x-recursive": true,
+                  "description": "Evaluates all tests in the group, all must fail in order for the group to pass."
+                },
+                "OR": {
+                  "x-recursive": true,
+                  "description": "Evaluates tests in the group, one or more must pass in order for the group to pass."
+                },
+                "all": {
+                  "x-recursive": true,
+                  "description": "Evaluates all tests in the group, all must pass in order for the group to pass."
+                },
+                "all_of": {
+                  "x-recursive": true,
+                  "description": "Evaluates all tests in the group, all must pass in order for the group to pass."
+                },
+                "any": {
+                  "x-recursive": true,
+                  "description": "Evaluates tests in the group, one or more must pass in order for the group to pass."
+                },
+                "any_of": {
+                  "x-recursive": true,
+                  "description": "Evaluates tests in the group, one or more must pass in order for the group to pass."
+                },
+                "none_of": {
+                  "x-recursive": true,
+                  "description": "Evaluates all tests in the group, all must fail in order for the group to pass."
+                }
+              },
+              "title": "Filter Group Map",
+              "type": "object"
+            }
+          ],
+          "title": "Filter Group",
+          "default": {
+            "AND": null,
+            "NOT": null,
+            "OR": null,
+            "all": null,
+            "all_of": null,
+            "any": null,
+            "any_of": null,
+            "none_of": null
+          }
+        },
+        "target": {
+          "enum": [
+            "self",
+            "other",
+            "player",
+            "target",
+            "parent",
+            "baby",
+            "block",
+            "damager",
+            "holder",
+            "item"
+          ],
+          "title": "FilterSubject",
+          "type": "string",
+          "default": "self"
+        }
+      },
+      "title": "ActorDefinitionTrigger",
+      "type": "object",
+      "default": {
+        "event": "",
+        "filters": {
+          "AND": null,
+          "NOT": null,
+          "OR": null,
+          "all": null,
+          "all_of": null,
+          "any": null,
+          "any_of": null,
+          "none_of": null
+        },
+        "target": "self"
+      },
+      "description": "Defines the event to trigger when this entity successfully attacks.",
+      "x-since": "1.21.120"
+    },
+    "on_kill": {
+      "properties": {
+        "event": {
+          "default": "",
+          "type": "string"
+        },
+        "filters": {
+          "description": "Filters allow data objects to specify test criteria which allows their use. Filters can be defined by a single object of type (Filter Test), an array of tests, collection groups, or a combination of these objects.",
+          "oneOf": [
+            {
+              "properties": {
+                "domain": {
+                  "description": "The domain the test should be performed in.",
+                  "oneOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-control-value-type": "uint32"
+                },
+                "operator": {
+                  "description": "The comparison to apply with 'value'.",
+                  "oneOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-control-value-type": "uint32"
+                },
+                "subject": {
+                  "description": "The subject of this filter test.",
+                  "oneOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-control-value-type": "uint32"
+                },
+                "test": {
+                  "description": "The name of the test to apply.",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "The value being compared with the test.",
+                  "oneOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-control-value-type": "uint32"
+                }
+              },
+              "required": [
+                "test"
+              ],
+              "title": "Filter Test",
+              "type": "object"
+            },
+            {
+              "items": {
+                "x-recursive": true,
+                "description": "Filters allow data objects to specify test criteria which allows their use. Filters can be defined by a single object of type (Filter Test), an array of tests, collection groups, or a combination of these objects."
+              },
+              "type": "array"
+            },
+            {
+              "description": "Filters allow data objects to specify test criteria which allows their use. Filters can be defined by a single object of type (Filter Test), an array of tests, collection groups, or a combination of these objects.",
+              "properties": {
+                "AND": {
+                  "x-recursive": true,
+                  "description": "Evaluates all tests in the group, all must pass in order for the group to pass."
+                },
+                "NOT": {
+                  "x-recursive": true,
+                  "description": "Evaluates all tests in the group, all must fail in order for the group to pass."
+                },
+                "OR": {
+                  "x-recursive": true,
+                  "description": "Evaluates tests in the group, one or more must pass in order for the group to pass."
+                },
+                "all": {
+                  "x-recursive": true,
+                  "description": "Evaluates all tests in the group, all must pass in order for the group to pass."
+                },
+                "all_of": {
+                  "x-recursive": true,
+                  "description": "Evaluates all tests in the group, all must pass in order for the group to pass."
+                },
+                "any": {
+                  "x-recursive": true,
+                  "description": "Evaluates tests in the group, one or more must pass in order for the group to pass."
+                },
+                "any_of": {
+                  "x-recursive": true,
+                  "description": "Evaluates tests in the group, one or more must pass in order for the group to pass."
+                },
+                "none_of": {
+                  "x-recursive": true,
+                  "description": "Evaluates all tests in the group, all must fail in order for the group to pass."
+                }
+              },
+              "title": "Filter Group Map",
+              "type": "object"
+            }
+          ],
+          "title": "Filter Group",
+          "default": {
+            "AND": null,
+            "NOT": null,
+            "OR": null,
+            "all": null,
+            "all_of": null,
+            "any": null,
+            "any_of": null,
+            "none_of": null
+          }
+        },
+        "target": {
+          "enum": [
+            "self",
+            "other",
+            "player",
+            "target",
+            "parent",
+            "baby",
+            "block",
+            "damager",
+            "holder",
+            "item"
+          ],
+          "title": "FilterSubject",
+          "type": "string",
+          "default": "self"
+        }
+      },
+      "title": "ActorDefinitionTrigger",
+      "type": "object",
+      "default": {
+        "event": "",
+        "filters": {
+          "AND": null,
+          "NOT": null,
+          "OR": null,
+          "all": null,
+          "all_of": null,
+          "any": null,
+          "any_of": null,
+          "none_of": null
+        },
+        "target": "self"
+      },
+      "description": "Defines the event to trigger when this entity kills the target.",
+      "x-since": "1.21.120"
+    }
+  }
+}

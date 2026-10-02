@@ -1,0 +1,40 @@
+{
+  "properties": {
+    "saturation_modifier": {
+      "type": [
+        "number",
+        "string"
+      ]
+    },
+    "effects": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "remove_effects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "on_use_action": {
+      "type": "string"
+    },
+    "on_use_range": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "is_meat": {
+      "type": "boolean"
+    },
+    "cooldown_type": {
+      "type": "string"
+    },
+    "cooldown_time": {
+      "type": "number"
+    }
+  }
+}

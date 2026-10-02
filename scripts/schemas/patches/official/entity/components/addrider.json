@@ -1,0 +1,14 @@
+{
+  "properties": {
+    "entity_type": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.21.90: 1."
+      }
+    },
+    "spawn_event": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.21.90: 1."
+      }
+    }
+  }
+}

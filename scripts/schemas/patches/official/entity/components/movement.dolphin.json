@@ -1,0 +1,8 @@
+{
+  "x-new-component": "minecraft:movement.dolphin",
+  "x-official": "official 1.21.80–1.26.50",
+  "type": "object",
+  "description": "Listed by the official Mojang schemas without a body.",
+  "additionalProperties": {},
+  "x-free-form": "the official Mojang schema lists the component without a body (\"Dynamic value\")"
+}

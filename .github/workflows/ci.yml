@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Generated SDK types/validators must match the pinned schemas + patches.
+      - run: npm run codegen:check
+      - run: npx tsc -p packages/pack/tsconfig.json --noEmit
+      - run: npx vitest run

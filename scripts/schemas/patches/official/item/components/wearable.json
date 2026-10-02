@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "dispensable": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+      }
+    }
+  }
+}

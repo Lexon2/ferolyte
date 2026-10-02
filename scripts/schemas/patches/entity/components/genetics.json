@@ -1,0 +1,1 @@
+{ "properties": { "genes": { "items": { "properties": { "use_simplified_breeding": { "type": "boolean" } } } } } }

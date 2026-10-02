@@ -1,0 +1,12 @@
+{
+  "x-new-component": "minecraft:behavior.enderman_take_block",
+  "type": "object",
+  "description": "Allows the enderman to take a block and carry it around. The official schema lists it without a body (\"Dynamic value\").",
+  "additionalProperties": false,
+  "properties": {
+    "priority": {
+      "type": "integer",
+      "description": "How important this behavior is. Lower priority behaviors will be executed first."
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "x-new-component": "minecraft:on_placed",
+  "x-official": "official 1.26.20–1.26.20",
+  "title": "Placed Component",
+  "type": "object",
+  "additionalProperties": {},
+  "x-free-form": "the official Mojang schema has a body without properties"
+}

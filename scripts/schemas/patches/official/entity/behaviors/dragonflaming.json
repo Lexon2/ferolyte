@@ -1,0 +1,33 @@
+{
+  "properties": {
+    "control_flags": {
+      "default": [],
+      "items": {
+        "enum": [
+          "move",
+          "look",
+          "jump"
+        ],
+        "title": "Goal's control flags",
+        "type": "string"
+      },
+      "type": "array",
+      "x-since": "1.21.100"
+    },
+    "smoke_color": {
+      "default": "#DC00EF",
+      "type": "string",
+      "x-since": "1.21.100"
+    },
+    "smoke_radius": {
+      "default": 5,
+      "type": "number",
+      "x-since": "1.21.100"
+    },
+    "smoke_time": {
+      "default": 10,
+      "type": "number",
+      "x-since": "1.21.100"
+    }
+  }
+}

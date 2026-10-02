@@ -1,0 +1,4 @@
+{
+  "properties": { "chance": { "type": "number", "description": "Not documented in the schemas, used by vanilla." } },
+  "definitions": { "effect": { "properties": { "chance": { "type": "number" } } } }
+}

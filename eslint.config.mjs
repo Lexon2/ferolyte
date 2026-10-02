@@ -81,6 +81,6 @@ export default tseslint.config(
     },
   },
   {
-    ignores: ['build/**/*.js'],
+    ignores: ['build/**/*.js', '**/generated/**'],
   },
 );

@@ -1,0 +1,1 @@
+{ "properties": { "target_dist": { "type": "number", "deprecated": true, "description": "Pre-1.21 name of `target_distance`." } } }

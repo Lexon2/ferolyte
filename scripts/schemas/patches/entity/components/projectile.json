@@ -1,0 +1,51 @@
+{
+  "properties": {
+    "owner_launch_immunity_ticks": { "type": "integer", "deprecated": true, "description": "Deprecated since 1.26.50." },
+    "on_hit": {
+      "properties": {
+        "douse_fire": { "type": null, "oneOf": [{ "type": "boolean" }, { "type": "object" }] },
+        "mob_effect": {
+          "type": null,
+          "items": null,
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "amplifier": { "type": "integer" },
+                  "durationeasy": { "type": ["integer", "string"] },
+                  "durationhard": { "type": ["integer", "string"] },
+                  "durationnormal": { "type": ["integer", "string"] },
+                  "effect": { "type": "string" }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "description": "1.26.50: effects wrapped into an `effects` list.",
+              "additionalProperties": false,
+              "properties": {
+                "effects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "amplifier": { "type": "integer" },
+                      "durationeasy": { "type": ["integer", "string"] },
+                      "durationhard": { "type": ["integer", "string"] },
+                      "durationnormal": { "type": ["integer", "string"] },
+                      "effect": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

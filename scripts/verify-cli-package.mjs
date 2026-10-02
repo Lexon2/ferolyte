@@ -6,23 +6,26 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const cliRoot = join(repoRoot, 'packages', 'cli');
-const packageScriptsDir = join(cliRoot, 'scripts');
+// Build output; every package publishes only its dist folder (plus docs).
+const distRoot = join(cliRoot, 'dist');
 
 const CRITICAL_PATHS = [
   'cli/index.js',
   'compiler/scripts/watch-esbuild.js',
   'compiler/scripts/create-scripts-output-path.js',
-  'compiler/scripts/minecraft-reload-server.js',
+  'compiler/scripts/minecraft-hub.js',
+  'compiler/check/check-project.js',
+  'package.json',
 ];
+
+const WORKSPACES = ['@ferolyte/common', '@ferolyte/pack', '@ferolyte/cli'];
+const FORBIDDEN_IN_TARBALL = /(^|\/)tests\/|\.test\.[cm]?[jt]s(\.map)?$|\.test\.d\.ts/;
+const ALLOWED_ROOT_FILES =
+  /^(package\.json|README\.md|CHANGELOG\.md|LICENSE|AGENTS\.md|llms\.txt)$/;
 
 const relativeImportPattern = /(?:from|export\s+\*)\s+["'](\.\.?\/[^"']+)["']/g;
 const createRequirePattern =
   /createRequire\([^)]+\)\(\s*['"](\.\.?\/[^'"]+)['"]\s*\)/g;
-
-const shouldSkipDir = (dirPath, entryName) =>
-  entryName === 'node_modules' ||
-  entryName === 'tests' ||
-  dirPath === packageScriptsDir;
 
 async function collectJsFiles(dir, files = []) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -31,15 +34,14 @@ async function collectJsFiles(dir, files = []) {
     const path = join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      if (shouldSkipDir(path, entry.name)) {
-        continue;
+      if (entry.name !== 'node_modules') {
+        await collectJsFiles(path, files);
       }
 
-      await collectJsFiles(path, files);
       continue;
     }
 
-    if (entry.name.endsWith('.js') && !entry.name.endsWith('.test.js')) {
+    if (entry.name.endsWith('.js')) {
       files.push(path);
     }
   }
@@ -49,7 +51,7 @@ async function collectJsFiles(dir, files = []) {
 
 function resolveRelativeImport(fromFile, importPath) {
   const base = dirname(fromFile);
-  let target = resolve(base, importPath);
+  const target = resolve(base, importPath);
 
   if (extname(target) === '') {
     if (existsSync(`${target}.js`)) {
@@ -65,76 +67,70 @@ function resolveRelativeImport(fromFile, importPath) {
 }
 
 function verifyCriticalPaths(root) {
-  const errors = [];
-
-  for (const rel of CRITICAL_PATHS) {
-    if (!existsSync(join(root, rel))) {
-      errors.push(`Missing critical file: ${rel}`);
-    }
-  }
-
-  return errors;
+  return CRITICAL_PATHS.filter((rel) => !existsSync(join(root, rel))).map(
+    (rel) => `Missing critical file: dist/${rel}`,
+  );
 }
 
 async function verifyBuiltImports() {
   const errors = [];
-  const jsFiles = await collectJsFiles(cliRoot);
 
-  for (const file of jsFiles) {
+  for (const file of await collectJsFiles(distRoot)) {
     const content = await readFile(file, 'utf8');
+    const relFile = file.replace(distRoot, '').replace(/\\/g, '/');
 
     for (const match of content.matchAll(relativeImportPattern)) {
-      const importPath = match[1];
-      const resolved = resolveRelativeImport(file, importPath);
-
-      if (!existsSync(resolved)) {
-        const relFile = file.replace(cliRoot, '').replace(/\\/g, '/');
-        errors.push(`Missing module "${importPath}" imported from ${relFile}`);
+      if (!existsSync(resolveRelativeImport(file, match[1]))) {
+        errors.push(`Missing module "${match[1]}" imported from ${relFile}`);
       }
     }
 
     for (const match of content.matchAll(createRequirePattern)) {
-      const requirePath = match[1];
-      const resolved = resolve(dirname(file), requirePath);
-
-      if (!existsSync(resolved)) {
-        const relFile = file.replace(cliRoot, '').replace(/\\/g, '/');
-        errors.push(
-          `Missing createRequire target "${requirePath}" in ${relFile}`,
-        );
+      if (!existsSync(resolve(dirname(file), match[1]))) {
+        errors.push(`Missing createRequire target "${match[1]}" in ${relFile}`);
       }
     }
   }
 
   return errors;
 }
-function verifyPackContents() {
+
+function packFiles(workspace) {
   const result = spawnSync(
     'npm',
-    ['pack', '-w', '@ferolyte/cli', '--dry-run', '--json'],
-    {
-      cwd: repoRoot,
-      encoding: 'utf8',
-      shell: true,
-    },
+    ['pack', '-w', workspace, '--dry-run', '--json'],
+    { cwd: repoRoot, encoding: 'utf8', shell: true },
   );
 
   if (result.status !== 0) {
     throw new Error(`npm pack failed:\n${result.stderr || result.stdout}`);
   }
 
-  const parsed = JSON.parse(result.stdout);
-  const files = (parsed[0]?.files ?? []).map((entry) =>
+  return (JSON.parse(result.stdout)[0]?.files ?? []).map((entry) =>
     entry.path.replace(/\\/g, '/'),
   );
+}
+
+function verifyPackContents() {
   const errors = [];
 
-  for (const rel of CRITICAL_PATHS) {
-    const normalized = rel.replace(/\\/g, '/');
-    const found = files.includes(normalized);
+  for (const workspace of WORKSPACES) {
+    const files = packFiles(workspace);
 
-    if (!found) {
-      errors.push(`Tarball missing: ${rel}`);
+    if (workspace === '@ferolyte/cli') {
+      for (const rel of CRITICAL_PATHS) {
+        if (!files.includes(`dist/${rel}`)) {
+          errors.push(`Tarball missing: dist/${rel}`);
+        }
+      }
+    }
+
+    for (const file of files) {
+      if (FORBIDDEN_IN_TARBALL.test(file)) {
+        errors.push(`${workspace} tarball contains a test file: ${file}`);
+      } else if (!file.startsWith('dist/') && !ALLOWED_ROOT_FILES.test(file)) {
+        errors.push(`${workspace} tarball contains an unexpected file: ${file}`);
+      }
     }
   }
 
@@ -142,17 +138,17 @@ function verifyPackContents() {
 }
 
 const errors = [
-  ...verifyCriticalPaths(cliRoot),
+  ...verifyCriticalPaths(distRoot),
   ...(await verifyBuiltImports()),
   ...verifyPackContents(),
 ];
 
 if (errors.length > 0) {
-  console.error('CLI package verification failed:\n');
+  console.error('Package verification failed:\n');
   for (const error of errors) {
     console.error(`  - ${error}`);
   }
   process.exit(1);
 }
 
-console.log('CLI package verification passed');
+console.log('Package verification passed');

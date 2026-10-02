@@ -1,0 +1,6 @@
+{
+  "properties": {
+    "excluded_items": { "type": "array", "description": "Items that are never equipped.", "items": { "$ref": "../../../../general/item/descriptor.json" } },
+    "can_wear_armor": { "type": "boolean", "description": "Whether the mob can wear armor it picks up." }
+  }
+}

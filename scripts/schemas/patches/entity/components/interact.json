@@ -1,0 +1,81 @@
+{
+  "properties": {
+    "interactions": {
+      "type": null,
+      "items": null,
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/interaction_spec"
+          }
+        },
+        {
+          "$ref": "#/definitions/interaction_spec"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "interaction_spec": {
+      "properties": {
+        "play_sounds": {
+          "type": null,
+          "items": null,
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "../../../../general/sound_event.json"
+              }
+            },
+            {
+              "$ref": "../../../../general/sound_event.json"
+            }
+          ]
+        },
+        "spawn_entities": {
+          "type": null,
+          "items": null,
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "equip_item_slot": {
+          "enum": {
+            "$append": [
+              "0",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ]
+          }
+        },
+        "drop_item_slot": {
+          "enum": {
+            "$append": [
+              "0",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

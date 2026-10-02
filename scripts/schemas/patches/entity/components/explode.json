@@ -1,0 +1,14 @@
+{
+  "properties": {
+    "fuse_length": {
+      "oneOf": {
+        "$append": [
+          {
+            "type": "object",
+            "properties": { "range_min": { "type": "number" }, "range_max": { "type": "number" } }
+          }
+        ]
+      }
+    }
+  }
+}

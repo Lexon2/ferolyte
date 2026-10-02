@@ -1,0 +1,28 @@
+{
+  "properties": {
+    "control_flags": {
+      "default": [],
+      "items": {
+        "enum": [
+          "move",
+          "look",
+          "jump"
+        ],
+        "title": "Goal's control flags",
+        "type": "string"
+      },
+      "type": "array",
+      "x-since": "1.26.10"
+    },
+    "sound_delay_max": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    },
+    "sound_delay_min": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    }
+  }
+}

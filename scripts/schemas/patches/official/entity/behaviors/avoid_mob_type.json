@@ -1,0 +1,15 @@
+{
+  "properties": {
+    "river_speed_multiplier": {
+      "default": 0.75,
+      "description": "Multiplier for speed when following river. 1.0 means keep the regular speed, while higher numbers make the speed faster.",
+      "type": "number",
+      "x-since": "1.21.120"
+    },
+    "ignore_visibilty": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    }
+  }
+}

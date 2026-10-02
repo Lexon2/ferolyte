@@ -1,0 +1,31 @@
+{
+  "properties": {
+    "max_angle_of_view_horizontal": {
+      "default": 180,
+      "description": "The rightmost angle a mob can look at on the horizontal plane with respect to its initial facing direction.",
+      "type": "number",
+      "x-since": "1.26.30"
+    },
+    "min_angle_of_view_horizontal": {
+      "default": -180,
+      "description": "The leftmost angle a mob can look at on the horizontal plane with respect to its initial facing direction.",
+      "type": "number",
+      "x-since": "1.26.30"
+    },
+    "angle_of_view_horizontal": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    },
+    "angle_of_view_vertical": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+      }
+    },
+    "look_distance": {
+      "x-deprecated": {
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1."
+      }
+    }
+  }
+}

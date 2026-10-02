@@ -1,0 +1,25 @@
+{
+  "x-new-component": "minecraft:camera",
+  "type": "object",
+  "description": "Camera item settings (vanilla; not in the schemas).",
+  "properties": {
+    "black_bars_duration": {
+      "type": "number"
+    },
+    "black_bars_screen_ratio": {
+      "type": "number"
+    },
+    "shutter_duration": {
+      "type": "number"
+    },
+    "picture_duration": {
+      "type": "number"
+    },
+    "slide_away_duration": {
+      "type": "number"
+    }
+  },
+  "x-deprecated": {
+    "reason": "not in the official Mojang schemas (item index 1.26.30); the vanilla corpus items still use it"
+  }
+}

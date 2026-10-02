@@ -1,0 +1,1 @@
+{ "properties": { "target_materials_above_block": { "items": { "enum": { "$append": ["air", "any", "lava", "water"] } } } } }

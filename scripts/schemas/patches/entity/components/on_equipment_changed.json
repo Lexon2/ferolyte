@@ -1,0 +1,1 @@
+{ "properties": { "slots": { "items": { "properties": { "slot": { "type": ["integer", "string"] } } } } } }

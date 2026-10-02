@@ -23,3 +23,6 @@ packages/wip/*
 test/
 !test/events/
 !test/utils/
+
+# Cache (schemas, reports)
+.cache/

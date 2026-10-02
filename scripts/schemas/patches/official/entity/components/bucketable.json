@@ -1,0 +1,9 @@
+{
+  "x-new-component": "minecraft:bucketable",
+  "x-official": "official 1.21.80–1.26.50",
+  "description": "Defines interactions with this entity.",
+  "title": "minecraft:bucketable",
+  "type": "object",
+  "additionalProperties": {},
+  "x-free-form": "the official Mojang schema has a body without properties"
+}

@@ -1,0 +1,6 @@
+{
+  "properties": {
+    "on_tempt_start": { "$ref": "../types/trigger.json", "description": "Event to fire when the mob starts being tempted." },
+    "on_tempt_end": { "$ref": "../types/trigger.json", "description": "Event to fire when the mob stops being tempted." }
+  }
+}

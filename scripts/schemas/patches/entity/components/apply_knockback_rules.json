@@ -1,0 +1,1 @@
+{ "properties": { "presets": { "items": { "properties": { "vertical_velocity_cap": { "minimum": null } } } } } }

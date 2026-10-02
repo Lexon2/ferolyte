@@ -1,0 +1,15 @@
+{
+  "properties": {
+    "breeds_with": {
+      "oneOf": {
+        "$append": [
+          {
+            "type": "object",
+            "description": "1.26.50: map of mate entity identifier to its (optional) breeding settings.",
+            "additionalProperties": { "type": "object" }
+          }
+        ]
+      }
+    }
+  }
+}

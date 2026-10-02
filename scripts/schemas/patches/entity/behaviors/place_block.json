@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "randomly_placeable_blocks": {
+      "items": { "properties": { "filter": { "$ref": "../../filters/filters.json", "description": "Conditions for placing this block." } } }
+    }
+  }
+}
