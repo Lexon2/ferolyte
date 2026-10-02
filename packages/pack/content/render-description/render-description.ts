@@ -37,7 +37,7 @@ export interface RenderDescriptionFields {
 export interface RenderScriptsFields {
   /** Short animation names, or `{ name: condition }`. */
   animate?: Array<string | Record<string, string | MolangBuilder>>;
-  /** Molang statements; strings are written as they are, builders get a `;`. */
+  /** Molang statements; a missing `;` is appended, except after `{` (a block split across entries, as in vanilla). */
   initialize?: Array<string | MolangBuilder>;
   preAnimation?: Array<string | MolangBuilder>;
   parentSetup?: string;
@@ -57,10 +57,12 @@ export interface RenderScriptsFields {
 const toMap = (value: RenderMap): Record<string, string> =>
   typeof value === 'string' ? { default: value } : value;
 
+// A line ending with `{` opens a block continued in the next entries (vanilla style): no `;` after it.
+const terminate = (text: string): string =>
+  text.trim() === '' || /[;{]\s*$/.test(text) ? text : `${text};`;
+
 const formatStatement = (value: string | MolangBuilder): string =>
-  typeof value === 'string'
-    ? value
-    : parseMolangStatement(value as MolangBuilder);
+  typeof value === 'string' ? terminate(value) : parseMolangStatement(value as MolangBuilder);
 
 const formatAnimations = (
   identifier: string,
