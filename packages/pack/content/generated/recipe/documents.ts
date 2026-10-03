@@ -49,12 +49,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -77,12 +79,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -111,6 +115,7 @@ export interface RecipeDocument {
       item: string;
       /**
        * The data of the item to unlock
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
@@ -123,6 +128,7 @@ export interface RecipeDocument {
     })[];
     /**
      * Order in which the recipe is chosen when several recipes match.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft priority
      */
     priority?: number;
@@ -166,6 +172,7 @@ export interface RecipeDocument {
       item: string;
       /**
        * The data of the item to unlock
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
@@ -231,6 +238,7 @@ export interface RecipeDocument {
       item: string;
       /**
        * The data of the item to unlock
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
@@ -296,6 +304,7 @@ export interface RecipeDocument {
       item: string;
       /**
        * The data of the item to unlock
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
@@ -318,12 +327,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -346,6 +357,7 @@ export interface RecipeDocument {
     pattern?: string[];
     /**
      * Item used as output for the furnace recipe.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft priority
      */
     priority?: number;
@@ -361,12 +373,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -384,12 +398,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -446,6 +462,7 @@ export interface RecipeDocument {
       item: string;
       /**
        * The data of the item to unlock
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
@@ -468,12 +485,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -491,6 +510,7 @@ export interface RecipeDocument {
     group?: string;
     /**
      * Item used as output for the furnace recipe.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft priority
      */
     priority?: number;
@@ -506,12 +526,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -529,12 +551,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -585,6 +609,7 @@ export interface RecipeDocument {
       item: string;
       /**
        * The data of the item to unlock
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
@@ -607,12 +632,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -630,12 +657,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -658,12 +687,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -681,12 +712,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -709,12 +742,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -732,12 +767,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -760,12 +797,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -783,12 +822,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -839,6 +880,7 @@ export interface RecipeDocument {
       item: string;
       /**
        * The data of the item to unlock
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
@@ -861,12 +903,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -889,12 +933,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;
@@ -917,12 +963,14 @@ export interface RecipeDocument {
       item: string;
       /**
        * Item Data Value
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft data
        */
       data?: number;
       /**
        * Count
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft count
        */
       count?: number;

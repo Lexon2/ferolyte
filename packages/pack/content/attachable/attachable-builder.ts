@@ -1,3 +1,4 @@
+import { cloneConfig } from '@ferolyte/common/object/clone-config';
 import type { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import type { ContentBuilder } from '@ferolyte/common/content/interfaces/content-builder';
 import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
@@ -52,7 +53,7 @@ export class AttachableBuilder implements ContentBuilder {
   }
 
   public cloneConfig(): AttachableConfig {
-    return structuredClone(this.config);
+    return cloneConfig(this.config);
   }
 
   /** Names the output file. */

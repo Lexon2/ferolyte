@@ -25,6 +25,7 @@ export interface BlockEntityComponent {
   container?: {
     /**
      * Sets the number of slots in the container.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft slot_count
      */
     slotCount?: number;
@@ -806,17 +807,20 @@ export interface RandomOffsetComponent {
     range?: {
       /**
        * Lower bound
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft min
        */
       min?: number;
       /**
        * Upper bound
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft max
        */
       max?: number;
     };
     /**
      * This is the equally spaced steps across the given range. Provide 0 for all possible values in the range
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft steps
      */
     steps?: number;
@@ -833,17 +837,20 @@ export interface RandomOffsetComponent {
     range?: {
       /**
        * Lower bound
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft min
        */
       min?: number;
       /**
        * Upper bound
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft max
        */
       max?: number;
     };
     /**
      * This is the equally spaced steps across the given range. Provide 0 for all possible values in the range
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft steps
      */
     steps?: number;
@@ -860,17 +867,20 @@ export interface RandomOffsetComponent {
     range?: {
       /**
        * Lower bound
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft min
        */
       min?: number;
       /**
        * Upper bound
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft max
        */
       max?: number;
     };
     /**
      * This is the equally spaced steps across the given range. Provide 0 for all possible values in the range
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft steps
      */
     steps?: number;
@@ -911,6 +921,7 @@ export interface RedstoneConsumerComponent {
   /**
    * Defines the minimum value for incoming signal stregth. If signal strength is greater than or equal to this value then the onRedstoneUpdate event is sent to Scripts.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft min_power
    */
   minPower: number;
@@ -929,6 +940,7 @@ export interface RedstoneConsumerComponent {
 export interface RedstoneProducerComponent {
   /**
    * The strength of the redstone signal produced by this block. Valid values are from 0 to 15, where 0 means no signal and 15 is the maximum signal strength.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft power
    */
   power: number;

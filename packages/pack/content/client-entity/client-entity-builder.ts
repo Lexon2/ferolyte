@@ -1,3 +1,4 @@
+import { cloneConfig } from '@ferolyte/common/object/clone-config';
 import { ClientEntityConfig } from './interfaces/client-entity-config';
 import { ClientEntityAnimationResolver } from './interfaces/animations-collection';
 import { formatRenderDescription } from '../render-description/render-description';
@@ -24,7 +25,7 @@ export class ClientEntityBuilder implements ContentBuilder {
   }
 
   public cloneConfig(): ClientEntityConfig {
-    return structuredClone(this.config);
+    return cloneConfig(this.config);
   }
 
   public build(): any {

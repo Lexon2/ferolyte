@@ -132,6 +132,11 @@ describe('documentation examples', () => {
       const exported = (await import(/* @vite-ignore */ file)).default;
       const builders: any[] = Array.isArray(exported) ? exported : [exported];
 
+      // The compiler clones every config (`cloneConfig()`): bare Molang values must survive it.
+      for (const b of builders) {
+        expect(() => b.cloneConfig?.()).not.toThrow();
+      }
+
       const collector = collectDiagnostics({ silent: true });
       const outputs: unknown[] = [];
       const Grouped = builders[0]?.constructor;

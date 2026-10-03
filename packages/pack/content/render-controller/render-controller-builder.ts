@@ -1,3 +1,4 @@
+import { cloneConfig } from '@ferolyte/common/object/clone-config';
 import {
   ContentDiagnosticContext,
   logContentError,
@@ -73,7 +74,7 @@ export class RenderControllerBuilder implements ContentBuilder {
   }
 
   public cloneConfig(): RenderControllerConfig {
-    return structuredClone(this.config);
+    return cloneConfig(this.config);
   }
 
   public get id(): string {

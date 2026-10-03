@@ -34,6 +34,11 @@ Both `moduleResolution: "bundler"` (the `ferolyte init` template) and `"node"` w
 - **Version-aware.** Components and fields removed or added in later format versions are reported for
   your `version` (e.g. `pushable` → `pushableByEntity` / `pushableByBlock` from 1.26.10). Deprecated ones
   warn and are marked `@deprecated` in your editor.
+- **Format version.** Without `version` the file is written as `1.21.70` (items, server entities, blocks; blocks follow the profile
+  `minGameVersion` from 1.26.40 on), `1.10.0` (client entities, attachables, render controllers, animation controllers), `1.20.10`
+  (recipes) or `1.8.0` (spawn rules). The profile `minGameVersion` (default `1.26.20`) is the version that version-gated fields are checked
+  against; it does not change the version of items and entities. Namespaced custom components need `version: '1.21.90'` or newer
+  (older files get a warning).
 - **Escape hatches:**
   - `'namespace:name': {...}` in item/block `components` for custom components;
   - `rawComponents` for anything written verbatim.

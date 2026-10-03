@@ -41,6 +41,11 @@ generated from `displayName`. A file may export one builder or an array of build
   (`{ 'namespace:component': {...} }`, emitted verbatim). Items, blocks, server entities and
   component groups support it.
 - `version` fields accept any string; known values are only suggestions.
+- Output `format_version` when `version` is not set: items and server entities `1.21.70`; blocks `1.21.70`, or the profile
+  `minGameVersion` when it is 1.26.40 or newer; client entities, attachables, render controllers and animation controllers `1.10.0`;
+  recipes `1.20.10`; spawn rules `1.8.0`. `minGameVersion` (profile `packs`, default `1.26.20`) does not change the version of items and entities;
+  it is the version that version-gated fields and components are checked against. Namespaced custom components (`'ns:name'` keys, flat `rawComponents`)
+  need `version: '1.21.90'` or newer: older files get a warning.
 - `displayName` (a string, or `{ en_US: '...', ru_RU: '...' }`) is written to `texts/<locale>.lang`.
 - Molang: prefer the immutable v2 API — ``molang`${q.isMoving} && ${v('speed')} > 1` ``,
   `q.*`, `v()`, `math.*`, `not(...)`, `assign(...)` — or plain strings. `new Molang()` is deprecated.
@@ -50,13 +55,14 @@ generated from `displayName`. A file may export one builder or an array of build
   event / entity property references are warnings with a "did you mean" hint (`--strict` makes them errors).
 - Typed ids: every build/watch batch (and `ferolyte types`) writes `.ferolyte/types/ids.ts`; import it as
   `import { EntityId, EntityEvent, AnimationId } from '@ferolyte/ids'` instead of retyping id strings (`ItemId`, `BlockId`, `AttachableId`, `RenderControllerId`, `RecipeId`, `SpawnRuleId`, `GeometryId`, …)
-  (works in `@minecraft/server` scripts too). Existing projects add `"@ferolyte/ids": ["./.ferolyte/types/ids.ts"]`
+  (works in `@minecraft/server` scripts too). Content may import ids of other content, even mutually; a clean project builds in one `check`/`run`
+  (a missing ids file is bootstrapped first with placeholder ids; when ids change, only the files that import them are evaluated again). `AnimationId` / `AnimationControllerId` are resource pack ids, `BpAnimationId` / `BpAnimationControllerId` behavior pack ids. Existing projects add `"@ferolyte/ids": ["./.ferolyte/types/ids.ts"]`
   to `compilerOptions.paths` in tsconfig (the compiler resolves the alias on its own).
 
 ## Verify your change
 
 ```bash
-npx ferolyte check            # validates every content file in memory, nothing is written
+npx ferolyte check            # validates every content file in memory; writes no pack output (only refreshes the generated .ferolyte/types/ids.ts)
 npx ferolyte check --json     # [{ file, contentType, component, fieldPath, message, severity }]
 npx ferolyte check --types --json  # also runs the project TypeScript (tsc --noEmit); TS errors appear as contentType "typescript", fieldPath "line:col"
 npx ferolyte inspect packs/BP/items/golden_apple.item.ts   # prints the JSON that would be emitted

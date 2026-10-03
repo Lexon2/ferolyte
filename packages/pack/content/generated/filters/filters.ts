@@ -48,6 +48,7 @@ export interface ActorHealthFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * (Required) A integer value.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -888,6 +889,7 @@ export interface HourlyClockTimeFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * (Required) An integer value set between 0 and 24000.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -1186,6 +1188,7 @@ export interface InactivityTimerFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * The Family name to look for.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -1220,6 +1223,7 @@ export interface IntPropertyFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * (Required) A integer value.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -1249,6 +1253,7 @@ export interface IsAltitudeFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * The altitude value to compare with.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -1798,6 +1803,7 @@ export interface IsMarkVariantFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * The altitude value to compare with.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value?: number;
@@ -2114,6 +2120,7 @@ export interface IsSkinIdFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * The altitude value to compare with.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value?: number;
@@ -2471,6 +2478,7 @@ export interface IsVariantFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * The altitude value to compare with.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -2588,6 +2596,7 @@ export interface LightLevelFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * An integer value.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -2646,6 +2655,7 @@ export interface MoonPhaseFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * An integer value.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -2799,6 +2809,7 @@ export interface RandomChanceFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * An integer value.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -2828,6 +2839,7 @@ export interface RedstoneStrengthAtPositionFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * An integer value.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -2857,6 +2869,7 @@ export interface RiderCountFilter {
   subject?: "block" | "other" | "parent" | "player" | "self" | "target" | "damager" | "baby";
   /**
    * An integer value.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;

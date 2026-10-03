@@ -36,20 +36,53 @@ export const convertBlockStates = (
         return undefined;
       }
 
-      for (let index = 0; index < stateValue.length; index++) {
-        const value = stateValue[index];
-        if (typeof value !== 'string' || value.length === 0) {
-          logContentError(
-            stateContext !== undefined
-              ? { ...stateContext, fieldPath: `[${index}]` }
-              : undefined,
-            `State values for "${stateName}" must be non-empty strings`,
-          );
-          return undefined;
-        }
+      const fail = (message: string, fieldPath = stateName) => {
+        logContentError(
+          ctx !== undefined ? { ...ctx, fieldPath } : undefined,
+          message,
+        );
+      };
+      // Schema: 1-16 unique values of one type (boolean, integer or string).
+      const kind = typeof stateValue[0];
+      if (
+        stateValue.some(
+          (value: unknown) => typeof value !== kind,
+        )
+      ) {
+        fail(
+          `State values for "${stateName}" must all be of the same type (booleans, integers or strings)`,
+        );
+        return undefined;
+      }
+      if (kind === 'string' && stateValue.some((value) => value === '')) {
+        fail(`State values for "${stateName}" must be non-empty strings`);
+        return undefined;
+      }
+      if (
+        kind === 'number' &&
+        stateValue.some((value) => !Number.isInteger(value))
+      ) {
+        fail(`State values for "${stateName}" must be integers`);
+        return undefined;
+      }
+      if (kind !== 'string' && kind !== 'number' && kind !== 'boolean') {
+        fail(
+          `State values for "${stateName}" must be booleans, integers or strings`,
+        );
+        return undefined;
+      }
+      if (new Set<unknown>(stateValue as unknown[]).size !== stateValue.length) {
+        fail(`State values for "${stateName}" must be unique`);
+        return undefined;
+      }
+      if (stateValue.length > 16) {
+        fail(
+          `State "${stateName}" has ${stateValue.length} values, at most 16 are allowed`,
+        );
+        return undefined;
       }
 
-      result[stateName] = [...(stateValue as string[])];
+      result[stateName] = [...stateValue] as BlockStates[string];
     } else if (
       typeof stateValue === 'object' &&
       stateValue !== null &&
@@ -90,7 +123,7 @@ export const convertBlockStates = (
     } else {
       logContentError(
         stateContext,
-        `State "${stateName}" must be an array of strings or an object with min/max values`,
+        `State "${stateName}" must be an array of booleans, integers or strings, or an object with min/max values`,
       );
       return undefined;
     }

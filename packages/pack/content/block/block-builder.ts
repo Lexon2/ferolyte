@@ -1,3 +1,5 @@
+import { checkCustomComponentVersion } from '../common/custom-component-version';
+import { cloneConfig } from '@ferolyte/common/object/clone-config';
 import { convertBlockComponents } from './convert-components';
 import { BlockComponents, BlockConfig } from './interfaces/block-config';
 import { createBlockPermutations } from './permutations/create-permuation';
@@ -25,7 +27,7 @@ export class BlockBuilder implements ContentBuilder {
   }
 
   public cloneConfig(): any {
-    return structuredClone(this.config);
+    return cloneConfig(this.config);
   }
 
   public fileName(): string {
@@ -88,6 +90,12 @@ export class BlockBuilder implements ContentBuilder {
 
   private formatComponents(file: any) {
     const { components, rawComponents } = this.config;
+
+    checkCustomComponentVersion(
+      [...Object.keys(components ?? {}), ...Object.keys(rawComponents ?? {})],
+      this.config.version || this.defaultFormatVersion(),
+      this.buildContext && { contentType: 'block', ...this.buildContext },
+    );
 
     const minecraftComponents =
       components !== undefined

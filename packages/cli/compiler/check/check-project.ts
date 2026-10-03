@@ -1,8 +1,11 @@
 import { existsSync } from 'fs';
 
 import {
+  ContentDiagnosticRecord,
+  getContentDiagnosticSink,
   reportContentFailure,
   reportDiagnosticRecord,
+  setContentDiagnosticSink,
 } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 
 import { walkFiles } from '../actions/build';
@@ -12,8 +15,9 @@ import { isFerolyteContentFile } from '../core/utils/is-content-file';
 import { inspectContentFile } from '../inspect/inspect-file';
 import { initPlugins } from '../plugins/plugin-host';
 import { runTypeCheck } from './typescript-check';
-import { clearRegistry } from '../registry/project-registry';
-import { refreshRegistry } from '../registry/refresh';
+import { buildIndex, clearRegistry } from '../registry/project-registry';
+import { settleAfterPass, settleIds } from '../registry/generate-types';
+import { runReferenceChecks } from '../registry/reference-checks';
 
 /** Exit codes of `ferolyte check`. */
 export const CHECK_EXIT = {
@@ -31,8 +35,8 @@ export interface CheckResult {
 }
 
 /**
- * Compiles every content file of the profile in memory (nothing is written,
- * plugins are disabled) with diagnostics on. Results are reported through the
+ * Compiles every content file of the profile in memory (no pack output is written, only the
+ * generated `.ferolyte/types/ids.ts` is refreshed; plugins are disabled) with diagnostics on. Results are reported through the
  * content diagnostic sink, so attach a collector before calling.
  */
 export const checkProject = async (
@@ -65,16 +69,38 @@ export const checkProject = async (
     }
   }
 
+  // A missing ids file is bootstrapped first (placeholder ids), so content importing generated ids evaluates in one `check`.
+  await settleIds();
   clearRegistry();
-  for (const file of files) {
-    const result = await inspectContentFile(file, { diagnostics: true });
-    if (!result.ok) {
-      reportContentFailure(file, result.message);
+
+  // Diagnostics are kept per file: when the ids change, the files that import them are evaluated again and replace theirs.
+  const pending = new Map<string, ContentDiagnosticRecord[]>();
+  const evaluate = async (entries: string[]) => {
+    for (const file of entries) {
+      const records: ContentDiagnosticRecord[] = [];
+      const previous = getContentDiagnosticSink();
+      setContentDiagnosticSink((record) => records.push(record), { silent: true });
+      try {
+        const result = await inspectContentFile(file, { diagnostics: true });
+        if (!result.ok) {
+          reportContentFailure(file, result.message);
+        }
+      } finally {
+        setContentDiagnosticSink(previous.sink, { silent: previous.silent });
+      }
+      pending.set(file, records);
     }
+  };
+  await evaluate(files);
+
+  // Refreshes `.ferolyte/types/ids.ts` (a generated cache, not pack output); changed ids re-evaluate their importers only.
+  await settleAfterPass(evaluate);
+  for (const records of pending.values()) {
+    records.forEach(reportDiagnosticRecord);
   }
 
-  // Reference checks between content and pack files (nothing is written).
-  await refreshRegistry({ ids: false });
+  // Reference checks between content and pack files.
+  runReferenceChecks(buildIndex());
 
   if (options.types) {
     const records = await runTypeCheck({

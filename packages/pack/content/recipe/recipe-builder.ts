@@ -1,3 +1,4 @@
+import { cloneConfig } from '@ferolyte/common/object/clone-config';
 import {
   ContentDiagnosticContext,
   logContentError,
@@ -150,7 +151,7 @@ export class RecipeBuilder extends DocumentBuilder<'recipe'> {
 
   /** The flat config the recipe was created from. */
   public cloneFlatConfig(): RecipeConfig {
-    return structuredClone(this.flat);
+    return cloneConfig(this.flat);
   }
 
   public override build(): Record<string, unknown> {

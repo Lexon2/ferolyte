@@ -21,7 +21,7 @@ This installs `@ferolyte/common` and `@ferolyte/pack` as dependencies. The `fero
 | `ferolyte init <project-name> <alias>` | Scaffold a new Ferolyte project in `./<project-name>/`               |
 | `ferolyte run [profile]`               | Build packs and scripts once; optionally create a `.mcaddon` archive |
 | `ferolyte watch [profile]`             | Watch packs and scripts; rebuild incrementally on file changes       |
-| `ferolyte check [profile]`             | Validate every content file in memory (nothing is written); exit 1 on errors |
+| `ferolyte check [profile]`             | Validate every content file in memory (no pack output; refreshes `.ferolyte/types/ids.ts`); exit 1 on errors |
 | `ferolyte inspect <file>`              | Print the JSON a content file would produce (`--profile`, `--out`, `--compact`) |
 | `ferolyte types [profile]`             | Regenerate typed ids (`.ferolyte/types/ids.ts`, imported as `@ferolyte/ids`) |
 

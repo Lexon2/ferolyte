@@ -6,10 +6,13 @@ import { BUILD_CONTEXT } from '../../build-context';
 import { jsoncEsbuildPlugin } from './jsonc-esbuild-plugin';
 import { stubMinecraftPlugin } from './stub-minecraft-plugin';
 import { externalSdkPlugin } from './external-sdk-plugin';
+import { idsPlaceholderPlugin } from './ids-placeholder-plugin';
 
 export interface BundleOptions {
   /** Replace `@minecraft/*` imports with an inert stub (used by `ferolyte inspect`). */
   stubMinecraft?: boolean;
+  /** Resolve `@ferolyte/ids` to deep-proxy placeholders (the ids bootstrap pass). */
+  placeholderIds?: boolean;
 }
 
 export const EXTERNAL_MODULES = [
@@ -47,6 +50,7 @@ export const createEsbuildConfig = (
     alias: BUILD_CONTEXT.TS.ALIASES,
     tsconfig: BUILD_CONTEXT.TS.CONFIG_PATH,
     plugins: [
+      ...(options.placeholderIds ? [idsPlaceholderPlugin()] : []),
       externalSdkPlugin(BUILD_CONTEXT.TS.ALIASES),
       ...(options.stubMinecraft ? [stubMinecraftPlugin()] : []),
       jsoncEsbuildPlugin(),

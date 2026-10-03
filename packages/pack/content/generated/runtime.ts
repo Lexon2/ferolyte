@@ -346,8 +346,13 @@ const describeError = (error: {
       return `Unknown field "${String(error.params.additionalProperty)}"`;
     case 'enum':
       return `Must be one of: ${(error.params.allowedValues as unknown[]).map(String).join(', ')}`;
-    case 'type':
-      return `Must be ${String(error.params.type)}`;
+    case 'type': {
+      const type = String(error.params.type);
+
+      return type === 'integer'
+        ? 'Must be an integer (whole number)'
+        : `Must be ${type}`;
+    }
     case 'required':
       return `Missing required field "${snakeToCamel(String(error.params.missingProperty))}"`;
     case 'oneOf':

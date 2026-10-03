@@ -14,6 +14,7 @@ import type { Enum6c6496, Enum3db897, Enumcaa25b, Enum614ad8, Enum78acf6, Enum23
 export interface AdmireItemBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -52,6 +53,7 @@ export interface AdmireItemBehavior {
 export interface AquaticChargeAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -111,12 +113,14 @@ export interface AquaticChargeAttackBehavior {
 export interface AvoidBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
   /**
    * Should start tick interval.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft tick_interval
    */
   tickInterval?: number;
@@ -128,12 +132,14 @@ export interface AvoidBlockBehavior {
   /**
    * Maximum distance to look for a block in xz.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
   /**
    * Maximum distance to look for a block in y.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
@@ -176,9 +182,15 @@ export interface AvoidBlockBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -205,9 +217,15 @@ export interface AvoidBlockBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -242,6 +260,7 @@ export interface AvoidBlockBehavior {
 export interface AvoidMobTypeBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -259,12 +278,14 @@ export interface AvoidMobTypeBehavior {
   /**
    * The next target position the entity chooses to avoid another entity will be chosen within this XZ Distance.
    * @default 16
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft avoid_target_xz
    */
   avoidTargetXz?: number;
   /**
    * The next target position the entity chooses to avoid another entity will be chosen within this Y Distance.
    * @default 7
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft avoid_target_y
    */
   avoidTargetY?: number;
@@ -494,6 +515,7 @@ export interface AvoidMobTypeBehavior {
 export interface BarterBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -511,6 +533,7 @@ export interface BarterBehavior {
 export interface BegBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -546,9 +569,15 @@ export interface BegBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -575,9 +604,15 @@ export interface BegBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -601,6 +636,7 @@ export interface BegBehavior {
 export interface BreakDoorBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -625,6 +661,7 @@ export interface BreakDoorBehavior {
 export interface BreedBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -648,6 +685,7 @@ export interface BreedBehavior {
 export interface CelebrateBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -691,6 +729,7 @@ export interface CelebrateBehavior {
 export interface CelebrateSurviveBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -731,6 +770,7 @@ export interface CelebrateSurviveBehavior {
 export interface ChargeAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -779,6 +819,7 @@ export interface ChargeAttackBehavior {
 export interface ChargeHeldItemBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -814,9 +855,15 @@ export interface ChargeHeldItemBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -843,9 +890,15 @@ export interface ChargeHeldItemBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -858,6 +911,7 @@ export interface ChargeHeldItemBehavior {
 export interface CircleAroundAnchorBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -875,6 +929,7 @@ export interface CircleAroundAnchorBehavior {
   /**
    * A random value to determine when to increase the size of the radius up to the maximum. This has a 1/value chance every tick to do so.
    * @default 250
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
    * @minecraft radius_change_chance
    */
@@ -892,6 +947,7 @@ export interface CircleAroundAnchorBehavior {
   /**
    * A random value to determine when to change the height of the mob from the anchor point. This has a 1/value chance every tick to do so.
    * @default 350
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
    * @minecraft height_change_chance
    */
@@ -940,6 +996,7 @@ export interface CircleAroundAnchorBehavior {
 export interface ControlledByPlayerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -975,6 +1032,7 @@ export interface ControlledByPlayerBehavior {
 export interface CroakBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1007,6 +1065,7 @@ export interface CroakBehavior {
 export interface DefendTrustedTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1024,6 +1083,7 @@ export interface DefendTrustedTargetBehavior {
   /**
    * Time in seconds between attacks.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft attack_interval
    */
   attackInterval?: number;
@@ -1211,6 +1271,7 @@ export interface DefendTrustedTargetBehavior {
 export interface DefendVillageTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1415,6 +1476,7 @@ export interface DefendVillageTargetBehavior {
 export interface DelayedAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1526,6 +1588,7 @@ export interface DelayedAttackBehavior {
   /**
    * This entity will have a 1 in N chance to stop it's current attack, where N = "random_stop_interval".
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft random_stop_interval
    */
   randomStopInterval?: number;
@@ -1586,6 +1649,7 @@ export interface DelayedAttackBehavior {
 export interface DigBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1643,6 +1707,7 @@ export interface DigBehavior {
 export interface DoorInteractBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1660,6 +1725,7 @@ export interface DoorInteractBehavior {
 export interface DragonChargePlayerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1706,6 +1772,7 @@ export interface DragonChargePlayerBehavior {
 export interface DragonDeathBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1723,6 +1790,7 @@ export interface DragonDeathBehavior {
 export interface DragonFlamingBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1741,6 +1809,7 @@ export interface DragonFlamingBehavior {
   /**
    * Number of ground flame-breath attacks to use before flight-takeoff.
    * @default 4
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft ground_flame_count
    */
   groundFlameCount?: number;
@@ -1782,6 +1851,7 @@ export interface DragonFlamingBehavior {
 export interface DragonHoldingPatternBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1799,6 +1869,7 @@ export interface DragonHoldingPatternBehavior {
 export interface DragonLandingBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1816,6 +1887,7 @@ export interface DragonLandingBehavior {
 export interface DragonScanningBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1833,6 +1905,7 @@ export interface DragonScanningBehavior {
 export interface DragonStrafePlayerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1897,6 +1970,7 @@ export interface DragonStrafePlayerBehavior {
 export interface DragonTakeoffBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1914,6 +1988,7 @@ export interface DragonTakeoffBehavior {
 export interface DrinkMilkBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1942,6 +2017,7 @@ export interface DrinkMilkBehavior {
 export interface DrinkPotionBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -1971,6 +2047,7 @@ export interface DrinkPotionBehavior {
     /**
      * The registry ID of the potion to use.
      * @default -1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft id
      */
     id: number;
@@ -1995,6 +2072,7 @@ export interface DrinkPotionBehavior {
 export interface DropItemForBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2203,18 +2281,21 @@ export interface DropItemForBehavior {
   /**
    * The number of blocks each tick that the entity will check within its search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_count
    */
   searchCount?: number;
   /**
    * The Height in blocks the entity will search within to find a valid target position.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The distance in blocks the entity will search within to find a valid target position.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -2248,6 +2329,7 @@ export interface DropItemForBehavior {
 export interface EatBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2297,6 +2379,7 @@ export interface EatBlockBehavior {
 export interface EatCarriedItemBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2319,6 +2402,7 @@ export interface EatCarriedItemBehavior {
 export interface EatMobBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2370,6 +2454,7 @@ export interface EatMobBehavior {
 export interface EmergeBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2404,6 +2489,7 @@ export interface EmergeBehavior {
 export interface EndermanLeaveBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2416,6 +2502,7 @@ export interface EndermanLeaveBlockBehavior {
 export interface EndermanTakeBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2428,6 +2515,7 @@ export interface EndermanTakeBlockBehavior {
 export interface EquipItemBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2445,6 +2533,7 @@ export interface EquipItemBehavior {
 export interface ExploreOutskirtsBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2503,12 +2592,14 @@ export interface ExploreOutskirtsBehavior {
   /**
    * A new explore point will randomly be chosen within this XZ distance of the current target position when navigation has finished and the wait timer has elapsed.
    * @default 5
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft next_xz
    */
   nextXz?: number;
   /**
    * A new explore point will randomly be chosen within this Y distance of the current target position when navigation has finished and the wait timer has elapsed.
    * @default 3
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft next_y
    */
   nextY?: number;
@@ -2527,6 +2618,7 @@ export interface ExploreOutskirtsBehavior {
 export interface FertilizeFarmBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2550,6 +2642,7 @@ export interface FertilizeFarmBlockBehavior {
   /**
    * The maximum number of times the mob will use fertilzer on the target block.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_fertilizer_usage
    */
   maxFertilizerUsage?: number;
@@ -2562,18 +2655,21 @@ export interface FertilizeFarmBlockBehavior {
   /**
    * The number of randomly selected blocks each tick that the mob will check within its search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick.
    * @default 9
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_count
    */
   searchCount?: number;
   /**
    * The Height in blocks the mob will search within to find a valid target position.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The distance in blocks the mob will search within to find a valid target position.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -2586,6 +2682,7 @@ export interface FertilizeFarmBlockBehavior {
 export interface FindCoverBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2615,6 +2712,7 @@ export interface FindCoverBehavior {
 export interface FindMountBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2638,6 +2736,7 @@ export interface FindMountBehavior {
   /**
    * Time the mob will wait before starting to move towards the mount.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft start_delay
    */
   startDelay?: number;
@@ -2655,6 +2754,7 @@ export interface FindMountBehavior {
   withinRadius?: number;
   /**
    * The number of failed attempts to make before this goal is no longer used.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_failed_attempts
    */
   maxFailedAttempts?: number;
@@ -2667,6 +2767,7 @@ export interface FindMountBehavior {
 export interface FindUnderwaterTreasureBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2684,6 +2785,7 @@ export interface FindUnderwaterTreasureBehavior {
   /**
    * The range that the mob will search for a treasure chest within a ruin or shipwreck to move towards.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -2702,6 +2804,7 @@ export interface FindUnderwaterTreasureBehavior {
 export interface FireAtTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2724,6 +2827,7 @@ export interface FireAtTargetBehavior {
   /**
    * Entity anchor for the projectile spawn location.
    * @default 2
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft owner_anchor
    */
   ownerAnchor?: number;
@@ -2735,6 +2839,7 @@ export interface FireAtTargetBehavior {
   /**
    * Entity anchor for projectile target.
    * @default 2
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft target_anchor
    */
   targetAnchor?: number;
@@ -2792,6 +2897,7 @@ export interface FireAtTargetBehavior {
 export interface FleeSunBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2815,6 +2921,7 @@ export interface FleeSunBehavior {
 export interface FloatBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2850,6 +2957,7 @@ export interface FloatBehavior {
 export interface FloatTemptBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -2904,9 +3012,15 @@ export interface FloatTemptBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -2933,9 +3047,15 @@ export interface FloatTemptBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -2990,6 +3110,7 @@ export interface FloatTemptBehavior {
 export interface FloatWanderBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3013,12 +3134,14 @@ export interface FloatWanderBehavior {
   /**
    * Distance in blocks on ground that the mob will look for a new spot to move to. Must be at least 1
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft xz_dist
    */
   xzDist?: number;
   /**
    * Distance in blocks that the mob will look up or down for a new spot to move to. Must be at least 1
    * @default 7
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft y_dist
    */
   yDist?: number;
@@ -3055,12 +3178,14 @@ export interface FloatWanderBehavior {
   /**
    * The horizontal distance in blocks that the goal will check for a surface from a candidate position. Only valid when `navigate_around_surface` is true.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft surface_xz_dist
    */
   surfaceXzDist?: number;
   /**
    * The vertical distance in blocks that the goal will check for a surface from a candidate position. Only valid when `navigate_around_surface` is true.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft surface_y_dist
    */
   surfaceYDist?: number;
@@ -3084,6 +3209,7 @@ export interface FloatWanderBehavior {
 export interface FollowCaravanBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3246,6 +3372,7 @@ export interface FollowCaravanBehavior {
   /**
    * Number of entities that can be in the caravan.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft entity_count
    */
   entityCount?: number;
@@ -3258,6 +3385,7 @@ export interface FollowCaravanBehavior {
 export interface FollowMobBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3285,6 +3413,7 @@ export interface FollowMobBehavior {
   /**
    * The distance in blocks it will look for a mob to follow.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -3308,6 +3437,7 @@ export interface FollowMobBehavior {
 export interface FollowOwnerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3366,6 +3496,7 @@ export interface FollowOwnerBehavior {
 export interface FollowParentBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3388,7 +3519,10 @@ export interface FollowParentBehavior {
  * @minecraft minecraft:behavior.follow_target_captain
  */
 export interface FollowTargetCaptainBehavior {
-  /** @minecraft priority */
+  /**
+   * @integer Whole number only (fractions are rejected by the build).
+   * @minecraft priority
+   */
   priority?: number;
   /** @minecraft follow_distance */
   followDistance?: number;
@@ -3405,6 +3539,7 @@ export interface FollowTargetCaptainBehavior {
 export interface FollowTargetLeaderBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3439,6 +3574,7 @@ export interface FollowTargetLeaderBehavior {
   /**
    * Number of ticks that must pass before a new search is initiated after a target is not found, lost, or becomes invalid.
    * @default 20
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_cooldown
    */
   searchCooldown?: number;
@@ -3457,6 +3593,7 @@ export interface FollowTargetLeaderBehavior {
 export interface GoAndGiveItemsToNoteblockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3468,6 +3605,7 @@ export interface GoAndGiveItemsToNoteblockBehavior {
   /**
    * Sets the time an entity should continue delivering items to a noteblock after hearing it.
    * @default 30
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft listen_time
    */
   listenTime?: number;
@@ -3515,6 +3653,7 @@ export interface GoAndGiveItemsToNoteblockBehavior {
 export interface GoAndGiveItemsToOwnerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3567,6 +3706,7 @@ export interface GoAndGiveItemsToOwnerBehavior {
 export interface GoHomeBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3590,6 +3730,7 @@ export interface GoHomeBehavior {
   /**
    * A random value to determine when to randomly move somewhere. This has a 1/interval chance to choose this goal
    * @default 120
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft interval
    */
   interval?: number;
@@ -3618,6 +3759,7 @@ export interface GoHomeBehavior {
 export interface GuardianAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3629,18 +3771,21 @@ export interface GuardianAttackBehavior {
   /**
    * Amount of additional damage dealt from an elder guardian's magic attack.
    * @default 2
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft elder_extra_magic_damage
    */
   elderExtraMagicDamage?: number;
   /**
    * In hard difficulty, amount of additional damage dealt from a guardian's magic attack.
    * @default 2
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft hard_mode_extra_magic_damage
    */
   hardModeExtraMagicDamage?: number;
   /**
    * Amount of damage dealt from a guardian's magic attack. Magic attack damage is added to the guardian's base attack damage.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft magic_damage
    */
   magicDamage?: number;
@@ -3677,6 +3822,7 @@ export interface GuardianAttackBehavior {
 export interface HarvestFarmBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3712,18 +3858,21 @@ export interface HarvestFarmBlockBehavior {
   /**
    * The number of randomly selected blocks each tick that the entity will check within its search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_count
    */
   searchCount?: number;
   /**
    * The height in blocks the entity will search within to find a valid target position.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The distance in blocks the entity will search within to find a valid target position.
    * @default 16
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -3742,6 +3891,7 @@ export interface HarvestFarmBlockBehavior {
 export interface HideBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3782,6 +3932,7 @@ export interface HideBehavior {
 export interface HoldGroundBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3824,6 +3975,7 @@ export interface HoverBehavior {
   controlFlags?: ("move" | "look" | "jump")[];
   /**
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -3836,6 +3988,7 @@ export interface HoverBehavior {
 export interface HurtByTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4004,6 +4157,7 @@ export interface HurtByTargetBehavior {
 export interface InspectBookshelfBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4027,18 +4181,21 @@ export interface InspectBookshelfBehavior {
   /**
    * The number of blocks each tick that the mob will check within it's search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_count
    */
   searchCount?: number;
   /**
    * The height that the mob will search for bookshelves.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * Distance in blocks the mob will look for books to inspect.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -4057,6 +4214,7 @@ export interface InvestigateSuspiciousLocationBehavior {
   goalRadius?: number;
   /**
    * The higher the priority, the sooner this behavior will be executed as a goal.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4080,6 +4238,7 @@ export interface InvestigateSuspiciousLocationBehavior {
 export interface JumpAroundTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4125,6 +4284,7 @@ export interface JumpAroundTargetBehavior {
   /**
    * This angle (in degrees) is used for controlling the spread when picking a landing position behind the target. A zero spread angle means the landing position will be straight behind the target with no variance. A 90 degree spread angle means the landing position can be up to 45 degrees to the left and to the right of the position straight behind the target's view direction.
    * @default 90
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft landing_position_spread_degrees
    */
   landingPositionSpreadDegrees?: number;
@@ -4137,6 +4297,7 @@ export interface JumpAroundTargetBehavior {
   /**
    * If the entity's line of sight towards its target is obstructed by an obstacle with a height below this number, the obstacle will be ignored, and the goal will try to find a valid landing position.
    * @default 4
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft line_of_sight_obstruction_height_ignore
    */
   lineOfSightObstructionHeightIgnore?: number;
@@ -4155,12 +4316,14 @@ export interface JumpAroundTargetBehavior {
   /**
    * The number of blocks above the entity's head that has to be air for this goal to be usable.
    * @default 4
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft required_vertical_space
    */
   requiredVerticalSpace?: number;
   /**
    * The number of blocks above and below from the jump target position that will be checked to find a surface to land on.
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft snap_to_surface_block_range
    */
   snapToSurfaceBlockRange?: number;
@@ -4183,6 +4346,7 @@ export interface JumpAroundTargetBehavior {
 export interface JumpToBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4223,9 +4387,15 @@ export interface JumpToBlockBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -4252,9 +4422,15 @@ export interface JumpToBlockBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -4267,12 +4443,14 @@ export interface JumpToBlockBehavior {
   /**
    * The minimum distance (in blocks) from the mob to a block, in order to consider jumping to it.
    * @default 2
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft minimum_distance
    */
   minimumDistance?: number;
   /**
    * The minimum length (in blocks) of the mobs path to a block, in order to consider jumping to it.
    * @default 5
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft minimum_path_length
    */
   minimumPathLength?: number;
@@ -4303,9 +4481,15 @@ export interface JumpToBlockBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -4332,9 +4516,15 @@ export interface JumpToBlockBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -4353,12 +4543,14 @@ export interface JumpToBlockBehavior {
   /**
    * The height (in blocks, in range [1, 15]) of the search box, centered around the mob.
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The width (in blocks, in range [1, 15]) of the search box, centered around the mob.
    * @default 8
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_width
    */
   searchWidth?: number;
@@ -4371,6 +4563,7 @@ export interface JumpToBlockBehavior {
 export interface KnockbackRoarBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4405,12 +4598,14 @@ export interface KnockbackRoarBehavior {
   /**
    * The damage dealt by the knockback roar.
    * @default 6
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft knockback_damage
    */
   knockbackDamage?: number;
   /**
    * The strength of the knockback.
    * @default 4
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
    * @minecraft knockback_strength
    */
@@ -4423,18 +4618,21 @@ export interface KnockbackRoarBehavior {
   /**
    * The strength of the horizontal knockback.
    * @default 4
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft knockback_horizontal_strength
    */
   knockbackHorizontalStrength?: number;
   /**
    * The radius (in blocks) of the knockback effect.
    * @default 4
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft knockback_range
    */
   knockbackRange?: number;
   /**
    * The strength of the vertical knockback.
    * @default 4
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft knockback_vertical_strength
    */
   knockbackVerticalStrength?: number;
@@ -4465,6 +4663,7 @@ export interface KnockbackRoarBehavior {
 export interface LayDownBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4476,12 +4675,14 @@ export interface LayDownBehavior {
   /**
    * A random value to determine at what intervals something can occur. This has a 1/interval chance to choose this goal
    * @default 120
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft interval
    */
   interval?: number;
   /**
    * A random value in which the goal can use to pull out of the behavior. This is a 1/interval chance to play the sound
    * @default 120
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft random_stop_interval
    */
   randomStopInterval?: number;
@@ -4494,6 +4695,7 @@ export interface LayDownBehavior {
 export interface LayEggBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4542,9 +4744,15 @@ export interface LayEggBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -4571,9 +4779,15 @@ export interface LayEggBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   };
@@ -4603,12 +4817,14 @@ export interface LayEggBehavior {
   /**
    * Height in blocks the mob will look for a target block to move towards.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The distance in blocks it will look for a target block to move towards.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -4639,9 +4855,15 @@ export interface LayEggBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -4668,9 +4890,15 @@ export interface LayEggBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -4694,6 +4922,7 @@ export interface LayEggBehavior {
 export interface LeapAtTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4736,6 +4965,7 @@ export interface LeapAtTargetBehavior {
 export interface LookAtEntityBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4759,12 +4989,14 @@ export interface LookAtEntityBehavior {
   /**
    * The angle in degrees that the mob can see in the X-axis (left-right).
    * @default 360
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft angle_of_view_vertical
    */
   angleOfViewVertical?: number;
   /**
    * The angle in degrees that the mob can see in the Y-axis (up-down).
    * @default 360
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft angle_of_view_horizontal
    */
   angleOfViewHorizontal?: number;
@@ -4787,18 +5019,21 @@ export interface LookAtEntityBehavior {
 export interface LookAtPlayerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
   /**
    * The angle in degrees that the mob can see in the X-axis (left-right).
    * @default 360
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft angle_of_view_vertical
    */
   angleOfViewVertical?: number;
   /**
    * The angle in degrees that the mob can see in the Y-axis (up-down).
    * @default 360
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft angle_of_view_horizontal
    */
   angleOfViewHorizontal?: number;
@@ -4840,6 +5075,7 @@ export interface LookAtPlayerBehavior {
 export interface LookAtTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4863,12 +5099,14 @@ export interface LookAtTargetBehavior {
   /**
    * The angle in degrees that the mob can see in the X-axis (left-right).
    * @default 360
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft angle_of_view_vertical
    */
   angleOfViewVertical?: number;
   /**
    * The angle in degrees that the mob can see in the Y-axis (up-down).
    * @default 360
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft angle_of_view_horizontal
    */
   angleOfViewHorizontal?: number;
@@ -4886,6 +5124,7 @@ export interface LookAtTargetBehavior {
 export interface LookAtTradingPlayerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4909,12 +5148,14 @@ export interface LookAtTradingPlayerBehavior {
   /**
    * The angle in degrees that the mob can see in the X-axis (left-right).
    * @default 360
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft angle_of_view_vertical
    */
   angleOfViewVertical?: number;
   /**
    * The angle in degrees that the mob can see in the Y-axis (up-down).
    * @default 360
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft angle_of_view_horizontal
    */
   angleOfViewHorizontal?: number;
@@ -4932,6 +5173,7 @@ export interface LookAtTradingPlayerBehavior {
 export interface MakeLoveBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -4949,6 +5191,7 @@ export interface MakeLoveBehavior {
 export interface MeleeAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5054,6 +5297,7 @@ export interface MeleeAttackBehavior {
   /**
    * This entity will have a 1 in N chance to stop it's current attack, where N = "random_stop_interval".
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft random_stop_interval
    */
   randomStopInterval?: number;
@@ -5109,6 +5353,7 @@ export interface MeleeAttackBehavior {
 export interface MeleeBoxAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5220,6 +5465,7 @@ export interface MeleeBoxAttackBehavior {
   /**
    * This entity will have a 1 in N chance to stop it's current attack, where N = "random_stop_interval".
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft random_stop_interval
    */
   randomStopInterval?: number;
@@ -5276,6 +5522,7 @@ export interface MeleeBoxAttackBehavior {
 export interface MingleBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5322,6 +5569,7 @@ export interface MingleBehavior {
 export interface MountPathingBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5357,6 +5605,7 @@ export interface MountPathingBehavior {
 export interface MoveAroundTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5391,6 +5640,7 @@ export interface MoveAroundTargetBehavior {
   /**
    * Horizontal search distance (in blocks) when searching for a position to move away from target.
    * @default 5
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft horizontal_search_distance
    */
   horizontalSearchDistance?: number;
@@ -5403,6 +5653,7 @@ export interface MoveAroundTargetBehavior {
   /**
    * Number of ticks needed to complete a stay at the block.
    * @default 5
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft vertical_search_distance
    */
   verticalSearchDistance?: number;
@@ -5420,6 +5671,7 @@ export interface MoveAroundTargetBehavior {
 export interface MoveIndoorsBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5449,6 +5701,7 @@ export interface MoveIndoorsBehavior {
 export interface MoveOutdoorsBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5472,18 +5725,21 @@ export interface MoveOutdoorsBehavior {
   /**
    * The amount of times to try finding a random outdoors position before failing.
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_count
    */
   searchCount?: number;
   /**
    * The y range to search for an outdoors position for.
    * @default 5
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The x and z range to search for an outdoors position for.
    * @default 15
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -5502,6 +5758,7 @@ export interface MoveOutdoorsBehavior {
 export interface MoveThroughVillageBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5531,6 +5788,7 @@ export interface MoveThroughVillageBehavior {
 export interface MoveToBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5564,12 +5822,14 @@ export interface MoveToBlockBehavior {
   /**
    * The distance in blocks that the mob will look for the block.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
   /**
    * The height in blocks that the mob will look for the block.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
@@ -5617,9 +5877,15 @@ export interface MoveToBlockBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -5646,9 +5912,15 @@ export interface MoveToBlockBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -5660,6 +5932,7 @@ export interface MoveToBlockBehavior {
   /**
    * Average interval in ticks to try to run this behavior.
    * @default 20
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft tick_interval
    */
   tickInterval?: number;
@@ -5679,6 +5952,7 @@ export interface MoveToBlockBehavior {
 export interface MoveToLandBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5697,18 +5971,21 @@ export interface MoveToLandBehavior {
   /**
    * The number of blocks each tick that the mob will check within it's search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_count
    */
   searchCount?: number;
   /**
    * Height in blocks the mob will look for land to move towards.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The distance in blocks it will look for land to move towards.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -5726,6 +6003,7 @@ export interface MoveToLandBehavior {
 export interface MoveToLavaBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5744,18 +6022,21 @@ export interface MoveToLavaBehavior {
   /**
    * The number of blocks each tick that the mob will check within it's search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_count
    */
   searchCount?: number;
   /**
    * Height in blocks the mob will look for lava to move towards.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The distance in blocks it will look for lava to move towards.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -5773,6 +6054,7 @@ export interface MoveToLavaBehavior {
 export interface MoveToLiquidBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5791,18 +6073,21 @@ export interface MoveToLiquidBehavior {
   /**
    * The number of blocks each tick that the mob will check within it's search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_count
    */
   searchCount?: number;
   /**
    * Height in blocks the mob will look for lava to move towards.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The distance in blocks it will look for lava to move towards.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -5826,6 +6111,7 @@ export interface MoveToLiquidBehavior {
 export interface MoveToPoiBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5854,6 +6140,7 @@ export interface MoveToPoiBehavior {
 export interface MoveToRandomBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5889,6 +6176,7 @@ export interface MoveToRandomBlockBehavior {
 export interface MoveToVillageBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5918,6 +6206,7 @@ export interface MoveToVillageBehavior {
   /**
    * The distance in blocks to search for villages. If <= 0, find the closest village regardless of distance.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -5930,6 +6219,7 @@ export interface MoveToVillageBehavior {
 export interface MoveTowardsDwellingRestrictionBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5953,6 +6243,7 @@ export interface MoveTowardsDwellingRestrictionBehavior {
 export interface MoveTowardsHomeRestrictionBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -5977,6 +6268,7 @@ export interface MoveTowardsHomeRestrictionBehavior {
 export interface MoveTowardsRestrictionBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6000,6 +6292,7 @@ export interface MoveTowardsRestrictionBehavior {
 export interface MoveTowardsTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6029,6 +6322,7 @@ export interface MoveTowardsTargetBehavior {
 export interface MoveToWaterBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6041,18 +6335,21 @@ export interface MoveToWaterBehavior {
   /**
    * The distance in blocks it will look for water to move towards.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
   /**
    * Height in blocks the mob will look for water to move towards.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The number of blocks each tick that the mob will check within it's search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_count
    */
   searchCount?: number;
@@ -6076,6 +6373,7 @@ export interface MoveToWaterBehavior {
 export interface NapBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6134,6 +6432,7 @@ export interface NapBehavior {
 export interface NearestAttackableTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6338,6 +6637,7 @@ export interface NearestAttackableTargetBehavior {
   /**
    * If `attack_interval` is 0 or isn't declared, then between attacks: scanning for a new target occurs every amount of ticks equal to `scan_interval`, minimum value is 1. Values under 10 can affect performance.
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft scan_interval
    */
   scanInterval?: number;
@@ -6386,6 +6686,7 @@ export interface NearestAttackableTargetBehavior {
 export interface NearestPrioritizedAttackableTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6548,6 +6849,7 @@ export interface NearestPrioritizedAttackableTargetBehavior {
   /**
    * Time in seconds before selecting a target.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft attack_interval
    */
   attackInterval?: number;
@@ -6591,6 +6893,7 @@ export interface NearestPrioritizedAttackableTargetBehavior {
   /**
    * How many ticks to wait between scanning for a target.
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft scan_interval
    */
   scanInterval?: number;
@@ -6621,6 +6924,7 @@ export interface NearestPrioritizedAttackableTargetBehavior {
 export interface OcelotAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6698,6 +7002,7 @@ export interface OcelotAttackBehavior {
 export interface OcelotSitOnBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6721,6 +7026,7 @@ export interface OcelotSitOnBlockBehavior {
 export interface OfferFlowerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6772,6 +7078,7 @@ export interface OfferFlowerBehavior {
 export interface OpenDoorBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6795,6 +7102,7 @@ export interface OpenDoorBehavior {
 export interface OwnerHurtByTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -6957,6 +7265,7 @@ export interface OwnerHurtByTargetBehavior {
 export interface OwnerHurtTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7119,6 +7428,7 @@ export interface OwnerHurtTargetBehavior {
 export interface PanicBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7181,6 +7491,7 @@ export interface PanicBehavior {
 export interface PetSleepWithOwnerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7204,12 +7515,14 @@ export interface PetSleepWithOwnerBehavior {
   /**
    * Height in blocks from the owner the pet can be to sleep with owner.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The radius that the mob will search for an owner to curl up with.
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
    * @minecraft search_radius
    */
@@ -7217,6 +7530,7 @@ export interface PetSleepWithOwnerBehavior {
   /**
    * The range that the mob will search for an owner to curl up with.
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -7229,6 +7543,7 @@ export interface PetSleepWithOwnerBehavior {
 export interface PickupItemsBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7288,9 +7603,15 @@ export interface PickupItemsBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -7317,9 +7638,15 @@ export interface PickupItemsBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -7384,6 +7711,7 @@ export interface PickupItemsBehavior {
 export interface PlaceBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7483,6 +7811,7 @@ export interface PlaceBlockBehavior {
 export interface PlayBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7501,6 +7830,7 @@ export interface PlayBehavior {
   /**
    * The distance (in blocks) that the mob tries to be in range of the friend it's following.
    * @default 2
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft follow_distance
    */
   followDistance?: number;
@@ -7523,12 +7853,14 @@ export interface PlayBehavior {
   /**
    * The height (in blocks) that the mob will search within to find a random position position to move to. Must be at least 1.
    * @default 3
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft random_pos_search_height
    */
   randomPosSearchHeight?: number;
   /**
    * The distance (in blocks) on ground that the mob will search within to find a random position to move to. Must be at least 1.
    * @default 16
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft random_pos_search_range
    */
   randomPosSearchRange?: number;
@@ -7546,6 +7878,7 @@ export interface PlayBehavior {
 export interface PlayDeadBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7569,6 +7902,7 @@ export interface PlayDeadBehavior {
   /**
    * The amount of health at which damage will cause the mob to play dead.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft force_below_health
    */
   forceBelowHealth?: number;
@@ -7602,6 +7936,7 @@ export interface PlayDeadBehavior {
 export interface PlayerRideTamedBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7619,6 +7954,7 @@ export interface PlayerRideTamedBehavior {
 export interface RaidGardenBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7649,18 +7985,21 @@ export interface RaidGardenBehavior {
   /**
    * Time in seconds between each time it eats.
    * @default 2
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft eat_delay
    */
   eatDelay?: number;
   /**
    * Amount of time in seconds before this mob wants to eat again.
    * @default 100
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft full_delay
    */
   fullDelay?: number;
   /**
    * Time in seconds before starting to eat/raid once it arrives at it.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft initial_eat_delay
    */
   initialEatDelay?: number;
@@ -7673,18 +8012,21 @@ export interface RaidGardenBehavior {
   /**
    * Maximum number of things this entity wants to eat.
    * @default 6
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_to_eat
    */
   maxToEat?: number;
   /**
    * Distance in blocks the mob will look for crops to eat.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
   /**
    * Height in blocks the mob will look for crops to eat.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
@@ -7702,6 +8044,7 @@ export interface RaidGardenBehavior {
 export interface RamAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7789,6 +8132,7 @@ export interface RamAttackBehavior {
 export interface RandomBreachBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7812,18 +8156,21 @@ export interface RandomBreachBehavior {
   /**
    * A random value to determine when to randomly move somewhere. This has a 1/interval chance to choose this goal
    * @default 120
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft interval
    */
   interval?: number;
   /**
    * Distance in blocks on ground that the mob will look for a new spot to move to. Must be at least 1
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft xz_dist
    */
   xzDist?: number;
   /**
    * Distance in blocks that the mob will look up or down for a new spot to move to. Must be at least 1
    * @default 7
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft y_dist
    */
   yDist?: number;
@@ -7836,6 +8183,7 @@ export interface RandomBreachBehavior {
 export interface RandomFlyBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7865,17 +8213,20 @@ export interface RandomFlyBehavior {
   /**
    * Distance in blocks on ground that the mob will look for a new spot to move to. Must be at least 1
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft xz_dist
    */
   xzDist?: number;
   /**
    * Distance in blocks that the mob will look up or down for a new spot to move to. Must be at least 1
    * @default 7
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft y_dist
    */
   yDist?: number;
   /**
    * Height in blocks to add to the selected target position.
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1.
    * @minecraft y_offset
    */
@@ -7889,6 +8240,7 @@ export interface RandomFlyBehavior {
 export interface RandomHoverBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7911,18 +8263,21 @@ export interface RandomHoverBehavior {
   /**
    * A random value to determine when to randomly move somewhere. This has a 1/interval chance to choose this goal
    * @default 120
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft interval
    */
   interval?: number;
   /**
    * Distance in blocks on ground that the mob will look for a new spot to move to. Must be at least 1
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft xz_dist
    */
   xzDist?: number;
   /**
    * Distance in blocks that the mob will look up or down for a new spot to move to. Must be at least 1
    * @default 7
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft y_dist
    */
   yDist?: number;
@@ -7941,6 +8296,7 @@ export interface RandomHoverBehavior {
 export interface RandomLookAroundBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -7952,6 +8308,7 @@ export interface RandomLookAroundBehavior {
   /**
    * The angle in degrees that an entity can see in the Y-axis (up-down).
    * @default 180
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
    * @minecraft angle_of_view_horizontal
    */
@@ -7959,6 +8316,7 @@ export interface RandomLookAroundBehavior {
   /**
    * The angle in degrees that an entity can see in the X-axis (left-right).
    * @default 180
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
    * @minecraft angle_of_view_vertical
    */
@@ -8003,6 +8361,7 @@ export interface RandomLookAroundBehavior {
 export interface RandomLookAroundAndSitBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8032,12 +8391,14 @@ export interface RandomLookAroundAndSitBehavior {
   /**
    * The max amount of unique looks a mob will have while looking around.
    * @default 2
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_look_count
    */
   maxLookCount?: number;
   /**
    * The max amount of time (in ticks) a mob will stay looking at a direction while looking around.
    * @default 40
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_look_time
    */
   maxLookTime?: number;
@@ -8050,12 +8411,14 @@ export interface RandomLookAroundAndSitBehavior {
   /**
    * The min amount of unique looks a mob will have while looking around.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft min_look_count
    */
   minLookCount?: number;
   /**
    * The min amount of time (in ticks) a mob will stay looking at a direction while looking around.
    * @default 20
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft min_look_time
    */
   minLookTime?: number;
@@ -8068,6 +8431,7 @@ export interface RandomLookAroundAndSitBehavior {
   /**
    * The cooldown in seconds before the goal can be used again.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft random_look_around_cooldown
    */
   randomLookAroundCooldown?: number;
@@ -8080,6 +8444,7 @@ export interface RandomLookAroundAndSitBehavior {
 export interface RandomSearchAndDigBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8208,6 +8573,7 @@ export interface RandomSearchAndDigBehavior {
 export interface RandomSittingBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8256,6 +8622,7 @@ export interface RandomSittingBehavior {
 export interface RandomStrollBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8273,18 +8640,21 @@ export interface RandomStrollBehavior {
   /**
    * A random value to determine when to randomly move somewhere. This has a 1/interval chance to choose this goal
    * @default 120
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft interval
    */
   interval?: number;
   /**
    * Distance in blocks on ground that the mob will look for a new spot to move to. Must be at least 1
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft xz_dist
    */
   xzDist?: number;
   /**
    * Distance in blocks that the mob will look up or down for a new spot to move to. Must be at least 1
    * @default 7
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft y_dist
    */
   yDist?: number;
@@ -8297,6 +8667,7 @@ export interface RandomStrollBehavior {
 export interface RandomSwimBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8320,18 +8691,21 @@ export interface RandomSwimBehavior {
   /**
    * A random value to determine when to randomly move somewhere. This has a 1/interval chance to choose this goal
    * @default 120
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft interval
    */
   interval?: number;
   /**
    * Distance in blocks on ground that the mob will look for a new spot to move to. Must be at least 1
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft xz_dist
    */
   xzDist?: number;
   /**
    * Distance in blocks that the mob will look up or down for a new spot to move to. Must be at least 1
    * @default 7
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft y_dist
    */
   yDist?: number;
@@ -8344,6 +8718,7 @@ export interface RandomSwimBehavior {
 export interface RangedAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8382,6 +8757,7 @@ export interface RangedAttackBehavior {
   /**
    * Number of shots fired every time the attacking entity uses a charged up attack.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft burst_shots
    */
   burstShots?: number;
@@ -8470,6 +8846,7 @@ export interface RangedAttackBehavior {
 export interface ReceiveLoveBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8487,6 +8864,7 @@ export interface ReceiveLoveBehavior {
 export interface RestrictOpenDoorBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8504,6 +8882,7 @@ export interface RestrictOpenDoorBehavior {
 export interface RestrictSunBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8521,6 +8900,7 @@ export interface RestrictSunBehavior {
 export interface RiseToLiquidLevelBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8556,6 +8936,7 @@ export interface RiseToLiquidLevelBehavior {
 export interface RoarBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8579,6 +8960,7 @@ export interface RoarBehavior {
 export interface RollBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8601,6 +8983,7 @@ export interface RollBehavior {
 export interface RunAroundLikeCrazyBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8624,6 +9007,7 @@ export interface RunAroundLikeCrazyBehavior {
 export interface ScaredBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8635,6 +9019,7 @@ export interface ScaredBehavior {
   /**
    * The interval in which a sound will play when active in a 1/delay chance to kick off.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
    * @minecraft sound_interval
    */
@@ -8642,6 +9027,7 @@ export interface ScaredBehavior {
   /**
    * The interval in which a sound will play when active in a 1/delay chance to kick off.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * Introduced in format version 1.26.30 (older versions may reject it).
    * @minecraft sound_delay
    */
@@ -8655,6 +9041,7 @@ export interface ScaredBehavior {
 export interface SendEventBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8703,6 +9090,7 @@ export interface SendEventBehavior {
     particleColor?: string;
     /**
      * The weight of this spell. Controls how likely this spell will be picked
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft weight
      */
     weight?: number;
@@ -8769,6 +9157,7 @@ export interface SendEventBehavior {
 export interface ShareItemsBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8949,6 +9338,7 @@ export interface ShareItemsBehavior {
 export interface SilverfishMergeWithStoneBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8966,6 +9356,7 @@ export interface SilverfishMergeWithStoneBehavior {
 export interface SilverfishWakeUpFriendsBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -8983,6 +9374,7 @@ export interface SilverfishWakeUpFriendsBehavior {
 export interface SkeletonHorseTrapBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9012,6 +9404,7 @@ export interface SkeletonHorseTrapBehavior {
 export interface SleepBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9078,6 +9471,7 @@ export interface SleepBehavior {
 export interface SlimeAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9124,6 +9518,7 @@ export interface SlimeAttackBehavior {
 export interface SlimeFloatBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9153,6 +9548,7 @@ export interface SlimeFloatBehavior {
 export interface SlimeKeepOnJumpingBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9176,6 +9572,7 @@ export interface SlimeKeepOnJumpingBehavior {
 export interface SlimeRandomDirectionBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9187,6 +9584,7 @@ export interface SlimeRandomDirectionBehavior {
   /**
    * Additional time (in whole seconds), chosen randomly in the range of [0, "add_random_time_range"], to add to "min_change_direction_time".
    * @default 3
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft add_random_time_range
    */
   addRandomTimeRange?: number;
@@ -9199,6 +9597,7 @@ export interface SlimeRandomDirectionBehavior {
   /**
    * Maximum rotation angle range (in degrees) when randomly choosing a new direction.
    * @default 360
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft turn_range
    */
   turnRange?: number;
@@ -9211,6 +9610,7 @@ export interface SlimeRandomDirectionBehavior {
 export interface SnackingBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9246,9 +9646,15 @@ export interface SnackingBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -9275,9 +9681,15 @@ export interface SnackingBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[] | string | {
@@ -9303,9 +9715,15 @@ export interface SnackingBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -9332,9 +9750,15 @@ export interface SnackingBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   };
@@ -9365,6 +9789,7 @@ export interface SnackingBehavior {
 export interface SneezeBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9575,6 +10000,7 @@ export interface SneezeBehavior {
 export interface SniffBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9621,6 +10047,7 @@ export interface SniffBehavior {
 export interface SonicBoomBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9710,6 +10137,7 @@ export interface SonicBoomBehavior {
 export interface SquidDiveBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9727,6 +10155,7 @@ export interface SquidDiveBehavior {
 export interface SquidFleeBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9744,6 +10173,7 @@ export interface SquidFleeBehavior {
 export interface SquidIdleBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9761,6 +10191,7 @@ export interface SquidIdleBehavior {
 export interface SquidMoveAwayFromGroundBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9778,6 +10209,7 @@ export interface SquidMoveAwayFromGroundBehavior {
 export interface SquidOutOfWaterBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9795,6 +10227,7 @@ export interface SquidOutOfWaterBehavior {
 export interface StalkAndPounceOnTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9877,6 +10310,7 @@ export interface StalkAndPounceOnTargetBehavior {
 export interface StayNearNoteBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9888,6 +10322,7 @@ export interface StayNearNoteBlockBehavior {
   /**
    * Sets the time an entity should stay near a noteblock after hearing it.
    * @default 30
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft listen_time
    */
   listenTime?: number;
@@ -9918,6 +10353,7 @@ export interface StayNearNoteBlockBehavior {
 export interface StayWhileSittingBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -9935,6 +10371,7 @@ export interface StayWhileSittingBehavior {
 export interface StompAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10041,6 +10478,7 @@ export interface StompAttackBehavior {
   /**
    * This entity will have a 1 in N chance to stop it's current attack, where N = "random_stop_interval".
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft random_stop_interval
    */
   randomStopInterval?: number;
@@ -10102,6 +10540,7 @@ export interface StompAttackBehavior {
 export interface StompTurtleEggBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10120,24 +10559,28 @@ export interface StompTurtleEggBehavior {
   /**
    * A random value to determine when to randomly move somewhere. This has a 1/interval chance to choose this goal
    * @default 120
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft interval
    */
   interval?: number;
   /**
    * The number of blocks each tick that the mob will check within it's search range and height for a valid block to move to. A value of 0 will have the mob check every block within range in one tick
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_count
    */
   searchCount?: number;
   /**
    * Height in blocks the mob will look for turtle eggs to move towards.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The distance in blocks it will look for turtle eggs to move towards.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -10155,6 +10598,7 @@ export interface StompTurtleEggBehavior {
 export interface StrollTowardsVillageBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10178,6 +10622,7 @@ export interface StrollTowardsVillageBehavior {
   /**
    * The distance in blocks to search for points inside villages. If <= 0, find the closest village regardless of distance.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_range
    */
   searchRange?: number;
@@ -10202,6 +10647,7 @@ export interface StrollTowardsVillageBehavior {
 export interface SummonEntityBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10289,6 +10735,7 @@ export interface SummonEntityBehavior {
       /**
        * Number of entities that will be spawned in this step.
        * @default 1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft num_entities_spawned
        */
       numEntitiesSpawned?: number;
@@ -10312,6 +10759,7 @@ export interface SummonEntityBehavior {
       /**
        * Maximum number of summoned entities at any given time.
        * @default 0
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft summon_cap
        */
       summonCap?: number;
@@ -10355,6 +10803,7 @@ export interface SummonEntityBehavior {
 export interface SwellBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10384,6 +10833,7 @@ export interface SwellBehavior {
 export interface SwimIdleBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10413,6 +10863,7 @@ export interface SwimIdleBehavior {
 export interface SwimUpForBreathBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10430,12 +10881,14 @@ export interface SwimUpForBreathBehavior {
   /**
    * The height (in blocks) above the mob's current position that it will search for a valid air block to move to. If a valid block cannot be found, the mob will move to the position this many blocks above it.
    * @default 16
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_height
    */
   searchHeight?: number;
   /**
    * The radius (in blocks) around the mob's current position that it will search for a valid air block to move to.
    * @default 4
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft search_radius
    */
   searchRadius?: number;
@@ -10454,6 +10907,7 @@ export interface SwimUpForBreathBehavior {
 export interface SwimWanderBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10495,6 +10949,7 @@ export interface SwimWanderBehavior {
 export interface SwimWithEntityBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10711,6 +11166,7 @@ export interface SwimWithEntityBehavior {
 export interface SwoopAttackBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10745,6 +11201,7 @@ export interface SwoopAttackBehavior {
 export interface TakeBlockBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10815,6 +11272,7 @@ export interface TakeBlockBehavior {
 export interface TakeFlowerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -10883,6 +11341,7 @@ export interface TakeFlowerBehavior {
 export interface TargetWhenPushedBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -11051,6 +11510,7 @@ export interface TargetWhenPushedBehavior {
 export interface TeleportToOwnerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -11078,6 +11538,7 @@ export interface TeleportToOwnerBehavior {
 export interface TemptBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -11132,9 +11593,15 @@ export interface TemptBehavior {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -11161,9 +11628,15 @@ export interface TemptBehavior {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -11218,6 +11691,7 @@ export interface TemptBehavior {
 export interface TimerFlag1Behavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -11255,6 +11729,7 @@ export interface TimerFlag1Behavior {
 export interface TimerFlag2Behavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -11292,6 +11767,7 @@ export interface TimerFlag2Behavior {
 export interface TimerFlag3Behavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -11329,6 +11805,7 @@ export interface TimerFlag3Behavior {
 export interface TradeInterestBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -11376,6 +11853,7 @@ export interface TradeInterestBehavior {
 export interface TradeWithPlayerBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -11405,6 +11883,7 @@ export interface TradeWithPlayerBehavior {
 export interface TransportItemsBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -11447,6 +11926,7 @@ export interface TransportItemsBehavior {
   /**
    * The maximum stack size that the mob will try to take from a container.
    * @default 16
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_stack_size
    */
   maxStackSize?: number;
@@ -11475,18 +11955,21 @@ export interface TransportItemsBehavior {
   /**
    * The maximum number of containers the mob will visit before resetting. 0 is unlimited.
    * @default 16
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_visited_containers
    */
   maxVisitedContainers?: number;
   /**
    * ime, in seconds, the mob will wait after spawning or after its available goals have changed (e.g. due to a component group update).
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft initial_cooldown
    */
   initialCooldown?: number;
   /**
    * When the mob cannot find a valid container to interact with, the goal will be disabled for this amount of time in seconds.
    * @default 20
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft idle_cooldown
    */
   idleCooldown?: number;
@@ -11523,6 +12006,7 @@ export interface TransportItemsBehavior {
 export interface UseKineticWeaponBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -11642,6 +12126,7 @@ export interface UseKineticWeaponBehavior {
   /**
    * This entity will have a 1 in N chance to stop it's current attack, where N = "random_stop_interval".
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft random_stop_interval
    */
   randomStopInterval?: number;
@@ -11871,6 +12356,7 @@ export interface UseKineticWeaponBehavior {
 export interface VexCopyOwnerTargetBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -12028,6 +12514,7 @@ export interface VexCopyOwnerTargetBehavior {
 export interface VexRandomMoveBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -12185,6 +12672,7 @@ export interface VexRandomMoveBehavior {
 export interface WitherRandomAttackPosGoalBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -12202,6 +12690,7 @@ export interface WitherRandomAttackPosGoalBehavior {
 export interface WitherTargetHighestDamageBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -12364,6 +12853,7 @@ export interface WitherTargetHighestDamageBehavior {
 export interface WorkBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -12376,6 +12866,7 @@ export interface WorkBehavior {
   /**
    * The amount of ticks the NPC will stay in their the work location.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft active_time
    */
   activeTime?: number;
@@ -12388,6 +12879,7 @@ export interface WorkBehavior {
   /**
    * The amount of ticks the goal will be on cooldown before it can be used again.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft goal_cooldown
    */
   goalCooldown?: number;
@@ -12399,18 +12891,21 @@ export interface WorkBehavior {
   /**
    * The max interval in which a sound will play.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft sound_delay_max
    */
   soundDelayMax?: number;
   /**
    * The min interval in which a sound will play.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft sound_delay_min
    */
   soundDelayMin?: number;
   /**
    * If "can_work_in_rain" is false, this is the maximum number of ticks left in the goal where rain will not interrupt the goal
    * @default -1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft work_in_rain_tolerance
    */
   workInRainTolerance?: number;
@@ -12428,6 +12923,7 @@ export interface WorkBehavior {
 export interface WorkComposterBehavior {
   /**
    * How important this behavior is. Lower priority behaviors will be executed first.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
@@ -12440,12 +12936,14 @@ export interface WorkComposterBehavior {
   /**
    * The amount of ticks the NPC will stay in their the work location.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft active_time
    */
   activeTime?: number;
   /**
    * The maximum number of times the mob will interact with the composter.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft block_interaction_max
    */
   blockInteractionMax?: number;
@@ -12470,18 +12968,21 @@ export interface WorkComposterBehavior {
   /**
    * The amount of ticks the goal will be on cooldown before it can be used again.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft goal_cooldown
    */
   goalCooldown?: number;
   /**
    * The maximum number of items which can be added to the composter per block interaction.
    * @default 20
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft items_per_use_max
    */
   itemsPerUseMax?: number;
   /**
    * Limits the amount of each compostable item the mob can use. Any amount held over this number will be composted if possible
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft min_item_count
    */
   minItemCount?: number;
@@ -12492,12 +12993,14 @@ export interface WorkComposterBehavior {
   onArrival?: string | PartialEntityEventTrigger | (string | PartialEntityEventTrigger)[];
   /**
    * Unused.
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
    * @minecraft sound_delay_max
    */
   soundDelayMax?: number;
   /**
    * Unused.
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
    * @minecraft sound_delay_min
    */
@@ -12505,18 +13008,21 @@ export interface WorkComposterBehavior {
   /**
    * The maximum interval in which the mob will interact with the composter.
    * @default 200
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft use_block_max
    */
   useBlockMax?: number;
   /**
    * The minimum interval in which the mob will interact with the composter.
    * @default 100
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft use_block_min
    */
   useBlockMin?: number;
   /**
    * If "can_work_in_rain" is false, this is the maximum number of ticks left in the goal where rain will not interrupt the goal
    * @default -1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft work_in_rain_tolerance
    */
   workInRainTolerance?: number;

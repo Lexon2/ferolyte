@@ -1,5 +1,6 @@
 import {
   ContentDiagnosticContext,
+  logContentError,
   withFieldPath,
 } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { EntityEventRandomize } from '../interfaces/entity-events';
@@ -166,29 +167,31 @@ export const convertEntityEvent = (
   }
 
   if (event.stopMovement) {
+    const { stopVerticalMovement, stopHorizontalMovement } = event.stopMovement;
+    // Both flags are optional: only the given ones are written.
     if (
-      event.stopMovement.stopVerticalMovement === undefined ||
-      event.stopMovement.stopHorizontalMovement === undefined
-    ) {
-      return undefined;
-    }
-    if (
-      !validateBoolean(
-        event.stopMovement.stopVerticalMovement,
-        'stopMovement.stopVerticalMovement',
-        ctx,
-      ) ||
-      !validateBoolean(
-        event.stopMovement.stopHorizontalMovement,
-        'stopMovement.stopHorizontalMovement',
-        ctx,
-      )
+      (stopVerticalMovement !== undefined &&
+        !validateBoolean(
+          stopVerticalMovement,
+          'stopMovement.stopVerticalMovement',
+          ctx,
+        )) ||
+      (stopHorizontalMovement !== undefined &&
+        !validateBoolean(
+          stopHorizontalMovement,
+          'stopMovement.stopHorizontalMovement',
+          ctx,
+        ))
     ) {
       return undefined;
     }
     result.stop_movement = {
-      stop_vertical_movement: event.stopMovement.stopVerticalMovement,
-      stop_horizontal_movement: event.stopMovement.stopHorizontalMovement,
+      ...(stopVerticalMovement !== undefined && {
+        stop_vertical_movement: stopVerticalMovement,
+      }),
+      ...(stopHorizontalMovement !== undefined && {
+        stop_horizontal_movement: stopHorizontalMovement,
+      }),
     };
   }
 
@@ -268,6 +271,12 @@ export const convertEntityEvents = (
     );
     if (convertedEvent) {
       result[eventName] = convertedEvent;
+    } else {
+      // An event must never disappear without a diagnostic.
+      logContentError(
+        eventContext(ctx, eventName),
+        `Event "${eventName}" is not written because of the errors above`,
+      );
     }
   }
 
