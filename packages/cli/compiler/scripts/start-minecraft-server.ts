@@ -19,6 +19,12 @@ export const createMinecraftContext = (
   scriptEvent: (id, message, options) => hub.scriptEvent(id, message, options),
   subscribe: (eventName, handler) => hub.subscribe(eventName, handler),
   onMessage: (handler) => hub.onMessage(handler),
+  onReload: (handler) => hub.onReload(handler),
+  onCommand: (handler) => hub.onCommand(handler),
+  onChat: (handler) => hub.onChat(handler),
+  get primaryClientId() {
+    return hub.primaryClientId;
+  },
   http: http && {
     route: (method, path, handler) => http.route(method, path, handler),
   },
@@ -29,8 +35,10 @@ export const createMinecraftContext = (
  * to plugins. Returns a disposer that closes everything.
  */
 export const startMinecraftServer = async (): Promise<() => Promise<void>> => {
-  const { PORT, HTTP } = BUILD_CONTEXT.SERVER;
-  const hub = await MinecraftHub.listen(PORT);
+  const { PORT, HTTP, RELOAD_ON_PACK_CHANGE, CLIENT_POLICY } = BUILD_CONTEXT.SERVER;
+  const hub = await MinecraftHub.listen(PORT, '127.0.0.1', {
+    clientPolicy: BUILD_CONTEXT.SERVER.CLIENT_POLICY,
+  });
   let http: MinecraftHttpApi | undefined;
 
   try {
@@ -44,7 +52,12 @@ export const startMinecraftServer = async (): Promise<() => Promise<void>> => {
   }
 
   activeHub = hub;
-  setMinecraftContext(createMinecraftContext(hub, http));
+  setMinecraftContext(createMinecraftContext(hub, http), {
+    port: hub.port,
+    http: HTTP && http ? { port: http.port, host: HTTP.host } : false,
+    reloadOnPackChange: RELOAD_ON_PACK_CHANGE,
+    clientPolicy: CLIENT_POLICY,
+  });
   console.log(`To use automatic reload type: /connect localhost:${PORT}`);
   if (http && HTTP) {
     console.log(`HTTP API: http://${HTTP.host}:${http.port}`);

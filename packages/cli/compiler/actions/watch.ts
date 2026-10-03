@@ -380,7 +380,7 @@ export const watch = async (
       .then(() => processBatch(batch, buildOptions))
       .then(() => {
         if (BUILD_CONTEXT.SERVER.RELOAD_ON_PACK_CHANGE) {
-          getMinecraftHub()?.scheduleReload();
+          getMinecraftHub()?.scheduleReload('packs');
         }
       })
       .then(syncInputs, syncInputs);

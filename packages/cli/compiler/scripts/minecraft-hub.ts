@@ -3,10 +3,16 @@ import { randomUUID } from 'crypto';
 import { WebSocketServer, WebSocket } from 'ws';
 
 import type {
+  MinecraftChatMessage,
+  MinecraftCommandEvent,
   MinecraftCommandResult,
   MinecraftConnection,
   MinecraftGameMessage,
+  MinecraftReloadEvent,
+  MinecraftReloadTrigger,
 } from '../plugins/types';
+import { logger } from '../utils/logger';
+import { normalizeChatBody } from './minecraft-chat';
 
 export const COMMAND_TIMEOUT_MS = 20_000;
 export const MAX_IN_FLIGHT = 90;
@@ -20,6 +26,8 @@ export interface BufferedGameEvent extends MinecraftGameMessage {
 interface Client {
   readonly id: number;
   readonly socket: WebSocket;
+  /** The body of the first `PlayerMessage` is logged (verbose) to record the real shape. */
+  loggedPlayerMessage: boolean;
 }
 
 interface PendingCommand {
@@ -31,6 +39,7 @@ interface PendingCommand {
 
 interface QueuedCommand {
   readonly command: string;
+  readonly requestId: string;
   readonly client: Client;
   readonly timeoutMs: number;
   readonly resolve: (result: MinecraftCommandResult) => void;
@@ -39,10 +48,22 @@ interface QueuedCommand {
 
 type MessageHandler = (message: MinecraftGameMessage) => void;
 
+export type ClientPolicy = 'newest' | 'oldest';
+
+export interface HubOptions {
+  /**
+   * Which connection commands go to when no `clientId` is given.
+   * @default 'newest'
+   */
+  clientPolicy?: ClientPolicy;
+}
+
+/** Same envelope for every frame the hub sends (`/connect` bridges send `commandRequest`). */
 const header = (purpose: string, requestId: string) => ({
   requestId,
   messagePurpose: purpose,
   version: 1,
+  messageType: 'commandRequest',
 });
 
 /**
@@ -56,17 +77,30 @@ export class MinecraftHub {
   private readonly subscriptions = new Map<string, Set<MessageHandler>>();
   private readonly messageHandlers = new Set<MessageHandler>();
   private readonly events: BufferedGameEvent[] = [];
+  private readonly reloadHandlers = new Set<(event: MinecraftReloadEvent) => void>();
+  private readonly commandHandlers = new Set<(event: MinecraftCommandEvent) => void>();
+  private readonly chatHandlers = new Set<(message: MinecraftChatMessage) => void>();
+  private chatSubscription: (() => void) | undefined;
+  private lastReloadEvent: MinecraftReloadEvent | undefined;
+  private nextReloadSeq = 1;
   private nextClientId = 1;
   private nextEventSeq = 1;
   private reloadTimer: NodeJS.Timeout | undefined;
   private closed = false;
 
-  private constructor(private readonly server: WebSocketServer) {
+  private constructor(
+    private readonly server: WebSocketServer,
+    readonly clientPolicy: ClientPolicy,
+  ) {
     server.on('connection', (socket) => this.attach(socket));
   }
 
   /** Starts listening; rejects with a readable error when the port is taken. */
-  static listen(port: number, host = '127.0.0.1'): Promise<MinecraftHub> {
+  static listen(
+    port: number,
+    host = '127.0.0.1',
+    options: HubOptions = {},
+  ): Promise<MinecraftHub> {
     return new Promise((resolve, reject) => {
       const server = new WebSocketServer({ port, host });
 
@@ -84,7 +118,7 @@ export class MinecraftHub {
         server.on('error', (error) =>
           console.error('[ferolyte:ws] Server error:', error),
         );
-        resolve(new MinecraftHub(server));
+        resolve(new MinecraftHub(server, options.clientPolicy ?? 'newest'));
       });
     });
   }
@@ -98,6 +132,25 @@ export class MinecraftHub {
     return [...this.clientList.values()].map(({ id }) => ({ id }));
   }
 
+  /** The connection commands go to by default (see `clientPolicy`), if any. */
+  get primaryClientId(): number | undefined {
+    return this.pickClient()?.id;
+  }
+
+  /** Result of the last reload of any client, or `null` when none happened yet. */
+  get lastReload(): {
+    seq: number;
+    at: number;
+    ok: boolean;
+    trigger: MinecraftReloadTrigger;
+  } | null {
+    const event = this.lastReloadEvent;
+
+    return event
+      ? { seq: event.seq, at: event.at, ok: event.ok, trigger: event.trigger }
+      : null;
+  }
+
   get inFlight(): number {
     return this.pending.size;
   }
@@ -107,7 +160,11 @@ export class MinecraftHub {
   }
 
   private attach(socket: WebSocket) {
-    const client: Client = { id: this.nextClientId++, socket };
+    const client: Client = {
+      id: this.nextClientId++,
+      socket,
+      loggedPlayerMessage: false,
+    };
     this.clientList.set(client.id, client);
 
     // One listener per connection; responses are matched through `pending`.
@@ -169,13 +226,24 @@ export class MinecraftHub {
       entry.resolve({
         status: Number(parsed.body?.statusCode ?? 0),
         message: String(parsed.body?.statusMessage ?? ''),
+        body: parsed.body,
       });
       this.drain();
       return;
     }
 
     if (head.messagePurpose === 'commandResponse') {
+      logger.verbose(
+        `[ferolyte:ws] Unmatched commandResponse from client ${client.id} (requestId ${requestId ?? 'none'})`,
+      );
       return;
+    }
+
+    if (head.eventName === 'PlayerMessage' && !client.loggedPlayerMessage) {
+      client.loggedPlayerMessage = true;
+      logger.verbose(
+        `[ferolyte:ws] First PlayerMessage body from client ${client.id}: ${JSON.stringify(parsed.body)}`,
+      );
     }
 
     const message: MinecraftGameMessage = {
@@ -214,11 +282,15 @@ export class MinecraftHub {
     }
   }
 
+  private pickClient(): Client | undefined {
+    const clients = [...this.clientList.values()];
+
+    return this.clientPolicy === 'oldest' ? clients[0] : clients[clients.length - 1];
+  }
+
   private resolveClient(clientId?: number): Client {
     const client =
-      clientId === undefined
-        ? this.clientList.values().next().value
-        : this.clientList.get(clientId);
+      clientId === undefined ? this.pickClient() : this.clientList.get(clientId);
 
     if (!client) {
       throw new Error(
@@ -241,12 +313,30 @@ export class MinecraftHub {
 
     return new Promise((resolve, reject) => {
       try {
+        const client = this.resolveClient(options.clientId);
+        const requestId = randomUUID();
+        const report = (outcome: Pick<MinecraftCommandEvent, 'result' | 'error'>) =>
+          this.dispatchEvent(this.commandHandlers, {
+            command,
+            clientId: client.id,
+            requestId,
+            at: Date.now(),
+            ...outcome,
+          });
+
         this.queue.push({
           command,
-          client: this.resolveClient(options.clientId),
+          requestId,
+          client,
           timeoutMs: options.timeoutMs ?? COMMAND_TIMEOUT_MS,
-          resolve,
-          reject,
+          resolve: (result) => {
+            report({ result });
+            resolve(result);
+          },
+          reject: (error) => {
+            report({ error: error.message });
+            reject(error);
+          },
         });
       } catch (error) {
         reject(error as Error);
@@ -268,7 +358,7 @@ export class MinecraftHub {
   private drain() {
     while (this.queue.length > 0 && this.pending.size < MAX_IN_FLIGHT) {
       const next = this.queue.shift()!;
-      const requestId = randomUUID();
+      const { requestId } = next;
       const timer = setTimeout(() => {
         this.pending.delete(requestId);
         next.reject(
@@ -347,18 +437,94 @@ export class MinecraftHub {
     };
   }
 
+  /** Every command sent through the hub (also its own reload), once per command. */
+  onCommand(handler: (event: MinecraftCommandEvent) => void): () => void {
+    this.commandHandlers.add(handler);
+
+    return () => {
+      this.commandHandlers.delete(handler);
+    };
+  }
+
+  /** Result of every reload, once per client. */
+  onReload(handler: (event: MinecraftReloadEvent) => void): () => void {
+    this.reloadHandlers.add(handler);
+
+    return () => {
+      this.reloadHandlers.delete(handler);
+    };
+  }
+
+  /**
+   * Normalised chat lines. Subscribes to `PlayerMessage` while there is a chat handler; the
+   * subscription is shared with `subscribe()` and never dropped for other subscribers.
+   */
+  onChat(handler: (message: MinecraftChatMessage) => void): () => void {
+    this.chatHandlers.add(handler);
+    this.chatSubscription ??= this.subscribe('PlayerMessage', (message) => {
+      const chat = normalizeChatBody(message.clientId, message.body);
+      if (chat) {
+        this.dispatchEvent(this.chatHandlers, chat);
+      }
+    });
+
+    return () => {
+      this.chatHandlers.delete(handler);
+      if (this.chatHandlers.size === 0) {
+        this.chatSubscription?.();
+        this.chatSubscription = undefined;
+      }
+    };
+  }
+
+  /** Calls every handler; a throwing handler does not affect the others. */
+  private dispatchEvent<T>(handlers: Set<(event: T) => void>, event: T) {
+    for (const handler of [...handlers]) {
+      try {
+        handler(event);
+      } catch (error) {
+        console.error('[ferolyte:ws] Event handler failed:', error);
+      }
+    }
+  }
+
   eventsSince(seq = 0): BufferedGameEvent[] {
     return this.events.filter((event) => event.seq > seq);
   }
 
-  /** Runs `/reload` on every connected client and reports the result in chat. */
-  async reloadAll(): Promise<void> {
+  private emitReload(
+    trigger: MinecraftReloadTrigger,
+    clientId: number,
+    ok: boolean,
+    message: string,
+  ) {
+    const event: MinecraftReloadEvent = {
+      trigger,
+      clientId,
+      ok,
+      message,
+      at: Date.now(),
+      seq: this.nextReloadSeq++,
+    };
+    this.lastReloadEvent = event;
+    this.dispatchEvent(this.reloadHandlers, event);
+  }
+
+  /**
+   * Runs `/reload` on every connected client and reports the result in chat.
+   * `onReload` handlers receive one event per client.
+   */
+  async reloadAll(trigger: MinecraftReloadTrigger = 'manual'): Promise<void> {
     await Promise.all(
       [...this.clientList.values()].map(async (client) => {
         try {
           const { status, message } = await this.sendCommand('reload', {
             clientId: client.id,
+          }).catch((error: Error) => {
+            this.emitReload(trigger, client.id, false, error.message);
+            throw error;
           });
+          this.emitReload(trigger, client.id, status === 0, message);
           const text =
             status === 0
               ? 'Scripts and functions reloaded.'
@@ -379,11 +545,11 @@ export class MinecraftHub {
   }
 
   /** Debounced reload for bursts of file changes. */
-  scheduleReload() {
+  scheduleReload(trigger: MinecraftReloadTrigger = 'packs') {
     clearTimeout(this.reloadTimer);
     this.reloadTimer = setTimeout(() => {
       this.reloadTimer = undefined;
-      void this.reloadAll();
+      void this.reloadAll(trigger);
     }, RELOAD_DEBOUNCE_MS);
   }
 

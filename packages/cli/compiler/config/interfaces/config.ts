@@ -156,6 +156,13 @@ export interface FerolyteServerConfig {
    * @default false
    */
   reloadOnPackChange?: boolean;
+
+  /**
+   * Which `/connect` connection commands go to when no client is named: the `'newest'` (a newer
+   * `/connect` is always the live one) or the `'oldest'` one.
+   * @default 'newest'
+   */
+  clientPolicy?: 'newest' | 'oldest';
 }
 
 export interface FerolyteProfileConfig {

@@ -7,6 +7,7 @@ import { BUILD_CONTEXT } from '../build-context';
 import { loadConfig } from '../config/load-config';
 import { jsoncEsbuildPlugin } from '../core/utils/jsonc-esbuild-plugin';
 import { createScriptsOutputPath } from './create-scripts-output-path';
+import { getActiveProfile, emitHook } from '../plugins/plugin-host';
 import { getMinecraftHub } from './start-minecraft-server';
 
 
@@ -22,10 +23,14 @@ const hasScriptEntry = async () => {
 const createReloadPlugin = (): esbuild.Plugin => ({
   name: 'ReloadPlugin',
   setup(build) {
-    build.onEnd(async () => {
+    build.onEnd(async (result) => {
       console.log('Transpilation completed');
 
-      await getMinecraftHub()?.reloadAll();
+      await emitHook('afterScriptBuild', {
+        profile: getActiveProfile(),
+        ok: result.errors.length === 0,
+      });
+      await getMinecraftHub()?.reloadAll('scripts');
     });
   },
 });
@@ -66,7 +71,13 @@ export const buildScriptsOnce = async (profile: string = 'default') => {
     return;
   }
 
-  await esbuild.build(createEsbuildConfig());
+  let ok = false;
+  try {
+    await esbuild.build(createEsbuildConfig());
+    ok = true;
+  } finally {
+    await emitHook('afterScriptBuild', { profile: getActiveProfile(), ok });
+  }
 };
 
 export const watchScripts = async (

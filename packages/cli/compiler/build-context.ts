@@ -6,6 +6,7 @@ export const BUILD_CONTEXT = {
     PORT: 8080,
     HTTP: false as false | { port: number; host: string },
     RELOAD_ON_PACK_CHANGE: false,
+    CLIENT_POLICY: 'newest' as 'newest' | 'oldest',
   },
   TS: {
     CONFIG_PATH: '',

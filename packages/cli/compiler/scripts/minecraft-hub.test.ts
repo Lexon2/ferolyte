@@ -56,9 +56,11 @@ describe('MinecraftHub', () => {
     const hub = await startHub();
     const { frames } = await connect(hub);
 
+    // `body` (API 1.2.0) carries the raw response body next to status / message.
     await expect(hub.sendCommand('say hi')).resolves.toEqual({
       status: 0,
       message: 'ok',
+      body: { statusCode: 0, statusMessage: 'ok' },
     });
     expect(frames[0].body.commandLine).toBe('say hi');
   });

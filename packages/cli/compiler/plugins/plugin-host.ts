@@ -2,6 +2,8 @@ import { BUILD_CONTEXT } from '../build-context';
 import { SUPPORTED_PLUGIN_API_VERSIONS } from './api-version';
 import {
   AfterLoadEvent,
+  AfterScriptBuildEvent,
+  FerolyteServerInfo,
   FerolytePlugin,
   FerolytePluginHookName,
   FerolytePluginPaths,
@@ -25,11 +27,14 @@ let stopPromise: Promise<void> | undefined;
 
 const BEFORE_STOP_TIMEOUT_MS = 5000;
 let minecraftContext: FerolyteMinecraftContext | undefined;
+let serverInfo: FerolyteServerInfo | undefined;
 
 export const setMinecraftContext = (
   context: FerolyteMinecraftContext | undefined,
+  info?: FerolyteServerInfo,
 ) => {
   minecraftContext = context;
+  serverInfo = context ? info : undefined;
 };
 
 const createPathsSnapshot = (): FerolytePluginPaths => {
@@ -113,6 +118,7 @@ export const createWatchReadyEvent = (): WatchReadyEvent => ({
   paths: createPathsSnapshot(),
   signal: abortController.signal,
   minecraft: minecraftContext,
+  server: serverInfo,
 });
 
 export const createFileEvent = (
@@ -152,7 +158,7 @@ export const emitAfterLoad = async () => {
 
 export const emitHook = async (
   hookName: Exclude<FerolytePluginHookName, 'beforeFileWrite' | 'afterLoad' | 'beforeStop'>,
-  event: BuildEvent | FileEvent | WatchReadyEvent,
+  event: BuildEvent | FileEvent | WatchReadyEvent | AfterScriptBuildEvent,
 ) => {
   for (const plugin of plugins) {
     await runPluginHook(plugin, hookName, event);
@@ -227,6 +233,7 @@ export const createAfterLoadEvent = (
   files,
   signal: abortController.signal,
   minecraft: minecraftContext,
+  server: serverInfo,
 });
 
 const runBeforeStop = async (plugin: FerolytePlugin, event: StopEvent) => {
