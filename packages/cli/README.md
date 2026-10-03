@@ -21,7 +21,7 @@ This installs `@ferolyte/common` and `@ferolyte/pack` as dependencies. The `fero
 | `ferolyte init <project-name> <alias>` | Scaffold a new Ferolyte project in `./<project-name>/`               |
 | `ferolyte run [profile]`               | Build packs and scripts once; optionally create a `.mcaddon` archive |
 | `ferolyte watch [profile]`             | Watch packs and scripts; rebuild incrementally on file changes       |
-| `ferolyte check [profile]`             | Validate every content file in memory (nothing is written); exit 1 on errors |
+| `ferolyte check [profile]`             | Validate every content file in memory (no pack output; refreshes `.ferolyte/types/ids.ts`); exit 1 on errors |
 | `ferolyte inspect <file>`              | Print the JSON a content file would produce (`--profile`, `--out`, `--compact`) |
 | `ferolyte types [profile]`             | Regenerate typed ids (`.ferolyte/types/ids.ts`, imported as `@ferolyte/ids`) |
 
@@ -316,12 +316,72 @@ profiles: {
 }
 ```
 
-HTTP API (only when `server.http` is set): `GET /status`, `POST /command` `{command}`,
-`POST /scriptevent` `{id, message}`, `GET /events?since=<seq>`, `POST /subscribe` `{eventName}`.
+HTTP API (only when `server.http` is set): `GET /status` (`connected`, `clients`, `inFlight`, `lastEventSeq`,
+`lastReload` = `{ seq, at, ok, trigger } | null`), `POST /command` `{command}`, `POST /scriptevent` `{id, message}`,
+`GET /events?since=<seq>&limit=<n>` (the last `n` events of the `since` window), `POST /subscribe` `{eventName}`
+(`event` works as an alias). Every route is JSON; plugin routes are added with `minecraft.http.route()` (see below).
 
-Plugins (API 1.1.0) get `event.minecraft` in `afterLoad` / `afterWatchReady` (undefined outside watch):
-`sendCommand`, `scriptEvent`, `subscribe(eventName, handler?)`, `onMessage`, `clients`, and
-`http?.route(method, path, handler)` when HTTP is enabled. Sockets close automatically on shutdown.
+#### Client policy (`server.clientPolicy`, cli 0.5)
+
+The game allows one live `/connect` per world, so a newer connection is the live one:
+`clientPolicy: 'newest'` (**default since 0.5**) sends commands without a `clientId` to the newest connection and falls back
+to the older one when it disconnects. `'oldest'` keeps the behaviour of 0.4 and earlier. An explicit `clientId` always wins;
+`minecraft.primaryClientId` is the connection the policy currently picks.
+
+#### Game event shapes
+
+`subscribe PlayerMessage` delivers `event` frames whose `body` is either `{ message, sender, type }` or
+`{ properties: { Message, Sender, MessageType } }` depending on the game version; `minecraft.onChat` handles both. Run
+`ferolyte watch --verbose` to see the raw body of the first `PlayerMessage` of every connection, and unmatched
+`commandResponse` frames. Every frame the hub sends carries `messageType: 'commandRequest'`.
+Use `/connect 127.0.0.1:<port>` if `localhost` does not connect: the hub listens on IPv4 loopback.
+
+#### Plugin access to the game (`event.minecraft`)
+
+`afterLoad` / `afterWatchReady` events carry `event.minecraft` (undefined outside `watch`):
+
+| Member | Since | Description |
+| --- | --- | --- |
+| `clients`, `sendCommand(command, { clientId?, timeoutMs? })`, `scriptEvent(id, message?, { clientId? })` | 1.1.0 | `sendCommand` resolves with `{ status, message, body? }` (`body` is the raw response body, API 1.2.0 / cli 0.5) |
+| `subscribe(eventName, handler?)`, `onMessage(handler)` | 1.1.0 | Game events; every handler returns an unsubscribe function |
+| `http?.route(method, path, handler)` | 1.1.0 | Present when `server.http` is enabled |
+| `onReload(handler)` | 1.2.0 | `{ trigger: 'scripts' \| 'packs' \| 'manual', clientId, ok, message, at, seq }`, once per client when its `/reload` resolved or failed |
+| `onCommand(handler)` | 1.2.0 | `{ command, clientId, requestId, at, result?, error? }` for **every** command, including ferolyte's own `reload` / `tellraw` |
+| `onChat(handler)` | 1.2.0 | `{ clientId, sender, type, text }`: rawtext flattened (text / translate / selector / score as plain text), `§` codes removed. Subscribes to `PlayerMessage` on demand and shares it with `subscribe` |
+| `primaryClientId` | 1.2.0 | The connection commands go to by default (`clientPolicy`) |
+
+A throwing handler never affects the others (it is logged). `seq` of reload events is a per-hub counter.
+`afterLoad` / `afterWatchReady` also get `server` (API 1.2.0): the effective values after defaults,
+`{ port, http: false | { port, host }, reloadOnPackChange, clientPolicy }` (undefined outside `watch`), handy for printing the
+right `/connect` hint. `afterScriptBuild({ profile, ok })` (API 1.2.0) fires after every scripts build (`ok: false` when esbuild
+reported errors). Reloads are triggered by `'scripts'` (script rebuild), `'packs'` (`reloadOnPackChange`) or `'manual'`.
+
+#### HTTP routes of plugins
+
+```ts
+import { defineFerolytePlugin, FerolytePluginApiVersion, httpResponse } from '@ferolyte/cli/plugin';
+
+export const bridge = defineFerolytePlugin({
+  name: 'bridge',
+  apiVersion: FerolytePluginApiVersion.V1_2_0,
+  afterWatchReady({ minecraft }) {
+    minecraft?.http?.route('GET', '/api/*', ({ path, headers, signal }) => {
+      signal.addEventListener('abort', () => { /* the client went away */ });
+      return path === '/api/known' ? { ok: true } : httpResponse(404, { error: 'unknown route' });
+    });
+  },
+});
+```
+
+- `route()` **replaces** an existing route, built-in ones included (this is how a plugin keeps an older response shape);
+  the override is logged once per path with `--verbose`.
+- A path ending in `/*` is a **prefix route**: the handler gets the full `request.path`. An exact route wins over a prefix
+  route; of several prefixes the longest wins.
+- Handlers receive `headers` (lower-cased names) and `signal`, an `AbortSignal` that aborts when the socket closes before the
+  response is written (stop long polling there).
+- `httpResponse(status, body?)` (exported from `@ferolyte/cli/plugin`) is the supported way to set a status. Any other return
+  value is a `200` JSON body. For compatibility an object with nothing but a numeric `status` and/or a `body` is still read as an
+  envelope when no `httpResponse` marker is present; a payload like `{ status: 'ok' }` is sent as is.
 
 ### Plugin system
 
@@ -337,7 +397,13 @@ Define plugins with `defineFerolytePlugin()` and hook into the build lifecycle:
 | `afterFileUpdate` | After a file is updated during watch                           |
 | `afterFileRemove` | After a file is removed during watch                           |
 | `afterWatchReady` | After watch mode is ready                                      |
+| `afterScriptBuild` | After every scripts build (`{ profile, ok }`, API 1.2.0)      |
 | `beforeStop`      | Once on shutdown (Ctrl+C, SIGTERM, error, end of `run`); 5 s timeout |
+
+#### API versions
+
+`apiVersion` is `1.0.0`, `1.1.0` or `1.2.0` (`FerolytePluginApiVersion.V1_2_0`, cli 0.5: reload / command / chat taps, `server` in events,
+`httpResponse`, `afterScriptBuild`). Newer members exist at runtime for every version; plugins declaring `1.1.0` keep working unchanged.
 
 #### Cleaning up (API 1.1.0)
 

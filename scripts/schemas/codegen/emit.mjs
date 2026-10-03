@@ -28,6 +28,11 @@ const jsdoc = (node, minecraftKey, indent) => {
   if (node.default !== undefined && typeof node.default !== 'object') {
     lines.push(`@default ${JSON.stringify(node.default)}`);
   }
+  const types = [node.type].flat();
+  if (types.includes('integer') && !types.includes('number')) {
+    // TypeScript has no integer type: say it in the docs, the validator rejects fractions.
+    lines.push('@integer Whole number only (fractions are rejected by the build).');
+  }
   if (node.deprecated === true) {
     lines.push('@deprecated');
   }

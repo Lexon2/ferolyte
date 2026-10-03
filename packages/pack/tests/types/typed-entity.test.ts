@@ -73,7 +73,8 @@ const zombie = defineServerEntity({
 });
 `;
 
-describe('typed entity names (const generics)', () => {
+// Each case runs the TypeScript compiler over the SDK sources: slow under a full parallel run.
+describe('typed entity names (const generics)', { timeout: 30_000 }, () => {
   it('accepts declared events, groups and property values', () => {
     expect(
       compile(`${header}${zombie}

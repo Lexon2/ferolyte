@@ -139,6 +139,7 @@ export interface AttachableDocument {
         texture?: string;
         /**
          * UNDOCUMENTED: texture index.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft texture_index
          */
         textureIndex?: number;

@@ -69,6 +69,7 @@ export interface BlockPlacerComponent {
 export interface BundleInteractionComponent {
   /**
    * The maximum number of slots in the bundle viewable by the plater. Can be from 1 to 64. Default is 12.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft num_viewable_slots
    */
   numViewableSlots?: number;
@@ -113,6 +114,7 @@ export interface CompostableComponent {
   /**
    * The chance of this item generating a compost layer when supplied to the composter block.
    * @default 100
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft composting_chance
    */
   compostingChance?: number;
@@ -230,17 +232,20 @@ export interface DurabilityComponent {
   damageChance?: {
     /**
      * The minimum.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft min
      */
     min: number;
     /**
      * The maximum.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max
      */
     max: number;
   };
   /**
    * Maximum durability is the amount of damage that this item can take before breaking.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_durability
    */
   maxDurability: number;
@@ -253,6 +258,7 @@ export interface DurabilityComponent {
 export interface DurabilitySensorComponent {
   /**
    * The effects are emitted when the item durability value is less than or equal to this value.
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
    * @minecraft durability
    */
@@ -277,6 +283,7 @@ export interface DurabilitySensorComponent {
     /**
      * The effects are emitted when the item durability value is less than or equal to this value.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft durability
      */
     durability?: number;
@@ -402,6 +409,7 @@ export interface FoodComponent {
   /**
    * How much nutrition does this food item give the player when eaten.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft nutrition
    */
   nutrition?: number;
@@ -550,6 +558,7 @@ export interface KineticWeaponComponent {
     /**
      * Time, in ticks, during which the effect can be applied after "delay" elapses. If negative, the effect is applied indefinitely.
      * @default -1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_duration
      */
     maxDuration?: number;
@@ -581,6 +590,7 @@ export interface KineticWeaponComponent {
   /**
    * Time, in ticks, after which kinetic damage and its effects start being applied.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft delay
    */
   delay?: number;
@@ -592,6 +602,7 @@ export interface KineticWeaponComponent {
     /**
      * Time, in ticks, during which the effect can be applied after "delay" elapses. If negative, the effect is applied indefinitely.
      * @default -1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_duration
      */
     maxDuration?: number;
@@ -622,6 +633,7 @@ export interface KineticWeaponComponent {
     /**
      * Time, in ticks, during which the effect can be applied after "delay" elapses. If negative, the effect is applied indefinitely.
      * @default -1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_duration
      */
     maxDuration?: number;
@@ -804,9 +816,15 @@ export interface RepairableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -833,9 +851,15 @@ export interface RepairableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     })[];
@@ -965,6 +989,7 @@ export interface StorageItemComponent {
   /**
    * The maximum number of different item stacks. Maximum is 64. Default is 64.
    * @default 64
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_slots
    */
   maxSlots?: number;
@@ -978,6 +1003,7 @@ export interface StorageWeightLimitComponent {
   /**
    * The maximum allowed weight of the sum of all contained items.
    * @default 64
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_weight_limit
    */
   maxWeightLimit?: number;
@@ -991,6 +1017,7 @@ export interface StorageWeightModifierComponent {
   /**
    * The weight of this item when inside another Storage Item. 0 means item is not allowed in another Storage Item.
    * @default 4
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft weight_in_storage_item
    */
   weightInStorageItem?: number;
@@ -1146,6 +1173,7 @@ export interface UseModifiersComponent {
 export interface WearableComponent {
   /**
    * How much protection does the armor item have.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft protection
    */
   protection?: number;

@@ -10,6 +10,8 @@ export interface DiagnosticsCollector {
   errorCount(): number;
   /** Number of records with `warning` severity. */
   warningCount(): number;
+  /** Forgets the records of a file (it is about to be evaluated again), so its new diagnostics are not taken for duplicates. */
+  discardFile(file: string): void;
   /** Detaches from the diagnostic sink (the previous sink is restored). */
   stop(): void;
 }
@@ -24,7 +26,7 @@ export const collectDiagnostics = (
   options: { silent?: boolean } = {},
 ): DiagnosticsCollector => {
   const records: ContentDiagnosticRecord[] = [];
-  const seen = new Set<string>();
+  const seen = new Map<string, ContentDiagnosticRecord>();
   const previous = getContentDiagnosticSink();
 
   setContentDiagnosticSink(
@@ -36,7 +38,7 @@ export const collectDiagnostics = (
         return;
       }
 
-      seen.add(key);
+      seen.set(key, record);
       records.push(record);
     },
     { silent: options.silent === true || previous.silent },
@@ -46,6 +48,18 @@ export const collectDiagnostics = (
     records,
     errorCount: () => records.filter((r) => r.severity === 'error').length,
     warningCount: () => records.filter((r) => r.severity === 'warning').length,
+    discardFile: (file) => {
+      for (let index = records.length - 1; index >= 0; index--) {
+        if (records[index].file === file) {
+          records.splice(index, 1);
+        }
+      }
+      for (const [key, record] of seen) {
+        if (record.file === file) {
+          seen.delete(key);
+        }
+      }
+    },
     stop: () =>
       setContentDiagnosticSink(previous.sink, { silent: previous.silent }),
   };

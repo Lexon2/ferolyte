@@ -138,6 +138,8 @@ export const generateIdsSource = (
     flat('BlockId', index.blocks.keys(), '', warnings),
     flat('AnimationId', index.animations, /^animation\./, warnings),
     flat('AnimationControllerId', index.animationControllers, /^controller\.animation\./, warnings),
+    flat('BpAnimationId', index.bpAnimations, /^animation\./, warnings),
+    flat('BpAnimationControllerId', index.bpAnimationControllers, /^controller\.animation\./, warnings),
     flat('AttachableId', index.attachables, '', warnings),
     flat('RenderControllerId', index.renderControllers, /^controller\.render\./, warnings),
     flat('RecipeId', index.recipes, '', warnings),

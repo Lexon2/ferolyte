@@ -55,12 +55,14 @@ export interface SpawnRuleDocument {
         /**
          * This is the minimum light level value that allows the mob to spawn.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft min
          */
         min?: number;
         /**
          * This is the maximum light level value that allows the mob to spawn.
          * @default 15
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft max
          */
         max?: number;
@@ -79,12 +81,14 @@ export interface SpawnRuleDocument {
         /**
          * This is the minimum delay that a mob spawns.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft min
          */
         min?: number;
         /**
          * This is the maximum delay that a mob spawns.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft max
          */
         max?: number;
@@ -107,11 +111,13 @@ export interface SpawnRuleDocument {
       densityLimit?: {
         /**
          * This is the maximum number of mobs of this type spawnable on the surface.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft surface
          */
         surface?: number;
         /**
          * This is the maximum number of mobs of this type spawnable underground.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft underground
          */
         underground?: number;
@@ -144,12 +150,14 @@ export interface SpawnRuleDocument {
       distanceFilter?: {
         /**
          * This is the minimum distance level that a mob spawns.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft min
          */
         min?: number;
         /**
          * This is the maximum distance level that a mob spawns.
          * @default 128
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft max
          */
         max?: number;
@@ -161,11 +169,13 @@ export interface SpawnRuleDocument {
       heightFilter?: {
         /**
          * This is the minimum height level that a mob spawns.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft min
          */
         min?: number;
         /**
          * This is the maximum height level that a mob spawns.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft max
          */
         max?: number;
@@ -183,16 +193,19 @@ export interface SpawnRuleDocument {
         /**
          * The number of entities that "initial_event" should trigger on.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft initial_event_count
          */
         initialEventCount?: number;
         /**
          * This is the minimum number of mobs that spawn in a herd.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft min_size
          */
         minSize?: number;
         /**
          * This is the maximum number of mobs that spawn in a herd.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft max_size
          */
         maxSize?: number;
@@ -204,6 +217,7 @@ export interface SpawnRuleDocument {
         /**
          * This is the number of mobs spawned before the specified event is triggered.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft event_skip_count
          */
         eventSkipCount?: number;
@@ -216,16 +230,19 @@ export interface SpawnRuleDocument {
         /**
          * The number of entities that "initial_event" should trigger on.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft initial_event_count
          */
         initialEventCount?: number;
         /**
          * This is the minimum number of mobs that spawn in a herd.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft min_size
          */
         minSize?: number;
         /**
          * This is the maximum number of mobs that spawn in a herd.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft max_size
          */
         maxSize?: number;
@@ -237,6 +254,7 @@ export interface SpawnRuleDocument {
         /**
          * This is the number of mobs spawned before the specified event is triggered.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft event_skip_count
          */
         eventSkipCount?: number;
@@ -259,6 +277,7 @@ export interface SpawnRuleDocument {
       permuteType?: {
         /**
          * The percentage of 100 of a type of mob that should spawn. If there are multiple weights, they must add up to 100.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft weight
          */
         weight?: number;
@@ -275,6 +294,7 @@ export interface SpawnRuleDocument {
       } | {
         /**
          * The percentage of 100 of a type of mob that should spawn. If there are multiple weights, they must add up to 100.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft weight
          */
         weight?: number;
@@ -296,11 +316,13 @@ export interface SpawnRuleDocument {
       playerInVillageFilter?: {
         /**
          * This is the maximum mob_event level that an entity spawns.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft distance
          */
         distance?: number;
         /**
          * This is the minimum mob_event level that an entity spawns.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft village_border_tolerance
          */
         villageBorderTolerance?: number;
@@ -375,11 +397,13 @@ export interface SpawnRuleDocument {
       weight?: {
         /**
          * This is the priority of the mob spawning out of 100.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft default
          */
         default?: number;
         /**
          * UNDOCUMENTED.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft rarity
          */
         rarity?: number;
@@ -391,6 +415,7 @@ export interface SpawnRuleDocument {
       worldAgeFilter?: {
         /**
          * This is the minimum world_age_filter level that a mob spawns measured in seconds.
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft min
          */
         min?: number;

@@ -1,7 +1,14 @@
 export { FerolytePluginApiVersion } from './api-version';
+export { httpResponse } from './http-response';
 
 export type {
   AfterLoadEvent,
+  AfterScriptBuildEvent,
+  FerolyteServerInfo,
+  MinecraftChatMessage,
+  MinecraftCommandEvent,
+  MinecraftReloadEvent,
+  MinecraftReloadTrigger,
   FerolyteFileKind,
   FerolytePlugin,
   FerolytePluginPaths,

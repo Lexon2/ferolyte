@@ -1,3 +1,5 @@
+import { checkCustomComponentVersion } from '../common/custom-component-version';
+import { cloneConfig } from '@ferolyte/common/object/clone-config';
 import {
   hintSnakeCaseComponent,
   hintSnakeCaseFields,
@@ -19,6 +21,9 @@ import {
 import { isVersionAtLeast } from '@ferolyte/common/content/versions/compare-version';
 import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
 
+/** Written when the config has no `version` (the profile `minGameVersion` does not change it). */
+const DEFAULT_FORMAT_VERSION = '1.21.70';
+
 export class ItemBuilder implements ContentBuilder {
   readonly metadata = CONTENT_METADATA.ITEM;
 
@@ -35,7 +40,7 @@ export class ItemBuilder implements ContentBuilder {
   }
 
   public cloneConfig(): ItemConfig {
-    return structuredClone(this.config);
+    return cloneConfig(this.config);
   }
 
   public build(): MinecraftItem {
@@ -43,7 +48,7 @@ export class ItemBuilder implements ContentBuilder {
 
     const item: MinecraftItem = {
       // @TODO: Add support for ferolyte config
-      format_version: config.version || '1.21.70',
+      format_version: config.version || DEFAULT_FORMAT_VERSION,
       'minecraft:item': {
         description: {
           identifier: config.identifier,
@@ -112,6 +117,12 @@ export class ItemBuilder implements ContentBuilder {
     }
 
     let itemComponents: MinecraftItem['minecraft:item']['components'] = {};
+
+    checkCustomComponentVersion(
+      [...Object.keys(components), ...Object.keys(rawComponents)],
+      this.config.version || DEFAULT_FORMAT_VERSION,
+      this.buildContext && { contentType: 'item', ...this.buildContext },
+    );
 
     for (const component in components) {
       const componentData = components[component as keyof typeof components];

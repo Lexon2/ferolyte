@@ -57,7 +57,7 @@ const CONTENT_TYPE_BY_METADATA: Record<string, string> = {
  */
 export const inspectContentFile = async (
   filePath: string,
-  options: { diagnostics?: boolean } = {},
+  options: { diagnostics?: boolean; placeholderIds?: boolean } = {},
 ): Promise<InspectResult> => {
   const entry = resolve(filePath);
   const name = basename(entry);
@@ -70,6 +70,7 @@ export const inspectContentFile = async (
 
   const { bundled, failed } = await bundleEntries([entry], {
     stubMinecraft: true,
+    placeholderIds: options.placeholderIds,
   });
   if (bundled.length === 0) {
     return {

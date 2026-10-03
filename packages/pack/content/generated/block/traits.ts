@@ -31,6 +31,7 @@ export interface MultiBlockTrait {
   enabledStates: "minecraft:multi_block_part"[];
   /**
    * Optionally used to initialize state 'minecraft:multi_block_part'
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft parts
    */
   parts?: number;

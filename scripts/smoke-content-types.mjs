@@ -3,7 +3,7 @@
 // `ferolyte run --json` and `ferolyte check --types --json`; both must report no errors.
 //   npm run smoke:content     (needs the registry for @minecraft/* and typescript)
 import { execSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,6 +13,37 @@ const tmp = mkdtempSync(path.join(tmpdir(), 'ferolyte-smoke-'));
 const run = (command, cwd) => execSync(command, { cwd, stdio: ['ignore', 'pipe', 'inherit'] }).toString();
 
 const FILES = {
+  // Two entities reading each other's generated ids: must build from a clean project in one `check`.
+  'packs/BP/entities/ping.se.ts': `import { createServerEntity } from '@ferolyte/pack';
+import { EntityEvent } from '@ferolyte/ids';
+export default createServerEntity({
+  identifier: 'myaddon:ping',
+  componentGroups: [{ name: 'myaddon:ping_on', components: { instantDespawn: {} } }],
+  events: {
+    'myaddon:ping_go': { add: { componentGroups: ['myaddon:ping_on'] } },
+    'myaddon:ping_pong': { trigger: EntityEvent.Pong.PongGo },
+  },
+});
+`,
+  'packs/BP/entities/pong.se.ts': `import { createServerEntity } from '@ferolyte/pack';
+import { EntityEvent } from '@ferolyte/ids';
+export default createServerEntity({
+  identifier: 'myaddon:pong',
+  events: {
+    'myaddon:pong_go': { sequence: [] },
+    'myaddon:pong_ping': { trigger: EntityEvent.Ping.PingGo },
+  },
+});
+`,
+  // Imports an entity id that the scenario below renames: one `run` must write the new id.
+  'packs/BP/spawn_rules/pong.spawn.ts': `import { createSpawnRule } from '@ferolyte/pack';
+import { EntityId } from '@ferolyte/ids';
+export default createSpawnRule({
+  identifier: EntityId.Pong,
+  populationControl: 'monster',
+  conditions: [{ weight: { default: 5 } }],
+});
+`,
   'packs/BP/items/ruby.item.ts': `import { createItem } from '@ferolyte/pack';
 export default createItem({ identifier: 'myaddon:ruby', components: { maxStackSize: 64 } });
 `,
@@ -87,7 +118,8 @@ try {
   }
 
   const failures = [];
-  for (const command of ['npx ferolyte run --json', 'npx ferolyte check --types --json']) {
+  // `check` goes first: nothing exists yet (no .ferolyte/types/ids.ts), the ids of both entities must be bootstrapped by it.
+  for (const command of ['npx ferolyte check --types --json', 'npx ferolyte run --json']) {
     let output;
     try {
       output = run(command, project);
@@ -97,6 +129,21 @@ try {
     const errors = JSON.parse(output || '[]').filter((r) => r.severity === 'error');
     console.log(`${command}: ${errors.length} error(s)`);
     failures.push(...errors);
+  }
+  // An id of imported content changes: the importer gets the new id in a single `run`.
+  const pong = path.join(project, 'packs/BP/entities/pong.se.ts');
+  writeFileSync(pong, readFileSync(pong, 'utf8').replace("'myaddon:pong'", "'other:pong'"));
+  run('npx ferolyte run --json', project);
+  const spawn = JSON.parse(
+    readFileSync(path.join(project, 'build/MYADDON_BP/spawn_rules/proj/pong.spawn.json'), 'utf8'),
+  );
+  if (spawn['minecraft:spawn_rules'].description.identifier !== 'other:pong') {
+    failures.push({ message: `importer kept a stale id: ${spawn['minecraft:spawn_rules'].description.identifier}` });
+  }
+
+  const ids = readFileSync(path.join(project, '.ferolyte/types/ids.ts'), 'utf8');
+  if (!ids.includes("'myaddon:ping_go'") || !ids.includes("'myaddon:pong_go'")) {
+    failures.push({ message: 'ids.ts does not contain the events of both entities' });
   }
   if (failures.length > 0) {
     console.error(JSON.stringify(failures, null, 2));

@@ -5,7 +5,7 @@ import { MolangMath, MolangQuery } from '../../molang/types';
 
 type AnimationKeys<T> =
   T extends Record<infer K extends string, string>
-    ? K | OneOfRecord<K, MolangMath | MolangQuery | Molang>
+    ? K | OneOfRecord<K, MolangMath | MolangQuery | Molang | MolangBuilder>
     : never;
 
 /**

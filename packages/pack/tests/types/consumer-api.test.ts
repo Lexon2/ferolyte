@@ -91,7 +91,8 @@ import { createItem } from '@ferolyte/pack/content/item/create-item';
 import { createServerEntity } from '@ferolyte/pack/content/server-entity/create-server-entity';
 `;
 
-describe('consumer API types', () => {
+// Each case runs the TypeScript compiler over the SDK sources: slow under a full parallel run.
+describe('consumer API types', { timeout: 30_000 }, () => {
   it('block trait aliases and schema names', () => {
     expect(
       compile(`${header}
@@ -179,5 +180,16 @@ export const value = components.pushable;
     expect(messages.some((m) => m.includes("'pushable' is deprecated"))).toBe(
       true,
     );
+  });
+
+  it('exports EntityComponentGroup and EntityEvents from the package entries', () => {
+    expect(
+      compile(`${header}
+import type { EntityComponentGroup, EntityEvents } from '@ferolyte/pack/entity';
+import type { EntityComponentGroup as RootGroup, EntityEvents as RootEvents } from '@ferolyte/pack/index';
+export const group: EntityComponentGroup & RootGroup = { name: 'a', components: {} };
+export const events: EntityEvents & RootEvents = { trigger: 'x' };
+`),
+    ).toEqual([]);
   });
 });

@@ -71,6 +71,7 @@ export interface AdmireItemComponent {
   /**
    * Duration, in seconds, for which mob won't admire items if it was hurt.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft cooldown_after_being_attacked
    */
   cooldownAfterBeingAttacked?: number;
@@ -114,9 +115,15 @@ export interface AgeableComponent {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -143,9 +150,15 @@ export interface AgeableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[] | string | {
@@ -171,9 +184,15 @@ export interface AgeableComponent {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -200,9 +219,15 @@ export interface AgeableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   };
@@ -233,9 +258,15 @@ export interface AgeableComponent {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -262,9 +293,15 @@ export interface AgeableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[] | string | {
@@ -290,9 +327,15 @@ export interface AgeableComponent {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -319,9 +362,15 @@ export interface AgeableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   };
@@ -352,9 +401,15 @@ export interface AgeableComponent {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -381,9 +436,15 @@ export interface AgeableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[] | string | {
@@ -409,9 +470,15 @@ export interface AgeableComponent {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -438,9 +505,15 @@ export interface AgeableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   };
@@ -481,9 +554,15 @@ export interface AgeableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -510,9 +589,15 @@ export interface AgeableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -543,9 +628,15 @@ export interface AgeableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -572,9 +663,15 @@ export interface AgeableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -669,12 +766,14 @@ export interface AngerLevelComponent {
   /**
    * Anger boost applied to angry threshold when mob gets angry.
    * @default 20
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft angry_boost
    */
   angryBoost?: number;
   /**
    * Threshold that define when the mob is considered angry at a nuisance.
    * @default 80
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft angry_threshold
    */
   angryThreshold?: number;
@@ -693,6 +792,7 @@ export interface AngerLevelComponent {
   /**
    * The maximum anger level that can be reached. Applies to any nuisance
    * @default 100
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_anger
    */
   maxAnger?: number;
@@ -749,6 +849,7 @@ export interface AngryComponent {
   /**
    * Distance in blocks within which other entities of the same entity definition will become angry.
    * @default 20
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft broadcast_range
    */
   broadcastRange?: number;
@@ -789,12 +890,14 @@ export interface AngryComponent {
   /**
    * The amount of time in seconds that the entity will be angry.
    * @default 25
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft duration
    */
   duration?: number;
   /**
    * Variance in seconds added to the duration [-delta, delta].
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft duration_delta
    */
   durationDelta?: number;
@@ -922,6 +1025,7 @@ export interface AreaAttackComponent {
   /**
    * How much damage per tick is applied to entities that enter the damage range.
    * @default 2
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft damage_per_tick
    */
   damagePerTick?: number;
@@ -978,6 +1082,7 @@ export interface AttackComponent {
   /**
    * Amplifier level (potion tier) of the status ailment applied to the damaged entity. Higher values increase the strength of the effect.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft effect_amplifier
    */
   effectAmplifier?: number;
@@ -1077,6 +1182,7 @@ export interface BarterComponent {
   /**
    * Duration, in seconds, for which mob won't barter items if it was hurt.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft cooldown_after_being_attacked
    */
   cooldownAfterBeingAttacked?: number;
@@ -1120,6 +1226,7 @@ export interface BlockMovementSlowdownImmunityComponent {
 export interface BlockSensorComponent {
   /**
    * The maximum radial distance in which a specified block can be detected. The biggest radius is 32.0.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft sensor_radius
    */
   sensorRadius?: number;
@@ -1183,6 +1290,7 @@ export interface BoostableComponent {
     /**
      * This is the damage that the item will take each time it is used.
      * @default 1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft damage
      */
     damage?: number;
@@ -1214,9 +1322,15 @@ export interface BoostableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -1243,9 +1357,15 @@ export interface BoostableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -1277,9 +1397,15 @@ export interface BoostableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -1306,9 +1432,15 @@ export interface BoostableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -1323,6 +1455,7 @@ export interface BossComponent {
   /**
    * The Maximum distance from the boss at which the boss's health bar is present on the players screen.
    * @default 55
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft hud_range
    */
   hudRange?: number;
@@ -1373,12 +1506,14 @@ export interface BreathableComponent {
   /**
    * Time in seconds the entity can hold its breath.
    * @default 15
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft total_supply
    */
   totalSupply?: number;
   /**
    * Time in seconds between suffocation damage.
    * @default -20
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft suffocate_time
    */
   suffocateTime?: number;
@@ -1508,9 +1643,15 @@ export interface BreedableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -1537,9 +1678,15 @@ export interface BreedableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -1570,9 +1717,15 @@ export interface BreedableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -1599,9 +1752,15 @@ export interface BreedableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -1628,9 +1787,15 @@ export interface BreedableComponent {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -1657,9 +1822,15 @@ export interface BreedableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   };
@@ -1858,9 +2029,15 @@ export interface BribeableComponent {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -1887,9 +2064,15 @@ export interface BribeableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -2047,6 +2230,7 @@ export interface CelebrateHuntComponent {
   /**
    * Duration, in seconds, of celebration.
    * @default 4
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft duration
    */
   duration?: number;
@@ -2102,6 +2286,7 @@ export interface ColorComponent {
   /**
    * The Palette Color value of the entity.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value?: number;
@@ -2115,6 +2300,7 @@ export interface Color2Component {
   /**
    * The second Palette Color value of the entity.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value?: number;
@@ -2156,6 +2342,7 @@ export interface ConditionalBandwidthOptimizationComponent {
   conditionalValues?: {
     /**
      * In relation to the optimization value, determines the maximum ticks spatial update packets can be not sent.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_dropped_ticks
      */
     maxDroppedTicks?: number;
@@ -2182,6 +2369,7 @@ export interface ConditionalBandwidthOptimizationComponent {
   defaultValues?: {
     /**
      * In relation to the optimization value, determines the maximum ticks spatial update packets can be not sent.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_dropped_ticks
      */
     maxDroppedTicks?: number;
@@ -2234,6 +2422,7 @@ export interface DamageOverTimeComponent {
   /**
    * Amount of damage caused each hurt.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft damage_per_hurt
    */
   damagePerHurt?: number;
@@ -2402,12 +2591,14 @@ export interface DespawnComponent {
     /**
      * Maximum distance for standard despawn rules to instantly despawn the mob.
      * @default 128
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_distance
      */
     maxDistance?: number;
     /**
      * Minimum distance for standard despawn rules to try to despawn the mob.
      * @default 32
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft min_distance
      */
     minDistance?: number;
@@ -2432,12 +2623,14 @@ export interface DespawnComponent {
   /**
    * The amount of time in seconds that the mob must be inactive.
    * @default 30
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft min_range_inactivity_timer
    */
   minRangeInactivityTimer?: number;
   /**
    * A random chance between 1 and the given value.
    * @default 800
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft min_range_random_chance
    */
   minRangeRandomChance?: number;
@@ -2521,6 +2714,7 @@ export interface DwellerComponent {
   canFindPoi?: boolean;
   /**
    * How much reputation should the players be rewarded on first founding?.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft first_founding_reward
    */
   firstFoundingReward?: number;
@@ -2566,6 +2760,7 @@ export interface EconomyTradeTableComponent {
   /**
    * Used in legacy prices to determine how much should Demand be modified by when the player has the Hero of the Village mob effect.
    * @default -4
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft hero_demand_discount
    */
   heroDemandDiscount?: number;
@@ -2577,12 +2772,14 @@ export interface EconomyTradeTableComponent {
   /**
    * The Maximum the discount can be modified by when the player has cured a nearby Zombie Villager.
    * @default -200
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_nearby_cured_discount
    */
   maxNearbyCuredDiscount?: number;
   /**
    * How much should the discount be modified by when the player has cured a nearby Zombie Villager.
    * @default -25
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft nearby_cured_discount
    */
   nearbyCuredDiscount?: number;
@@ -2651,12 +2848,14 @@ export type EntitySensorComponent = {
   /**
    * The maximum number of entities that must pass the filter conditions for the event to send.
    * @default -1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft maximum_count
    */
   maximumCount?: number;
   /**
    * The minimum number of entities that must pass the filter conditions for the event to send.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft minimum_count
    */
   minimumCount?: number;
@@ -2711,12 +2910,14 @@ export type EntitySensorComponent = {
     /**
      * The maximum number of entities that must pass the filter conditions for the event to send.
      * @default -1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft maximum_count
      */
     maximumCount?: number;
     /**
      * The minimum number of entities that must pass the filter conditions for the event to send.
      * @default 1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft minimum_count
      */
     minimumCount?: number;
@@ -2796,9 +2997,15 @@ export interface EquipItemComponent {
      * @minecraft states
      */
     states?: Record<string, unknown>;
-    /** @minecraft count */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft count
+     */
     count?: number;
-    /** @minecraft data */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft data
+     */
     data?: number;
   } | {
     /** @minecraft item */
@@ -2825,9 +3032,15 @@ export interface EquipItemComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     };
   })[];
@@ -2880,6 +3093,7 @@ export interface EquippableComponent {
     /**
      * The slot number of this slot.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft slot
      */
     slot?: number;
@@ -2910,9 +3124,15 @@ export interface EquippableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -2939,9 +3159,15 @@ export interface EquippableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     })[];
@@ -2972,9 +3198,15 @@ export interface EquippableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -3001,9 +3233,15 @@ export interface EquippableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -3281,6 +3519,7 @@ export interface FlockingComponent {
   /**
    * Determines the high bound amount of entities that can be allowed in the flock.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft high_flock_limit
    */
   highFlockLimit?: number;
@@ -3311,6 +3550,7 @@ export interface FlockingComponent {
   /**
    * Determines the low bound amount of entities that can be allowed in the flock.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft low_flock_limit
    */
   lowFlockLimit?: number;
@@ -3478,12 +3718,14 @@ export interface GeneticsComponent {
       /**
        * Lower bound of the vaues.
        * @default 0
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft range_min
        */
       rangeMin?: number;
       /**
        * Upper bound of the vaues.
        * @default 0
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft range_max
        */
       rangeMax?: number;
@@ -3507,12 +3749,14 @@ export interface GeneticsComponent {
         /**
          * Lower bound of the vaues.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft range_min
          */
         rangeMin?: number;
         /**
          * Upper bound of the vaues.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft range_max
          */
         rangeMax?: number;
@@ -3520,12 +3764,14 @@ export interface GeneticsComponent {
       /**
        * If this value is non-negative, compare both the mob's main and hidden alleles with this value for a match with either. Can also be a range of integers.
        * @default -1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft either_allele
        */
       eitherAllele?: number;
       /**
        * If this value is non-negative, compare the mob's hidden allele with this value for a match. Can also be a range of integers.
        * @default -1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft hidden_allele
        */
       hiddenAllele?: number;
@@ -3538,12 +3784,14 @@ export interface GeneticsComponent {
         /**
          * Lower bound of the vaues.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft range_min
          */
         rangeMin?: number;
         /**
          * Upper bound of the vaues.
          * @default 0
+         * @integer Whole number only (fractions are rejected by the build).
          * @minecraft range_max
          */
         rangeMax?: number;
@@ -3608,9 +3856,15 @@ export interface GiveableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -3637,9 +3891,15 @@ export interface GiveableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     })[];
@@ -3696,6 +3956,7 @@ export interface GrowsCropComponent {
   /**
    * Number of charges.
    * @default 10
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft charges
    */
   charges?: number;
@@ -3727,6 +3988,7 @@ export interface HealableComponent {
     /**
      * The amount of health this entity gains when fed this item.
      * @default 1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft heal_amount
      */
     healAmount?: number;
@@ -3757,9 +4019,15 @@ export interface HealableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -3786,9 +4054,15 @@ export interface HealableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -3819,9 +4093,15 @@ export interface HealableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -3848,9 +4128,15 @@ export interface HealableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -3869,6 +4155,7 @@ export interface HealableComponent {
       /**
        * The amplifier of the effect.
        * @default 0
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft amplifier
        */
       amplifier?: number;
@@ -3888,6 +4175,7 @@ export interface HealableComponent {
       /**
        * The amplifier of the effect.
        * @default 0
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft amplifier
        */
       amplifier?: number;
@@ -3955,6 +4243,7 @@ export interface HomeComponent {
   /**
    * The radius that the entity will be restricted to in relation to its home.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft restriction_radius
    */
   restrictionRadius?: number;
@@ -4010,6 +4299,7 @@ export interface HurtOnConditionComponent {
     cause?: Enum6c6496;
     /**
      * Amount of damage done each tick that the conditions are met.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft damage_per_tick
      */
     damagePerTick?: number;
@@ -4176,12 +4466,14 @@ export interface InteractComponent {
     /**
      * The amount of health this entity will recover or hurt when interacting with this item. Negative values will harm the entity.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft health_amount
      */
     healthAmount?: number;
     /**
      * The amount of damage the item will take when used to interact with this entity. A value of 0 means the item won't lose durability.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft hurt_item
      */
     hurtItem?: number;
@@ -4234,6 +4526,7 @@ export interface InteractComponent {
     repairEntityItem?: {
       /**
        * How much of the item durability should be restored upon interaction.
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft amount
        */
       amount?: number;
@@ -4354,12 +4647,14 @@ export interface InteractComponent {
     /**
      * The amount of health this entity will recover or hurt when interacting with this item. Negative values will harm the entity.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft health_amount
      */
     healthAmount?: number;
     /**
      * The amount of damage the item will take when used to interact with this entity. A value of 0 means the item won't lose durability.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft hurt_item
      */
     hurtItem?: number;
@@ -4412,6 +4707,7 @@ export interface InteractComponent {
     repairEntityItem?: {
       /**
        * How much of the item durability should be restored upon interaction.
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft amount
        */
       amount?: number;
@@ -4482,6 +4778,7 @@ export interface InventoryComponent {
   /**
    * Number of slots that this entity can gain per extra strength.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft additional_slots_per_strength
    */
   additionalSlotsPerStrength?: number;
@@ -4500,6 +4797,7 @@ export interface InventoryComponent {
   /**
    * Number of slots the container has.
    * @default 5
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft inventory_size
    */
   inventorySize?: number;
@@ -4664,12 +4962,14 @@ export interface JumpDynamicComponent {
     /**
      * Amount of ticks between sequential jumps.
      * @default 30
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft jump_delay
      */
     jumpDelay?: number;
     /**
      * Duration of the jump animation.
      * @default 1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft animation_duration
      */
     animationDuration?: number;
@@ -4694,12 +4994,14 @@ export interface JumpDynamicComponent {
     /**
      * Amount of ticks between sequential jumps.
      * @default 30
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft jump_delay
      */
     jumpDelay?: number;
     /**
      * Duration of the jump animation.
      * @default 1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft animation_duration
      */
     animationDuration?: number;
@@ -5001,6 +5303,7 @@ export interface MarkVariantComponent {
   /**
    * The ID of the variant. By convention, 0 is the ID of the base entity
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -5048,6 +5351,7 @@ export interface MobEffectComponent {
   /**
    * Time in seconds to wait between each application of the effect.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft cooldown_time
    */
   cooldownTime?: number;
@@ -6350,11 +6654,13 @@ export interface NpcComponent {
     skinList?: {
       /**
        * UNDOCUMENTED.
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft variant
        */
       variant?: number;
       /**
        * UNDOCUMENTED.
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft mark_variant
        */
       markVariant?: number;
@@ -6387,12 +6693,14 @@ export type OffspringComponent = {
     /**
      * The inclusive maximum of the variant range.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_variant
      */
     maxVariant?: number;
     /**
      * The inclusive minimum of the variant range.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft min_variant
      */
     minVariant?: number;
@@ -6498,6 +6806,7 @@ export interface OnEquipmentChangedComponent {
     /**
      * The slot number of this slot.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft slot
      */
     slot?: number | string;
@@ -6634,11 +6943,13 @@ export interface PhysicsComponent {
 export interface PlayerExhaustionComponent {
   /**
    * The initial value of the player exhaustion.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value?: number;
   /**
    * The maximum player exhaustion of this entity.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max
    */
   max?: number;
@@ -6652,12 +6963,14 @@ export interface PlayerExperienceComponent {
   /**
    * The initial value of the player experience.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value?: number;
   /**
    * The maximum player experience of this entity.
    * @default 5
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max
    */
   max?: number;
@@ -6677,11 +6990,13 @@ export type PlayerHungerComponent = Record<string, unknown>;
 export interface PlayerLevelComponent {
   /**
    * The initial value of the player level.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value?: number;
   /**
    * The maximum player level value of the entity.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max
    */
   max?: number;
@@ -6694,11 +7009,13 @@ export interface PlayerLevelComponent {
 export interface PlayerSaturationComponent {
   /**
    * The initial value of player saturation.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value?: number;
   /**
    * The maximum player saturation value.
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max
    */
   max?: number;
@@ -6718,12 +7035,14 @@ export interface PreferredPathComponent {
   /**
    * Added cost for jumping up a node.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft jump_cost
    */
   jumpCost?: number;
   /**
    * Distance mob can fall without taking damage.
    * @default 3
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_fall_blocks
    */
   maxFallBlocks?: number;
@@ -7094,12 +7413,14 @@ export interface ProjectileComponent {
       /**
        * If specified, sets the maximum damage after critical damage has been applied. Enchantments have already been applied at this point, so this clamps the final damage value of critical hits.
        * @default 2147483647
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft max_critical_damage
        */
       maxCriticalDamage?: number;
       /**
        * If specified, sets the minimum damage after critical damage has been applied. Enchantments have already been applied at this point, so this clamps the final damage value of critical hits.
        * @default 0
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft min_critical_damage
        */
       minCriticalDamage?: number;
@@ -7121,26 +7442,50 @@ export interface ProjectileComponent {
      * @minecraft mob_effect
      */
     mobEffect?: ({
-      /** @minecraft amplifier */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft amplifier
+       */
       amplifier?: number;
-      /** @minecraft durationeasy */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft durationeasy
+       */
       durationeasy?: number | string;
-      /** @minecraft durationhard */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft durationhard
+       */
       durationhard?: number | string;
-      /** @minecraft durationnormal */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft durationnormal
+       */
       durationnormal?: number | string;
       /** @minecraft effect */
       effect?: string;
     })[] | {
       /** @minecraft effects */
       effects?: ({
-        /** @minecraft amplifier */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft amplifier
+         */
         amplifier?: number;
-        /** @minecraft durationeasy */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft durationeasy
+         */
         durationeasy?: number | string;
-        /** @minecraft durationhard */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft durationhard
+         */
         durationhard?: number | string;
-        /** @minecraft durationnormal */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft durationnormal
+         */
         durationnormal?: number | string;
         /** @minecraft effect */
         effect?: string;
@@ -7199,6 +7544,7 @@ export interface ProjectileComponent {
       affectOwner?: boolean;
       /**
        * How long, in seconds, the cloud persists before disappearing.
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft duration
        */
       duration?: number | "infinite";
@@ -7211,6 +7557,7 @@ export interface ProjectileComponent {
       /**
        * Aux value of the potion whose effects the cloud applies. When `-1`, the potion is taken from the projectile entity itself.
        * @default -1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft potion
        */
       potion?: number;
@@ -7229,6 +7576,7 @@ export interface ProjectileComponent {
       /**
        * Number of ticks the cloud waits before re-applying its effects to the same entity.
        * @default 0
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft reapplication_delay
        */
       reapplicationDelay?: number;
@@ -7247,6 +7595,7 @@ export interface ProjectileComponent {
       /**
        * Number of entities spawned when the first roll succeeds.
        * @default 0
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft first_spawn_count
        */
       firstSpawnCount?: number;
@@ -7264,6 +7613,7 @@ export interface ProjectileComponent {
       /**
        * Number of entities spawned when the first roll succeeds.
        * @default 0
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft second_spawn_count
        */
       secondSpawnCount?: number;
@@ -7304,6 +7654,7 @@ export interface ProjectileComponent {
       /**
        * Aux value of the potion to apply.
        * @default -1
+       * @integer Whole number only (fractions are rejected by the build).
        * @minecraft effect
        */
       effect?: number;
@@ -7323,6 +7674,7 @@ export interface ProjectileComponent {
   /**
    * Default potion aux value associated with the projectile. Normally set programmatically by potion items; rarely useful at authoring time. A value matching the water potion is required for the `douse_fire` on-hit subcomponent to extinguish fires.
    * @default -1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft potion_effect
    */
   potionEffect?: number;
@@ -7386,6 +7738,7 @@ export interface ProjectileComponent {
   uncertaintyMultiplier?: number;
   /**
    * Deprecated since 1.26.50.
+   * @integer Whole number only (fractions are rejected by the build).
    * @deprecated
    * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
    * @minecraft owner_launch_immunity_ticks
@@ -7614,6 +7967,7 @@ export interface RavagerBlockedComponent {
   reactionChoices?: ({
     /**
      * The chance of this reaction being picked.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft weight
      */
     weight?: number;
@@ -7682,6 +8036,7 @@ export interface RideableComponent {
   /**
    * The seat that designates the driver of the entity. Entities with the "minecraft:behavior.controlled_by_player" goal ignore this field and give control to any player in any seat.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft controlling_seat
    */
   controllingSeat?: number;
@@ -7741,6 +8096,7 @@ export interface RideableComponent {
   /**
    * The number of entities that can ride this entity at the same time.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft seat_count
    */
   seatCount?: number;
@@ -7770,12 +8126,14 @@ export interface RideableComponent {
     /**
      * Defines the maximum number of riders that can be riding this entity for this seat to be valid.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_rider_count
      */
     maxRiderCount?: number;
     /**
      * Defines the minimum number of riders that need to be riding this entity before this seat can be used.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft min_rider_count
      */
     minRiderCount?: number;
@@ -7811,12 +8169,14 @@ export interface RideableComponent {
     /**
      * Defines the maximum number of riders that can be riding this entity for this seat to be valid.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_rider_count
      */
     maxRiderCount?: number;
     /**
      * Defines the minimum number of riders that need to be riding this entity before this seat can be used.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft min_rider_count
      */
     minRiderCount?: number;
@@ -7928,18 +8288,21 @@ export interface ShareablesComponent {
   /**
    * Maximum number of this item the mob will hold.
    * @default -1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft all_items_max_amount
    */
   allItemsMaxAmount?: number;
   /**
    * Number of this item considered extra that the entity wants to share.
    * @default -1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft all_items_surplus_amount
    */
   allItemsSurplusAmount?: number;
   /**
    * Number of this item this entity wants to share.
    * @default -1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft all_items_want_amount
    */
   allItemsWantAmount?: number;
@@ -7975,21 +8338,25 @@ export interface ShareablesComponent {
     item?: string;
     /**
      * Aux value for the item.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft item_aux
      */
     itemAux?: number;
     /**
      * Maximum number of this item the mob will hold.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_amount
      */
     maxAmount?: number;
     /**
      * Maximum number of this item the mob will pick up during a single goal tick.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft pickup_limit
      */
     pickupLimit?: number;
     /**
      * Prioritizes which items the entity prefers. 0 is the highest priority.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft priority
      */
     priority?: number;
@@ -8000,11 +8367,13 @@ export interface ShareablesComponent {
     storedInInventory?: boolean;
     /**
      * Number of this item considered extra that the entity wants to share.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft surplus_amount
      */
     surplusAmount?: number;
     /**
      * Number of this item this entity wants to have.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft want_amount
      */
     wantAmount?: number;
@@ -8030,6 +8399,7 @@ export interface ShooterComponent {
   /**
    * ID of the Potion effect to be applied on hit.
    * @default -1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft aux_val
    */
   auxVal?: number;
@@ -8058,6 +8428,7 @@ export interface ShooterComponent {
     /**
      * ID of the Potion effect to be applied on hit.
      * @default -1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft aux_val
      */
     auxVal?: number;
@@ -8073,7 +8444,10 @@ export interface ShooterComponent {
     loseTarget?: boolean;
     /** @minecraft chance */
     chance?: number;
-    /** @minecraft aux_val */
+    /**
+     * @integer Whole number only (fractions are rejected by the build).
+     * @minecraft aux_val
+     */
     auxVal?: number;
     /** @minecraft def */
     def?: string;
@@ -8112,6 +8486,7 @@ export interface SkinIdComponent {
   /**
    * The ID of the skin. By convention, 0 is the ID of the base skin
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value?: number;
@@ -8154,18 +8529,21 @@ export interface SpawnEntityComponent {
     /**
      * Maximum amount of time to randomly wait in seconds before another entity is spawned.
      * @default 600
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_wait_time
      */
     maxWaitTime?: number;
     /**
      * Minimum amount of time to randomly wait in seconds before another entity is spawned.
      * @default 300
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft min_wait_time
      */
     minWaitTime?: number;
     /**
      * The number of entities of this type to spawn each time that this triggers.
      * @default 1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft num_to_spawn
      */
     numToSpawn?: number;
@@ -8220,9 +8598,15 @@ export interface SpawnEntityComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -8249,9 +8633,15 @@ export interface SpawnEntityComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -8281,18 +8671,21 @@ export interface SpawnEntityComponent {
     /**
      * Maximum amount of time to randomly wait in seconds before another entity is spawned.
      * @default 600
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft max_wait_time
      */
     maxWaitTime?: number;
     /**
      * Minimum amount of time to randomly wait in seconds before another entity is spawned.
      * @default 300
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft min_wait_time
      */
     minWaitTime?: number;
     /**
      * The number of entities of this type to spawn each time that this triggers.
      * @default 1
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft num_to_spawn
      */
     numToSpawn?: number;
@@ -8347,9 +8740,15 @@ export interface SpawnEntityComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -8376,9 +8775,15 @@ export interface SpawnEntityComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -8431,6 +8836,7 @@ export interface SpawnOnDeathComponent {
   /**
    * How many entities to spawn, defaults to 1 when not set
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft spawn_amount
    */
   spawnAmount?: number;
@@ -8455,6 +8861,7 @@ export interface SpellEffectsComponent {
     /**
      * The level of the effect, same as used in the /effect command (0 for level I, 1 for level II, etc). Defaults to 0. NOTE: Values can be negative but its not an intentional feature
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft amplifier
      */
     amplifier?: number;
@@ -8500,12 +8907,14 @@ export interface StrengthComponent {
   /**
    * The maximum strength of this entity.
    * @default 5
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max
    */
   max?: number;
   /**
    * The initial value of the strength.
    * @default 1
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value?: number;
@@ -8562,9 +8971,15 @@ export interface TameableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -8591,9 +9006,15 @@ export interface TameableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -8624,9 +9045,15 @@ export interface TameableComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -8653,9 +9080,15 @@ export interface TameableComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -8670,6 +9103,7 @@ export interface TamemountComponent {
   /**
    * The amount the entity's temper will increase when mounted.
    * @default 5
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft attempt_temper_mod
    */
   attemptTemperMod?: number;
@@ -8705,9 +9139,15 @@ export interface TamemountComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -8734,9 +9174,15 @@ export interface TamemountComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -8773,9 +9219,15 @@ export interface TamemountComponent {
        * @minecraft states
        */
       states?: Record<string, unknown>;
-      /** @minecraft count */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft count
+       */
       count?: number;
-      /** @minecraft data */
+      /**
+       * @integer Whole number only (fractions are rejected by the build).
+       * @minecraft data
+       */
       data?: number;
     } | {
       /** @minecraft item */
@@ -8802,9 +9254,15 @@ export interface TamemountComponent {
          * @minecraft states
          */
         states?: Record<string, unknown>;
-        /** @minecraft count */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft count
+         */
         count?: number;
-        /** @minecraft data */
+        /**
+         * @integer Whole number only (fractions are rejected by the build).
+         * @minecraft data
+         */
         data?: number;
       };
     };
@@ -8824,12 +9282,14 @@ export interface TamemountComponent {
   /**
    * The maximum value for the entity's random starting temper.
    * @default 100
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft max_temper
    */
   maxTemper?: number;
   /**
    * The minimum value for the entity's random starting temper.
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft min_temper
    */
   minTemper?: number;
@@ -8971,6 +9431,7 @@ export interface TickWorldComponent {
   /**
    * The area around the entity to tick. Default: 2. Allowed range: 2-6.
    * @default 2
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft radius
    */
   radius?: number;
@@ -9010,11 +9471,13 @@ export interface TimerComponent {
   randomTimeChoices?: {
     /**
      * The weight on how likely this section is to trigger.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft weight
      */
     weight?: number;
     /**
      * The value in seconds that would be used if this section was picked.
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft value
      */
     value?: number;
@@ -9126,12 +9589,14 @@ export interface TransformationComponent {
     /**
      * Maximum number of blocks the entity will look for to aid in the transformation. If not defined or set to 0, it will be set to the block radius
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft block_max
      */
     blockMax?: number;
     /**
      * Distance in Blocks that the entity will search for blocks that can help the transformation.
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft block_radius
      */
     blockRadius?: number;
@@ -9327,6 +9792,7 @@ export interface VariantComponent {
   /**
    * The ID of the variant. By convention, 0 is the ID of the base entity
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft value
    */
   value: number;
@@ -9409,6 +9875,7 @@ export interface WitherTargetHighestDamageComponent {
     /**
      * The amount of time in seconds that the mob has to wait before selecting a target of the same type again
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft cooldown
      */
     cooldown?: number;
@@ -9510,12 +9977,14 @@ export interface WitherTargetHighestDamageComponent {
     /**
      * Determines the amount of time in seconds that this mob will look for a target before forgetting about it and looking for a new one when the target isn't visible any more
      * @default 3
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft must_see_forget_duration
      */
     mustSeeForgetDuration?: number;
     /**
      * Priority for this mob type
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft priority
      */
     priority?: number;
@@ -9547,6 +10016,7 @@ export interface WitherTargetHighestDamageComponent {
     /**
      * The amount of time in seconds that the mob has to wait before selecting a target of the same type again
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft cooldown
      */
     cooldown?: number;
@@ -9648,12 +10118,14 @@ export interface WitherTargetHighestDamageComponent {
     /**
      * Determines the amount of time in seconds that this mob will look for a target before forgetting about it and looking for a new one when the target isn't visible any more
      * @default 3
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft must_see_forget_duration
      */
     mustSeeForgetDuration?: number;
     /**
      * Priority for this mob type
      * @default 0
+     * @integer Whole number only (fractions are rejected by the build).
      * @minecraft priority
      */
     priority?: number;
@@ -9678,6 +10150,7 @@ export interface WitherTargetHighestDamageComponent {
   };
   /**
    * @default 0
+   * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;

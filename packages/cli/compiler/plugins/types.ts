@@ -21,6 +21,49 @@ export interface MinecraftConnection {
 export interface MinecraftCommandResult {
   readonly status: number;
   readonly message: string;
+  /** Raw `body` of the game's `commandResponse`. API 1.2.0. */
+  readonly body?: unknown;
+}
+
+/** What triggered a reload of the game. API 1.2.0. */
+export type MinecraftReloadTrigger = 'scripts' | 'packs' | 'manual';
+
+/** Result of the `/reload` sent to one client. API 1.2.0. */
+export interface MinecraftReloadEvent {
+  readonly trigger: MinecraftReloadTrigger;
+  readonly clientId: number;
+  /** `true` when the game answered with status 0. */
+  readonly ok: boolean;
+  /** The game's status message, or the error text (timeout, disconnect). */
+  readonly message: string;
+  /** `Date.now()` when the result arrived. */
+  readonly at: number;
+  /** Per-hub counter, increases with every event. */
+  readonly seq: number;
+}
+
+/** Every command the hub sent (also its own `/reload` and `tellraw`). API 1.2.0. */
+export interface MinecraftCommandEvent {
+  readonly command: string;
+  readonly clientId: number;
+  readonly requestId: string;
+  /** `Date.now()` when the result (or error) arrived. */
+  readonly at: number;
+  readonly result?: {
+    readonly status: number;
+    readonly message: string;
+    readonly body?: unknown;
+  };
+  readonly error?: string;
+}
+
+/** A chat line, normalised from the `PlayerMessage` event. API 1.2.0. */
+export interface MinecraftChatMessage {
+  readonly clientId: number;
+  readonly sender: string;
+  readonly type: string;
+  /** Plain text: rawtext flattened, `§` formatting codes removed. */
+  readonly text: string;
 }
 
 export interface MinecraftGameMessage {
@@ -35,6 +78,10 @@ export interface MinecraftHttpRequest {
   readonly path: string;
   readonly query: Readonly<Record<string, string>>;
   readonly body: unknown;
+  /** Request headers, names in lower case. API 1.2.0. */
+  readonly headers: Readonly<Record<string, string>>;
+  /** Aborted when the client closes the connection before the response is written. API 1.2.0. */
+  readonly signal: AbortSignal;
 }
 
 export interface MinecraftHttpResponse {
@@ -68,10 +115,43 @@ export interface FerolyteMinecraftContext {
   ): () => void;
   /** Receives every non-response message sent by the game. */
   onMessage(handler: (message: MinecraftGameMessage) => void): () => void;
+  /**
+   * Result of every reload sent to the game, once per client (API 1.2.0).
+   * Returns an unsubscribe function.
+   */
+  onReload(handler: (event: MinecraftReloadEvent) => void): () => void;
+  /**
+   * Observes every command the hub sends, including its own reload (API 1.2.0).
+   * Called once per command with `result` or `error`.
+   */
+  onCommand(handler: (event: MinecraftCommandEvent) => void): () => void;
+  /**
+   * Normalised chat lines (API 1.2.0). Subscribes to `PlayerMessage` on demand; shares the
+   * subscription with `subscribe`.
+   */
+  onChat(handler: (message: MinecraftChatMessage) => void): () => void;
+  /** Id of the client commands go to by default (follows `server.clientPolicy`). API 1.2.0. */
+  readonly primaryClientId?: number;
   /** Present only when `server.http` is enabled. */
   readonly http?: {
     route(method: string, path: string, handler: MinecraftHttpHandler): void;
   };
+}
+
+/** The effective `server` configuration of `ferolyte watch` (API 1.2.0). */
+export interface FerolyteServerInfo {
+  /** Port of the WebSocket hub (`/connect localhost:<port>`). */
+  readonly port: number;
+  /** The HTTP API address, or `false` when it is disabled. */
+  readonly http: false | { readonly port: number; readonly host: string };
+  readonly reloadOnPackChange: boolean;
+  readonly clientPolicy: 'newest' | 'oldest';
+}
+
+export interface AfterScriptBuildEvent {
+  readonly profile: string;
+  /** `false` when esbuild reported errors. */
+  readonly ok: boolean;
 }
 
 export interface AfterLoadEvent {
@@ -85,6 +165,8 @@ export interface AfterLoadEvent {
   readonly signal: AbortSignal;
   /** Undefined outside watch mode. */
   readonly minecraft?: FerolyteMinecraftContext;
+  /** Effective server config; undefined outside watch mode. API 1.2.0. */
+  readonly server?: FerolyteServerInfo;
 }
 
 export interface BuildEvent {
@@ -98,6 +180,8 @@ export interface WatchReadyEvent {
   /** Aborted when plugins are stopped. Available since API 1.1.0. */
   readonly signal: AbortSignal;
   readonly minecraft?: FerolyteMinecraftContext;
+  /** Effective server config; undefined outside watch mode. API 1.2.0. */
+  readonly server?: FerolyteServerInfo;
 }
 
 export type StopReason = 'signal' | 'error' | 'build-end';
@@ -141,6 +225,8 @@ export interface FerolytePlugin {
   afterFileUpdate?(event: FileEvent): void | Promise<void>;
   afterFileRemove?(event: FileEvent): void | Promise<void>;
   afterWatchReady?(event: WatchReadyEvent): void | Promise<void>;
+  /** After every scripts build in `watch` / `run`. Available since API 1.2.0. */
+  afterScriptBuild?(event: AfterScriptBuildEvent): void | Promise<void>;
   /** Called once on shutdown (5 s timeout). Available since API 1.1.0. */
   beforeStop?(event: StopEvent): void | Promise<void>;
 }
@@ -155,5 +241,6 @@ export type FerolytePluginHookName = keyof Pick<
   | 'afterFileUpdate'
   | 'afterFileRemove'
   | 'afterWatchReady'
+  | 'afterScriptBuild'
   | 'beforeStop'
 >;

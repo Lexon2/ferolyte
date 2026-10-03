@@ -1,3 +1,4 @@
+import { cloneConfig } from '@ferolyte/common/object/clone-config';
 import {
   hintSnakeCaseComponent,
   hintSnakeCaseFields,
@@ -38,7 +39,7 @@ export class ServerEntityBuilder implements ContentBuilder {
   }
 
   public cloneConfig(): ServerEntityConfig {
-    return structuredClone(this.config);
+    return cloneConfig(this.config);
   }
 
   public build(): MinecraftServerEntity {

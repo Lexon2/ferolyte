@@ -7,9 +7,9 @@ import { loadConfig } from '../config/load-config';
 import { createPacksOutputPathFromInputPath } from './utils/create-output-path';
 import { FerolyteContentBuilder } from '../core/builder';
 import { clearGraph } from '../core/graph';
-import { ensureIdsFile } from '../registry/ids-generator';
-import { clearRegistry } from '../registry/project-registry';
-import { refreshRegistry } from '../registry/refresh';
+import { settleAfterPass, settleIds } from '../registry/generate-types';
+import { buildIndex, clearRegistry } from '../registry/project-registry';
+import { runReferenceChecks } from '../registry/reference-checks';
 import { DEFAULT_CONCURRENCY, mapLimit } from '../utils/map-limit';
 import {
   clearAllLang,
@@ -131,7 +131,8 @@ export const build = async (options: CompilerActionOptions): Promise<BuildStats>
     clearGraph();
     clearAllLang();
     clearRegistry();
-    await ensureIdsFile();
+    // A missing ids file is bootstrapped first (placeholder ids), so content importing ids of other content evaluates.
+    await settleIds();
     clearAllContentOutputs();
 
     const content = { json: 0, byType: {} as Record<string, number> };
@@ -190,12 +191,28 @@ export const build = async (options: CompilerActionOptions): Promise<BuildStats>
 
     const [builtFiles, copyMs] = await Promise.all([buildContent(), copyFiles()]);
 
+    // Generated ids (`.ferolyte/types/ids.ts`): when they changed, content that imports them saw stale ids and
+    // is built again (only those files, with their old diagnostics dropped).
+    await settleAfterPass(async (entries) => {
+      entries.forEach((entry) => collector.discardFile(entry));
+      const rebuilt = await FerolyteContentBuilder.buildFiles(entries, {
+        debug: false,
+        diagnostics,
+      });
+      await mapLimit(rebuilt, DEFAULT_CONCURRENCY, (result) =>
+        emitHook(
+          'afterFileAdd',
+          createFileEvent(result.source, 'content', result.outFile),
+        ),
+      );
+    });
+
     const langStart = performance.now();
     await flushLang({ force: true });
     const langMs = performance.now() - langStart;
 
-    // Reference checks + generated ids (`.ferolyte/types/ids.ts`).
-    await refreshRegistry();
+    // Reference checks.
+    runReferenceChecks(buildIndex());
 
     await emitHook('afterBuild', createBuildEvent());
     scheduleAfterLoad(

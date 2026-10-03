@@ -17,3 +17,7 @@ export * from './behaviors';
 export * from './filters/index';
 
 export * from './components';
+
+export * from './entity-component-group';
+
+export * from './entity-events';
