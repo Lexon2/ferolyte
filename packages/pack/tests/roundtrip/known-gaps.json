@@ -5,6 +5,9 @@
   "block/minecraft:instrument_sound": [
     "REJECTED"
   ],
+  "block/minecraft:redstone_producer": [
+    "TYPE"
+  ],
   "block/minecraft:tags": [
     "REJECTED"
   ],

@@ -1,0 +1,10 @@
+{
+  "properties": {
+    "strongly_powered_face": {
+      "type": "string",
+      "enum": ["up", "down", "north", "south", "east", "west"],
+      "items": null,
+      "description": "The block touching this face will become strongly powered with the signal level strength of 'power'. Strongly powered blocks will power adjacent blocks. One face (Minecraft 1.26.50+ rejects a list). By default, the block will not strongly power any face."
+    }
+  }
+}

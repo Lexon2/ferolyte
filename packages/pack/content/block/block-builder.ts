@@ -106,6 +106,7 @@ export class BlockBuilder implements ContentBuilder {
               this.config.version ||
               this.buildContext?.minGameVersion ||
               undefined,
+            outputVersion: this.config.version || this.defaultFormatVersion(),
           })
         : undefined;
     if (
@@ -127,10 +128,12 @@ export class BlockBuilder implements ContentBuilder {
       return;
     }
 
-    const permutationsContext: ContentDiagnosticContext | undefined =
-      this.buildContext !== undefined
-        ? { ...this.buildContext, section: 'permutations' }
-        : undefined;
+    const permutationsContext: ContentDiagnosticContext = {
+      contentType: 'block',
+      ...this.buildContext,
+      section: 'permutations',
+      outputVersion: this.config.version || this.defaultFormatVersion(),
+    };
 
     const minecraftPermutations = createBlockPermutations(
       permutations,

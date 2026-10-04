@@ -46,7 +46,14 @@ generated from `displayName`. A file may export one builder or an array of build
   recipes `1.20.10`; spawn rules `1.8.0`. `minGameVersion` (profile `packs`, default `1.26.20`) does not change the version of items and entities;
   it is the version that version-gated fields and components are checked against. Namespaced custom components (`'ns:name'` keys, flat `rawComponents`)
   need `version: '1.21.90'` or newer: older files get a warning.
-- `displayName` (a string, or `{ en_US: '...', ru_RU: '...' }`) is written to `texts/<locale>.lang`.
+- `displayName` (a string, or `{ en_US: '...', ru_RU: '...' }`) is written to `texts/<locale>.lang`. A server entity's `displayName` also
+  names its spawn egg; `spawnEggName` (same type) names the egg separately.
+- Block `components.tags: ['minecraft:crop']` is written as `"minecraft:tags": [...]` when the written `format_version` is 1.26.20 or newer
+  (the block default follows `minGameVersion` from 1.26.40 on, or set `version`), and as `tag:<name>` keys before that; `rawComponents['minecraft:tags']` wins.
+- Molang string fields take strings or Molang builders: a boolean `boneVisibility` value (`{ lid: false }`) is written as `'false'` with a warning (Minecraft 1.26.52 rejects a bare boolean).
+  `redstoneProducer.stronglyPoweredFace` is one face (`'up'`), not a list. `blockPlacer.useOn` takes block names or descriptors (`['minecraft:farmland']`, `{ name, states }`, `{ tags }`).
+- Integer-only schema fields are marked `@integer` in the types; vanilla texture keys (`stone`, `planks`, item `apple`) are never reported as unknown texture keys, and block
+  `loot`, `geometry.culling` and `geometry.cullingShape` are checked against the loot tables, `block_culling/*.json` rules and `shapes/*.json` voxel shapes of the pack.
 - Molang: prefer the immutable v2 API — ``molang`${q.isMoving} && ${v('speed')} > 1` ``,
   `q.*`, `v()`, `math.*`, `not(...)`, `assign(...)` — or plain strings. `new Molang()` is deprecated.
 - Identifiers use a namespace: `myaddon:thing`. Never edit generated output in the build folder.

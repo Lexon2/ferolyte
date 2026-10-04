@@ -167,7 +167,10 @@ export const keyMaps: Record<string, KeyMapNode> = {
       "boneVisibility": [
        "bone_visibility",
        {
-        "a": {}
+        "a": {
+         "n": "molang",
+         "b": 1
+        }
        }
       ],
       "culling": [
@@ -266,7 +269,10 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "boneVisibility": [
     "bone_visibility",
     {
-     "a": {}
+     "a": {
+      "n": "molang",
+      "b": 1
+     }
     }
    ],
    "culling": [
@@ -324,7 +330,10 @@ export const keyMaps: Record<string, KeyMapNode> = {
       "boneVisibility": [
        "bone_visibility",
        {
-        "a": {}
+        "a": {
+         "n": "molang",
+         "b": 1
+        }
        }
       ],
       "culling": [
@@ -736,11 +745,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "power"
    ],
    "stronglyPoweredFace": [
-    "strongly_powered_face",
-    {
-     "i": {},
-     "r": 1
-    }
+    "strongly_powered_face"
    ],
    "connectedFaces": [
     "connected_faces",

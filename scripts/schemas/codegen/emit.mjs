@@ -193,7 +193,8 @@ export const buildKeyMap = (node) => {
     return {};
   }
   if (node['x-shared']) {
-    return { n: node['x-shared'] };
+    // `b`: a boolean in a Molang string field is written as 'true' / 'false' with a warning.
+    return { n: node['x-shared'], ...(node['x-warn-boolean'] ? { b: 1 } : {}) };
   }
   const parts = [];
   const branches = node.oneOf ?? node.anyOf ?? node.allOf;
@@ -267,6 +268,8 @@ const mergeMaps = (maps) => {
         continue;
       } else if (key === 's') {
         out.s = 1;
+      } else if (key === 'b') {
+        out.b = 1;
       } else if (key === 'n') {
         out.n ??= value;
       } else if (key === 'p') {

@@ -57,6 +57,10 @@ export interface RegistryIndex {
   lootTables: Set<string>;
   tradeTables: Set<string>;
   functions: Set<string>;
+  /** Identifiers of block culling rules (`block_culling/*.json`). */
+  cullingRules: Set<string>;
+  /** Identifiers of voxel shapes (`shapes/*.json`). */
+  voxelShapes: Set<string>;
   documents: ProjectDocument[];
 }
 
@@ -72,7 +76,9 @@ type ResourceKind =
   | 'bpAnimationControllers'
   | 'lootTables'
   | 'tradeTables'
-  | 'functions';
+  | 'functions'
+  | 'cullingRules'
+  | 'voxelShapes';
 
 type ResourceEntry =
   | { mtimeMs: number; file: string; type: 'ids'; kind: ResourceKind; ids: string[] }
@@ -142,6 +148,10 @@ const readJson = async (file: string): Promise<any | undefined> => {
   return parsed.ok ? parsed.value : undefined;
 };
 
+/** `[description.identifier]` of a pack file root, or nothing. */
+const identifierOf = (root: any): string[] =>
+  typeof root?.description?.identifier === 'string' ? [root.description.identifier] : [];
+
 const keysOf = (value: unknown): string[] =>
   value !== null && typeof value === 'object' && !Array.isArray(value)
     ? Object.keys(value)
@@ -207,6 +217,9 @@ const RULES: Rule[] = [
   { pack: 'BP', dir: 'blocks', ext: '.json', entry: () => ({ type: 'document', kind: 'block' }) },
   { pack: 'BP', dir: 'animations', ext: '.json', entry: (j) => ({ type: 'ids', kind: 'bpAnimations', ids: keysOf(j?.animations) }) },
   { pack: 'BP', dir: 'animation_controllers', ext: '.json', entry: (j) => ({ type: 'ids', kind: 'bpAnimationControllers', ids: keysOf(j?.animation_controllers) }) },
+  { pack: 'RP', dir: 'block_culling', ext: '.json', entry: (j) => ({ type: 'ids', kind: 'cullingRules', ids: identifierOf(j?.['minecraft:block_culling_rules']) }) },
+  { pack: 'BP', dir: 'shapes', ext: '.json', entry: (j) => ({ type: 'ids', kind: 'voxelShapes', ids: identifierOf(j?.['minecraft:voxel_shape']) }) },
+  { pack: 'RP', dir: 'shapes', ext: '.json', entry: (j) => ({ type: 'ids', kind: 'voxelShapes', ids: identifierOf(j?.['minecraft:voxel_shape']) }) },
   { pack: 'BP', dir: 'loot_tables', ext: '.json', entry: (_, rel) => ({ type: 'ids', kind: 'lootTables', ids: [rel] }) },
   { pack: 'BP', dir: 'trading', ext: '.json', entry: (_, rel) => ({ type: 'ids', kind: 'tradeTables', ids: [rel] }) },
   { pack: 'BP', dir: 'trade_tables', ext: '.json', entry: (_, rel) => ({ type: 'ids', kind: 'tradeTables', ids: [rel] }) },
@@ -328,6 +341,8 @@ export const createEmptyIndex = (): RegistryIndex => ({
   lootTables: new Set(),
   tradeTables: new Set(),
   functions: new Set(),
+  cullingRules: new Set(),
+  voxelShapes: new Set(),
   documents: [],
 });
 

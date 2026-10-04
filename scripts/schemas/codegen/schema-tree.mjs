@@ -45,8 +45,12 @@ export const createLoader = (schemasRoot, sharedPatchesDir) => {
       }
       // One patch or a list (applied in order, e.g. official-derived first, hand-written last).
       for (const entry of [filePatches.get(file) ?? []].flat()) {
-        const { $stripKeys: strip = [], ...patch } = entry;
+        const { $stripKeys: strip = [], $set: sets = {}, ...patch } = entry;
         doc = mergePatch(strip.length ? stripKeysDeep(doc, strip) : doc, patch);
+        // Extension `$set`: `{ "/oneOf/1/properties/x": value }` replaces the node at a JSON pointer (merge patches cannot edit inside arrays).
+        for (const [pointerPath, value] of Object.entries(sets)) {
+          setPointer(doc, pointerPath, value);
+        }
       }
       files.set(file, doc);
     }
@@ -195,4 +199,14 @@ export const stripDocs = (node) => {
           : stripDocs(value),
       ]),
   );
+};
+
+const setPointer = (doc, pointerPath, value) => {
+  const keys = pointerPath.split('/').filter(Boolean).map(decodeURIComponent);
+  const last = keys.pop();
+  const parent = keys.reduce((node, key) => node?.[key], doc);
+  if (parent === undefined || parent === null) {
+    throw new Error(`$set: "${pointerPath}" does not exist in the schema`);
+  }
+  parent[last] = value;
 };

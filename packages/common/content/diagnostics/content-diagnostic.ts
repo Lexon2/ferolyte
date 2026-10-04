@@ -33,6 +33,8 @@ export interface ContentDiagnosticContext {
   minGameVersion?: string;
   /** Format version of the file being built (config `version`, else the profile `minGameVersion`). */
   formatVersion?: string;
+  /** `format_version` that is written to the file (config `version`, else the content type default); not the profile `minGameVersion`. */
+  outputVersion?: string;
 }
 
 export const buildFieldPath = (ctx: ContentDiagnosticContext): string => {

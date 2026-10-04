@@ -1,1 +1,11 @@
-{ "$stripKeys": ["pattern"] }
+{
+  "$stripKeys": ["pattern"],
+  "$set": {
+    "/oneOf/1/properties/bone_visibility/additionalProperties": {
+      "title": "Bone Visibility",
+      "description": "A Molang expression (as a string) that evaluates to whether the bone is visible. Minecraft 1.26.52 rejects a bare boolean: `true` / `false` are written as the strings \"true\" / \"false\" with a warning.",
+      "x-shared": "molang",
+      "x-warn-boolean": true
+    }
+  }
+}

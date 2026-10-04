@@ -13,12 +13,19 @@ const PATHS = [
   'behavior_pack/animation_controllers',
   'behavior_pack/recipes',
   'behavior_pack/spawn_rules',
+  'behavior_pack/loot_tables',
   'resource_pack/entity',
   'resource_pack/animation_controllers',
   'resource_pack/attachables',
   'resource_pack/render_controllers',
   'metadata/json_schemas',
+  // Single files (vanilla texture atlas keys): no-cone sparse checkout, the textures folder itself is huge.
+  'resource_pack/textures/terrain_texture.json',
+  'resource_pack/textures/item_texture.json',
 ];
+
+/** Sparse-checkout patterns: directories end with a slash, files are exact. */
+const PATTERNS = PATHS.map((p) => (p.endsWith('.json') ? `/${p}` : `/${p}/`));
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dir = path.join(root, '.cache', 'bedrock-samples');
@@ -29,7 +36,7 @@ if (existsSync(path.join(dir, '.git'))) {
   try {
     if (git('rev-parse', 'HEAD') === COMMIT) {
       // New paths may have been added to PATHS since the clone.
-      git('sparse-checkout', 'set', ...PATHS);
+      git('sparse-checkout', 'set', '--no-cone', ...PATTERNS);
       git('checkout', '-q', '--force', 'FETCH_HEAD');
       console.log(`bedrock-samples already at ${COMMIT.slice(0, 7)}`);
       process.exit(0);
@@ -44,7 +51,7 @@ if (existsSync(path.join(dir, '.git'))) {
 }
 
 console.log(`Fetching bedrock-samples @ ${COMMIT.slice(0, 7)} (sparse: ${PATHS.length} dirs) ...`);
-git('sparse-checkout', 'set', ...PATHS);
+git('sparse-checkout', 'set', '--no-cone', ...PATTERNS);
 git('fetch', '--depth', '1', '--filter=blob:none', 'origin', COMMIT);
 git('checkout', '-q', '--force', 'FETCH_HEAD');
 console.log('done');

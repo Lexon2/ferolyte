@@ -28,9 +28,11 @@ export const registerServerEntityLang = (
   source: string,
   identifier: string | undefined,
   displayName: LocalizedString | undefined,
+  spawnEggName?: LocalizedString,
 ) => {
   if (identifier !== undefined) {
     addSourceLang(source, LANG_KEYS.entity(identifier), displayName);
-    addSourceLang(source, LANG_KEYS.spawnEgg(identifier), displayName);
+    // The spawn egg is named like the entity unless `spawnEggName` says otherwise.
+    addSourceLang(source, LANG_KEYS.spawnEgg(identifier), spawnEggName ?? displayName);
   }
 };

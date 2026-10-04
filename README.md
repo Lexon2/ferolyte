@@ -200,6 +200,11 @@ Ferolyte is in active development (0.x): APIs can still change between minor ver
 listed in each release's changelog. Issues and ideas are welcome on
 [GitHub](https://github.com/Lexon2/ferolyte/issues).
 
+## Open ideas
+
+- Typed builders for the raw companion files that are only reference-checked today: loot tables, `item_catalog/crafting_item_catalog.json`,
+  block culling rules and voxel shapes (`createLootTable`, …).
+
 ## License
 
 MIT © 2024 Lexon2. See [LICENSE](LICENSE).

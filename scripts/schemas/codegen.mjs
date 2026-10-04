@@ -91,7 +91,9 @@ const collect = ({
   sdkNames,
 }) => {
   const entries = [];
-  for (const [key, ref] of Object.entries(props)) {
+  // Every patch is registered before anything is resolved: components that `$ref` another component file
+  // (e.g. `embedded_visual` -> `geometry`) must see its patch whatever the order.
+  const files = Object.entries(props).map(([key, ref]) => {
     const rel = ref.$ref.replace(/^\.\//, '');
     const file = path.join(baseDir, rel);
     const base = path.basename(rel, '.json');
@@ -104,6 +106,10 @@ const collect = ({
     if (patch.length > 0) {
       loader.addPatch(file, patch);
     }
+
+    return { key, rel, file };
+  });
+  for (const { key, rel, file } of files) {
     entries.push({
       key,
       kind: kindOf(key, rel),

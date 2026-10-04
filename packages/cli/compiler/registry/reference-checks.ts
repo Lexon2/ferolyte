@@ -7,6 +7,15 @@ import {
   walk,
 } from './checks/shared';
 import { unknownMessage } from './suggest';
+import {
+  VANILLA_ITEM_TEXTURE_KEYS,
+  VANILLA_LOOT_TABLE_PATHS,
+  VANILLA_TERRAIN_TEXTURE_KEYS,
+} from './vanilla-texture-keys.generated';
+
+const VANILLA_TERRAIN = new Set(VANILLA_TERRAIN_TEXTURE_KEYS);
+const VANILLA_ITEM = new Set(VANILLA_ITEM_TEXTURE_KEYS);
+const VANILLA_LOOT = new Set(VANILLA_LOOT_TABLE_PATHS);
 
 const checkItem = (document: ProjectDocument, index: RegistryIndex) => {
   if (index.itemTextures.size === 0) {
@@ -14,12 +23,51 @@ const checkItem = (document: ProjectDocument, index: RegistryIndex) => {
   }
   const icon = document.json['minecraft:item']?.components?.['minecraft:icon'];
   const key = typeof icon === 'string' ? icon : icon?.textures?.default;
-  if (typeof key === 'string' && !index.itemTextures.has(key)) {
+  if (typeof key === 'string' && !index.itemTextures.has(key) && !VANILLA_ITEM.has(key)) {
     report(document, 'components.minecraft:icon', unknownMessage('item texture key', key, index.itemTextures));
   }
 };
 
+/** Block loot table path, culling rule / voxel shape ids declared by no file of the pack. */
+const checkBlockReferences = (document: ProjectDocument, index: RegistryIndex) => {
+  const components = document.json['minecraft:block']?.components ?? {};
+  const loot = components['minecraft:loot'];
+  checkPathReference(
+    document,
+    'components.minecraft:loot',
+    'loot table',
+    typeof loot === 'string' ? loot : loot?.table,
+    index.lootTables,
+    VANILLA_LOOT,
+  );
+
+  const geometry = components['minecraft:geometry'];
+  if (typeof geometry !== 'object' || geometry === null) {
+    return;
+  }
+  // `culling` names a culling rule (or a voxel shape); `culling_shape` a voxel shape. `minecraft:` ids are built in.
+  const declared = (id: unknown, ...sets: ReadonlySet<string>[]) =>
+    typeof id !== 'string' ||
+    id.startsWith('minecraft:') ||
+    sets.some((set) => set.has(id));
+  if (!declared(geometry.culling, index.cullingRules, index.voxelShapes)) {
+    report(
+      document,
+      'components.minecraft:geometry.culling',
+      unknownMessage('culling rule', geometry.culling, [...index.cullingRules, ...index.voxelShapes]),
+    );
+  }
+  if (!declared(geometry.culling_shape, index.voxelShapes)) {
+    report(
+      document,
+      'components.minecraft:geometry.culling_shape',
+      unknownMessage('voxel shape', geometry.culling_shape, index.voxelShapes),
+    );
+  }
+};
+
 const checkBlock = (document: ProjectDocument, index: RegistryIndex) => {
+  checkBlockReferences(document, index);
   if (index.terrainTextures.size === 0) {
     return;
   }
@@ -29,7 +77,11 @@ const checkBlock = (document: ProjectDocument, index: RegistryIndex) => {
     instances?.mappings ?? instances;
   for (const [name, instance] of Object.entries(entries ?? {})) {
     const texture = (instance as { texture?: unknown })?.texture;
-    if (typeof texture === 'string' && !index.terrainTextures.has(texture)) {
+    if (
+      typeof texture === 'string' &&
+      !index.terrainTextures.has(texture) &&
+      !VANILLA_TERRAIN.has(texture)
+    ) {
       report(
         document,
         `components.minecraft:material_instances.${name}`,
@@ -47,8 +99,14 @@ const checkPathReference = (
   what: string,
   value: unknown,
   known: ReadonlySet<string>,
+  vanilla: ReadonlySet<string> = new Set(),
 ) => {
-  if (typeof value !== 'string' || known.size === 0 || known.has(value)) {
+  if (
+    typeof value !== 'string' ||
+    known.size === 0 ||
+    known.has(value) ||
+    vanilla.has(value)
+  ) {
     return;
   }
   const folder = `${dirname(value)}/`;
@@ -112,7 +170,7 @@ const checkServerEntity = (document: ProjectDocument, index: RegistryIndex) => {
     }
     for (const component of ['minecraft:loot']) {
       if (node[component]) {
-        checkPathReference(document, `${path}.${component}.table`, 'loot table', node[component].table, index.lootTables);
+        checkPathReference(document, `${path}.${component}.table`, 'loot table', node[component].table, index.lootTables, VANILLA_LOOT);
       }
     }
     for (const component of ['minecraft:trade_table', 'minecraft:economy_trade_table']) {

@@ -37,6 +37,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "schemas": "node scripts/schemas/fetch.mjs && node scripts/schemas/report.mjs",
+    "schemas:vanilla-keys": "node scripts/schemas/fetch-samples.mjs && node scripts/schemas/vanilla-texture-keys.mjs",
     "schemas:official": "node scripts/schemas/fetch-samples.mjs && node scripts/schemas/compare-official.mjs && node scripts/schemas/classify-official.mjs",
     "schemas:official:patches": "node scripts/schemas/fetch-samples.mjs && node scripts/schemas/generate-official-patches.mjs && node scripts/schemas/codegen.mjs",
     "codegen:check": "node scripts/schemas/codegen-check.mjs",

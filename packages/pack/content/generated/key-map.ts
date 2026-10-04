@@ -13,6 +13,8 @@ export interface KeyMapNode {
   r?: 1;
   /** `number | range`: plain numbers stay numbers. */
   s?: 1;
+  /** Molang string field that also receives booleans: written as `'true'` / `'false'` with a warning. */
+  b?: 1;
 }
 
 /** Field lifecycle marker: deprecated (warning), removed (error + not written from `since`), introduced in `since`. */

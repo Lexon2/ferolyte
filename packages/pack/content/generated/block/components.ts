@@ -213,7 +213,7 @@ export interface EmbeddedVisualComponent {
      * A list of bones that should be visible when rendering this block. If not specified, all bones will be visible.
      * @minecraft bone_visibility
      */
-    boneVisibility?: Record<string, boolean | string>;
+    boneVisibility?: Record<string, string | MolangExpr>;
     /**
      * The description identifier of the block culling rule or voxel shape used to cull this block. This identifier must match an existing block culling rule or voxel shape identifier in any of the currently loaded resource or behavior packs.
      * @minecraft culling
@@ -363,7 +363,7 @@ export type GeometryComponent = string | {
    * A list of bones that should be visible when rendering this block. If not specified, all bones will be visible.
    * @minecraft bone_visibility
    */
-  boneVisibility?: Record<string, boolean | string>;
+  boneVisibility?: Record<string, string | MolangExpr>;
   /**
    * The description identifier of the block culling rule or voxel shape used to cull this block. This identifier must match an existing block culling rule or voxel shape identifier in any of the currently loaded resource or behavior packs.
    * @minecraft culling
@@ -442,7 +442,7 @@ export interface ItemVisualComponent {
      * A list of bones that should be visible when rendering this block. If not specified, all bones will be visible.
      * @minecraft bone_visibility
      */
-    boneVisibility?: Record<string, boolean | string>;
+    boneVisibility?: Record<string, string | MolangExpr>;
     /**
      * The description identifier of the block culling rule or voxel shape used to cull this block. This identifier must match an existing block culling rule or voxel shape identifier in any of the currently loaded resource or behavior packs.
      * @minecraft culling
@@ -945,10 +945,10 @@ export interface RedstoneProducerComponent {
    */
   power: number;
   /**
-   * The block touching this face will become strongly powered with the signal level strength of 'power'. Strongly powered blocks will power adjacent blocks. By default, the block will not strongly power any face.
+   * The block touching this face will become strongly powered with the signal level strength of 'power'. Strongly powered blocks will power adjacent blocks. One face (Minecraft 1.26.50+ rejects a list). By default, the block will not strongly power any face.
    * @minecraft strongly_powered_face
    */
-  stronglyPoweredFace?: ("up" | "down" | "north" | "south" | "east" | "west" | "side" | "all")[];
+  stronglyPoweredFace?: "up" | "down" | "north" | "south" | "east" | "west";
   /**
    * The list of faces that are considered connected to the circuit. If a face is not connected, it will not provide power to the block touching that face. By default, all faces are connected.
    * @minecraft connected_faces
