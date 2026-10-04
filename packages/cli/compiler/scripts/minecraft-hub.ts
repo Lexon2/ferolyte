@@ -56,7 +56,16 @@ export interface HubOptions {
    * @default 'newest'
    */
   clientPolicy?: ClientPolicy;
+  /**
+   * `body.version` of the command frames: selects the command syntax. The default is the current syntax
+   * (`execute as @p run say hi`); `1` is the legacy syntax (`execute @p ~ ~ ~ say hi`).
+   * @default DEFAULT_COMMAND_VERSION
+   */
+  commandVersion?: number;
 }
+
+/** Command syntax version of the current Minecraft syntax (`body.version` of a `commandRequest`). */
+export const DEFAULT_COMMAND_VERSION = 17039360;
 
 /** Same envelope for every frame the hub sends (`/connect` bridges send `commandRequest`). */
 const header = (purpose: string, requestId: string) => ({
@@ -91,6 +100,7 @@ export class MinecraftHub {
   private constructor(
     private readonly server: WebSocketServer,
     readonly clientPolicy: ClientPolicy,
+    readonly commandVersion: number,
   ) {
     server.on('connection', (socket) => this.attach(socket));
   }
@@ -118,7 +128,13 @@ export class MinecraftHub {
         server.on('error', (error) =>
           console.error('[ferolyte:ws] Server error:', error),
         );
-        resolve(new MinecraftHub(server, options.clientPolicy ?? 'newest'));
+        resolve(
+          new MinecraftHub(
+            server,
+            options.clientPolicy ?? 'newest',
+            options.commandVersion ?? DEFAULT_COMMAND_VERSION,
+          ),
+        );
       });
     });
   }
@@ -381,7 +397,7 @@ export class MinecraftHub {
           JSON.stringify({
             header: header('commandRequest', requestId),
             body: {
-              version: 1,
+              version: this.commandVersion,
               commandLine: next.command,
               origin: { type: 'player' },
             },

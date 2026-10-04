@@ -23,6 +23,15 @@ export const keyMaps: Record<string, KeyMapNode> = {
     {
      "i": {
       "p": {
+       "name": [
+        "name"
+       ],
+       "states": [
+        "states",
+        {
+         "a": {}
+        }
+       ],
        "tags": [
         "tags",
         {

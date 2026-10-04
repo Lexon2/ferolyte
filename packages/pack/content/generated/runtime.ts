@@ -232,6 +232,15 @@ const rename = (
     case 'trigger':
       return state.normalizers.trigger(value, withCtx());
     case 'molang':
+      if (typeof value === 'boolean' && node.b === 1) {
+        report(
+          state,
+          path,
+          `"${String(path[path.length - 1])}" is a boolean, but Minecraft expects a Molang string here; written as "${String(value)}"`,
+          'warning',
+        );
+      }
+
       return toMolangSource(value);
     case 'molang-number':
       return typeof value === 'number' ? value : toMolangSource(value);

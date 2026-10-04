@@ -163,6 +163,14 @@ export interface FerolyteServerConfig {
    * @default 'newest'
    */
   clientPolicy?: 'newest' | 'oldest';
+
+  /**
+   * Command syntax version of the commands the hub sends (`body.version` of `commandRequest`).
+   * The default selects the current syntax (`/execute as @p run say hi`); `1` is the legacy syntax
+   * (`/execute @p ~ ~ ~ say hi`) for plugins and scripts that still send it.
+   * @default 17039360
+   */
+  commandVersion?: number;
 }
 
 export interface FerolyteProfileConfig {

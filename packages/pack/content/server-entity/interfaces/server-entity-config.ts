@@ -38,11 +38,17 @@ export interface ServerEntityConfig {
 
   /**
    * Display Name
-   * @description Name of the entity and of its spawn egg. A string uses the default locale,
+   * @description Name of the entity and, unless `spawnEggName` is set, of its spawn egg. A string uses the default locale,
    * a record maps locale codes to translations.
    * @file Automatically added to the `.lang` file(s) as `entity.<id>.name` and `item.spawn_egg.entity.<id>.name`.
    */
   displayName?: LocalizedString;
+
+  /**
+   * Name of the spawn egg of this entity (`item.spawn_egg.entity.<id>.name`).
+   * @description Unset: the spawn egg is named like the entity (`displayName`).
+   */
+  spawnEggName?: LocalizedString;
 
   /**
    * Is Spawnable

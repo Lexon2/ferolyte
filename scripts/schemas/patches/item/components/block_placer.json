@@ -1,0 +1,12 @@
+{
+  "definitions": null,
+  "properties": {
+    "use_on": {
+      "items": {
+        "$ref": "../../../../general/block/reference.json",
+        "title": "Block Descriptor",
+        "description": "A block name, or a block descriptor (`name` + `states`, or `tags`)."
+      }
+    }
+  }
+}

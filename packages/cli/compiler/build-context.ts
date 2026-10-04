@@ -7,6 +7,7 @@ export const BUILD_CONTEXT = {
     HTTP: false as false | { port: number; host: string },
     RELOAD_ON_PACK_CHANGE: false,
     CLIENT_POLICY: 'newest' as 'newest' | 'oldest',
+    COMMAND_VERSION: 17039360,
   },
   TS: {
     CONFIG_PATH: '',

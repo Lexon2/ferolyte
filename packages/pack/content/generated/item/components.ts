@@ -47,9 +47,16 @@ export interface BlockPlacerComponent {
    * List of block descriptors that contain blocks that this item can be used on. If left empty, all blocks will be allowed.
    * @minecraft use_on
    */
-  useOn?: ({
+  useOn?: (string | {
     /**
-     * Tags.
+     * A minecraft block identifier.
+     * @minecraft name
+     */
+    name?: string;
+    /** @minecraft states */
+    states?: Record<string, boolean | number | string>;
+    /**
+     * A condition using Molang queries that results to true/false that can be used to query for blocks with certain tags.
      * @minecraft tags
      */
     tags?: string | MolangExpr;

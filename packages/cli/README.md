@@ -328,6 +328,14 @@ The game allows one live `/connect` per world, so a newer connection is the live
 to the older one when it disconnects. `'oldest'` keeps the behaviour of 0.4 and earlier. An explicit `clientId` always wins;
 `minecraft.primaryClientId` is the connection the policy currently picks.
 
+#### Command syntax version (`server.commandVersion`)
+
+Every command frame carries the command syntax version in `body.version`. The hub now sends the current syntax by default
+(`commandVersion: 17039360`), so `/execute as @p run say hi` works through `sendCommand`; it used to send `1`, the legacy syntax
+(`/execute @p ~ ~ ~ say hi`, while `execute as @p run …` failed with `Syntax error: Unexpected "@p"`). Plugins and scripts that send
+legacy syntax set `server.commandVersion: 1`. Ferolyte's own commands (`reload`, `tellraw`, `scriptevent`) are valid under both.
+The frame `header.version` stays `1`.
+
 #### Game event shapes
 
 `subscribe PlayerMessage` delivers `event` frames whose `body` is either `{ message, sender, type }` or
@@ -352,7 +360,7 @@ Use `/connect 127.0.0.1:<port>` if `localhost` does not connect: the hub listens
 
 A throwing handler never affects the others (it is logged). `seq` of reload events is a per-hub counter.
 `afterLoad` / `afterWatchReady` also get `server` (API 1.2.0): the effective values after defaults,
-`{ port, http: false | { port, host }, reloadOnPackChange, clientPolicy }` (undefined outside `watch`), handy for printing the
+`{ port, http: false | { port, host }, reloadOnPackChange, clientPolicy, commandVersion }` (undefined outside `watch`), handy for printing the
 right `/connect` hint. `afterScriptBuild({ profile, ok })` (API 1.2.0) fires after every scripts build (`ok: false` when esbuild
 reported errors). Reloads are triggered by `'scripts'` (script rebuild), `'packs'` (`reloadOnPackChange`) or `'manual'`.
 

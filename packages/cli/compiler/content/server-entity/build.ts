@@ -67,7 +67,12 @@ export const buildServerEntityJson = async (
   const json = builder.build();
   registerContentJson(filePath, 'server-entity', json);
   const entityConfig = builder.cloneConfig();
-  registerServerEntityLang(filePath, entityConfig.identifier, entityConfig.displayName);
+  registerServerEntityLang(
+    filePath,
+    entityConfig.identifier,
+    entityConfig.displayName,
+    entityConfig.spawnEggName,
+  );
   replaceTrailingZeroFloats(json);
 
   const jsonString = serializeJson(json);
