@@ -146,6 +146,8 @@ export interface FerolyteServerInfo {
   readonly http: false | { readonly port: number; readonly host: string };
   readonly reloadOnPackChange: boolean;
   readonly clientPolicy: 'newest' | 'oldest';
+  /** Command syntax version of the commands sent to the game (`server.commandVersion`). */
+  readonly commandVersion: number;
 }
 
 export interface AfterScriptBuildEvent {

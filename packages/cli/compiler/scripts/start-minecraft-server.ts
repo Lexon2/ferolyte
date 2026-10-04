@@ -35,9 +35,11 @@ export const createMinecraftContext = (
  * to plugins. Returns a disposer that closes everything.
  */
 export const startMinecraftServer = async (): Promise<() => Promise<void>> => {
-  const { PORT, HTTP, RELOAD_ON_PACK_CHANGE, CLIENT_POLICY } = BUILD_CONTEXT.SERVER;
+  const { PORT, HTTP, RELOAD_ON_PACK_CHANGE, CLIENT_POLICY, COMMAND_VERSION } =
+    BUILD_CONTEXT.SERVER;
   const hub = await MinecraftHub.listen(PORT, '127.0.0.1', {
     clientPolicy: BUILD_CONTEXT.SERVER.CLIENT_POLICY,
+    commandVersion: COMMAND_VERSION,
   });
   let http: MinecraftHttpApi | undefined;
 
@@ -57,6 +59,7 @@ export const startMinecraftServer = async (): Promise<() => Promise<void>> => {
     http: HTTP && http ? { port: http.port, host: HTTP.host } : false,
     reloadOnPackChange: RELOAD_ON_PACK_CHANGE,
     clientPolicy: CLIENT_POLICY,
+    commandVersion: COMMAND_VERSION,
   });
   console.log(`To use automatic reload type: /connect localhost:${PORT}`);
   if (http && HTTP) {

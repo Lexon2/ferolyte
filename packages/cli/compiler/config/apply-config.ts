@@ -126,6 +126,7 @@ export const applyConfig = async (config: FerolyteProfileConfig) => {
   BUILD_CONTEXT.SERVER.RELOAD_ON_PACK_CHANGE =
     server?.reloadOnPackChange ?? false;
   BUILD_CONTEXT.SERVER.CLIENT_POLICY = server?.clientPolicy ?? 'newest';
+  BUILD_CONTEXT.SERVER.COMMAND_VERSION = server?.commandVersion ?? 17039360;
   BUILD_CONTEXT.PACKS.PACK_ALIAS = alias;
   BUILD_CONTEXT.PACKS.NAMESPACE = namespace;
   BUILD_CONTEXT.PACKS.MINIFY_JSON = packs.minifyJSON ?? false;
