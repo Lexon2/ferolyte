@@ -196,6 +196,14 @@ describe('20: redstoneProducer.stronglyPoweredFace is one face', () => {
     expect(many.errors[0].message).toContain('takes one face');
   });
 
+  it('drops an empty list with a warning', async () => {
+    const { json, errors, warnings } = await producer([]);
+
+    expect(errors).toEqual([]);
+    expect(warnings[0].message).toContain('empty list');
+    expect(components(json)['minecraft:redstone_producer']).toEqual({ power: 15 });
+  });
+
   it('rejects faces the game does not know', async () => {
     expect((await producer('side')).errors[0].message).toContain('Must be one of');
   });
