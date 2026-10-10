@@ -1,6 +1,6 @@
 {
   "name": "@ferolyte/pack",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Ferolyte content SDK for Minecraft BE addons",
   "license": "MIT",
   "type": "module",
@@ -21,6 +21,9 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
+      "dist/index.d.ts": [
+        "dist/index.d.ts"
+      ],
       "*": [
         "dist/*",
         "dist/*/index.d.ts"
@@ -75,7 +78,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@ferolyte/common": "^0.6.0"
+    "@ferolyte/common": "^0.7.0"
   },
   "devDependencies": {
     "esbuild": "^0.28.1",

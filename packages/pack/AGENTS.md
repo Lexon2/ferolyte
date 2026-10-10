@@ -56,6 +56,11 @@ generated from `displayName`. A file may export one builder or an array of build
   `loot`, `geometry.culling` and `geometry.cullingShape` are checked against the loot tables, `block_culling/*.json` rules and `shapes/*.json` voxel shapes of the pack.
 - Molang: prefer the immutable v2 API — ``molang`${q.isMoving} && ${v('speed')} > 1` ``,
   `q.*`, `v()`, `math.*`, `not(...)`, `assign(...)` — or plain strings. `new Molang()` is deprecated.
+  `!` binds tighter than comparisons: write `!(v.a == 1)`, never `` `!${"v.a == 1"}` `` (= `(!v.a) == 1`). A plain
+  string given to `not()` or interpolated into `molang` is a Molang string literal (`not('v.a == 1')` -> `!'v.a == 1'`);
+  wrap Molang source in `raw()`: `not(raw('v.a == 1'))` -> `!(v.a == 1)`. `check` warns about both.
+- Blocks with `traits.multiBlock`: `version` >= 1.26.40, a `movable` component, no `placementFilter` in permutations.
+  `materialInstances.*.ambientOcclusion: false/true` is written as `0`/`1` from block format 1.26.20 (the game wants a number).
 - Identifiers use a namespace: `myaddon:thing`. Never edit generated output in the build folder.
 - Diagnostics name the file and field path: fix the reported field, do not silence them.
 - Reference checks: unknown geometry / animation / render controller / texture / item icon / component group /

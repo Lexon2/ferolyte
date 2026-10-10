@@ -265,7 +265,7 @@ export interface EmbeddedVisualComponent {
      */
     alphaMaskedTint?: boolean;
     /**
-     * Should this material have ambient occlusion applied when lighting? If true, shadows will be created around and underneath the block.
+     * Should this material have ambient occlusion applied when lighting? A boolean, or the exponent (0-10) applied to the ambient occlusion value after lighting; `true` is the exponent 1. From block format 1.26.20 the game requires a number (it rejects `false` with "invalid numeric value"), so ferolyte writes `true` as 1 and `false` as 0 there.
      * @minecraft ambient_occlusion
      */
     ambientOcclusion?: boolean | number;
@@ -494,7 +494,7 @@ export interface ItemVisualComponent {
      */
     alphaMaskedTint?: boolean;
     /**
-     * Should this material have ambient occlusion applied when lighting? If true, shadows will be created around and underneath the block.
+     * Should this material have ambient occlusion applied when lighting? A boolean, or the exponent (0-10) applied to the ambient occlusion value after lighting; `true` is the exponent 1. From block format 1.26.20 the game requires a number (it rejects `false` with "invalid numeric value"), so ferolyte writes `true` as 1 and `false` as 0 there.
      * @minecraft ambient_occlusion
      */
     ambientOcclusion?: boolean | number;
@@ -630,7 +630,7 @@ export type MaterialInstancesComponent = Record<string, string | {
    */
   alphaMaskedTint?: boolean;
   /**
-   * Should this material have ambient occlusion applied when lighting? If true, shadows will be created around and underneath the block.
+   * Should this material have ambient occlusion applied when lighting? A boolean, or the exponent (0-10) applied to the ambient occlusion value after lighting; `true` is the exponent 1. From block format 1.26.20 the game requires a number (it rejects `false` with "invalid numeric value"), so ferolyte writes `true` as 1 and `false` as 0 there.
    * @minecraft ambient_occlusion
    */
   ambientOcclusion?: boolean | number;

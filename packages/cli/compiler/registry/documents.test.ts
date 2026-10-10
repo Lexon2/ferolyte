@@ -183,6 +183,41 @@ describe('render controller reference checks', () => {
   });
 });
 
+describe('Molang check', () => {
+  const controller = (transitions: Record<string, string>[]) => ({
+    format_version: '1.10.0',
+    animation_controllers: {
+      'controller.animation.ns.shield': {
+        initial_state: 'idle',
+        states: { idle: { transitions }, shielding: { transitions: [{ idle: '1' }] } },
+      },
+    },
+  });
+
+  it("warns for `!` applied to one side of a comparison and to a string literal", async () => {
+    register('/src/shield.ac.rp.ts', 'animation-controller-rp', controller([
+      { shielding: "!v.ability == 'shielding'" },
+      { shielding: "!'v.a == 1'" },
+    ]));
+
+    const messages = (await check()).filter((m) => m.includes('shield'));
+
+    expect(messages).toEqual([
+      expect.stringMatching(/^warning: animation-controller-rp: .*states\.idle\.transitions\.0\.shielding: .*binds tighter than `==`/),
+      expect.stringMatching(/^warning: animation-controller-rp: .*transitions\.1\.shielding: .*string literal 'v\.a == 1'/),
+    ]);
+  });
+
+  it('keeps grouped negations and negated operands of && clean', async () => {
+    register('/src/shield.ac.rp.ts', 'animation-controller-rp', controller([
+      { shielding: "!(v.ability == 'shielding')" },
+      { shielding: '!q.is_moving && v.x == 1' },
+    ]));
+
+    expect((await check()).filter((m) => m.includes('shield'))).toEqual([]);
+  });
+});
+
 describe('ids and the checks registry', () => {
   it('generates AttachableId, RenderControllerId, RecipeId and SpawnRuleId', async () => {
     register('/src/sword.att.ts', 'attachable', attachable({}));

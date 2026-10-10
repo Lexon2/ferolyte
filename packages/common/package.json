@@ -1,6 +1,6 @@
 {
   "name": "@ferolyte/common",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Shared utilities and content foundation for Ferolyte",
   "license": "MIT",
   "type": "module",
@@ -26,6 +26,11 @@
     }
   },
   "exports": {
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js",
+      "default": "./dist/types/index.js"
+    },
     "./*": {
       "types": "./dist/*.d.ts",
       "import": "./dist/*.js",

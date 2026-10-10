@@ -1,0 +1,12 @@
+{
+  "$set": {
+    "/additionalProperties/oneOf/1/properties/ambient_occlusion": {
+      "title": "Ambient Occlusion",
+      "description": "Should this material have ambient occlusion applied when lighting? A boolean, or the exponent (0-10) applied to the ambient occlusion value after lighting; `true` is the exponent 1. From block format 1.26.20 the game requires a number (it rejects `false` with \"invalid numeric value\"), so ferolyte writes `true` as 1 and `false` as 0 there.",
+      "anyOf": [
+        { "type": "boolean", "default": true },
+        { "type": "number", "minimum": 0, "maximum": 10 }
+      ]
+    }
+  }
+}
