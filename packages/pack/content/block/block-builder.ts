@@ -6,7 +6,12 @@ import { createBlockPermutations } from './permutations/create-permuation';
 import { convertBlockStates } from './states/convert-states';
 import { convertBlockTraits } from './traits/convert-traits';
 import { ContentBuilder } from '@ferolyte/common/content/interfaces/content-builder';
-import { ContentDiagnosticContext } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import {
+  ContentDiagnosticContext,
+  ContentSection,
+  logContentError,
+  logContentWarning,
+} from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { isVersionAtLeast } from '@ferolyte/common/content/versions/compare-version';
 import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
 import { convertMenuCategory } from '../item/convertors/components/menu-category/convert-category';
@@ -67,6 +72,7 @@ export class BlockBuilder implements ContentBuilder {
     this.formatPermutations(minecraftBlock);
     this.formatStates(minecraftBlock);
     this.formatTraits(minecraftBlock);
+    this.checkMultiBlock(minecraftBlock);
 
     return minecraftBlock;
   }
@@ -187,5 +193,44 @@ export class BlockBuilder implements ContentBuilder {
     }
 
     file['minecraft:block'].description.traits = { ...minecraftTraits };
+  }
+
+  /**
+   * What the game requires of a block with `minecraft:multi_block` (checked on the written JSON, so
+   * `rawComponents` count): format 1.26.40+ (older formats need Upcoming Creator Features), a
+   * `minecraft:movable` component, and no `minecraft:placement_filter` in permutations.
+   */
+  private checkMultiBlock(file: any) {
+    const block = file['minecraft:block'];
+    if (block.description.traits?.['minecraft:multi_block'] === undefined) {
+      return;
+    }
+    const ctx = (section: ContentSection, fieldPath?: string): ContentDiagnosticContext => ({
+      contentType: 'block',
+      ...this.buildContext,
+      section,
+      fieldPath,
+    });
+
+    if (!isVersionAtLeast(file.format_version, '1.26.40')) {
+      logContentWarning(
+        ctx('traits', 'multiBlock'),
+        `Trait minecraft:multi_block needs block format_version 1.26.40 or later (the block is written as ${file.format_version}); older formats only load with the 'Upcoming Creator Features' toggle. Set \`version: '1.26.40'\` or later`,
+      );
+    }
+    if (block.components?.['minecraft:movable'] === undefined) {
+      logContentError(
+        ctx('components'),
+        'Blocks with trait minecraft:multi_block must define component `movable` (minecraft:movable); the game rejects the block without it',
+      );
+    }
+    (block.permutations as any[] | undefined)?.forEach((permutation, index) => {
+      if (permutation.components?.['minecraft:placement_filter'] !== undefined) {
+        logContentError(
+          ctx('permutations', `[${index}].components.placementFilter`),
+          '`placementFilter` is not valid in multi block permutations; put it in the base components',
+        );
+      }
+    });
   }
 }

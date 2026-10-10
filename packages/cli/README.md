@@ -303,6 +303,10 @@ Content files must `export default` a `ContentBuilder` or an array of builders. 
 `ferolyte watch` starts one WebSocket hub; in game run `/connect localhost:<port>` once.
 Script rebuilds trigger `/reload` on **every** connected client.
 
+A `/connect` lives for the **game session**, not the world: it survives leaving the world, entering another one and
+`/reload all`, and only closing the game drops it. So a connected client does not mean a world is loaded (the player
+may be in the main menu).
+
 ```ts
 profiles: {
   default: {
@@ -320,10 +324,11 @@ HTTP API (only when `server.http` is set): `GET /status` (`connected`, `clients`
 `lastReload` = `{ seq, at, ok, trigger } | null`), `POST /command` `{command}`, `POST /scriptevent` `{id, message}`,
 `GET /events?since=<seq>&limit=<n>` (the last `n` events of the `since` window), `POST /subscribe` `{eventName}`
 (`event` works as an alias). Every route is JSON; plugin routes are added with `minecraft.http.route()` (see below).
+`connected` / `clients` count game connections, which can exist without a loaded world (see above).
 
 #### Client policy (`server.clientPolicy`, cli 0.5)
 
-The game allows one live `/connect` per world, so a newer connection is the live one:
+There is one connection per game session, and a newer connection (a game restarted and connected again) is the live one:
 `clientPolicy: 'newest'` (**default since 0.5**) sends commands without a `clientId` to the newest connection and falls back
 to the older one when it disconnects. `'oldest'` keeps the behaviour of 0.4 and earlier. An explicit `clientId` always wins;
 `minecraft.primaryClientId` is the connection the policy currently picks.
@@ -350,7 +355,7 @@ Use `/connect 127.0.0.1:<port>` if `localhost` does not connect: the hub listens
 
 | Member | Since | Description |
 | --- | --- | --- |
-| `clients`, `sendCommand(command, { clientId?, timeoutMs? })`, `scriptEvent(id, message?, { clientId? })` | 1.1.0 | `sendCommand` resolves with `{ status, message, body? }` (`body` is the raw response body, API 1.2.0 / cli 0.5) |
+| `clients`, `sendCommand(command, { clientId?, timeoutMs? })`, `scriptEvent(id, message?, { clientId? })` | 1.1.0 | `clients` are game sessions, connected with or without a loaded world. `sendCommand` resolves with `{ status, message, body? }` (`body` is the raw response body, API 1.2.0 / cli 0.5) |
 | `subscribe(eventName, handler?)`, `onMessage(handler)` | 1.1.0 | Game events; every handler returns an unsubscribe function |
 | `http?.route(method, path, handler)` | 1.1.0 | Present when `server.http` is enabled |
 | `onReload(handler)` | 1.2.0 | `{ trigger: 'scripts' \| 'packs' \| 'manual', clientId, ok, message, at, seq }`, once per client when its `/reload` resolved or failed |

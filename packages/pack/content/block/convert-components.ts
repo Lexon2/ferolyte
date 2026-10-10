@@ -6,6 +6,7 @@ import {
   ContentDiagnosticContext,
   logContentError,
 } from '@ferolyte/common/content/diagnostics/content-diagnostic';
+import { isVersionAtLeast } from '@ferolyte/common/content/versions/compare-version';
 import { blockComponentRegistry } from '../generated/block/registry';
 import {
   convertWithOverride,
@@ -78,5 +79,44 @@ export const convertBlockComponents = (
     }
   }
 
+  if (
+    ctx?.outputVersion !== undefined &&
+    isVersionAtLeast(ctx.outputVersion, '1.26.20')
+  ) {
+    numericAmbientOcclusion(result);
+  }
+
   return result;
+};
+
+const MATERIAL_INSTANCE_OWNERS = [
+  'minecraft:material_instances',
+  'minecraft:item_visual',
+  'minecraft:embedded_visual',
+];
+
+/**
+ * From block format 1.26.20 `ambient_occlusion` is a number (the exponent, 0-10; the game rejects a boolean):
+ * `true` is written as `1` (the default exponent), `false` as `0`.
+ */
+const numericAmbientOcclusion = (components: MinecraftBlockComponents): void => {
+  for (const owner of MATERIAL_INSTANCE_OWNERS) {
+    const component = components[owner];
+    const instances =
+      owner === 'minecraft:material_instances'
+        ? component
+        : component?.material_instances;
+    if (instances === null || typeof instances !== 'object') {
+      continue;
+    }
+    for (const instance of Object.values(instances)) {
+      if (
+        instance !== null &&
+        typeof instance === 'object' &&
+        typeof (instance as any).ambient_occlusion === 'boolean'
+      ) {
+        (instance as any).ambient_occlusion = (instance as any).ambient_occlusion ? 1 : 0;
+      }
+    }
+  }
 };

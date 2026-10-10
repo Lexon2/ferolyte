@@ -21,7 +21,7 @@ import { molang, q, v, math, not } from '@ferolyte/pack/molang';
 ```
 
 Entry points: `@ferolyte/pack`, `/item`, `/block`, `/entity` (server + client), `/molang`, `/animation`, `/attachable`, `/render-controller`, `/recipe`, `/spawn-rule`.
-Both `moduleResolution: "bundler"` (the `ferolyte init` template) and `"node"` work.
+Both `moduleResolution: "bundler"` (the `ferolyte init` template) and `"node"` work (as does `"nodenext"`; a test checks all three).
 
 ## Rules of the config
 
@@ -82,7 +82,11 @@ export default createBlock({
 });
 ```
 
-Traits, states and permutations are supported, including the 1.26.40+ `multiBlock` trait and its rules.
+Traits, states and permutations are supported, including the 1.26.40+ `multiBlock` trait and its rules: the game
+needs block `version` 1.26.40+ (older formats need the Upcoming Creator Features toggle), a `movable` component, and
+`placementFilter` only in the base components (never in a permutation); `check` reports each case.
+`materialInstances.*.ambientOcclusion` takes a boolean or an exponent (0-10). The game requires a number from block
+format 1.26.20, so a boolean is written as `1` / `0` there.
 
 ### Server entity: `packs/BP/entities/zombie.se.ts`
 
@@ -249,6 +253,14 @@ assign(speed, q.modifiedMoveSpeed);        // "variable.speed = query.modified_m
 
 Anything that accepts Molang also accepts a plain string. The old fluent `new Molang()` builder still works
 but is deprecated.
+
+Two mistakes the game loads without an error, so `ferolyte check` warns about them:
+
+- `!` binds tighter than `==`, `!=`, `<`, `>`, `<=`, `>=`. `` `!${cond}` `` with `cond = "v.a == 'x'"` is written as
+  `!v.a == 'x'`, which means `(!v.a) == 'x'` and is always false. Write `!(v.a == 'x')`, or `not(eq(v('a'), 'x'))`.
+- A plain string passed to `not()`, `eq()` and the other builders, or interpolated into `molang`, is a Molang
+  **string literal**: `not('v.a == 1')` is `!'v.a == 1'`. Wrap existing Molang source in `raw()`:
+  `not(raw('v.a == 1'))` is `!(v.a == 1)`.
 
 ## How it is built
 

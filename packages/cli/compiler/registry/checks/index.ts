@@ -1,4 +1,5 @@
 import type { RegistryIndex } from '../project-registry';
+import { molangCheck } from './molang';
 import { checkRecipeDocument, projectNamespaces } from './recipe';
 import { renderControllerCheck } from './render-controller';
 import { checkSpawnRuleDocument } from './spawn-rule';
@@ -36,4 +37,5 @@ const recipeAndSpawnRuleChecks: ReferenceCheck = (index, only) => {
 export const REFERENCE_CHECKS: ReferenceCheck[] = [
   renderControllerCheck,
   recipeAndSpawnRuleChecks,
+  molangCheck,
 ];

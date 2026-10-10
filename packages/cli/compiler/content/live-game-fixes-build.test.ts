@@ -232,3 +232,61 @@ describe('23: spawnEggName', () => {
     expect(lang['item.spawn_egg.entity.ns:e.name']).toEqual({ en_US: 'Golem', ru_RU: 'Голем' });
   });
 });
+
+describe('27: multiBlock trait requirements', () => {
+  const filter = { conditions: [{ allowedFaces: ['up' as const] }] };
+  const multiBlock = (config: Record<string, unknown>) =>
+    build(
+      'door.block.ts',
+      createBlock({
+        identifier: 'ns:door',
+        version: '1.26.50',
+        traits: { multiBlock: { direction: 'up', enabledStates: ['minecraft:multi_block_part'] } },
+        components: { movable: { movementType: 'push' }, placementFilter: filter },
+        ...config,
+      }),
+    );
+
+  it('accepts format 1.26.50 with movable and placementFilter in the base components', async () => {
+    const { json, errors, warnings } = await multiBlock({});
+
+    expect(errors).toEqual([]);
+    expect(warnings).toEqual([]);
+    expect(json['minecraft:block'].description.traits).toHaveProperty(['minecraft:multi_block']);
+  });
+
+  it('warns below format 1.26.40 and names the toggle', async () => {
+    const { errors, warnings } = await multiBlock({ version: '1.26.30' });
+
+    expect(errors).toEqual([]);
+    expect(warnings.map((w) => w.message)).toEqual([
+      expect.stringContaining("'Upcoming Creator Features' toggle"),
+    ]);
+  });
+
+  it('errors without minecraft:movable, and accepts it from rawComponents', async () => {
+    const { errors } = await multiBlock({ components: { placementFilter: filter } });
+
+    expect(errors.map((e) => e.message)).toEqual([expect.stringContaining('`movable`')]);
+    const raw = await multiBlock({
+      components: {},
+      rawComponents: { 'minecraft:movable': { movement_type: 'push' } },
+    });
+    expect(raw.errors).toEqual([]);
+  });
+
+  it('errors for placementFilter in a permutation', async () => {
+    const { errors } = await multiBlock({
+      permutations: [
+        {
+          condition: { states: { 'minecraft:multi_block_part': [0] } } as never,
+          components: { placementFilter: filter },
+        },
+      ],
+    });
+
+    expect(errors.map((e) => [e.fieldPath, e.message])).toEqual([
+      ['permutations[0].components.placementFilter', expect.stringContaining('not valid in multi block permutations')],
+    ]);
+  });
+});

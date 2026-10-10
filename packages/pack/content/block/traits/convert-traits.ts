@@ -141,10 +141,12 @@ const convertMultiBlock = (
       return undefined;
     }
 
-    // Horizontal directions were released in format version 1.26.50.
+    // Horizontal directions were released in format version 1.26.50 (below 1.26.40 the block builder already
+    // warns that the whole trait needs the toggle).
     if (
       formatVersion === undefined ||
-      !isVersionAtLeast(formatVersion, '1.26.50')
+      (isVersionAtLeast(formatVersion, '1.26.40') &&
+        !isVersionAtLeast(formatVersion, '1.26.50'))
     ) {
       logContentWarning(
         field('multiBlock.direction'),
