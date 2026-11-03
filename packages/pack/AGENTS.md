@@ -61,6 +61,12 @@ generated from `displayName`. A file may export one builder or an array of build
   wrap Molang source in `raw()`: `not(raw('v.a == 1'))` -> `!(v.a == 1)`. `check` warns about both.
 - Blocks with `traits.multiBlock`: `version` >= 1.26.40, a `movable` component, no `placementFilter` in permutations.
   `materialInstances.*.ambientOcclusion: false/true` is written as `0`/`1` from block format 1.26.20 (the game wants a number).
+- `menuCategory.group` is namespaced: `'minecraft:itemGroup.name.sword'` (an unprefixed `itemGroup.name.*` gets `minecraft:`; other
+  unprefixed values are errors). `rideable.onRiderEnterEvent` / `onRiderExitEvent` are event id strings (`'myaddon:seat_exit'`, the event
+  runs on the ridden entity); an event object is an error.
+- Server entity `version` 1.26.60+ is parsed strictly by the game: single `seats` / `effects` / sound values are written as lists, a number
+  `transformation.delay` as `{ value }`, a number `jumpDelay` / `curedDiscount` / `timer.time` (from 1.26.50) as `{ min, max }`. Block
+  `version` 1.26.60+ writes a single `collisionBox` as a list.
 - Identifiers use a namespace: `myaddon:thing`. Never edit generated output in the build folder.
 - Diagnostics name the file and field path: fix the reported field, do not silence them.
 - Reference checks: unknown geometry / animation / render controller / texture / item icon / component group /

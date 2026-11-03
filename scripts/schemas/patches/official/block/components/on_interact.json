@@ -1,6 +1,6 @@
 {
   "x-new-component": "minecraft:on_interact",
-  "x-official": "official 1.26.20–1.26.20",
+  "x-official": "official 1.26.20–1.26.60",
   "title": "Interact Component",
   "type": "object",
   "additionalProperties": {},

@@ -29,7 +29,18 @@ export interface BlockEntityComponent {
      * @minecraft slot_count
      */
     slotCount?: number;
+    /**
+     * Optional container title, stored as a language file key or raw text.
+     * @minecraft title
+     */
+    title?: string;
   };
+  /**
+   * [EXPERIMENTAL] Stores serialized entities in this block via scripting.
+   * @default false
+   * @minecraft entity_storage
+   */
+  entityStorage?: boolean;
 }
 
 /**
@@ -60,24 +71,46 @@ export type CollisionBoxComponent = boolean | {
    * Minimal position of the bounds of the collision box. origin is specified as [x, y, z] and must be in the range (-8, 0, -8) to (8, 16, 8), inclusive.
    * @minecraft origin
    */
-  origin?: [number, number, number];
+  origin: [number, number, number];
   /**
    * Size of each side of the collision box. Size is specified as [x, y, z]. origin + size must be in the range (-8, 0, -8) to (8, 16, 8), inclusive.
    * @minecraft size
    */
-  size?: [number, number, number];
+  size: [number, number, number];
 } | {
+  /**
+   * Minimal position of the bounds of the collision box. [0, 0, 0] is the bottom-left of the cube.
+   * @minecraft min
+   */
+  min: [number, number, number];
+  /**
+   * Maximum position of the bounds of the collision box. [16, 16, 16] is the top-right of the cube.
+   * @minecraft max
+   */
+  max: [number, number, number];
+} | ({
   /**
    * Minimal position of the bounds of the collision box. origin is specified as [x, y, z] and must be in the range (-8, 0, -8) to (8, 16, 8), inclusive.
    * @minecraft origin
    */
-  origin?: [number, number, number];
+  origin: [number, number, number];
   /**
    * Size of each side of the collision box. Size is specified as [x, y, z]. origin + size must be in the range (-8, 0, -8) to (8, 16, 8), inclusive.
    * @minecraft size
    */
-  size?: [number, number, number];
-}[];
+  size: [number, number, number];
+} | {
+  /**
+   * Minimal position of the bounds of the collision box. [0, 0, 0] is the bottom-left of the cube.
+   * @minecraft min
+   */
+  min: [number, number, number];
+  /**
+   * Maximum position of the bounds of the collision box. [16, 16, 16] is the top-right of the cube.
+   * @minecraft max
+   */
+  max: [number, number, number];
+})[];
 
 /**
  * Allows custom blocks to define whether other blocks with connection behavior - such as fences, walls, bars, and glass panes - can try to create a connection.
@@ -298,6 +331,12 @@ export interface EmbeddedVisualComponent {
     tintMethod?: "none" | "default_foliage" | "birch_foliage" | "evergreen_foliage" | "dry_foliage" | "grass" | "water";
   }>;
 }
+
+/**
+ * Describes the enchantment power transmission properties of this block.
+ * @minecraft minecraft:enchantment_power_transmitter
+ */
+export type EnchantmentPowerTransmitterComponent = boolean;
 
 /**
  * Required component to use the custom component `onEntityFallOn`.
@@ -687,6 +726,18 @@ export interface MovableComponent {
 }
 
 /**
+ * Configures which neighboring block changes can trigger a block custom component event.
+ * @minecraft minecraft:neighbor_change
+ */
+export interface NeighborChangeComponent {
+  /**
+   * The directions to observe. The all value must be used alone.
+   * @minecraft neighbor_directions
+   */
+  neighborDirections?: ["all"] | unknown;
+}
+
+/**
  * Fall On Component
  * Free-form component (the official Mojang schema has a body without properties): keys are written as is.
  * @minecraft minecraft:on_fall_on
@@ -924,7 +975,7 @@ export interface RedstoneConsumerComponent {
    * @integer Whole number only (fractions are rejected by the build).
    * @minecraft min_power
    */
-  minPower: number;
+  minPower?: number;
   /**
    * Controls whether a signal can pass through this block or not, defaults to false
    * @default false
@@ -1072,6 +1123,25 @@ export interface TransformationComponent {
  */
 export type UnitCubeComponent = Record<string, unknown>;
 
+/**
+ * Defines whether a block dampens or occludes vibrations.
+ * @minecraft minecraft:vibration_properties
+ */
+export interface VibrationPropertiesComponent {
+  /**
+   * Whether this block dampens vibrations.
+   * @default false
+   * @minecraft dampen_vibrations
+   */
+  dampenVibrations?: boolean;
+  /**
+   * Whether this block occludes vibrations.
+   * @default false
+   * @minecraft occlude_vibrations
+   */
+  occludeVibrations?: boolean;
+}
+
 export interface GeneratedBlockComponents {
   /** @minecraft minecraft:block_entity */
   blockEntity?: BlockEntityComponent;
@@ -1097,6 +1167,8 @@ export interface GeneratedBlockComponents {
   displayName?: DisplayNameComponent;
   /** @minecraft minecraft:embedded_visual */
   embeddedVisual?: EmbeddedVisualComponent;
+  /** @minecraft minecraft:enchantment_power_transmitter */
+  enchantmentPowerTransmitter?: EnchantmentPowerTransmitterComponent;
   /** @minecraft minecraft:entity_fall_on */
   entityFallOn?: EntityFallOnComponent;
   /** @minecraft minecraft:flammable */
@@ -1127,6 +1199,8 @@ export interface GeneratedBlockComponents {
   materialInstances?: MaterialInstancesComponent;
   /** @minecraft minecraft:movable */
   movable?: MovableComponent;
+  /** @minecraft minecraft:neighbor_change */
+  neighborChange?: NeighborChangeComponent;
   /** @minecraft minecraft:on_fall_on */
   onFallOn?: OnFallOnComponent;
   /** @minecraft minecraft:on_interact */
@@ -1173,4 +1247,6 @@ export interface GeneratedBlockComponents {
   transformation?: TransformationComponent;
   /** @minecraft minecraft:unit_cube */
   unitCube?: UnitCubeComponent;
+  /** @minecraft minecraft:vibration_properties */
+  vibrationProperties?: VibrationPropertiesComponent;
 }

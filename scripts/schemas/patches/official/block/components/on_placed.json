@@ -1,6 +1,6 @@
 {
   "x-new-component": "minecraft:on_placed",
-  "x-official": "official 1.26.20–1.26.20",
+  "x-official": "official 1.26.20–1.26.60",
   "title": "Placed Component",
   "type": "object",
   "additionalProperties": {},

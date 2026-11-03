@@ -1,6 +1,6 @@
 {
   "x-new-component": "minecraft:queued_ticking",
-  "x-official": "official 1.26.20–1.26.20",
+  "x-official": "official 1.26.20–1.26.60",
   "title": "Queued Ticking Component",
   "type": "object",
   "additionalProperties": {},

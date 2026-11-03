@@ -28,6 +28,7 @@ export const blockComponentRegistry: Record<string, GeneratedEntry> = {
   destructionParticles: entry('minecraft:destruction_particles', 'destructionParticles', 'component', false, false, undefined, undefined),
   displayName: entry('minecraft:display_name', 'displayName', 'component', false, false, undefined, undefined),
   embeddedVisual: entry('minecraft:embedded_visual', 'embeddedVisual', 'component', false, false, undefined, undefined),
+  enchantmentPowerTransmitter: entry('minecraft:enchantment_power_transmitter', 'enchantmentPowerTransmitter', 'component', false, false, undefined, undefined),
   entityFallOn: entry('minecraft:entity_fall_on', 'entityFallOn', 'component', false, false, undefined, undefined),
   flammable: entry('minecraft:flammable', 'flammable', 'component', false, false, undefined, undefined),
   flowerPottable: entry('minecraft:flower_pottable', 'flowerPottable', 'component', true, false, undefined, undefined),
@@ -43,6 +44,7 @@ export const blockComponentRegistry: Record<string, GeneratedEntry> = {
   mapColor: entry('minecraft:map_color', 'mapColor', 'component', false, false, undefined, undefined),
   materialInstances: entry('minecraft:material_instances', 'materialInstances', 'component', false, false, undefined, undefined),
   movable: entry('minecraft:movable', 'movable', 'component', false, false, undefined, undefined),
+  neighborChange: entry('minecraft:neighbor_change', 'neighborChange', 'component', false, false, undefined, undefined),
   onFallOn: entry('minecraft:on_fall_on', 'onFallOn', 'component', false, false, undefined, "the official Mojang schema has a body without properties"),
   onInteract: entry('minecraft:on_interact', 'onInteract', 'component', false, false, undefined, "the official Mojang schema has a body without properties"),
   onPlaced: entry('minecraft:on_placed', 'onPlaced', 'component', false, false, undefined, "the official Mojang schema has a body without properties"),
@@ -66,6 +68,7 @@ export const blockComponentRegistry: Record<string, GeneratedEntry> = {
   tick: entry('minecraft:tick', 'tick', 'component', false, false, undefined, undefined),
   transformation: entry('minecraft:transformation', 'transformation', 'component', false, false, undefined, undefined),
   unitCube: entry('minecraft:unit_cube', 'unitCube', 'component', false, false, undefined, "the official Mojang schema has a body without properties"),
+  vibrationProperties: entry('minecraft:vibration_properties', 'vibrationProperties', 'component', false, false, undefined, undefined),
 };
 
 export const blockTraitRegistry: Record<string, GeneratedEntry> = {

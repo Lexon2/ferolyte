@@ -21,7 +21,12 @@
           "jump"
         ],
         "title": "Goal's control flags",
-        "type": "string"
+        "type": "string",
+        "x-enum-binary-value": [
+          1,
+          2,
+          4
+        ]
       },
       "type": "array",
       "x-since": "1.21.120"
@@ -201,6 +206,18 @@
           ],
           "title": "FilterSubject",
           "type": "string",
+          "x-enum-binary-value": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
           "default": "self"
         }
       },
@@ -391,6 +408,18 @@
           ],
           "title": "FilterSubject",
           "type": "string",
+          "x-enum-binary-value": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
           "default": "self"
         }
       },

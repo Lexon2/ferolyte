@@ -5,7 +5,7 @@ import type { EntityFilters } from '../../server-entity/interfaces/filters';
 import type { PartialEntityEventTrigger } from '../../server-entity/interfaces/trigger';
 import type { MinMaxRange } from '../../server-entity/types/min-max-range';
 import type { LooseString } from '@ferolyte/common/types/core/loose-string';
-import type { Enum6c6496, Enum3db897, Enumcaa25b, Enum614ad8, Enum78acf6, Enum23f7ae } from './shared';
+import type { Enum6c6496, Enum3db897, Enumcaa25b, Enum614ad8, Enumcd2873, Enum23f7ae } from './shared';
 
 /**
  * Specifies the initial value of a specific attribute for an entity when spawned.
@@ -935,7 +935,7 @@ export interface AnnotationBreakDoorComponent {
    * @default "hard"
    * @minecraft min_difficulty
    */
-  minDifficulty?: string;
+  minDifficulty?: "peaceful" | "easy" | "normal" | "hard";
 }
 
 /**
@@ -1068,7 +1068,7 @@ export interface AttackComponent {
    * Range of the random amount of damage the melee attack deals. A negative value can heal the entity instead of hurting it.
    * @minecraft damage
    */
-  damage: MinMaxRange;
+  damage: number | MinMaxRange;
   /**
    * Identifier of the status ailment to apply to an entity attacked by this entity's melee attack.
    * @minecraft effect_name
@@ -2105,6 +2105,7 @@ export interface BuoyantComponent {
   /**
    * Base buoyancy used to calculate how much will a mob float.
    * @default 1
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft buoyancy
    */
   buoyancy?: number;
@@ -2750,7 +2751,7 @@ export interface EconomyTradeTableComponent {
    * How much should the discount be modified by when the player has cured the Zombie Villager. Can be specified as a pair of numbers (low-tier trade discount and high-tier trade discount)
    * @minecraft cured_discount
    */
-  curedDiscount?: [number, number];
+  curedDiscount?: MinMaxRange;
   /**
    * Name to be displayed while trading with this entity.
    * @default ""
@@ -2768,7 +2769,7 @@ export interface EconomyTradeTableComponent {
    * The Maximum the discount can be modified by when the player has cured the Zombie Villager. Can be specified as a pair of numbers (low-tier trade discount and high-tier trade discount)
    * @minecraft max_cured_discount
    */
-  maxCuredDiscount?: [number, number];
+  maxCuredDiscount?: MinMaxRange;
   /**
    * The Maximum the discount can be modified by when the player has cured a nearby Zombie Villager.
    * @default -200
@@ -4140,7 +4141,10 @@ export interface HealableComponent {
         data?: number;
       };
     };
-    /** @minecraft effects */
+    /**
+     * One effect or the list of effects. Format 1.26.60 accepts only a list: a single effect is written as a one-element list there.
+     * @minecraft effects
+     */
     effects?: {
       /**
        * Effect name.
@@ -4159,7 +4163,11 @@ export interface HealableComponent {
        * @minecraft amplifier
        */
       amplifier?: number;
-      /** @minecraft chance */
+      /**
+       * The chance that the effect is applied.
+       * @default 1
+       * @minecraft chance
+       */
       chance?: number;
     } | ({
       /**
@@ -4179,12 +4187,17 @@ export interface HealableComponent {
        * @minecraft amplifier
        */
       amplifier?: number;
-      /** @minecraft chance */
+      /**
+       * The chance that the effect is applied.
+       * @default 1
+       * @minecraft chance
+       */
       chance?: number;
     })[];
   })[];
   /**
    * Not documented in the schemas, used by vanilla.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft chance
    */
   chance?: number;
@@ -5516,7 +5529,7 @@ export interface MovementJumpComponent {
    * Delay after landing when using the slime move control.
    * @minecraft jump_delay
    */
-  jumpDelay?: [number, number];
+  jumpDelay?: MinMaxRange;
   /**
    * The maximum number in degrees the mob can turn per tick.
    * @default 30
@@ -7737,10 +7750,17 @@ export interface ProjectileComponent {
    */
   uncertaintyMultiplier?: number;
   /**
+   * If `true`, when hitting an entity and the projectile is on fire, spread the fire to the entity.
+   * @default true
+   * Introduced in format version 1.26.50 (older versions may reject it).
+   * @minecraft spread_fire
+   */
+  spreadFire?: boolean;
+  /**
    * Deprecated since 1.26.50.
    * @integer Whole number only (fractions are rejected by the build).
    * @deprecated
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft owner_launch_immunity_ticks
    */
   ownerLaunchImmunityTicks?: number;
@@ -8061,20 +8081,21 @@ export interface RideableComponent {
    * Defines where riders are placed when dismounting this entity:
    * - "default", riders are placed on a valid ground position around the entity, or at the center of the entity's collision box if none is found.
    * - "on_top_center", riders are placed at the center of the top of the entity's collision box.
+   * - "look_direction", riders are placed in the direction the rider looks (format 1.26.60).
    * @default "default"
    * @minecraft dismount_mode
    */
-  dismountMode?: "default" | "on_top_center";
+  dismountMode?: "default" | "on_top_center" | "look_direction";
   /**
-   * Event to execute on the owner entity when an entity starts riding it.
+   * Event id to run on the ridden entity when an entity starts riding it. The game accepts only a string here (an event object is rejected: "unknown child schema option type").
    * @minecraft on_rider_enter_event
    */
-  onRiderEnterEvent?: string | PartialEntityEventTrigger | (string | PartialEntityEventTrigger)[];
+  onRiderEnterEvent?: string;
   /**
-   * Event to execute on the owner entity when an entity stops riding it.
+   * Event id to run on the ridden entity when an entity stops riding it. The game accepts only a string here (an event object is rejected: "unknown child schema option type").
    * @minecraft on_rider_exit_event
    */
-  onRiderExitEvent?: string | PartialEntityEventTrigger | (string | PartialEntityEventTrigger)[];
+  onRiderExitEvent?: string;
   /**
    * The max width a mob can have to be a rider. A value of 0 ignores this parameter.
    * @default 0
@@ -8101,7 +8122,7 @@ export interface RideableComponent {
    */
   seatCount?: number;
   /**
-   * The list of positions and number of riders for each position for entities riding this entity.
+   * One seat or the list of seats. Format 1.26.60 accepts only a list: a single seat is written as a one-element list there.
    * @minecraft seats
    */
   seats?: {
@@ -8896,7 +8917,7 @@ export interface SpellEffectsComponent {
    * List of identifiers of effects to be removed from this entity after adding this component.
    * @minecraft remove_effects
    */
-  removeEffects?: string[] | string;
+  removeEffects?: string | string[];
 }
 
 /**
@@ -9455,10 +9476,10 @@ export interface TimerComponent {
    */
   randomInterval?: boolean;
   /**
-   * Amount of time in seconds for the timer. Can be specified as a number or a pair of numbers (Minimum and max). Incompatible with random_time_choices.
+   * Amount of time in seconds for the timer. Specified as a pair of numbers (Minimum and max). Incompatible with random_time_choices.
    * @minecraft time
    */
-  time?: [number, number] | number;
+  time?: MinMaxRange;
   /**
    * Event to fire when the time on the timer runs out.
    * @minecraft time_down_event
@@ -9537,6 +9558,37 @@ export interface TrailComponent {
    */
   blockType?: string;
   /**
+   * A list of blocks that can be replaced by the trail block.
+   * @minecraft replaceable_blocks
+   */
+  replaceableBlocks?: (string | {
+    /**
+     * A minecraft block identifier.
+     * @minecraft name
+     */
+    name?: string;
+    /** @minecraft states */
+    states?: Record<string, boolean | number | string>;
+    /**
+     * A condition using Molang queries that results to true/false that can be used to query for blocks with certain tags.
+     * @minecraft tags
+     */
+    tags?: string | MolangExpr;
+  })[];
+  /**
+   * The radius of the horizontal square of blocks placed by the trail, centered on spawn_offset.
+   * @default -1
+   * @integer Whole number only (fractions are rejected by the build).
+   * @minecraft radius
+   */
+  radius?: number;
+  /**
+   * When true, replaces blocks matching replaceable_blocks even when normal block placement rules would prevent placement.
+   * @default false
+   * @minecraft force_replace_matched_blocks
+   */
+  forceReplaceMatchedBlocks?: boolean;
+  /**
    * One or more conditions that must be met in order to cause the chosen block type to spawn.
    * @minecraft spawn_filter
    */
@@ -9568,9 +9620,9 @@ export interface TransformationComponent {
    * Sound to play when the transformation starts.
    * @minecraft begin_transform_sound
    */
-  beginTransformSound?: string;
+  beginTransformSound?: string | string[];
   /**
-   * Defines the properties of the delay for the transformation.
+   * Seconds before the entity transforms, or the delay object. Format 1.26.60 accepts only the object: a number is written as `{ value }` there.
    * @minecraft delay
    */
   delay?: number | {
@@ -9611,7 +9663,6 @@ export interface TransformationComponent {
      * @minecraft value
      */
     value?: number;
-  } | {
     /** @minecraft range_min */
     rangeMin?: number;
     /** @minecraft range_max */
@@ -9655,10 +9706,9 @@ export interface TransformationComponent {
   preserveEquipment?: boolean;
   /**
    * Sound to play when the entity is done transforming.
-   * @default ""
    * @minecraft transformation_sound
    */
-  transformationSound?: string;
+  transformationSound?: string | string[];
 }
 
 /**

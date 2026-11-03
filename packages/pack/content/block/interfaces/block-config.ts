@@ -179,7 +179,8 @@ export type BlockVersions =
   | '1.26.20'
   | '1.26.30'
   | '1.26.40'
-  | '1.26.50';
+  | '1.26.50'
+  | '1.26.60';
 
 /**
  * Main interface for block configuration

@@ -10,10 +10,11 @@ export interface MinecraftPackageVersions {
   debugUtilities: string;
 }
 
-const FALLBACK_VERSIONS: MinecraftPackageVersions = {
-  server: '2.7.0',
-  serverUi: '2.0.0',
-  vanillaData: '1.26.20',
+/** Used when `npm view` fails (offline): the stable script modules of Minecraft 1.26.60. */
+export const FALLBACK_VERSIONS: MinecraftPackageVersions = {
+  server: '2.11.0',
+  serverUi: '2.3.0',
+  vanillaData: '1.26.60',
   debugUtilities: '1.0.0-beta',
 };
 

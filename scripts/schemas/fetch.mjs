@@ -5,7 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const REPO = 'https://github.com/Blockception/Minecraft-bedrock-json-schemas';
-const COMMIT = '30d5bb1f9dfc5443869e6b28741e4a6c978fe6ec';
+const COMMIT = 'c2859d0d99d3cfad7e0f08656af7c0bae045f956';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const dir = path.join(root, '.cache', 'bedrock-schemas');

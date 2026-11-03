@@ -24,14 +24,14 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "entity_type",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.21.90: 1."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.21.90: 1."
     }
    ],
    "spawnEvent": [
     "spawn_event",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.21.90: 1."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.21.90: 1."
     }
    ],
    "riders": [
@@ -821,7 +821,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "speed_multiplier",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "controlFlags": [
@@ -890,7 +890,8 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "damage": [
     "damage",
     {
-     "n": "range-any"
+     "n": "range-object",
+     "s": 1
     }
    ],
    "effectName": [
@@ -1074,7 +1075,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "ignore_visibilty",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "maxDist": [
@@ -1601,7 +1602,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "speed_multiplier",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "controlFlags": [
@@ -2145,7 +2146,11 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "apply_gravity"
    ],
    "buoyancy": [
-    "buoyancy"
+    "buoyancy",
+    {},
+    {
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
+    }
    ],
    "bigWaveProbability": [
     "big_wave_probability"
@@ -2285,7 +2290,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "speed_multiplier",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "controlFlags": [
@@ -2442,7 +2447,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "radius_change_chance",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "heightAboveTargetRange": [
@@ -2461,7 +2466,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "height_change_chance",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "goalRadius": [
@@ -2885,7 +2890,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "sound_chance",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ]
   }
@@ -3057,7 +3062,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "max_dist",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "maxPathTime": [
@@ -3106,14 +3111,14 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "set_persistent",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "targetDist": [
     "target_dist",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "trackTarget": [
@@ -3449,7 +3454,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "speed_multiplier",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "controlFlags": [
@@ -3822,7 +3827,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "curedDiscount": [
     "cured_discount",
     {
-     "i": {}
+     "n": "range-object"
     }
    ],
    "displayName": [
@@ -3834,7 +3839,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "maxCuredDiscount": [
     "max_cured_discount",
     {
-     "i": {}
+     "n": "range-object"
     }
    ],
    "maxNearbyCuredDiscount": [
@@ -4644,6 +4649,13 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "speedMultiplier": [
     "speed_multiplier"
    ],
+   "controlFlags": [
+    "control_flags",
+    {
+     "i": {},
+     "r": 1
+    }
+   ],
    "canGetScared": [
     "can_get_scared"
    ],
@@ -4718,7 +4730,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "soundInterval": [
     "sound_interval",
     {
-     "i": {}
+     "n": "range-object"
     }
    ],
    "stopDistance": [
@@ -4729,18 +4741,6 @@ export const keyMaps: Record<string, KeyMapNode> = {
    ],
    "withinRadius": [
     "within_radius"
-   ],
-   "onStart": [
-    "on_start",
-    {
-     "n": "trigger"
-    }
-   ],
-   "onEnd": [
-    "on_end",
-    {
-     "n": "trigger"
-    }
    ],
    "onTemptStart": [
     "on_tempt_start",
@@ -5748,7 +5748,11 @@ export const keyMaps: Record<string, KeyMapNode> = {
     }
    ],
    "chance": [
-    "chance"
+    "chance",
+    {},
+    {
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
+    }
    ]
   }
  },
@@ -6793,7 +6797,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "knockback_strength",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "knockbackFilters": [
@@ -6818,7 +6822,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "track_target",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "onRoarEnd": [
@@ -7062,7 +7066,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "target_dist",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.10: 1."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ]
   }
@@ -7204,7 +7208,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "target_distance",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "controlFlags": [
@@ -7433,7 +7437,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "max_dist",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "maxPathTime": [
@@ -7482,14 +7486,14 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "set_persistent",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "targetDist": [
     "target_dist",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "trackTarget": [
@@ -7540,7 +7544,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "max_dist",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "maxPathTime": [
@@ -7583,7 +7587,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "reach_multiplier",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "requireCompletePath": [
@@ -7593,14 +7597,14 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "set_persistent",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "targetDist": [
     "target_dist",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "trackTarget": [
@@ -7733,7 +7737,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "destination_pos_search_spread_degrees",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "destinationPositionRange": [
@@ -7857,7 +7861,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "jumpDelay": [
     "jump_delay",
     {
-     "i": {}
+     "n": "range-object"
     }
    ],
    "maxTurn": [
@@ -8403,7 +8407,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "speed_multiplier",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "controlFlags": [
@@ -9162,7 +9166,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "attack_interval_min",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "attackOwner": [
@@ -9323,7 +9327,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "cooldown",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "mustReach": [
@@ -9923,6 +9927,13 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "speedMultiplier": [
     "speed_multiplier"
    ],
+   "controlFlags": [
+    "control_flags",
+    {
+     "i": {},
+     "r": 1
+    }
+   ],
    "damageSources": [
     "damage_sources",
     {
@@ -9945,14 +9956,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "soundInterval": [
     "sound_interval",
     {
-     "p": {
-      "rangeMin": [
-       "range_min"
-      ],
-      "rangeMax": [
-       "range_max"
-      ]
-     }
+     "n": "range-object"
     }
    ]
   }
@@ -10005,7 +10009,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "search_radius",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "searchRange": [
@@ -10898,11 +10902,18 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "uncertaintyMultiplier": [
     "uncertainty_multiplier"
    ],
+   "spreadFire": [
+    "spread_fire",
+    {},
+    {
+     "s": "1.26.50"
+    }
+   ],
    "ownerLaunchImmunityTicks": [
     "owner_launch_immunity_ticks",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ]
   }
@@ -11158,7 +11169,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
      "n": "trigger"
     },
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ]
   }
@@ -11211,7 +11222,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "avoid_damage_blocks",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1."
     }
    ],
    "canLandOnTrees": [
@@ -11227,7 +11238,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "y_offset",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1."
     }
    ]
   }
@@ -11283,14 +11294,14 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "angle_of_view_horizontal",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "angleOfViewVertical": [
     "angle_of_view_vertical",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "lookTime": [
@@ -11320,7 +11331,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "look_distance",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1."
     }
    ]
   }
@@ -11493,7 +11504,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "speed_multiplier",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "controlFlags": [
@@ -11660,14 +11671,14 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "attack_interval_min",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.20: 1, 1.26.0: 3."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.26.20: 1, 1.26.0: 2."
     }
    ],
    "attackIntervalMax": [
     "attack_interval_max",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.20: 1, 1.26.0: 3."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.26.20: 1, 1.26.0: 2."
     }
    ]
   }
@@ -11787,16 +11798,10 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "dismount_mode"
    ],
    "onRiderEnterEvent": [
-    "on_rider_enter_event",
-    {
-     "n": "trigger"
-    }
+    "on_rider_enter_event"
    ],
    "onRiderExitEvent": [
-    "on_rider_exit_event",
-    {
-     "n": "trigger"
-    }
+    "on_rider_exit_event"
    ],
    "passengerMaxWidth": [
     "passenger_max_width"
@@ -11987,7 +11992,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "sound_interval",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "soundDelay": [
@@ -12033,14 +12038,15 @@ export const keyMaps: Record<string, KeyMapNode> = {
  },
  "behavior:sendEvent": {
   "p": {
+   "controlFlags": [
+    "control_flags",
+    {
+     "i": {},
+     "r": 1
+    }
+   ],
    "priority": [
     "priority"
-   ],
-   "castDuration": [
-    "cast_duration"
-   ],
-   "lookAtTarget": [
-    "look_at_target"
    ],
    "eventChoices": [
     "event_choices",
@@ -12092,25 +12098,6 @@ export const keyMaps: Record<string, KeyMapNode> = {
          },
          "r": 1
         }
-       ]
-      }
-     },
-     "r": 1
-    }
-   ],
-   "sequence": [
-    "sequence",
-    {
-     "i": {
-      "p": {
-       "baseDelay": [
-        "base_delay"
-       ],
-       "event": [
-        "event"
-       ],
-       "soundEvent": [
-        "sound_event"
        ]
       }
      },
@@ -12453,7 +12440,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "goal_radius",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "controlFlags": [
@@ -13284,7 +13271,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "leap_distance",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "leapHeight": [
@@ -13396,7 +13383,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "melee_fov",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "minPathTime": [
@@ -13442,7 +13429,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "set_persistent",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "stompRangeMultiplier": [
@@ -13452,7 +13439,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "target_dist",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "trackTarget": [
@@ -14549,6 +14536,13 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "speedMultiplier": [
     "speed_multiplier"
    ],
+   "controlFlags": [
+    "control_flags",
+    {
+     "i": {},
+     "r": 1
+    }
+   ],
    "canGetScared": [
     "can_get_scared"
    ],
@@ -14623,7 +14617,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "soundInterval": [
     "sound_interval",
     {
-     "i": {}
+     "n": "range-object"
     }
    ],
    "stopDistance": [
@@ -14634,18 +14628,6 @@ export const keyMaps: Record<string, KeyMapNode> = {
    ],
    "withinRadius": [
     "within_radius"
-   ],
-   "onStart": [
-    "on_start",
-    {
-     "n": "trigger"
-    }
-   ],
-   "onEnd": [
-    "on_end",
-    {
-     "n": "trigger"
-    }
    ],
    "onTemptStart": [
     "on_tempt_start",
@@ -14685,7 +14667,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "time": [
     "time",
     {
-     "i": {}
+     "n": "range-object"
     }
    ],
    "timeDownEvent": [
@@ -14916,6 +14898,37 @@ export const keyMaps: Record<string, KeyMapNode> = {
    "blockType": [
     "block_type"
    ],
+   "replaceableBlocks": [
+    "replaceable_blocks",
+    {
+     "i": {
+      "p": {
+       "name": [
+        "name"
+       ],
+       "states": [
+        "states",
+        {
+         "a": {}
+        }
+       ],
+       "tags": [
+        "tags",
+        {
+         "n": "molang"
+        }
+       ]
+      }
+     },
+     "r": 1
+    }
+   ],
+   "radius": [
+    "radius"
+   ],
+   "forceReplaceMatchedBlocks": [
+    "force_replace_matched_blocks"
+   ],
    "spawnFilter": [
     "spawn_filter",
     {
@@ -14947,7 +14960,10 @@ export const keyMaps: Record<string, KeyMapNode> = {
     }
    ],
    "beginTransformSound": [
-    "begin_transform_sound"
+    "begin_transform_sound",
+    {
+     "i": {}
+    }
    ],
    "delay": [
     "delay",
@@ -15003,7 +15019,10 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "preserve_equipment"
    ],
    "transformationSound": [
-    "transformation_sound"
+    "transformation_sound",
+    {
+     "i": {}
+    }
    ]
   }
  },
@@ -16054,14 +16073,14 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "sound_delay_max",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "soundDelayMin": [
     "sound_delay_min",
     {},
     {
-     "d": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
     }
    ],
    "useBlockMax": [

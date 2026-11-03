@@ -147,7 +147,7 @@ See [Configuration reference](#configuration-reference) below for all options.
 | `alias`           | `string`                                           | yes      | —                 | Pack folder prefix → `{ALIAS}_BP` / `{ALIAS}_RP`                       |
 | `namespace`       | `string`                                           | yes      | —                 | Content identifier namespace in output paths                           |
 | `minGameVersion`  | `string`                                           | no       | `1.26.20`         | Minimum supported game version                                         |
-| `output`          | `FerolytePackOutput`                               | no       | `minecraft-dev`   | Output target preset (see [Output presets](#output-presets))           |
+| `output`          | `FerolytePackOutput`                               | no       | `minecraft-dev`   | Output preset or directory (see [Output presets](#output-presets))     |
 | `input`           | `string`                                           | no       | `packs`           | Root directory containing `BP/` and `RP/`                              |
 | `minifyJSON`      | `boolean`                                          | no       | `false`           | Minify all output JSON (compiled and copied)                           |
 | `archive`         | `boolean`                                          | no       | `false`           | Create `{alias}.mcaddon` in the project root after a full build        |
@@ -162,7 +162,7 @@ See [Configuration reference](#configuration-reference) below for all options.
 
 #### Output presets
 
-The `output` field accepts one of the built-in presets. Pack folders are always named `{alias.toUpperCase()}_BP` and `{alias.toUpperCase()}_RP`.
+The `output` field accepts one of the built-in presets or a directory path. Pack folders are always named `{alias.toUpperCase()}_BP` and `{alias.toUpperCase()}_RP`.
 
 | Preset                    | BP output location                                          | RP output location                                          |
 | ------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- |
@@ -171,6 +171,7 @@ The `output` field accepts one of the built-in presets. Pack folders are always 
 | `minecraft-preview`       | `{minecraft-preview}/behavior_packs/{ALIAS}_BP`             | `{minecraft-preview}/resource_packs/{ALIAS}_RP`             |
 | `minecraft-preview-dev`   | `{minecraft-preview}/development_behavior_packs/{ALIAS}_BP` | `{minecraft-preview}/development_resource_packs/{ALIAS}_RP` |
 | `build`                   | `./build/{ALIAS}_BP`                                        | `./build/{ALIAS}_RP`                                        |
+| any other string          | `<dir>/{ALIAS}_BP` (`<dir>` absolute or relative to the working directory) | `<dir>/{ALIAS}_RP` |
 
 `{minecraft}` resolves to the Bedrock `com.mojang` directory under the user's Minecraft install. `{minecraft-preview}` resolves to the Preview app's `com.mojang` directory. On Windows these are typically:
 
@@ -291,7 +292,10 @@ Content files must `export default` a `ContentBuilder` or an array of builders. 
 ### Asset pipeline
 
 - Copies non-TypeScript BP/RP assets into the output packs
-- Optional JSON minification via [`packs.minifyJSON`](#packs-ferolytepackconfig)
+- Optional JSON minification via [`packs.minifyJSON`](#packs-ferolytepackconfig). Number literals keep their text (`0.0` stays `0.0`, which
+  float entity property defaults need), minified or not, built or copied
+- `check` / `build` report a BP `manifest.json` script module whose `entry` is not the scripts bundle path
+  (`scripts/{namespace, "_" → "/"}/index.js`) and not a file of the pack (error, naming both paths)
 
 ### Script bundling
 

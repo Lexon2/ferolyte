@@ -1,4 +1,7 @@
 {
+  "block/minecraft:collision_box": [
+    "TYPE"
+  ],
   "block/minecraft:custom_components": [
     "TYPE"
   ],
@@ -33,6 +36,10 @@
   "entity/minecraft:looked_at": [
     "TYPE",
     "LOST_FIELD"
+  ],
+  "entity/minecraft:rideable": [
+    "REJECTED",
+    "TYPE"
   ],
   "item/minecraft:icon": [
     "CHANGED"

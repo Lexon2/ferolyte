@@ -13,9 +13,15 @@ export const keyMaps: Record<string, KeyMapNode> = {
      "p": {
       "slotCount": [
        "slot_count"
+      ],
+      "title": [
+       "title"
       ]
      }
     }
+   ],
+   "entityStorage": [
+    "entity_storage"
    ]
   }
  },
@@ -42,6 +48,18 @@ export const keyMaps: Record<string, KeyMapNode> = {
     {
      "i": {}
     }
+   ],
+   "min": [
+    "min",
+    {
+     "i": {}
+    }
+   ],
+   "max": [
+    "max",
+    {
+     "i": {}
+    }
    ]
   },
   "i": {
@@ -54,6 +72,18 @@ export const keyMaps: Record<string, KeyMapNode> = {
     ],
     "size": [
      "size",
+     {
+      "i": {}
+     }
+    ],
+    "min": [
+     "min",
+     {
+      "i": {}
+     }
+    ],
+    "max": [
+     "max",
      {
       "i": {}
      }
@@ -239,6 +269,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
    ]
   }
  },
+ "component:enchantmentPowerTransmitter": {},
  "component:entityFallOn": {
   "p": {
    "minFallDistance": [
@@ -513,6 +544,16 @@ export const keyMaps: Record<string, KeyMapNode> = {
    ],
    "direction": [
     "direction"
+   ]
+  }
+ },
+ "component:neighborChange": {
+  "p": {
+   "neighborDirections": [
+    "neighbor_directions",
+    {
+     "i": {}
+    }
    ]
   }
  },
@@ -843,5 +884,15 @@ export const keyMaps: Record<string, KeyMapNode> = {
  },
  "component:unitCube": {
   "a": {}
+ },
+ "component:vibrationProperties": {
+  "p": {
+   "dampenVibrations": [
+    "dampen_vibrations"
+   ],
+   "occludeVibrations": [
+    "occlude_vibrations"
+   ]
+  }
  }
 };

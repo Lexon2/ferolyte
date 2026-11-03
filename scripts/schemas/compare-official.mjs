@@ -14,7 +14,7 @@ const OFFICIAL = path.join(ROOT, '.cache/bedrock-samples/metadata/json_schemas/s
 const GENERATED = path.join(ROOT, 'packages/pack/content/generated');
 const REPORT = path.join(ROOT, 'docs/roadmap/official-schemas-report.md');
 const versionArg = process.argv.indexOf('--version');
-const VERSION = versionArg > 0 ? process.argv[versionArg + 1] : '1.26.50';
+const VERSION = versionArg > 0 ? process.argv[versionArg + 1] : '1.26.60';
 
 if (!existsSync(OFFICIAL)) {
   console.error('Official schemas missing: run `node scripts/schemas/fetch-samples.mjs` first');
@@ -53,12 +53,12 @@ const areas = [
   },
   {
     name: 'item',
-    index: path.join(OFFICIAL, 'item', '1.26.30', 'Item Components.json'),
+    index: path.join(OFFICIAL, 'item', '1.26.50', 'Item Components.json'),
     generated: ['item/registry.ts', 'item/key-maps.ts'],
   },
   {
     name: 'block',
-    index: path.join(OFFICIAL, 'block', '1.26.20', 'Components.json'),
+    index: path.join(OFFICIAL, 'block_components', '1.26.60', 'Block Components.json'),
     generated: ['block/registry.ts', 'block/key-maps.ts'],
   },
 ];

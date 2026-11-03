@@ -16,6 +16,29 @@ const VALID_CATEGORIES = [
   'none',
 ] as const;
 
+/**
+ * The game rejects a `menu_category.group` without a namespace ("string must be prefixed with a namespace") and
+ * then drops the item's other components too. Vanilla `itemGroup.name.*` groups get the `minecraft:` prefix; any
+ * other unprefixed value is an error (written as given).
+ */
+export const namespaceMenuGroup = (
+  group: string,
+  ctx?: ContentDiagnosticContext,
+): string => {
+  if (group.includes(':')) {
+    return group;
+  }
+  if (group.startsWith('itemGroup.name.')) {
+    return `minecraft:${group}`;
+  }
+  logContentError(
+    ctx === undefined ? undefined : { ...ctx, fieldPath: 'group' },
+    `menuCategory.group "${group}" must be prefixed with a namespace ("minecraft:itemGroup.name.<group>" or "<namespace>:<group>")`,
+  );
+
+  return group;
+};
+
 export const convertMenuCategory = (
   input: ItemMenuCategory,
   ctx?: ContentDiagnosticContext,
@@ -61,7 +84,7 @@ export const convertMenuCategory = (
       return undefined;
     }
 
-    result.group = input.group;
+    result.group = namespaceMenuGroup(input.group, ctx);
   }
 
   return result as unknown as ItemMenuCategory;

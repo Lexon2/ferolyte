@@ -5,7 +5,7 @@ import type { EntityFilters } from '../../server-entity/interfaces/filters';
 import type { PartialEntityEventTrigger } from '../../server-entity/interfaces/trigger';
 import type { MinMaxRange } from '../../server-entity/types/min-max-range';
 import type { LooseString } from '@ferolyte/common/types/core/loose-string';
-import type { Enum6c6496, Enum614ad8, Enum78acf6, Enuma41b30, Enumb49f2a, Enum1bab91, Enum51f87e } from './shared';
+import type { Enum6c6496, Enum0d259a, Enuma41b30, Enumb49f2a, Enum1bab91, Enum51f87e } from './shared';
 
 /**
  * The allow off hand component determines whether the item can be placed in the off hand slot of the inventory.
@@ -266,19 +266,19 @@ export interface DurabilitySensorComponent {
   /**
    * The effects are emitted when the item durability value is less than or equal to this value.
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft durability
    */
   durability?: number;
   /**
    * Particle effect to emit when the threshold is met.
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft particle_type
    */
   particleType?: string;
   /**
    * Sound effect to emit when the threshold is met.
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft sound_event
    */
   soundEvent?: string;
@@ -299,13 +299,13 @@ export interface DurabilitySensorComponent {
      * @default "none"
      * @minecraft particle_type
      */
-    particleType?: Enum614ad8;
+    particleType?: Enum0d259a;
     /**
-     * Sound effect to emit when the threshold is met.
-     * @default "undefined"
+     * Sound effect to emit when the threshold is met. Accepts the name of any sound event defined in `sound_definitions.json`, including the built-in vanilla sound events.
+     * @default ""
      * @minecraft sound_event
      */
-    soundEvent?: Enum78acf6;
+    soundEvent?: string;
   }[];
 }
 
@@ -432,37 +432,37 @@ export interface FoodComponent {
    */
   usingConvertsTo?: string;
   /**
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft effects
    */
   effects?: Record<string, unknown>[];
   /**
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft remove_effects
    */
   removeEffects?: string[];
   /**
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft on_use_action
    */
   onUseAction?: string;
   /**
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft on_use_range
    */
   onUseRange?: number[];
   /**
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft is_meat
    */
   isMeat?: boolean;
   /**
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft cooldown_type
    */
   cooldownType?: string;
   /**
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft cooldown_time
    */
   cooldownTime?: number;
@@ -1186,7 +1186,7 @@ export interface WearableComponent {
   protection?: number;
   /**
    * Sets if the item can be dropped by a dispenser block
-   * @deprecated not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it.
    * @minecraft dispensable
    */
   dispensable?: boolean;

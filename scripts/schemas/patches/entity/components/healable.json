@@ -1,4 +1,20 @@
 {
-  "properties": { "chance": { "type": "number", "description": "Not documented in the schemas, used by vanilla." } },
-  "definitions": { "effect": { "properties": { "chance": { "type": "number" } } } }
+  "properties": {
+    "chance": { "type": "number", "description": "Not documented in the schemas, used by vanilla." },
+    "items": {
+      "items": {
+        "properties": {
+          "effects": {
+            "type": null,
+            "items": null,
+            "oneOf": [
+              { "$ref": "#/definitions/effect" },
+              { "type": "array", "items": { "$ref": "#/definitions/effect" } }
+            ],
+            "description": "One effect or the list of effects. Format 1.26.60 accepts only a list: a single effect is written as a one-element list there."
+          }
+        }
+      }
+    }
+  }
 }
