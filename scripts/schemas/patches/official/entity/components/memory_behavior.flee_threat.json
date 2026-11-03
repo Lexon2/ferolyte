@@ -1,6 +1,6 @@
 {
   "x-new-component": "minecraft:memory_behavior.flee_threat",
-  "x-official": "official 1.21.80–1.26.50",
+  "x-official": "official 1.21.80–1.26.60",
   "type": "object",
   "description": "Listed by the official Mojang schemas without a body.",
   "additionalProperties": {},

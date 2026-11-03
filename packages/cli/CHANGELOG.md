@@ -1,5 +1,31 @@
 # @ferolyte/cli
 
+## 0.8.0
+
+### Minor Changes
+
+- **Float literals survive `minifyJSON` and copying.** JSON output is re-printed token by token instead of parsed and re-stringified, so number literals keep their text: a float entity property `default: 0` stays `0.0` with `packs.minifyJSON: true` (the game rejected `0` and dropped every property of the entity), and a copied `.json` keeps `1.0`. Comments and trailing commas are still removed from copied files; the layout (2 spaces, or minified) is unchanged.
+- **New `check` / `build` error: BP manifest script entry.** A `modules[type=script].entry` in `packs/BP/manifest.json` that is neither the scripts bundle path (`scripts/<namespace, "_" → "/">/index.js`) nor a file of the pack is an error naming both paths (the game would run no scripts). An entry that is a hand-written file of the pack while a scripts entry is bundled too is a warning (the bundle is not loaded). The manifest written by `ferolyte init` stays clean.
+- **`menuCategory.group` is written with a namespace.** The game rejects an unprefixed group (`string must be prefixed with a namespace`) and then drops the item's other components. The type now takes `'minecraft:itemGroup.name.<group>'` and namespaced catalog groups (`'<namespace>:<group>'`); the old unprefixed `'itemGroup.name.<group>'` still type-checks and is written as `minecraft:itemGroup.name.<group>`. Any other value without a namespace is an error. `check` also reports an unprefixed group in a plain JSON item or block of the packs (error).
+- **Minecraft Bedrock 1.26.60.** Schemas and generated typings are refreshed from bedrock-samples `v1.26.60.5` and the current Blockception schemas.
+
+  - `version` suggestions: server entities `1.26.30`–`1.26.60`, blocks `1.26.60` (items stay at `1.26.50`). Default `format_version`s are unchanged.
+  - Entity format 1.26.60 is parsed strictly by the game. At server entity `version` 1.26.60+ the SDK writes the accepted shapes: a single `rideable.seats` entry, `healable.items[].effects` entry, `spellEffects.removeEffects` string and `transformation` sound become lists, an `addEffects` effect name becomes `{ effect }`, a number `transformation.delay` becomes `{ value }` (`rangeMin` / `rangeMax` there is an error), a number `movementJump.jumpDelay` / `economyTradeTable.curedDiscount` / `maxCuredDiscount` becomes `{ min, max }`. `timer.time` is written as `{ min, max }` from format 1.26.50 (`[10, 14]` used to stay an array). Older formats keep the shapes as written.
+  - Block format 1.26.60 writes a single `collisionBox` as a list.
+  - New typed fields: `rideable.dismountMode: 'look_direction'` (the schema's `'looking'` is not accepted by the game), `trail.replaceableBlocks` / `radius` / `forceReplaceMatchedBlocks`; experimental block components `enchantmentPowerTransmitter`, `vibrationProperties`, `neighborChange`, `blockEntity.entityStorage` / container `title`, `collisionBox` `min` / `max`. Item `durabilitySensor` / `swingSounds` / `useModifiers.startSound` take any sound id.
+  - Typings follow the 1.26.60 schemas: some fields the official schemas no longer have (for example `sendEvent` top-level `castDuration` / `lookAtTarget` / `sequence`, which belong in `eventChoices`) are now unknown-field errors and are not written.
+  - `ferolyte init` fallback script module versions (used offline): `@minecraft/server` 2.11.0, `@minecraft/server-ui` 2.3.0, `@minecraft/vanilla-data` 1.26.60.
+
+- **`packs.output` accepts a directory.** Any value that is not a preset (`minecraft`, `minecraft-dev`, `minecraft-preview`, `minecraft-preview-dev`, `build`) is a directory, absolute or relative to the working directory: `output: 'D:/packs'` writes `D:/packs/{ALIAS}_BP` and `D:/packs/{ALIAS}_RP`. It used to fail with `Invalid output type`; `'custom'` keeps writing `./custom/{ALIAS}_*` (it is now just a directory name). An empty value fails with a message that lists the presets.
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @ferolyte/pack@0.8.0
+  - @ferolyte/common@0.8.0
+
 ## 0.7.0
 
 ### Minor Changes

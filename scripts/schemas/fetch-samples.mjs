@@ -5,7 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const REPO = 'https://github.com/Mojang/bedrock-samples';
-const COMMIT = '46ba6ea985fb5a92d79a9419198f10dda14c199d';
+const COMMIT = '15701fa9c13923f12662984c32c124327e40e3d3';
 const PATHS = [
   'behavior_pack/entities',
   'behavior_pack/items',

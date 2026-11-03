@@ -1,5 +1,25 @@
 # @ferolyte/pack
 
+## 0.8.0
+
+### Minor Changes
+
+- **`menuCategory.group` is written with a namespace.** The game rejects an unprefixed group (`string must be prefixed with a namespace`) and then drops the item's other components. The type now takes `'minecraft:itemGroup.name.<group>'` and namespaced catalog groups (`'<namespace>:<group>'`); the old unprefixed `'itemGroup.name.<group>'` still type-checks and is written as `minecraft:itemGroup.name.<group>`. Any other value without a namespace is an error. `check` also reports an unprefixed group in a plain JSON item or block of the packs (error).
+- **Minecraft Bedrock 1.26.60.** Schemas and generated typings are refreshed from bedrock-samples `v1.26.60.5` and the current Blockception schemas.
+
+  - `version` suggestions: server entities `1.26.30`–`1.26.60`, blocks `1.26.60` (items stay at `1.26.50`). Default `format_version`s are unchanged.
+  - Entity format 1.26.60 is parsed strictly by the game. At server entity `version` 1.26.60+ the SDK writes the accepted shapes: a single `rideable.seats` entry, `healable.items[].effects` entry, `spellEffects.removeEffects` string and `transformation` sound become lists, an `addEffects` effect name becomes `{ effect }`, a number `transformation.delay` becomes `{ value }` (`rangeMin` / `rangeMax` there is an error), a number `movementJump.jumpDelay` / `economyTradeTable.curedDiscount` / `maxCuredDiscount` becomes `{ min, max }`. `timer.time` is written as `{ min, max }` from format 1.26.50 (`[10, 14]` used to stay an array). Older formats keep the shapes as written.
+  - Block format 1.26.60 writes a single `collisionBox` as a list.
+  - New typed fields: `rideable.dismountMode: 'look_direction'` (the schema's `'looking'` is not accepted by the game), `trail.replaceableBlocks` / `radius` / `forceReplaceMatchedBlocks`; experimental block components `enchantmentPowerTransmitter`, `vibrationProperties`, `neighborChange`, `blockEntity.entityStorage` / container `title`, `collisionBox` `min` / `max`. Item `durabilitySensor` / `swingSounds` / `useModifiers.startSound` take any sound id.
+  - Typings follow the 1.26.60 schemas: some fields the official schemas no longer have (for example `sendEvent` top-level `castDuration` / `lookAtTarget` / `sequence`, which belong in `eventChoices`) are now unknown-field errors and are not written.
+  - `ferolyte init` fallback script module versions (used offline): `@minecraft/server` 2.11.0, `@minecraft/server-ui` 2.3.0, `@minecraft/vanilla-data` 1.26.60.
+
+- **`rideable.onRiderEnterEvent` / `onRiderExitEvent` are event id strings.** The game accepts only a string there (the event runs on the ridden entity) and ignored the event object the type used to allow. The type is now `string`; an event object is an error naming the string form (`write onRiderExitEvent: 'ns:seat_exit'`) and its `event` is written as the string.
+
+### Patch Changes
+
+- @ferolyte/common@0.8.0
+
 ## 0.7.0
 
 ### Minor Changes

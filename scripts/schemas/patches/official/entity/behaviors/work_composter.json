@@ -9,19 +9,24 @@
           "jump"
         ],
         "title": "Goal's control flags",
-        "type": "string"
+        "type": "string",
+        "x-enum-binary-value": [
+          1,
+          2,
+          4
+        ]
       },
       "type": "array",
       "x-since": "1.26.10"
     },
     "sound_delay_max": {
       "x-deprecated": {
-        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
       }
     },
     "sound_delay_min": {
       "x-deprecated": {
-        "reason": "not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it."
+        "reason": "not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it."
       }
     }
   }

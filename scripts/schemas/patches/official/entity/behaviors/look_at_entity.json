@@ -9,7 +9,12 @@
           "jump"
         ],
         "title": "Goal's control flags",
-        "type": "string"
+        "type": "string",
+        "x-enum-binary-value": [
+          1,
+          2,
+          4
+        ]
       },
       "type": "array",
       "x-since": "1.26.0"

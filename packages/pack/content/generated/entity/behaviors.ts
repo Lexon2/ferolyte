@@ -5,7 +5,7 @@ import type { EntityFilters } from '../../server-entity/interfaces/filters';
 import type { PartialEntityEventTrigger } from '../../server-entity/interfaces/trigger';
 import type { MinMaxRange } from '../../server-entity/types/min-max-range';
 import type { LooseString } from '@ferolyte/common/types/core/loose-string';
-import type { Enum6c6496, Enum3db897, Enumcaa25b, Enum614ad8, Enum78acf6, Enum23f7ae } from './shared';
+import type { Enum6c6496, Enum3db897, Enumcaa25b, Enum614ad8, Enumcd2873, Enum23f7ae } from './shared';
 
 /**
  * Enables the mob to admire items that have been configured as admirable. Must be used in combination with the admire_item component.
@@ -60,7 +60,7 @@ export interface AquaticChargeAttackBehavior {
   /**
    * Movement speed multiplier of the mob when using this AI Goal.
    * @default 1
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft speed_multiplier
    */
   speedMultiplier?: number;
@@ -292,7 +292,7 @@ export interface AvoidMobTypeBehavior {
   /**
    * Whether or not to ignore direct line of sight while this entity is running away from other specified entities.
    * @default false
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft ignore_visibilty
    */
   ignoreVisibilty?: boolean;
@@ -643,7 +643,7 @@ export interface BreakDoorBehavior {
   /**
    * Movement speed multiplier of the mob when using this AI Goal.
    * @default 1
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft speed_multiplier
    */
   speedMultiplier?: number;
@@ -736,7 +736,7 @@ export interface CelebrateSurviveBehavior {
   /**
    * Movement speed multiplier of the mob when using this AI Goal.
    * @default 1
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft speed_multiplier
    */
   speedMultiplier?: number;
@@ -809,7 +809,7 @@ export interface ChargeAttackBehavior {
    * Introduced in format version 1.21.100 (older versions may reject it).
    * @minecraft sound_event
    */
-  soundEvent?: Enum78acf6;
+  soundEvent?: Enumcd2873;
 }
 
 /**
@@ -930,7 +930,7 @@ export interface CircleAroundAnchorBehavior {
    * A random value to determine when to increase the size of the radius up to the maximum. This has a 1/value chance every tick to do so.
    * @default 250
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft radius_change_chance
    */
   radiusChangeChance?: number;
@@ -948,7 +948,7 @@ export interface CircleAroundAnchorBehavior {
    * A random value to determine when to change the height of the mob from the anchor point. This has a 1/value chance every tick to do so.
    * @default 350
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft height_change_chance
    */
   heightChangeChance?: number;
@@ -1258,7 +1258,7 @@ export interface DefendTrustedTargetBehavior {
   /**
    * Probability that a sound will play.
    * @default 0.05
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft sound_chance
    */
   soundChance?: number;
@@ -1529,7 +1529,7 @@ export interface DelayedAttackBehavior {
   innerBoundaryTimeIncrease?: number;
   /**
    * Unused. No effect on "minecraft:behavior.melee_attack".
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft max_dist
    */
   maxDist?: number;
@@ -1607,13 +1607,13 @@ export interface DelayedAttackBehavior {
   /**
    * Allows the actor to be set to persist upon targeting a player.
    * @default false
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft set_persistent
    */
   setPersistent?: boolean;
   /**
    * Unused. No effect on "minecraft:behavior.melee_attack".
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft target_dist
    */
   targetDist?: number;
@@ -2024,7 +2024,7 @@ export interface DrinkPotionBehavior {
   /**
    * Movement speed multiplier of the mob when using this AI Goal.
    * @default 1
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft speed_multiplier
    */
   speedMultiplier?: number;
@@ -2968,6 +2968,11 @@ export interface FloatTemptBehavior {
    */
   speedMultiplier?: number;
   /**
+   * UNDOCUMENTED
+   * @minecraft control_flags
+   */
+  controlFlags?: ("move" | "look" | "jump")[];
+  /**
    * If true, the mob can stop being tempted if the player moves too fast while close to this mob.
    * @default false
    * @minecraft can_get_scared
@@ -3063,7 +3068,7 @@ export interface FloatTemptBehavior {
    * Range of random ticks to wait between tempt sounds.
    * @minecraft sound_interval
    */
-  soundInterval?: number | unknown;
+  soundInterval?: MinMaxRange;
   /**
    * The distance at which the mob will stop following the player.
    * @default 1.5
@@ -3081,16 +3086,6 @@ export interface FloatTemptBehavior {
    * @minecraft within_radius
    */
   withinRadius?: number;
-  /**
-   * Specifies the event to trigger when the goal starts
-   * @minecraft on_start
-   */
-  onStart?: string | PartialEntityEventTrigger | (string | PartialEntityEventTrigger)[];
-  /**
-   * Specifies the event to trigger when the goal ends
-   * @minecraft on_end
-   */
-  onEnd?: string | PartialEntityEventTrigger | (string | PartialEntityEventTrigger)[];
   /**
    * Event to fire when the mob starts being tempted.
    * @minecraft on_tempt_start
@@ -4606,7 +4601,7 @@ export interface KnockbackRoarBehavior {
    * The strength of the knockback.
    * @default 4
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft knockback_strength
    */
   knockbackStrength?: number;
@@ -4645,7 +4640,7 @@ export interface KnockbackRoarBehavior {
   /**
    * If true, this mob will chase after the target as long as it's a valid target.
    * @default false
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft track_target
    */
   trackTarget?: boolean;
@@ -4952,7 +4947,7 @@ export interface LeapAtTargetBehavior {
   /**
    * Pre-1.21 name of `target_distance`.
    * @deprecated
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.10: 1.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft target_dist
    */
   targetDist?: number;
@@ -5057,7 +5052,7 @@ export interface LookAtPlayerBehavior {
   /**
    * The distance in blocks from which the entity will choose a target.
    * @default 6
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft target_distance
    */
   targetDistance?: number;
@@ -5238,7 +5233,7 @@ export interface MeleeAttackBehavior {
   innerBoundaryTimeIncrease?: number;
   /**
    * Unused. No effect on "minecraft:behavior.melee_attack".
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft max_dist
    */
   maxDist?: number;
@@ -5316,13 +5311,13 @@ export interface MeleeAttackBehavior {
   /**
    * Allows the actor to be set to persist upon targeting a player.
    * @default false
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft set_persistent
    */
   setPersistent?: boolean;
   /**
    * Unused. No effect on "minecraft:behavior.melee_attack".
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft target_dist
    */
   targetDist?: number;
@@ -5406,7 +5401,7 @@ export interface MeleeBoxAttackBehavior {
   innerBoundaryTimeIncrease?: number;
   /**
    * Unused. No effect on "minecraft:behavior.melee_attack".
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft max_dist
    */
   maxDist?: number;
@@ -5472,7 +5467,7 @@ export interface MeleeBoxAttackBehavior {
   /**
    * Used with the base size of the entity to determine minimum target-distance before trying to deal attack damage.
    * @default 2
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft reach_multiplier
    */
   reachMultiplier?: number;
@@ -5485,13 +5480,13 @@ export interface MeleeBoxAttackBehavior {
   /**
    * Allows the actor to be set to persist upon targeting a player.
    * @default false
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft set_persistent
    */
   setPersistent?: boolean;
   /**
    * Unused. No effect on "minecraft:behavior.melee_attack".
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft target_dist
    */
   targetDist?: number;
@@ -5617,7 +5612,7 @@ export interface MoveAroundTargetBehavior {
   /**
    * This angle (in degrees) is used for controlling the spread when picking a destination position behind the target. A zero spread angle means the destination position will be straight behind the target with no variance. A 90 degree spread angle means the destination position can be up to 45 degrees to the left and to the right of the position straight behind the target's view direction.
    * @default 90
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft destination_pos_search_spread_degrees
    */
   destinationPosSearchSpreadDegrees?: number;
@@ -6380,7 +6375,7 @@ export interface NapBehavior {
   /**
    * Movement speed multiplier of the mob when using this AI Goal.
    * @default 1
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft speed_multiplier
    */
   speedMultiplier?: number;
@@ -6594,7 +6589,7 @@ export interface NearestAttackableTargetBehavior {
   /**
    * Alias for `attack_interval`; provides the same functionality as `attack_interval`.
    * @default 0
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft attack_interval_min
    */
   attackIntervalMin?: number;
@@ -6856,7 +6851,7 @@ export interface NearestPrioritizedAttackableTargetBehavior {
   /**
    * The amount of time in seconds that the mob has to wait before selecting a target of the same type again
    * @default 0
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft cooldown
    */
   cooldown?: number;
@@ -7439,6 +7434,11 @@ export interface PanicBehavior {
    */
   speedMultiplier?: number;
   /**
+   * UNDOCUMENTED
+   * @minecraft control_flags
+   */
+  controlFlags?: ("move" | "look" | "jump")[];
+  /**
    * The list of Entity Damage Sources that will cause this mob to panic.
    * @minecraft damage_sources
    */
@@ -7470,18 +7470,7 @@ export interface PanicBehavior {
    * The range of time in seconds to randomly wait before playing the sound again.
    * @minecraft sound_interval
    */
-  soundInterval?: {
-    /**
-     * The minimum time in seconds before the `panic_sound` plays.
-     * @minecraft range_min
-     */
-    rangeMin?: number;
-    /**
-     * The maximum time in seconds before the `panic_sound` plays.
-     * @minecraft range_max
-     */
-    rangeMax?: number;
-  };
+  soundInterval?: MinMaxRange;
 }
 
 /**
@@ -7523,7 +7512,7 @@ export interface PetSleepWithOwnerBehavior {
    * The radius that the mob will search for an owner to curl up with.
    * @default 10
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft search_radius
    */
   searchRadius?: number;
@@ -8119,7 +8108,7 @@ export interface RamAttackBehavior {
   runSpeed?: number;
   /**
    * The event to trigger when attacking.
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft trigger
    */
   trigger?: string | PartialEntityEventTrigger | (string | PartialEntityEventTrigger)[];
@@ -8200,7 +8189,7 @@ export interface RandomFlyBehavior {
   controlFlags?: ("move" | "look" | "jump")[];
   /**
    * If true, the mob will avoid blocks that cause damage.
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1.
    * @minecraft avoid_damage_blocks
    */
   avoidDamageBlocks?: boolean;
@@ -8227,7 +8216,7 @@ export interface RandomFlyBehavior {
   /**
    * Height in blocks to add to the selected target position.
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1.
    * @minecraft y_offset
    */
   yOffset?: number;
@@ -8309,7 +8298,7 @@ export interface RandomLookAroundBehavior {
    * The angle in degrees that an entity can see in the Y-axis (up-down).
    * @default 180
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft angle_of_view_horizontal
    */
   angleOfViewHorizontal?: number;
@@ -8317,7 +8306,7 @@ export interface RandomLookAroundBehavior {
    * The angle in degrees that an entity can see in the X-axis (left-right).
    * @default 180
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft angle_of_view_vertical
    */
   angleOfViewVertical?: number;
@@ -8348,7 +8337,7 @@ export interface RandomLookAroundBehavior {
   minAngleOfViewHorizontal?: number;
   /**
    * Not documented in the schemas, used by vanilla.
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.26.0: 1.
    * @minecraft look_distance
    */
   lookDistance?: number;
@@ -8580,7 +8569,7 @@ export interface RandomSittingBehavior {
   /**
    * Movement speed multiplier of the mob when using this AI Goal.
    * @default 1
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft speed_multiplier
    */
   speedMultiplier?: number;
@@ -8826,14 +8815,14 @@ export interface RangedAttackBehavior {
   /**
    * Pre-1.21 name of the minimum of attack_interval.
    * @deprecated
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.20: 1, 1.26.0: 3.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.26.20: 1, 1.26.0: 2.
    * @minecraft attack_interval_min
    */
   attackIntervalMin?: number;
   /**
    * Pre-1.21 name of the maximum of attack_interval.
    * @deprecated
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it. Vanilla corpus uses it in 1.26.20: 1, 1.26.0: 3.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it. Vanilla corpus uses it in 1.26.20: 1, 1.26.0: 2.
    * @minecraft attack_interval_max
    */
   attackIntervalMax?: number;
@@ -9020,7 +9009,7 @@ export interface ScaredBehavior {
    * The interval in which a sound will play when active in a 1/delay chance to kick off.
    * @default 0
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft sound_interval
    */
   soundInterval?: number;
@@ -9040,22 +9029,16 @@ export interface ScaredBehavior {
  */
 export interface SendEventBehavior {
   /**
+   * UNDOCUMENTED
+   * @minecraft control_flags
+   */
+  controlFlags?: ("move" | "look" | "jump")[];
+  /**
    * How important this behavior is. Lower priority behaviors will be executed first.
    * @integer Whole number only (fractions are rejected by the build).
    * @minecraft priority
    */
   priority?: number;
-  /**
-   * Time in seconds for the entire event sending process.
-   * @minecraft cast_duration
-   */
-  castDuration?: number;
-  /**
-   * If true, the mob will face the entity it sends an event to.
-   * @default true
-   * @minecraft look_at_target
-   */
-  lookAtTarget?: boolean;
   /**
    * List of spells for the mob to use.
    * @minecraft event_choices
@@ -9123,30 +9106,6 @@ export interface SendEventBehavior {
        */
       soundEvent?: string;
     }[];
-  }[];
-  /**
-   * List of steps for the spell.
-   * @minecraft sequence
-   */
-  sequence?: {
-    /**
-     * Amount of time in seconds before starting this step.
-     * @default 0
-     * @minecraft base_delay
-     */
-    baseDelay?: number;
-    /**
-     * The event to send to the entity.
-     * @default ""
-     * @minecraft event
-     */
-    event?: string;
-    /**
-     * The sound event to play when this step happens.
-     * @default ""
-     * @minecraft sound_event
-     */
-    soundEvent?: string;
   }[];
 }
 
@@ -9453,7 +9412,7 @@ export interface SleepBehavior {
   /**
    * Distance in blocks within the mob considers it has reached the goal. This is the "wiggle room" to stop the AI from bouncing back and forth trying to reach a specific spot
    * @default 0.5
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft goal_radius
    */
   goalRadius?: number;
@@ -10245,7 +10204,7 @@ export interface StalkAndPounceOnTargetBehavior {
   /**
    * The distance in blocks the mob jumps in the direction of its target.
    * @default 0.8
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft leap_distance
    */
   leapDistance?: number;
@@ -10425,7 +10384,7 @@ export interface StompAttackBehavior {
   /**
    * Field of view (in degrees) when using the sensing component to detect an attack target.
    * @default 90
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft melee_fov
    */
   meleeFov?: number;
@@ -10497,7 +10456,7 @@ export interface StompAttackBehavior {
   /**
    * Allows the actor to be set to persist upon targeting a player.
    * @default false
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft set_persistent
    */
   setPersistent?: boolean;
@@ -10509,7 +10468,7 @@ export interface StompAttackBehavior {
   stompRangeMultiplier?: number;
   /**
    * Unused. No effect on "minecraft:behavior.melee_attack".
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft target_dist
    */
   targetDist?: number;
@@ -11549,6 +11508,11 @@ export interface TemptBehavior {
    */
   speedMultiplier?: number;
   /**
+   * UNDOCUMENTED
+   * @minecraft control_flags
+   */
+  controlFlags?: ("move" | "look" | "jump")[];
+  /**
    * If true, the mob can stop being tempted if the player moves too fast while close to this mob.
    * @default false
    * @minecraft can_get_scared
@@ -11644,7 +11608,7 @@ export interface TemptBehavior {
    * Range of random ticks to wait between tempt sounds.
    * @minecraft sound_interval
    */
-  soundInterval?: number | unknown;
+  soundInterval?: MinMaxRange;
   /**
    * The distance at which the mob will stop following the player.
    * @default 1.5
@@ -11662,16 +11626,6 @@ export interface TemptBehavior {
    * @minecraft within_radius
    */
   withinRadius?: number;
-  /**
-   * Specifies the event to trigger when the goal starts
-   * @minecraft on_start
-   */
-  onStart?: string | PartialEntityEventTrigger | (string | PartialEntityEventTrigger)[];
-  /**
-   * Specifies the event to trigger when the goal ends
-   * @minecraft on_end
-   */
-  onEnd?: string | PartialEntityEventTrigger | (string | PartialEntityEventTrigger)[];
   /**
    * Event to fire when the mob starts being tempted.
    * @minecraft on_tempt_start
@@ -12994,14 +12948,14 @@ export interface WorkComposterBehavior {
   /**
    * Unused.
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft sound_delay_max
    */
   soundDelayMax?: number;
   /**
    * Unused.
    * @integer Whole number only (fractions are rejected by the build).
-   * @deprecated not in the official Mojang schemas (1.21.80–1.26.50); no proof that the game rejects it.
+   * @deprecated not in the official Mojang schemas (1.21.80–1.26.60); no proof that the game rejects it.
    * @minecraft sound_delay_min
    */
   soundDelayMin?: number;

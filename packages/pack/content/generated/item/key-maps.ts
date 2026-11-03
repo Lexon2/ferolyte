@@ -186,21 +186,21 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "durability",
     {},
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ],
    "particleType": [
     "particle_type",
     {},
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ],
    "soundEvent": [
     "sound_event",
     {},
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ],
    "durabilityThresholds": [
@@ -330,7 +330,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
      "r": 1
     },
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ],
    "removeEffects": [
@@ -340,14 +340,14 @@ export const keyMaps: Record<string, KeyMapNode> = {
      "r": 1
     },
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ],
    "onUseAction": [
     "on_use_action",
     {},
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ],
    "onUseRange": [
@@ -357,28 +357,28 @@ export const keyMaps: Record<string, KeyMapNode> = {
      "r": 1
     },
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ],
    "isMeat": [
     "is_meat",
     {},
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ],
    "cooldownType": [
     "cooldown_type",
     {},
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ],
    "cooldownTime": [
     "cooldown_time",
     {},
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ]
   }
@@ -872,7 +872,7 @@ export const keyMaps: Record<string, KeyMapNode> = {
     "dispensable",
     {},
     {
-     "d": "not in the official Mojang schemas (1.26.30–1.26.30); no proof that the game rejects it."
+     "d": "not in the official Mojang schemas (1.26.30–1.26.50); no proof that the game rejects it."
     }
    ],
    "slot": [

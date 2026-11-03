@@ -39,6 +39,11 @@ Both `moduleResolution: "bundler"` (the `ferolyte init` template) and `"node"` w
   (recipes) or `1.8.0` (spawn rules). The profile `minGameVersion` (default `1.26.20`) is the version that version-gated fields are checked
   against; it does not change the version of items and entities. Namespaced custom components need `version: '1.21.90'` or newer
   (older files get a warning).
+- **Strict formats.** From server entity `version: '1.26.60'` the game parses entity files strictly (an invalid file fails to load). Shapes
+  that older formats accepted are written in the accepted form there: a single `rideable.seats` entry, `healable.items[].effects` entry,
+  `spellEffects.removeEffects` string or transformation sound becomes a list, a number `transformation.delay` becomes `{ value }`, and a number
+  `movementJump.jumpDelay` / `economyTradeTable.curedDiscount` becomes `{ min, max }` (`timer.time` from 1.26.50). Block `version: '1.26.60'`
+  writes a single `collisionBox` as a list. Older formats keep the shapes as written.
 - **Escape hatches:**
   - `'namespace:name': {...}` in item/block `components` for custom components;
   - `rawComponents` for anything written verbatim.
@@ -87,6 +92,10 @@ needs block `version` 1.26.40+ (older formats need the Upcoming Creator Features
 `placementFilter` only in the base components (never in a permutation); `check` reports each case.
 `materialInstances.*.ambientOcclusion` takes a boolean or an exponent (0-10). The game requires a number from block
 format 1.26.20, so a boolean is written as `1` / `0` there.
+
+`menuCategory.group` needs a namespace (the game rejects the whole item otherwise): `'minecraft:itemGroup.name.sword'`, or
+`'<namespace>:<group>'` for a group of your item catalog. An unprefixed vanilla `'itemGroup.name.*'` is written with `minecraft:`; any other
+unprefixed value is an error, and `check` also reports an unprefixed group in a plain JSON item or block.
 
 ### Server entity: `packs/BP/entities/zombie.se.ts`
 

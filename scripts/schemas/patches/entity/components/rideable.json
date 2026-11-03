@@ -1,0 +1,38 @@
+{
+  "properties": {
+    "on_rider_enter_event": {
+      "$ref": null,
+      "type": "string",
+      "description": "Event id to run on the ridden entity when an entity starts riding it. The game accepts only a string here (an event object is rejected: \"unknown child schema option type\")."
+    },
+    "on_rider_exit_event": {
+      "$ref": null,
+      "type": "string",
+      "description": "Event id to run on the ridden entity when an entity stops riding it. The game accepts only a string here (an event object is rejected: \"unknown child schema option type\")."
+    },
+    "dismount_mode": {
+      "enum": [
+        "default",
+        "on_top_center",
+        "look_direction"
+      ],
+      "description": "Defines where riders are placed when dismounting this entity:\n- \"default\", riders are placed on a valid ground position around the entity, or at the center of the entity's collision box if none is found.\n- \"on_top_center\", riders are placed at the center of the top of the entity's collision box.\n- \"look_direction\", riders are placed in the direction the rider looks (format 1.26.60)."
+    },
+    "seats": {
+      "type": null,
+      "items": null,
+      "oneOf": [
+        {
+          "$ref": "#/definitions/seats_spec"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/seats_spec"
+          }
+        }
+      ],
+      "description": "One seat or the list of seats. Format 1.26.60 accepts only a list: a single seat is written as a one-element list there."
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "x-new-component": "minecraft:on_player_destroyed",
-  "x-official": "official 1.26.20–1.26.20",
+  "x-official": "official 1.26.20–1.26.60",
   "title": "Player Destroyed Component",
   "type": "object",
   "additionalProperties": {},

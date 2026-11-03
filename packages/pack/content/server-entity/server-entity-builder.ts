@@ -6,7 +6,12 @@ import {
 import { convertEntityEvents } from './convertors/entity-events.convertor';
 import { convertEntityProperties } from './convertors/entity-properties.convertor';
 import { EntityBehaviors } from './interfaces/entity-behaviors';
-import { convertGeneratedEntity } from './convertors/generated-entity';
+import {
+  convertGeneratedEntity,
+  entityNormalizers,
+} from './convertors/generated-entity';
+import { entityOverrides } from './overrides';
+import { convertWithOverride } from '../generated/runtime';
 import {
   entityBehaviorRegistry,
   entityComponentRegistry,
@@ -21,6 +26,9 @@ import {
 } from '@ferolyte/common/content/diagnostics/content-diagnostic';
 import { ContentBuilder } from '@ferolyte/common/content/interfaces/content-builder';
 import { CONTENT_METADATA } from '@ferolyte/common/content/metadata';
+
+/** `format_version` of a server entity without `version`. */
+const DEFAULT_ENTITY_FORMAT_VERSION = '1.21.70';
 
 export class ServerEntityBuilder implements ContentBuilder {
   readonly metadata = CONTENT_METADATA.SERVER_ENTITY;
@@ -46,7 +54,7 @@ export class ServerEntityBuilder implements ContentBuilder {
     const { config } = this;
 
     const entity: MinecraftServerEntity = {
-      format_version: config.version || '1.21.70',
+      format_version: this.outputVersion(),
       'minecraft:entity': {
         description: {
           identifier: config.identifier,
@@ -161,6 +169,7 @@ export class ServerEntityBuilder implements ContentBuilder {
         component,
         fieldPath: undefined,
         formatVersion: this.formatVersion(),
+        outputVersion: this.outputVersion(),
       };
       const generated = entityComponentRegistry[component];
       if (generated === undefined) {
@@ -176,10 +185,12 @@ export class ServerEntityBuilder implements ContentBuilder {
         continue;
       }
 
-      const converted = convertGeneratedEntity(
+      const converted = convertWithOverride(
         generated,
         components[component as keyof typeof components],
+        entityNormalizers,
         componentContext,
+        entityOverrides[component],
       );
       if (converted !== undefined) {
         entityComponents = { ...entityComponents, ...converted };
@@ -187,6 +198,11 @@ export class ServerEntityBuilder implements ContentBuilder {
     }
 
     return entityComponents;
+  }
+
+  /** `format_version` written to the file: the `version` of the config, else the default. */
+  private outputVersion(): string {
+    return this.config.version || DEFAULT_ENTITY_FORMAT_VERSION;
   }
 
   /** The `version` of the config, else the profile `minGameVersion`. */
@@ -208,6 +224,7 @@ export class ServerEntityBuilder implements ContentBuilder {
         component: 'behaviors',
         fieldPath: behavior,
         formatVersion: this.formatVersion(),
+        outputVersion: this.outputVersion(),
       };
       const generated = entityBehaviorRegistry[behavior];
       if (generated === undefined) {

@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 import { parse as parseJsonc } from 'jsonc-parser';
-import { join } from 'path';
+import { join, resolve } from 'path';
 
 import { BUILD_CONTEXT } from '../build-context';
 import { namespaceToPath } from '../utils/namespace-path';
@@ -8,6 +8,34 @@ import { FerolyteProfileConfig, FerolytePackOutput } from './interfaces/config';
 import { getMinecraftDirectory } from './utils/get-minecraft-directory';
 import { MinecraftPackType } from '@ferolyte/common/content/types/minecraft-pack-types';
 import { buildContentSuffixRegistry } from '../content/utils/content-suffix-registry';
+
+type OutputPathFactory = (alias: string, type: MinecraftPackType) => string;
+
+const packFolder = (alias: string, type: MinecraftPackType) =>
+  `${alias.toUpperCase()}_${type}`;
+
+/**
+ * `output` is a preset name or a directory (absolute, or relative to `cwd`) that receives the `{ALIAS}_BP` /
+ * `{ALIAS}_RP` folders. A string that is not a preset (`'custom'` included) is a directory.
+ */
+export const resolveOutputPath = (
+  output: FerolytePackOutput | undefined,
+  presets: Record<string, OutputPathFactory>,
+  cwd: string,
+): OutputPathFactory => {
+  const value = output ?? 'minecraft-dev';
+  if (Object.prototype.hasOwnProperty.call(presets, value)) {
+    return presets[value];
+  }
+  if (typeof value !== 'string' || value.trim().length === 0) {
+    throw new Error(
+      `Invalid output: ${JSON.stringify(output)}. Use a preset (${Object.keys(presets).join(', ')}) or a directory path`,
+    );
+  }
+  const directory = resolve(cwd, value);
+
+  return (alias, type) => join(directory, packFolder(alias, type));
+};
 
 const applyTsConfig = async (config: FerolyteProfileConfig) => {
   BUILD_CONTEXT.TS.CONFIG_PATH =
@@ -39,16 +67,12 @@ export const applyConfig = async (config: FerolyteProfileConfig) => {
 
   const currentWorkingDirectory = process.cwd();
 
-  const createPackPath = (alias: string, type: MinecraftPackType) =>
-    `${alias.toUpperCase()}_${type}`;
+  const createPackPath = packFolder;
 
   const convertPackTypeToMinecraftPackType = (type: MinecraftPackType) =>
     type === 'BP' ? 'behavior_packs' : 'resource_packs';
 
-  const outputPathFactory: Record<
-    FerolytePackOutput,
-    (alias: string, type: MinecraftPackType) => string
-  > = {
+  const outputPathFactory: Record<string, OutputPathFactory> = {
     /**
      * The output path for the pack in the Minecraft directory.
      */
@@ -92,25 +116,13 @@ export const applyConfig = async (config: FerolyteProfileConfig) => {
       join(currentWorkingDirectory, 'build', createPackPath(alias, type)),
   };
 
-  const outputPath = outputPathFactory[output ?? 'minecraft-dev'];
-  if (!outputPath && output !== 'custom') {
-    throw new Error(`Invalid output type: ${output}`);
-  }
-
-  if (output === 'custom') {
-    BUILD_CONTEXT.PACKS.OUTPUT_BEHAVIOR_PACK_PATH = join(
-      output,
-      createPackPath(alias, 'BP'),
-    );
-    BUILD_CONTEXT.PACKS.OUTPUT_RESOURCE_PACK_PATH = join(
-      output,
-      createPackPath(alias, 'RP'),
-    );
-  } else {
-    BUILD_CONTEXT.PACKS.OUTPUT_NAMESPACE_PATH = outputPath(alias, 'BP');
-    BUILD_CONTEXT.PACKS.OUTPUT_BEHAVIOR_PACK_PATH = outputPath(alias, 'BP');
-    BUILD_CONTEXT.PACKS.OUTPUT_RESOURCE_PACK_PATH = outputPath(alias, 'RP');
-  }
+  const outputPath = resolveOutputPath(
+    output,
+    outputPathFactory,
+    currentWorkingDirectory,
+  );
+  BUILD_CONTEXT.PACKS.OUTPUT_BEHAVIOR_PACK_PATH = outputPath(alias, 'BP');
+  BUILD_CONTEXT.PACKS.OUTPUT_RESOURCE_PACK_PATH = outputPath(alias, 'RP');
 
   // @TODO: Add namespace validation
   BUILD_CONTEXT.PACKS.OUTPUT_NAMESPACE_PATH = namespaceToPath(namespace, '\\');

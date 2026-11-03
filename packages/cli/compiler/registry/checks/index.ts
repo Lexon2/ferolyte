@@ -1,5 +1,6 @@
 import type { RegistryIndex } from '../project-registry';
 import { molangCheck } from './molang';
+import { manifestCheck, menuGroupCheck } from './pack-files';
 import { checkRecipeDocument, projectNamespaces } from './recipe';
 import { renderControllerCheck } from './render-controller';
 import { checkSpawnRuleDocument } from './spawn-rule';
@@ -38,4 +39,6 @@ export const REFERENCE_CHECKS: ReferenceCheck[] = [
   renderControllerCheck,
   recipeAndSpawnRuleChecks,
   molangCheck,
+  manifestCheck,
+  menuGroupCheck,
 ];

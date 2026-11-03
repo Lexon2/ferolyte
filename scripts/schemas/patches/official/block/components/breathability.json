@@ -1,6 +1,6 @@
 {
   "x-new-component": "minecraft:breathability",
-  "x-official": "official 1.26.20–1.26.20",
+  "x-official": "official 1.26.20–1.26.60",
   "title": "Block Breathability Component",
   "type": "object",
   "additionalProperties": {},

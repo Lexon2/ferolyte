@@ -16,7 +16,11 @@ export type ServerEntityVersions =
   | '1.21.120'
   | '1.21.130'
   | '1.26.10'
-  | '1.26.20';
+  | '1.26.20'
+  | '1.26.30'
+  | '1.26.40'
+  | '1.26.50'
+  | '1.26.60';
 
 /**
  * Main configuration interface for Minecraft entities

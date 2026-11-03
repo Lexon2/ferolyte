@@ -1,6 +1,6 @@
 {
   "x-new-component": "minecraft:behavior.hover",
-  "x-official": "official 1.21.80–1.26.50",
+  "x-official": "official 1.21.80–1.26.60",
   "description": "Allows the mob to hover in place.",
   "properties": {
     "control_flags": {
@@ -12,7 +12,12 @@
           "jump"
         ],
         "title": "Goal's control flags",
-        "type": "string"
+        "type": "string",
+        "x-enum-binary-value": [
+          1,
+          2,
+          4
+        ]
       },
       "type": "array"
     },

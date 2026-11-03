@@ -1,11 +1,99 @@
 {
   "properties": {
     "delay": {
-      "oneOf": {
-        "$append": [
-          { "type": "object", "properties": { "range_min": { "type": "number" }, "range_max": { "type": "number" } } }
-        ]
-      }
+      "type": null,
+      "additionalProperties": null,
+      "properties": null,
+      "oneOf": [
+        {
+          "type": "number",
+          "minimum": 0
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "block_assist_chance": {
+              "type": "number",
+              "default": 0,
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Chance that the entity will look for nearby blocks that can speed up the transformation. Value must be between 0.0 and 1.0"
+            },
+            "block_chance": {
+              "type": "number",
+              "default": 0,
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Chance that, once a block is found, will help speed up the transformation."
+            },
+            "block_max": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0,
+              "description": "Maximum number of blocks the entity will look for to aid in the transformation. If not defined or set to 0, it will be set to the block radius"
+            },
+            "block_radius": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0,
+              "description": "Distance in Blocks that the entity will search for blocks that can help the transformation."
+            },
+            "block_types": {
+              "type": "array",
+              "description": "List of blocks that can help the transformation of this entity.",
+              "items": {
+                "$ref": "../../../../general/block/identifier.json"
+              }
+            },
+            "value": {
+              "type": "number",
+              "default": 0,
+              "minimum": 0,
+              "description": "Time in seconds before the entity transforms."
+            },
+            "range_min": {
+              "type": "number"
+            },
+            "range_max": {
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "description": "Seconds before the entity transforms, or the delay object. Format 1.26.60 accepts only the object: a number is written as `{ value }` there."
+    },
+    "begin_transform_sound": {
+      "type": null,
+      "items": null,
+      "default": null,
+      "oneOf": [
+        {
+          "$ref": "../../../../general/sound_event.json"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "../../../../general/sound_event.json"
+          }
+        }
+      ]
+    },
+    "transformation_sound": {
+      "type": null,
+      "items": null,
+      "default": null,
+      "oneOf": [
+        {
+          "$ref": "../../../../general/sound_event.json"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "../../../../general/sound_event.json"
+          }
+        }
+      ]
     }
   }
 }

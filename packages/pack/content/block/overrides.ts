@@ -93,4 +93,18 @@ export const blockOverrides: Record<string, ComponentOverride> = {
           : Object.values(config)[0];
     },
   },
+  /**
+   * Block format 1.26.60 accepts `collision_box` only as a boolean or a list of boxes: a single box is written as a
+   * one-element list there (older formats keep the single box).
+   */
+  collisionBox: {
+    pre: (config, ctx) =>
+      typeof config === 'object' &&
+      config !== null &&
+      !Array.isArray(config) &&
+      ctx?.outputVersion !== undefined &&
+      isVersionAtLeast(ctx.outputVersion, '1.26.60')
+        ? [config]
+        : config,
+  },
 };

@@ -1,4 +1,5 @@
 {
+  "block/minecraft:collision_box": "schema variant noise: the Blockception schema types `origin`/`size`/`min`/`max` as [x, y, z] tuples, the variant generator writes empty arrays",
   "block/minecraft:custom_components": "typed `never` on purpose: custom components of 1.21.90+ are namespaced component keys, `customComponents` is only the pre-1.21.90 string list",
   "block/minecraft:instrument_sound": "schema variant noise: `up`/`down` must match `^note.`, the generator cannot produce it",
   "block/minecraft:redstone_producer": "`strongly_powered_face` is one face (official schema `Facing`, game 1.26.50+ rejects a list); the Blockception schema variant is a list, which the SDK type deliberately refuses (runtime unwraps a one-element list with a warning)",
@@ -9,6 +10,7 @@
   "entity/minecraft:damage_sensor": "vanilla `cause` values missing from the schema enum and legacy `other_with_families` filter",
   "entity/minecraft:environment_sensor": "vanilla filters that omit a `value` the schema marks as required",
   "entity/minecraft:looked_at": "vanilla `looked_at_event.filter` (legacy key of the event object)",
+  "entity/minecraft:rideable": "`on_rider_enter_event` / `on_rider_exit_event` take an event id string (the game rejects an event object: \"unknown child schema option type\"); the Blockception schema variant writes the event object, which the SDK refuses on purpose",
   "item/minecraft:icon": "SDK sugar: `icon: 'key'` is written as `{ textures: { default: 'key' } }`",
   "item/minecraft:tags": "SDK sugar: `tags: [...]` is written as `{ tags: [...] }`; schema variant noise for tag enums"
 }

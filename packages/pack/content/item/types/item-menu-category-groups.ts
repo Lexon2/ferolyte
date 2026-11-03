@@ -1,4 +1,5 @@
-export type ItemMenuCategoryGroup =
+/** Vanilla creative inventory group names (`itemGroup.name.<group>`). */
+export type VanillaItemMenuGroupName =
   | 'itemGroup.name.anvil'
   | 'itemGroup.name.arrow'
   | 'itemGroup.name.axe'
@@ -82,3 +83,15 @@ export type ItemMenuCategoryGroup =
   | 'itemGroup.name.wood'
   | 'itemGroup.name.wool'
   | 'itemGroup.name.woolCarpet';
+
+/**
+ * Creative inventory group of an item or block (`menu_category.group`). The game requires a namespace:
+ * `'minecraft:itemGroup.name.sword'` for vanilla groups, `'<namespace>:<group>'` for groups of your item catalog.
+ * The unprefixed vanilla form (`'itemGroup.name.sword'`) is accepted and written with the `minecraft:` prefix;
+ * any other value without a namespace is an error.
+ */
+export type ItemMenuCategoryGroup =
+  | `minecraft:${VanillaItemMenuGroupName}`
+  // Unprefixed vanilla form: written with the `minecraft:` prefix.
+  | VanillaItemMenuGroupName
+  | (`${string}:${string}` & {});

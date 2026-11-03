@@ -1,6 +1,6 @@
 {
   "x-new-component": "minecraft:bucketable",
-  "x-official": "official 1.21.80–1.26.50",
+  "x-official": "official 1.21.80–1.26.60",
   "description": "Defines interactions with this entity.",
   "title": "minecraft:bucketable",
   "type": "object",

@@ -18,27 +18,47 @@ export const compareVersions = (a, b) => {
   return 0;
 };
 
-const INDEX_NAMES = {
-  entity: () => 'Entity component definitions.json',
-  item: (dir) => (existsSync(path.join(dir, 'Item Components.json')) ? 'Item Components.json' : undefined),
-  block: (dir) => (existsSync(path.join(dir, 'Components.json')) ? 'Components.json' : undefined),
+/**
+ * Folders that hold an area's component index, with the index file name. Block components moved from
+ * `block/<version>/Components.json` to `block_components/<version>/Block Components.json` in 1.26.60.
+ */
+const INDEX_DIRS = {
+  entity: [['entity', 'Entity component definitions.json']],
+  item: [['item', 'Item Components.json']],
+  block: [
+    ['block', 'Components.json'],
+    ['block_components', 'Block Components.json'],
+  ],
 };
 
 const readJson = (file) => JSON.parse(readFileSync(file, 'utf8'));
 
-/** Versions of an area that have a component index, oldest first (`beta` is excluded). */
-export const officialVersions = (area) => {
-  const base = path.join(OFFICIAL_DIR, area);
+/** `version → index file` of an area (`beta` is excluded). */
+const indexFiles = (area) => {
+  const out = new Map();
+  for (const [folder, name] of INDEX_DIRS[area]) {
+    const base = path.join(OFFICIAL_DIR, folder);
+    if (!existsSync(base)) {
+      continue;
+    }
+    for (const version of readdirSync(base).filter((v) => /^\d/.test(v))) {
+      const file = path.join(base, version, name);
+      if (existsSync(file)) {
+        out.set(version, file);
+      }
+    }
+  }
 
-  return readdirSync(base)
-    .filter((v) => /^\d/.test(v) && INDEX_NAMES[area](path.join(base, v)) !== undefined)
-    .sort(compareVersions);
+  return out;
 };
+
+/** Versions of an area that have a component index, oldest first (`beta` is excluded). */
+export const officialVersions = (area) => [...indexFiles(area).keys()].sort(compareVersions);
 
 /** `component key → schema file (or undefined: no body)` of the index of one version. */
 export const officialIndex = (area, version) => {
-  const dir = path.join(OFFICIAL_DIR, area, version);
-  const file = path.join(dir, INDEX_NAMES[area](dir));
+  const file = indexFiles(area).get(version);
+  const dir = path.dirname(file);
   const out = new Map();
   for (const [key, value] of Object.entries(readJson(file).properties ?? {})) {
     out.set(key, value.$ref ? path.resolve(dir, decodeURIComponent(value.$ref)) : undefined);

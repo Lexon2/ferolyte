@@ -2,9 +2,9 @@ import { logger } from '../utils/logger';
 import { readFile } from 'fs/promises';
 
 import { BUILD_CONTEXT } from '../build-context';
-import { serializeJson } from '../content/utils/serialize-json';
 import { writeFileByPath } from '../content/utils/write-file-by-path';
 import { parseJsonc } from '../utils/read-jsonc';
+import { reformatJson } from '../utils/reformat-json';
 import { FerolyteFileKind } from './types';
 import { createBeforeFileWriteEvent, emitBeforeFileWrite } from './plugin-host';
 
@@ -41,7 +41,8 @@ const normalizeJsonData = (
     return data;
   }
 
-  return serializeJson(result.value);
+  // Re-printed from the tokens, not re-stringified: number literals (`0.0`, `1.0`) keep their text.
+  return reformatJson(text, BUILD_CONTEXT.PACKS.MINIFY_JSON ? undefined : 2);
 };
 
 export const writeWithPlugins = async (

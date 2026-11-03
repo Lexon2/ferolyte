@@ -68,7 +68,8 @@ export interface FerolytePackConfig {
    * - `minecraft`: The output directory for the pack will be in the `com.mojang/${BP or RP}` directory.
    * - `minecraft-dev`: The output directory for the pack will be in the `com.mojang/development_${BP or RP}` directory.
    * - `build`: The output directory for the pack will be in the `build` folder in the current working directory.
-   * - `custom`: The output directory for the pack will be in the directory specified in the `output` field.
+   * - any other string: a directory, absolute or relative to the working directory (`'D:/packs'`, `'../out'`); the
+   *   `{ALIAS}_BP` / `{ALIAS}_RP` folders are written into it.
    */
   output?: FerolytePackOutput;
 

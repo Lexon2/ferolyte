@@ -1,6 +1,6 @@
 {
   "x-new-component": "minecraft:on_step_off",
-  "x-official": "official 1.26.20–1.26.20",
+  "x-official": "official 1.26.20–1.26.60",
   "title": "Step Off Component",
   "type": "object",
   "additionalProperties": {},
