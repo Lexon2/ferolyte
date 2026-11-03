@@ -355,8 +355,11 @@ export const watch = async (
       BUILD_CONTEXT.PACKS.INPUT_RESOURCE_PACK_PATH,
     ],
     {
+      // A change is processed once the file size has been stable for 150 ms (polled every 50 ms). A writer that
+      // pauses longer mid-file gets one more batch when it continues; the last one wins.
       awaitWriteFinish: {
-        stabilityThreshold: 500,
+        stabilityThreshold: 150,
+        pollInterval: 50,
       },
       atomic: true,
       ignored: ['**/node_modules/**', '**/.git/**', '**/.ferolyte/**'],
