@@ -10,3 +10,6 @@
   parallel instead of one by one (registry order and diagnostics order unchanged). Also shortens every `watch` batch.
 - The dependency graph of a content pass resolves esbuild's import graph once per pass instead of once per entry
   (was quadratic in the number of content files).
+- Commands are loaded on use: `run`, `check`, `inspect` and `types` no longer load the project scaffolding, the file watcher and
+  the WebSocket hub (about 90 fewer modules per process). `getMinecraftHub` is still exported from
+  `compiler/scripts/start-minecraft-server`.

@@ -8,7 +8,7 @@ import { loadConfig } from '../config/load-config';
 import { jsoncEsbuildPlugin } from '../core/utils/jsonc-esbuild-plugin';
 import { createScriptsOutputPath } from './create-scripts-output-path';
 import { getActiveProfile, emitHook } from '../plugins/plugin-host';
-import { getMinecraftHub } from './start-minecraft-server';
+import { getMinecraftHub } from './active-hub';
 
 
 const hasScriptEntry = async () => {

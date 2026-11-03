@@ -1,6 +1,6 @@
 import { defineCommand } from 'citty';
 
-import { FerolytePack } from '../../ferolyte-pack';
+import { build } from '../../compiler/actions/build';
 import { collectDiagnostics } from '../../compiler/check/diagnostics-collector';
 import { archivePacksIfEnabled } from '../../compiler/archive/create-mcaddon';
 import { logger } from '../../compiler/utils/logger';
@@ -43,7 +43,7 @@ export const runCommand = defineCommand({
       logger.setLevel('quiet');
     }
 
-    const stats = await FerolytePack.build(options);
+    const stats = await build(options);
     await buildScriptsOnce(options.profile);
     await archivePacksIfEnabled();
     await stopPlugins('build-end');
