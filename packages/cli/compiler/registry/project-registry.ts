@@ -2,6 +2,7 @@ import { readdir, readFile, stat } from 'fs/promises';
 import { join, relative, sep } from 'path';
 
 import { BUILD_CONTEXT } from '../build-context';
+import { DEFAULT_CONCURRENCY, mapLimit } from '../utils/map-limit';
 import { parseJsonc } from '../utils/read-jsonc';
 
 export type DocumentKind =
@@ -79,6 +80,13 @@ type ResourceKind =
   | 'functions'
   | 'cullingRules'
   | 'voxelShapes';
+
+type ScannedFile =
+  | { status: 'missing' }
+  | { status: 'unchanged' }
+  | { status: 'removed' }
+  | { status: 'read'; entry: ResourceEntry }
+  | { status: 'failed'; error: unknown };
 
 type ResourceEntry =
   | { mtimeMs: number; file: string; type: 'ids'; kind: ResourceKind; ids: string[] }
@@ -226,6 +234,7 @@ const RULES: Rule[] = [
   { pack: 'BP', dir: 'functions', ext: '.mcfunction', entry: (_, rel) => ({ type: 'ids', kind: 'functions', ids: [rel] }) },
 ];
 
+/** Files with the extension below the directory, in directory listing order (subdirectories read in parallel). */
 const walk = async (dir: string, ext: string): Promise<string[]> => {
   let entries;
   try {
@@ -233,19 +242,18 @@ const walk = async (dir: string, ext: string): Promise<string[]> => {
   } catch {
     return [];
   }
-  const files: string[] = [];
-  for (const entry of entries) {
-    const path = join(dir, entry.name);
-    if (entry.isDirectory()) {
-      if (entry.name !== 'node_modules') {
-        files.push(...(await walk(path, ext)));
+  const nested = await Promise.all(
+    entries.map(async (entry): Promise<string[]> => {
+      const path = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        return entry.name !== 'node_modules' ? walk(path, ext) : [];
       }
-    } else if (entry.name.endsWith(ext)) {
-      files.push(path);
-    }
-  }
 
-  return files;
+      return entry.name.endsWith(ext) ? [path] : [];
+    }),
+  );
+
+  return nested.flat();
 };
 
 /**
@@ -260,41 +268,81 @@ export const scanResources = async (): Promise<boolean> => {
   const seen = new Set<string>();
   let changed = false;
 
-  for (const rule of RULES) {
-    const root = roots[rule.pack];
-    const files = rule.file
-      ? [join(root, rule.file)]
-      : await walk(join(root, rule.dir), rule.ext);
+  // The file system work (listing, stat, read + parse) runs in parallel; the registry is then updated in the
+  // listing order, so the map keeps the same order (and diagnostics the same order) as a one-by-one scan.
+  const candidates = (
+    await Promise.all(
+      RULES.map(async (rule) => {
+        const root = roots[rule.pack];
+        const files = rule.file
+          ? [join(root, rule.file)]
+          : await walk(join(root, rule.dir), rule.ext);
 
-    for (const file of files) {
+        return files.map((file) => ({
+          rule,
+          root,
+          file,
+          key: `${rule.pack}:${rule.file ?? ''}:${rule.dir}:${file}`,
+        }));
+      }),
+    )
+  ).flat();
+
+  const scanned = await mapLimit(
+    candidates,
+    DEFAULT_CONCURRENCY,
+    async ({ rule, root, file, key }): Promise<ScannedFile> => {
       let mtimeMs: number;
       try {
         mtimeMs = (await stat(file)).mtimeMs;
       } catch {
-        continue;
+        return { status: 'missing' };
       }
-      const key = `${rule.pack}:${rule.file ?? ''}:${rule.dir}:${file}`;
-      seen.add(key);
       if (resources.get(key)?.mtimeMs === mtimeMs) {
-        continue;
+        return { status: 'unchanged' };
       }
 
-      changed = true;
-      const rel = relative(root, file).split(sep).join('/');
-      const json = rule.ext === '.json' ? await readJson(file) : undefined;
-      const result = rule.entry(json, rel);
-      if (!result || (rule.ext === '.json' && json === undefined)) {
-        resources.delete(key);
-        continue;
+      try {
+        const rel = relative(root, file).split(sep).join('/');
+        const json = rule.ext === '.json' ? await readJson(file) : undefined;
+        const result = rule.entry(json, rel);
+        if (!result || (rule.ext === '.json' && json === undefined)) {
+          return { status: 'removed' };
+        }
+
+        return {
+          status: 'read',
+          entry:
+            result.type === 'ids'
+              ? { mtimeMs, file, type: 'ids', kind: result.kind, ids: result.ids }
+              : { mtimeMs, file, type: 'document', kind: result.kind, json },
+        };
+      } catch (error) {
+        return { status: 'failed', error };
       }
-      resources.set(
-        key,
-        result.type === 'ids'
-          ? { mtimeMs, file, type: 'ids', kind: result.kind, ids: result.ids }
-          : { mtimeMs, file, type: 'document', kind: result.kind, json },
-      );
+    },
+  );
+
+  candidates.forEach(({ key }, index) => {
+    const result = scanned[index];
+    if (result.status === 'missing') {
+      return;
     }
-  }
+    seen.add(key);
+    if (result.status === 'unchanged') {
+      return;
+    }
+
+    changed = true;
+    if (result.status === 'failed') {
+      throw result.error;
+    }
+    if (result.status === 'removed') {
+      resources.delete(key);
+    } else {
+      resources.set(key, result.entry);
+    }
+  });
 
   for (const key of [...resources.keys()]) {
     if (!seen.has(key)) {
