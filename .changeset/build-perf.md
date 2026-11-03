@@ -14,3 +14,5 @@
   the WebSocket hub (about 90 fewer modules per process). `getMinecraftHub` is still exported from
   `compiler/scripts/start-minecraft-server`.
 - Output files are written with one `mkdir` per folder instead of one per file (a folder removed in between is created again).
+- `watch` starts a rebuild sooner after a save: a changed file is processed once its size has been stable for 150 ms
+  (was 500 ms). An edit reaches the output about 350 ms earlier.
