@@ -82,21 +82,40 @@ export const loadExternalModules = async (
   );
 };
 
-/**
- * Collects every file reachable from the entry through the metafile import graph.
- * Walking the imports (instead of using `outputs[].inputs`) also keeps
- * tree-shaken modules, so a change in them still triggers a rebuild.
- */
-const collectInputs = (
-  entry: string,
-  metafile: esbuild.Metafile,
-  cwd: string,
-): Set<string> => {
+/** Absolute input path -> absolute paths of its non-external imports that are inputs of the same pass. */
+type InputGraph = Map<string, string[]>;
+
+/** Import graph of one esbuild pass, resolved once and shared by every entry of the pass. */
+const createInputGraph = (metafile: esbuild.Metafile, cwd: string): InputGraph => {
   const known = new Map<string, esbuild.Metafile['inputs'][string]>();
   for (const [file, meta] of Object.entries(metafile.inputs)) {
     known.set(resolve(cwd, file), meta);
   }
 
+  const graph: InputGraph = new Map();
+  for (const [file, meta] of known) {
+    const imports: string[] = [];
+    for (const imported of meta.imports) {
+      if (imported.external) {
+        continue;
+      }
+      const importedPath = resolve(cwd, imported.path);
+      if (known.has(importedPath)) {
+        imports.push(importedPath);
+      }
+    }
+    graph.set(file, imports);
+  }
+
+  return graph;
+};
+
+/**
+ * Collects every file reachable from the entry through the metafile import graph.
+ * Walking the imports (instead of using `outputs[].inputs`) also keeps
+ * tree-shaken modules, so a change in them still triggers a rebuild.
+ */
+const collectInputs = (entry: string, graph: InputGraph): Set<string> => {
   const visited = new Set<string>();
   const stack = [entry];
   while (stack.length > 0) {
@@ -106,14 +125,8 @@ const collectInputs = (
     }
     visited.add(current);
 
-    for (const imported of known.get(current)?.imports ?? []) {
-      if (imported.external) {
-        continue;
-      }
-      const importedPath = resolve(cwd, imported.path);
-      if (known.has(importedPath)) {
-        stack.push(importedPath);
-      }
+    for (const importedPath of graph.get(current) ?? []) {
+      stack.push(importedPath);
     }
   }
 
@@ -135,6 +148,7 @@ const bundleOnce = async (
     outputs.set(resolve(file.path), file.text);
   }
 
+  const graph = createInputGraph(metafile, cwd);
   const bundled: BundledEntry[] = [];
   for (const [outPath, output] of Object.entries(metafile.outputs)) {
     if (!output.entryPoint) {
@@ -152,7 +166,7 @@ const bundleOnce = async (
         .filter((imported) => imported.external && isSdkSpecifier(imported.path))
         .map((imported) => imported.path),
     );
-    const inputs = collectInputs(entry, metafile, cwd);
+    const inputs = collectInputs(entry, graph);
     bundled.push({ entry, code, inputs, externals });
   }
 

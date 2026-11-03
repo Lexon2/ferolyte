@@ -8,3 +8,5 @@
   errors (and `__proto__` keys), so error messages are unchanged. Copying, the registry scan and JSON imports are faster.
 - The pack file scan behind reference checks and generated ids (`.ferolyte/types/ids.ts`) lists, stats and reads files in
   parallel instead of one by one (registry order and diagnostics order unchanged). Also shortens every `watch` batch.
+- The dependency graph of a content pass resolves esbuild's import graph once per pass instead of once per entry
+  (was quadratic in the number of content files).
