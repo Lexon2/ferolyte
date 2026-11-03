@@ -1,5 +1,11 @@
 # @ferolyte/pack
 
+## 0.8.1
+
+### Patch Changes
+
+- @ferolyte/common@0.8.1
+
 ## 0.8.0
 
 ### Minor Changes
