@@ -13,3 +13,4 @@
 - Commands are loaded on use: `run`, `check`, `inspect` and `types` no longer load the project scaffolding, the file watcher and
   the WebSocket hub (about 90 fewer modules per process). `getMinecraftHub` is still exported from
   `compiler/scripts/start-minecraft-server`.
+- Output files are written with one `mkdir` per folder instead of one per file (a folder removed in between is created again).
