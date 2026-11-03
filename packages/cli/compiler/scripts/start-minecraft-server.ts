@@ -3,10 +3,9 @@ import { setMinecraftContext } from '../plugins/plugin-host';
 import type { FerolyteMinecraftContext } from '../plugins/types';
 import { MinecraftHttpApi } from './minecraft-http';
 import { MinecraftHub } from './minecraft-hub';
+import { getMinecraftHub, setActiveHub } from './active-hub';
 
-let activeHub: MinecraftHub | undefined;
-
-export const getMinecraftHub = () => activeHub;
+export { getMinecraftHub };
 
 export const createMinecraftContext = (
   hub: MinecraftHub,
@@ -53,7 +52,7 @@ export const startMinecraftServer = async (): Promise<() => Promise<void>> => {
     throw error;
   }
 
-  activeHub = hub;
+  setActiveHub(hub);
   setMinecraftContext(createMinecraftContext(hub, http), {
     port: hub.port,
     http: HTTP && http ? { port: http.port, host: HTTP.host } : false,
@@ -67,8 +66,8 @@ export const startMinecraftServer = async (): Promise<() => Promise<void>> => {
   }
 
   return async () => {
-    if (activeHub === hub) {
-      activeHub = undefined;
+    if (getMinecraftHub() === hub) {
+      setActiveHub(undefined);
       setMinecraftContext(undefined);
     }
     await Promise.all([http?.close(), hub.close()]);

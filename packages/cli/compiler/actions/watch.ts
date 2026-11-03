@@ -30,7 +30,7 @@ import {
   createWatchReadyEvent,
   emitHook,
 } from '../plugins/plugin-host';
-import { getMinecraftHub } from '../scripts/start-minecraft-server';
+import { getMinecraftHub } from '../scripts/active-hub';
 import { copyWithPlugins } from '../plugins/write-with-plugins';
 import { collectDiagnostics } from '../check/diagnostics-collector';
 import { resetBuildMetrics } from '../core/build-metrics';
