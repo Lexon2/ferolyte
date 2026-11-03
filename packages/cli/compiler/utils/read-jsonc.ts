@@ -33,6 +33,17 @@ const toDiagnostic = (text: string, error: ParseError): JsoncDiagnostic => {
 };
 
 export const parseJsonc = (text: string): JsoncParseResult => {
+  // Fast path: most pack files are strict JSON, and the native parser is many times faster than jsonc-parser.
+  // For strict JSON both give the same value (same key order, last duplicate wins). `__proto__` keys are the
+  // exception (an own key for JSON.parse, the prototype for jsonc-parser), so such text keeps the slow path.
+  if (!text.includes('__proto__')) {
+    try {
+      return { ok: true, value: JSON.parse(text) };
+    } catch {
+      // comments, trailing commas or a real error: jsonc-parser decides
+    }
+  }
+
   const errors: ParseError[] = [];
   const value = parse(text, errors, { allowTrailingComma: true });
 
