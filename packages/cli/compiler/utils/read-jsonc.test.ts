@@ -8,7 +8,9 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { BUILD_CONTEXT } from '../build-context';
 import { jsoncEsbuildPlugin } from '../core/utils/jsonc-esbuild-plugin';
 import { copyWithPlugins } from '../plugins/write-with-plugins';
-import { readJsonc } from './read-jsonc';
+import { parse } from 'jsonc-parser';
+
+import { parseJsonc, readJsonc } from './read-jsonc';
 
 const roots: string[] = [];
 
@@ -37,6 +39,32 @@ describe('jsonc', () => {
     const root = await createRoot();
     await writeFile(join(root, 'a.json'), COMMENTED);
     expect(await readJsonc(join(root, 'a.json'))).toEqual({ a: 1, b: [1, 2] });
+  });
+
+  it('parseJsonc gives the jsonc-parser value for strict JSON (native fast path)', () => {
+    const backslash = String.fromCharCode(92);
+    const texts = [
+      '{"b":1,"a":{"c":[1,2.5,-0,1e400,null,true]},"b":3}',
+      JSON.stringify({ 2: 'x', 1: 'y', z: 'A/' + String.fromCharCode(10, 9, 34, 92), u: String.fromCodePoint(233, 0x1f600) }),
+      '[1.0, 1.50, 1e2, -1E-2, 123456789012345678901234567890]',
+      '"' + backslash + 'ud800 ' + backslash + 'u0041' + backslash + '/"',
+    ];
+    for (const text of texts) {
+      const result = parseJsonc(text);
+      expect(result.ok).toBe(true);
+      const value = result.ok ? result.value : undefined;
+      expect(value).toStrictEqual(parse(text, [], { allowTrailingComma: true }));
+      expect(JSON.stringify(value)).toBe(JSON.stringify(parse(text, [], { allowTrailingComma: true })));
+    }
+  });
+
+  it('parseJsonc keeps jsonc-parser semantics for __proto__ keys, comments and errors', () => {
+    const proto = parseJsonc('{"__proto__": {"x": 1}, "a": 2}');
+    expect(proto.ok && Object.keys(proto.value as object)).toEqual(['a']);
+    expect(parseJsonc(COMMENTED)).toEqual({ ok: true, value: { a: 1, b: [1, 2] } });
+    const bad = parseJsonc('{"a": 1 "b": 2}');
+    expect(bad.ok).toBe(false);
+    expect(!bad.ok && bad.errors[0]).toMatchObject({ line: 1, message: 'CommaExpected' });
   });
 
   it('readJsonc reports file:line', async () => {
